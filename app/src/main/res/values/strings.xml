@@ -4,6 +4,9 @@
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Senha</string>
+    <string name="prompt_confirma_password">Confirmar Senha</string>
+    <string name="acao_criar_login">Criar Login</string>
+
     <string name="action_sign_in">Login</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="error_invalid_email">This email address is invalid</string>
@@ -15,7 +18,11 @@
         completions."
     </string>
     <string name="prompt_cpf">CPF</string>
-    <string name="title_activity_cadastro_login">CadastroLogin</string>
+    <string name="prompt_numero_cartao">Número do Cartão</string>
+    <string name="prompt_data_nascimento">Data de Nascimento</string>
+    <string name="prompt_confirmar_senha">Confirmar Senha</string>
+    <string name="title_activity_cadastro_login">Cadastro</string>
+    <string name="title_activity_termos_de_uso">Termos de Uso</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 
