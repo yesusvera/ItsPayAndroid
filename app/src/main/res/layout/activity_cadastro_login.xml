@@ -22,24 +22,47 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <android.support.design.widget.TextInputLayout
+             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:counterMaxLength="13"
-                android:layout_marginTop="7dp">
+                android:orientation="horizontal">
 
-                <EditText
-                    android:id="@+id/numeroCartao"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/prompt_numero_cartao"
-                    android:inputType="number"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:padding="15dp" />
+                 <android.support.design.widget.TextInputLayout
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     app:counterMaxLength="13"
 
-            </android.support.design.widget.TextInputLayout>
+                     android:layout_alignParentLeft="true">
 
+                     <EditText
+                         android:id="@+id/numeroCartao"
+                         android:layout_width="277dp"
+                         android:layout_height="wrap_content"
+                         android:hint="@string/prompt_numero_cartao"
+                         android:inputType="number"
+                         android:gravity="center_vertical"
+                         android:maxLines="1"
+                         android:singleLine="true"
+                         android:paddingLeft="15dp" />
+
+
+                 </android.support.design.widget.TextInputLayout>
+
+                 <ImageButton
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     app:srcCompat="@android:drawable/ic_menu_camera"
+                     android:id="@+id/scanCardButton"
+                     android:layout_weight="1"
+                     android:onClick="onScanPress"
+                     android:layout_marginRight="15dp"
+                     android:layout_marginBottom="15dp"
+                     android:layout_alignBottom="@+id/textInputLayout"
+                     android:layout_alignParentRight="true"
+                     android:layout_alignParentEnd="true"
+                     android:layout_marginEnd="15dp" />
+
+             </RelativeLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
