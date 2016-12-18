@@ -1,4 +1,4 @@
-package itspay.br.com.mask;
+package itspay.br.com.util;
 
 
 import java.util.Set;

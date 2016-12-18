@@ -1,10 +1,12 @@
-package itspay.br.com.mask;
+package itspay.br.com.util.mask;
 
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
 import java.util.HashSet;
 import java.util.Set;
+
+import itspay.br.com.util.Utils;
 
 public class MaskEditTextChangedListener implements TextWatcher{
 

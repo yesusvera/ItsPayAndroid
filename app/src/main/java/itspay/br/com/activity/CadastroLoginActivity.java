@@ -1,4 +1,4 @@
-package itspay.br.com.itspay;
+package itspay.br.com.activity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -10,16 +10,17 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import io.card.payment.CardIOActivity;
 import io.card.payment.CreditCard;
-import itspay.br.com.mask.MaskEditTextChangedListener;
+import itspay.br.com.itspay.R;
+import itspay.br.com.util.mask.MaskEditTextChangedListener;
 
-public class CadastroLogin extends AppCompatActivity {
+/**
+ * Created by yesus on 14/12/16.
+ */
+public class CadastroLoginActivity extends AppCompatActivity {
 
     private EditText numeroCartao;
     private EditText dataNascimento;
@@ -63,7 +64,7 @@ public class CadastroLogin extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(!termosDeUso.isChecked()){
-                    AlertDialog.Builder builder = new AlertDialog.Builder(CadastroLogin.this);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(CadastroLoginActivity.this);
                     builder.setMessage("Você precisa concordar com os termos de uso e políticas de privacidade.")
                             .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                 @Override
@@ -81,7 +82,7 @@ public class CadastroLogin extends AppCompatActivity {
         txtViewTermosDeUso.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(CadastroLogin.this, TermosDeUsoActivity.class);
+                Intent intent = new Intent(CadastroLoginActivity.this, TermosDeUsoActivity.class);
                 startActivity(intent);
             }
         });

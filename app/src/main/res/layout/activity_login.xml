@@ -10,7 +10,7 @@
     android:paddingLeft="0dp"
     android:paddingRight="0dp"
     android:paddingTop="0dp"
-    tools:context="itspay.br.com.itspay.LoginActivity">
+    tools:context="itspay.br.com.itspay.itspay.br.com.activity.LoginActivity">
 
     <!-- Login progress -->
 
@@ -72,7 +72,8 @@
                         android:inputType="number"
                         android:maxLines="1"
                         android:singleLine="true"
-                        android:padding="15dp" />
+                        android:padding="15dp"
+                        android:text="845.217.561-23" />
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -93,7 +94,8 @@
                         android:maxLength="25"
                         android:maxLines="1"
                         android:padding="15dp"
-                        android:singleLine="true" />
+                        android:singleLine="true"
+                        android:text="123456" />
 
                 </android.support.design.widget.TextInputLayout>
 
