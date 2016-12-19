@@ -1,9 +1,17 @@
 package itspay.br.com.activity;
 
+import android.Manifest;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.app.LoaderManager.LoaderCallbacks;
 
@@ -11,12 +19,12 @@ import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.AsyncTask;
 
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -24,15 +32,15 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import itspay.br.com.controller.LoginController;
 import itspay.br.com.itspay.R;
-import itspay.br.com.model.FazerLoginPortador;
-import itspay.br.com.services.ConnectPortadorService;
 import itspay.br.com.util.mask.MaskEditTextChangedListener;
+import itspay.br.com.util.validations.ValidationsForms;
 
 /**
  * Created by yesus on 12/12/16.
@@ -40,15 +48,20 @@ import itspay.br.com.util.mask.MaskEditTextChangedListener;
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
+public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor>, LocationListener{
 
-
+    private static final int PERMISSION_ACCESS_COARSE_LOCATION = 312;
     // UI references.
     private EditText mCpfView;
     private EditText mPasswordView;
     private TextView txtViewCriaLogin;
     private View mProgressView;
     private View mLoginFormView;
+
+    protected LocationManager locationManager;
+    protected LocationListener locationListener;
+
+    private double latitude, longitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +81,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 return false;
             }
         });
-
 
         MaskEditTextChangedListener maskCPF = new MaskEditTextChangedListener("###.###.###-##", mCpfView);
         mCpfView.addTextChangedListener(maskCPF);
@@ -93,10 +105,62 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.ACCESS_COARSE_LOCATION },
+                    PERMISSION_ACCESS_COARSE_LOCATION);
+        }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+        }
+    }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_ACCESS_COARSE_LOCATION:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                            == PackageManager.PERMISSION_GRANTED) {
+                        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+                        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+                    }
+                } else {
+                    Toast.makeText(this, "Need your location!", Toast.LENGTH_SHORT).show();
+                }
 
+                break;
+        }
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        latitude = location.getLatitude();
+        longitude = location.getLongitude();
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+        Log.d("Latitude","disable");
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+        Log.d("Latitude","enable");
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+        Log.d("Latitude","status");
+    }
 
     /**
      * Attempts to sign in or register the account specified by the login form.
@@ -117,7 +181,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+        if (TextUtils.isEmpty(password) || !isPasswordValid(password)) {
             mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
             cancel = true;
@@ -128,11 +192,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mCpfView.setError(getString(R.string.error_field_required));
             focusView = mCpfView;
             cancel = true;
-        }// else if (!CPFValidation.isCPF(cpf.replaceAll(".", "").replaceAll("-", ""))) {
-           // mCpfView.setError(getString(R.string.error_invalid_cpf));
-            //focusView = mCpfView;
-            //cancel = true;
-       // }
+        } else if (!ValidationsForms.isCPF(cpf.replace(".", "").replace("-", ""))) {
+            mCpfView.setError(getString(R.string.error_invalid_cpf));
+            focusView = mCpfView;
+            cancel = true;
+       }
 
         if (cancel) {
             // There was an error; don't attempt login and focus the first
@@ -141,9 +205,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-//            showProgress(true);
+            showProgress(true);
 
-            new LoginController(this).login(mCpfView.getText().toString(), mPasswordView.getText().toString());
+            new LoginController(this).login();
+
+
         }
     }
 
@@ -157,7 +223,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * Shows the progress UI and hides the login form.
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-    private void showProgress(final boolean show) {
+    public void showProgress(final boolean show) {
         // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
         // for very easy animations. If available, use these APIs to fade-in
         // the progress spinner.
@@ -233,5 +299,36 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         int IS_PRIMARY = 1;
     }
 
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public EditText getmCpfView() {
+        return mCpfView;
+    }
+
+    public void setmCpfView(EditText mCpfView) {
+        this.mCpfView = mCpfView;
+    }
+
+    public EditText getmPasswordView() {
+        return mPasswordView;
+    }
+
+    public void setmPasswordView(EditText mPasswordView) {
+        this.mPasswordView = mPasswordView;
+    }
 }
 

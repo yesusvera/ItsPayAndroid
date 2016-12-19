@@ -10,10 +10,18 @@
     android:paddingLeft="0dp"
     android:paddingRight="0dp"
     android:paddingTop="0dp"
-    tools:context="itspay.br.com.itspay.itspay.br.com.activity.LoginActivity">
+    tools:context="itspay.br.com.activity.LoginActivity">
 
     <!-- Login progress -->
 
+    <ProgressBar
+        android:id="@+id/login_progress"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_marginBottom="8dp"
+        android:visibility="gone" />
 
     <ScrollView
         android:id="@+id/login_form"
@@ -42,13 +50,7 @@
                 android:layout_marginTop="20dp"
                 app:srcCompat="@drawable/financial_logo" />
 
-            <ProgressBar
-                android:id="@+id/login_progress"
-                style="?android:attr/progressBarStyleLarge"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:visibility="gone" />
+
 
             <LinearLayout
                 android:id="@+id/email_login_form"

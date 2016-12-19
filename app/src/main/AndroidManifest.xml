@@ -6,9 +6,11 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.BLUETOOTH"/>
-    <uses-permission android:name="android.permission.SET_DEBUG_APP"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.SET_DEBUG_APP" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -32,7 +34,11 @@
             android:theme="@style/TemaFormularios" />
         <activity
             android:name="itspay.br.com.activity.TermosDeUsoActivity"
-            android:theme="@style/TemaFormularios"></activity>
+            android:theme="@style/TemaFormularios" />
+        <activity
+            android:name="itspay.br.com.activity.MeusCartoesActivity"
+            android:label="@string/title_activity_meus_cartoes"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

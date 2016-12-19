@@ -7,10 +7,11 @@ import java.util.regex.Pattern;
  * Created by yesus on 16/12/16.
  */
 
-public class CPFValidation {
+public class ValidationsForms {
     public static boolean isCPF(String CPF) {
 
-    CPF = CPF.replaceAll(Pattern.quote("."), "").replaceAll("-", "");
+
+    CPF = CPF.replace(".", "").replace("-", "");
 
 // considera-se erro CPF's formados por uma sequencia de numeros iguais
         if (CPF.equals("00000000000") || CPF.equals("11111111111") ||
@@ -66,4 +67,15 @@ public class CPFValidation {
         }
     }
 
+    public static boolean isEmail(String email){
+        if(email==null || email.length() < 3){
+            return false;
+        }
+
+        if(email.indexOf("@") == -1){
+            return false;
+        }
+
+        return true;
+    }
 }

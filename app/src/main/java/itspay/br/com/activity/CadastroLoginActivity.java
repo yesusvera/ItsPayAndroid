@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import io.card.payment.CardIOActivity;
 import io.card.payment.CreditCard;
+import itspay.br.com.controller.CadastroLoginController;
 import itspay.br.com.itspay.R;
 import itspay.br.com.util.mask.MaskEditTextChangedListener;
 
@@ -27,6 +28,7 @@ public class CadastroLoginActivity extends AppCompatActivity {
     private EditText cpf;
     private EditText email;
     private EditText senha;
+    private EditText confirmacaoSenha;
 
     private TextView txtViewTermosDeUso;
 
@@ -50,6 +52,7 @@ public class CadastroLoginActivity extends AppCompatActivity {
         cpf = (EditText)findViewById(R.id.cpf);
         email = (EditText)findViewById(R.id.email);
         senha = (EditText)findViewById(R.id.senha);
+        confirmacaoSenha = (EditText)findViewById(R.id.confirmacaoSenha);
         termosDeUso = (CheckBox)findViewById(R.id.checkTermosDeUso);
         criarLogin = (Button)findViewById(R.id.buttonCriarLogin);
         txtViewTermosDeUso = (TextView) findViewById(R.id.txtViewTermosDeUso);
@@ -63,19 +66,7 @@ public class CadastroLoginActivity extends AppCompatActivity {
         criarLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!termosDeUso.isChecked()){
-                    AlertDialog.Builder builder = new AlertDialog.Builder(CadastroLoginActivity.this);
-                    builder.setMessage("Você precisa concordar com os termos de uso e políticas de privacidade.")
-                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    termosDeUso.requestFocus();
-                                }
-                            });
-
-                    builder.create().show();
-
-                }
+                new CadastroLoginController(CadastroLoginActivity.this).criarLogin();
             }
         });
 
@@ -151,5 +142,61 @@ public class CadastroLoginActivity extends AppCompatActivity {
         }
 
 
+    }
+
+    public EditText getNumeroCartao() {
+        return numeroCartao;
+    }
+
+    public void setNumeroCartao(EditText numeroCartao) {
+        this.numeroCartao = numeroCartao;
+    }
+
+    public EditText getDataNascimento() {
+        return dataNascimento;
+    }
+
+    public void setDataNascimento(EditText dataNascimento) {
+        this.dataNascimento = dataNascimento;
+    }
+
+    public EditText getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(EditText cpf) {
+        this.cpf = cpf;
+    }
+
+    public EditText getEmail() {
+        return email;
+    }
+
+    public void setEmail(EditText email) {
+        this.email = email;
+    }
+
+    public EditText getSenha() {
+        return senha;
+    }
+
+    public void setSenha(EditText senha) {
+        this.senha = senha;
+    }
+
+    public CheckBox getTermosDeUso() {
+        return termosDeUso;
+    }
+
+    public void setTermosDeUso(CheckBox termosDeUso) {
+        this.termosDeUso = termosDeUso;
+    }
+
+    public EditText getConfirmacaoSenha() {
+        return confirmacaoSenha;
+    }
+
+    public void setConfirmacaoSenha(EditText confirmacaoSenha) {
+        this.confirmacaoSenha = confirmacaoSenha;
     }
 }

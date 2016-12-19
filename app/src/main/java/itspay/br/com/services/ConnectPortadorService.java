@@ -13,11 +13,16 @@ public abstract class ConnectPortadorService {
 
     public static PortadorService getService(){
         if(service==null){
+
+
+
             Retrofit retrofit = new Retrofit.Builder()
-//                    .baseUrl("http://ppp.sinergico.com.br:8080/issuer/")
-                    .baseUrl("http://tst.api.itspay.com.br/issuer/")
+                    .baseUrl("http://ppp.sinergico.com.br:8080/issuer/")
+//                    .baseUrl("http://tst.api.itspay.com.br/issuer/")
+//                    .client(client)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
+
             service = retrofit.create(PortadorService.class);
         }
         return service;
