@@ -7,6 +7,7 @@ import java.util.List;
 import itspay.br.com.activity.MeusCartoesActivity;
 import itspay.br.com.authentication.IdentityItsPay;
 import itspay.br.com.model.Credencial;
+import itspay.br.com.model.GetCredenciaisResponse;
 import itspay.br.com.services.ConnectPortadorService;
 import itspay.br.com.util.ItsPayConstants;
 import retrofit2.Call;
@@ -27,7 +28,7 @@ public class MeusCartoesController extends BaseActivityController<MeusCartoesAct
 
         IdentityItsPay identity = IdentityItsPay.getInstance();
 
-        Call<List<Credencial>> callListaCredencial
+        Call<GetCredenciaisResponse> callListaCredencial
                 =  ConnectPortadorService
                         .getService()
                         .listaCredenciais(
@@ -35,21 +36,20 @@ public class MeusCartoesController extends BaseActivityController<MeusCartoesAct
                                 ItsPayConstants.TIPO_PESSOA,
                                 ItsPayConstants.ID_PROCESSADORA,
                                 ItsPayConstants.ID_INSTITUICAO,
-                                identity.getLoginPortadorResponse().getToken(),
-                                identity.getSetCookie()
+                                identity.getLoginPortadorResponse().getToken()
                                         );
 
-        callListaCredencial.enqueue(new Callback<List<Credencial>>() {
+        callListaCredencial.enqueue(new Callback<GetCredenciaisResponse>() {
             @Override
-            public void onResponse(Call<List<Credencial>> call, Response<List<Credencial>> response) {
+            public void onResponse(Call<GetCredenciaisResponse> call, Response<GetCredenciaisResponse> response) {
                 if (response != null){
                     Log.i("teste", response.toString());
                 }
             }
 
             @Override
-            public void onFailure(Call<List<Credencial>> call, Throwable t) {
-
+            public void onFailure(Call<GetCredenciaisResponse> call, Throwable t) {
+                t.printStackTrace();
             }
         });
 

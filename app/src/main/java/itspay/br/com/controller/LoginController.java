@@ -58,7 +58,11 @@ public class LoginController extends BaseActivityController<LoginActivity>{
 
                    IdentityItsPay.getInstance().setLoginPortadorResponse(response.body());
                    IdentityItsPay.getInstance().setLoginPortador(fazerLoginPortador);
-                   IdentityItsPay.getInstance().setSetCookie(response.headers().get("Set-Cookie"));
+
+                   String setCookie = response.headers().get("Set-Cookie");
+//                   String JSESSIONID = extractJSESSSIONID(setCookie);
+
+                   IdentityItsPay.getInstance().setSetCookie(setCookie);
 
                    //redirecionando para meus cartões
                    Intent intent = new Intent(activity, MeusCartoesActivity.class);
@@ -98,5 +102,23 @@ public class LoginController extends BaseActivityController<LoginActivity>{
         String str = String.valueOf(coordenada);
         str = str.replace(".", "").replace(",", "");
         return Long.valueOf(str);
+    }
+
+    public String extractJSESSSIONID(String setCookie){
+        String jsessionid = "";
+        if(setCookie!=null){
+            if(setCookie.indexOf(";")>-1){
+                String[] headers = setCookie.split(";");
+
+                for(String header: headers){
+                    if(header.indexOf("JSESSIONID") > -1){
+                        jsessionid = header;
+                        jsessionid = jsessionid.replace("JSESSIONID=", "");
+                    }
+                }
+            }
+        }
+
+        return jsessionid;
     }
 }

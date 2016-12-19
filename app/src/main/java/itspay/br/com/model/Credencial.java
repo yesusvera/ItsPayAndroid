@@ -30,7 +30,7 @@ public class Credencial {
     private String nomeImpresso;
     private String nomeProduto;
     private String preparaDataSaldo;
-    private long saldo;
+    private double saldo;
     private long status;
     private long tipoConta;
     private String urlImagemProduto;
@@ -42,7 +42,7 @@ public class Credencial {
                       String descStatus, String email, long grupoStatus, long idConta,
                       long idCredencial, long idPessoa, long idPlastico, long idProduto,
                       long idProdutoPlataforma, long limiteDisponivel, String nomeImpresso, String nomeProduto,
-                      String preparaDataSaldo, long saldo, long status, long tipoConta, String urlImagemProduto) {
+                      String preparaDataSaldo, double saldo, long status, long tipoConta, String urlImagemProduto) {
         this.apelidoVirtual = apelidoVirtual;
         this.codigoSeguranca = codigoSeguranca;
         this.contaPagamento = contaPagamento;
@@ -274,11 +274,11 @@ public class Credencial {
         this.preparaDataSaldo = preparaDataSaldo;
     }
 
-    public long getSaldo() {
+    public double getSaldo() {
         return saldo;
     }
 
-    public void setSaldo(long saldo) {
+    public void setSaldo(double saldo) {
         this.saldo = saldo;
     }
 

@@ -6,6 +6,7 @@ import itspay.br.com.model.Credencial;
 import itspay.br.com.model.CriarLoginResponse;
 import itspay.br.com.model.FazerLoginPortador;
 import itspay.br.com.model.FazerLoginPortadorResponse;
+import itspay.br.com.model.GetCredenciaisResponse;
 import itspay.br.com.model.PortadorLogin;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -28,13 +29,12 @@ public interface PortadorService {
 
 
     @GET("api/portador/credencial/{documento}/pessoa/{tipoPessoa}/processadora/{idProc}/instituicao/{idInst}")
-    Call<List<Credencial>> listaCredenciais(
+    Call<GetCredenciaisResponse> listaCredenciais(
                                      @Path("documento") String documento,
                                      @Path("tipoPessoa") long tipoPessoa,
                                      @Path("idProc") long idProcessadora,
                                      @Path("idInst") long idInstituicao,
-                                     @Header("AuthorizationPortador") String token,
-                                     @Header("Set-Cookie") String setCookie
+                                     @Header("AuthorizationPortador") String token
                                      );
 
 }
