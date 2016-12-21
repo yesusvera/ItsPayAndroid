@@ -15,9 +15,9 @@
             android:icon="@android:drawable/ic_menu_info_details"
             android:title="Termos de Uso" />
         <item
-            android:id="@+id/nav_manage"
-            android:icon="@android:drawable/ic_menu_revert"
-            android:title="Sair" />
+            android:id="@+id/nav_marketplace"
+            android:icon="@drawable/cart"
+            android:title="Loja" />
     </group>
 
     <item android:title="Fale Conosco">
@@ -31,6 +31,12 @@
                 android:icon="@android:drawable/ic_menu_call"
                 android:title="Ouvidoria - (37) 35129797" />
         </menu>
+    </item>
+    <item android:title="Logout">
+        <item
+            android:id="@+id/nav_manage"
+            android:icon="@android:drawable/ic_menu_revert"
+            android:title="Sair" />
     </item>
 
 </menu>
