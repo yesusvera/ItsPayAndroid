@@ -4,32 +4,32 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
+            android:icon="@android:drawable/ic_dialog_email"
+            android:title="Trocar Email do Portador" />
         <item
             android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
+            android:icon="@android:drawable/ic_partial_secure"
+            android:title="Trocar Senha do Login" />
         <item
             android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
+            android:icon="@android:drawable/ic_menu_info_details"
+            android:title="Termos de Uso" />
         <item
             android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:icon="@android:drawable/ic_menu_revert"
+            android:title="Sair" />
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="Fale Conosco">
         <menu>
             <item
                 android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
+                android:icon="@android:drawable/ic_menu_call"
+                android:title="SAC - 0800 940 6020" />
             <item
                 android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:icon="@android:drawable/ic_menu_call"
+                android:title="Ouvidoria - (37) 35129797" />
         </menu>
     </item>
 

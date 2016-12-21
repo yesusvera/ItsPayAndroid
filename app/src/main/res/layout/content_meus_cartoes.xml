@@ -13,4 +13,13 @@
     tools:context="itspay.br.com.activity.MeusCartoesActivity"
     tools:showIn="@layout/app_bar_meus_cartoes">
 
+    <com.dexafree.materialList.view.MaterialListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/material_listview"/>
+
+    <!--<ImageView-->
+        <!--android:id="@+id/imageView"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="fill_parent"/>-->
 </RelativeLayout>

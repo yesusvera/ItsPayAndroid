@@ -38,9 +38,9 @@ public abstract class ConnectPortadorService {
             Retrofit retrofit = new Retrofit.Builder()
 //                    .baseUrl("http://ppp.sinergico.com.br:8080/issuer/")
 //                    .baseUrl("http://tst.api.itspay.com.br/issuer/")
-                    .client(client)
                     .baseUrl("http://tst.issuer.itspay.com.br/issuer/")
 //                    .client(client)
+                    .client(client)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
 

@@ -305,4 +305,39 @@ public class Credencial {
     public void setUrlImagemProduto(String urlImagemProduto) {
         this.urlImagemProduto = urlImagemProduto;
     }
+
+    @Override
+    public String toString() {
+        return "Credencial{" +
+                "apelidoVirtual='" + apelidoVirtual + '\'' +
+                ", codigoSeguranca='" + codigoSeguranca + '\'' +
+                ", contaPagamento='" + contaPagamento + '\'' +
+                ", credencialMascarada='" + credencialMascarada + '\'' +
+                ", credencialMascaradaReduzida='" + credencialMascaradaReduzida + '\'' +
+                ", credencialUltimosDigitos='" + credencialUltimosDigitos + '\'' +
+                ", credencialVirtual='" + credencialVirtual + '\'' +
+                ", dataHoraInclusao='" + dataHoraInclusao + '\'' +
+                ", dataSaldo='" + dataSaldo + '\'' +
+                ", dataValidade='" + dataValidade + '\'' +
+                ", dataValidadeFmt='" + dataValidadeFmt + '\'' +
+                ", descGrupoStatus='" + descGrupoStatus + '\'' +
+                ", descStatus='" + descStatus + '\'' +
+                ", email='" + email + '\'' +
+                ", grupoStatus=" + grupoStatus +
+                ", idConta=" + idConta +
+                ", idCredencial=" + idCredencial +
+                ", idPessoa=" + idPessoa +
+                ", idPlastico=" + idPlastico +
+                ", idProduto=" + idProduto +
+                ", idProdutoPlataforma=" + idProdutoPlataforma +
+                ", limiteDisponivel=" + limiteDisponivel +
+                ", nomeImpresso='" + nomeImpresso + '\'' +
+                ", nomeProduto='" + nomeProduto + '\'' +
+                ", preparaDataSaldo='" + preparaDataSaldo + '\'' +
+                ", saldo=" + saldo +
+                ", status=" + status +
+                ", tipoConta=" + tipoConta +
+                ", urlImagemProduto='" + urlImagemProduto + '\'' +
+                '}';
+    }
 }

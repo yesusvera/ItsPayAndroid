@@ -43,6 +43,8 @@ public class MeusCartoesController extends BaseActivityController<MeusCartoesAct
             @Override
             public void onResponse(Call<GetCredenciaisResponse> call, Response<GetCredenciaisResponse> response) {
                 if (response != null){
+                    activity.setCredenciais(response.body().getCredenciais());
+                    activity.configurarCartoes();
                     Log.i("teste", response.toString());
                 }
             }
