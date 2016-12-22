@@ -1,12 +1,18 @@
 package itspay.br.com.activity;
 
+import android.Manifest;
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -16,7 +22,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.dexafree.materialList.card.Card;
@@ -24,7 +29,6 @@ import com.dexafree.materialList.card.CardProvider;
 import com.dexafree.materialList.listeners.OnDismissCallback;
 import com.dexafree.materialList.listeners.RecyclerItemClickListener;
 import com.dexafree.materialList.view.MaterialListView;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +43,7 @@ public class MeusCartoesActivity extends AppCompatActivity
 
     private MaterialListView mListView;
     private Credencial credenciais[];
+    private MeusCartoesController meusCartoesController = new MeusCartoesController(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,9 +70,8 @@ public class MeusCartoesActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        new MeusCartoesController(this).listarCredenciais();
+        meusCartoesController.listarCredenciais();
 
-//        configurarCartoes();
     }
 
     public void configurarCartoes(){
@@ -166,18 +170,27 @@ public class MeusCartoesActivity extends AppCompatActivity
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
+    @TargetApi(Build.VERSION_CODES.M)
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.nav_email_portador) {
-            // Handle the camera action
+
         } else if (id == R.id.nav_trocar_senha) {
             Intent intent = new Intent(MeusCartoesActivity.this, TermosDeUsoActivity.class);
             startActivity(intent);
         }  else if (id == R.id.nav_marketplace) {
 
-        } 
+        } else if(id == R.id.nav_call_sac){
+            meusCartoesController.ligar("08009406020");
+        } else if(id == R.id.nav_call_ouvidoria){
+            meusCartoesController.ligar("35129797");
+        } else if(id == R.id.nav_email_fale_conosco){
+            meusCartoesController.enviarEmail("sac@financialcartoes.com.br", "", "","");
+        }
+
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

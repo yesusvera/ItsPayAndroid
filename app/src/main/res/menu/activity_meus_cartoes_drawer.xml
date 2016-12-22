@@ -20,23 +20,33 @@
             android:title="Loja" />
     </group>
 
+
     <item android:title="Fale Conosco">
         <menu>
             <item
-                android:id="@+id/nav_share"
+                android:id="@+id/nav_call_sac"
                 android:icon="@android:drawable/ic_menu_call"
                 android:title="SAC - 0800 940 6020" />
             <item
-                android:id="@+id/nav_send"
+                android:id="@+id/nav_call_ouvidoria"
                 android:icon="@android:drawable/ic_menu_call"
                 android:title="Ouvidoria - (37) 35129797" />
+            <item
+                android:id="@+id/nav_email_fale_conosco"
+                android:icon="@android:drawable/ic_dialog_email"
+                android:title="Email" />
         </menu>
     </item>
+
+
     <item android:title="Logout">
+        <menu>
         <item
-            android:id="@+id/nav_manage"
+            android:id="@+id/nav_logout"
             android:icon="@android:drawable/ic_menu_revert"
             android:title="Sair" />
+        </menu>
     </item>
+
 
 </menu>

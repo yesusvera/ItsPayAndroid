@@ -1,5 +1,10 @@
 package itspay.br.com.controller;
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 
 import java.util.List;
@@ -55,6 +60,24 @@ public class MeusCartoesController extends BaseActivityController<MeusCartoesAct
             }
         });
 
+    }
+
+    public void ligar(String numero){
+        if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
+            String uri = "tel:" + numero;
+            Intent intent = new Intent(Intent.ACTION_CALL);
+            intent.setData(Uri.parse(uri));
+            activity.startActivity(intent);
+        }
+    }
+
+    public void enviarEmail(String address, String subject, String text, String title){
+        Intent email = new Intent(Intent.ACTION_SEND);
+        email.putExtra(Intent.EXTRA_EMAIL, new String[]{address});
+        email.putExtra(Intent.EXTRA_SUBJECT, subject);
+        email.putExtra(Intent.EXTRA_TEXT, text);
+        email.setType("message/rfc822");
+        activity.startActivity(Intent.createChooser(email, title));
     }
 
 }
