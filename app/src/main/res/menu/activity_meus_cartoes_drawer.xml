@@ -3,23 +3,29 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_email_portador"
-            android:icon="@android:drawable/ic_dialog_email"
-            android:title="Trocar Email do Portador" />
-        <item
-            android:id="@+id/nav_trocar_senha"
-            android:icon="@android:drawable/ic_partial_secure"
-            android:title="Trocar Senha do Login" />
+            android:id="@+id/nav_marketplace"
+            android:icon="@drawable/cart"
+            android:title="Loja" />
         <item
             android:id="@+id/nav_termos_de_uso"
             android:icon="@android:drawable/ic_menu_info_details"
             android:title="Termos de Uso"/>
-        <item
-            android:id="@+id/nav_marketplace"
-            android:icon="@drawable/cart"
-            android:title="Loja" />
+
     </group>
 
+
+    <item android:title="Ajustes Gerais">
+        <menu>
+            <item
+                android:id="@+id/nav_email_portador"
+                android:icon="@android:drawable/ic_dialog_email"
+                android:title="Trocar Email do Portador" />
+            <item
+                android:id="@+id/nav_trocar_senha"
+                android:icon="@android:drawable/ic_partial_secure"
+                android:title="Trocar Senha do Login" />
+        </menu>
+    </item>
 
     <item android:title="Fale Conosco">
         <menu>
@@ -37,6 +43,7 @@
                 android:title="Email" />
         </menu>
     </item>
+
 
 
     <item android:title="Logout">

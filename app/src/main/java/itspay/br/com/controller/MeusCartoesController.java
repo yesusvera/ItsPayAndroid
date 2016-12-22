@@ -1,6 +1,8 @@
 package itspay.br.com.controller;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -59,25 +61,45 @@ public class MeusCartoesController extends BaseActivityController<MeusCartoesAct
                 t.printStackTrace();
             }
         });
-
     }
 
-    public void ligar(String numero){
-        if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
-            String uri = "tel:" + numero;
-            Intent intent = new Intent(Intent.ACTION_CALL);
-            intent.setData(Uri.parse(uri));
-            activity.startActivity(intent);
-        }
+    public void ligar(final String numero){
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setCancelable(false).setTitle("ItsPay").setMessage("Deseja realmente ligar para " + numero + "?")
+                .setPositiveButton("Ligar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
+                            String uri = "tel:" + numero;
+                            Intent intent = new Intent(Intent.ACTION_CALL);
+                            intent.setData(Uri.parse(uri));
+                            activity.startActivity(intent);
+                        }
+                    }
+                })
+                .setNegativeButton("Cancelar", null)
+                .setCancelable(true);
+        builder.create().show();
     }
 
-    public void enviarEmail(String address, String subject, String text, String title){
-        Intent email = new Intent(Intent.ACTION_SEND);
-        email.putExtra(Intent.EXTRA_EMAIL, new String[]{address});
-        email.putExtra(Intent.EXTRA_SUBJECT, subject);
-        email.putExtra(Intent.EXTRA_TEXT, text);
-        email.setType("message/rfc822");
-        activity.startActivity(Intent.createChooser(email, title));
+    public void enviarEmail(final String address, final String subject, final String text, final String title){
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setCancelable(false).setTitle("ItsPay").setMessage("Deseja realmente mandar um email para " + address)
+                .setPositiveButton("Ligar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent email = new Intent(Intent.ACTION_SEND);
+                        email.putExtra(Intent.EXTRA_EMAIL, new String[]{address});
+                        email.putExtra(Intent.EXTRA_SUBJECT, subject);
+                        email.putExtra(Intent.EXTRA_TEXT, text);
+                        email.setType("message/rfc822");
+                        activity.startActivity(Intent.createChooser(email, title));
+                    }
+                })
+                .setNegativeButton("Cancelar", null)
+                .setCancelable(true);
+        builder.create().show();
+
     }
 
 }
