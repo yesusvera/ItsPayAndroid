@@ -9,6 +9,9 @@
 
     <string name="action_sign_in">Login</string>
     <string name="action_sign_in_short">Sign in</string>
+
+    <string name="action_trocar_email">Trocar Email</string>
+    <string name="action_trocar_senha">Trocar Senha</string>
     <string name="error_invalid_email">Este endereço de email é inválido.</string>
     <string name="error_data_nascimento_invalida">Data de nascimento inválida.</string>
     <string name="error_invalid_cpf">Este cpf é inválido</string>
@@ -22,6 +25,7 @@
         completions."
     </string>
     <string name="prompt_cpf">CPF</string>
+    <string name="prompt_novo_email">Novo Email</string>
     <string name="prompt_numero_cartao">Número do Cartão</string>
     <string name="prompt_data_nascimento">Data de Nascimento</string>
     <string name="prompt_confirmar_senha">Confirmar Senha</string>
@@ -116,9 +120,17 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings_trocar_email_portador">Trocar Email do Portador</string>
+    <string name="action_settings_trocar_senha_login">Trocar Senha do Login</string>
+    <string name="action_settings_logout">Sair</string>
     <string name="title_activity_meus_cartoes">Meus Cartões</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="title_activity_trocar_email">TrocarEmailActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <string name="title_activity_trocar_senha">TrocarSenhaActivity</string>
 </resources>

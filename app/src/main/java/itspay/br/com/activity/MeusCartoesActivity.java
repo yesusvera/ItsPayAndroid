@@ -161,7 +161,16 @@ public class MeusCartoesActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_settings_trocar_email_portador) {
+            meusCartoesController.abrirTrocarEmail();
+            return true;
+        }
+        if (id == R.id.action_settings_trocar_senha_login) {
+            meusCartoesController.abrirTrocarSenha();
+            return true;
+        }
+        if (id == R.id.action_settings_logout) {
+            meusCartoesController.logout();
             return true;
         }
 
@@ -175,12 +184,14 @@ public class MeusCartoesActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_email_portador) {
-
+        if (id == R.id.nav_trocar_email_portador) {
+            meusCartoesController.abrirTrocarEmail();
         } else if (id == R.id.nav_trocar_senha) {
+            meusCartoesController.abrirTrocarSenha();
+        } else if (id == R.id.nav_termos_de_uso) {
             Intent intent = new Intent(MeusCartoesActivity.this, TermosDeUsoActivity.class);
             startActivity(intent);
-        }  else if (id == R.id.nav_marketplace) {
+        } else if (id == R.id.nav_marketplace) {
 
         } else if(id == R.id.nav_call_sac){
             meusCartoesController.ligar("08009406020");
@@ -188,6 +199,8 @@ public class MeusCartoesActivity extends AppCompatActivity
             meusCartoesController.ligar("35129797");
         } else if(id == R.id.nav_email_fale_conosco){
             meusCartoesController.enviarEmail("sac@financialcartoes.com.br", "", "","");
+        } else if(id == R.id.nav_logout){
+            meusCartoesController.logout();
         }
 
 

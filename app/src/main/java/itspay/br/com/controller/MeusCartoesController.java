@@ -9,14 +9,14 @@ import android.net.Uri;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 
-import java.util.List;
-
 import itspay.br.com.activity.MeusCartoesActivity;
+import itspay.br.com.activity.TrocarEmailActivity;
+import itspay.br.com.activity.TrocarSenhaActivity;
 import itspay.br.com.authentication.IdentityItsPay;
-import itspay.br.com.model.Credencial;
 import itspay.br.com.model.GetCredenciaisResponse;
 import itspay.br.com.services.ConnectPortadorService;
 import itspay.br.com.util.ItsPayConstants;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -100,6 +100,32 @@ public class MeusCartoesController extends BaseActivityController<MeusCartoesAct
                 .setCancelable(true);
         builder.create().show();
 
+    }
+
+    public void logout(){
+        Call<ResponseBody> callLogout = ConnectPortadorService.getService().logout();
+
+        callLogout.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                activity.finish();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                activity.finish();
+            }
+        });
+    }
+
+    public void abrirTrocarEmail(){
+        Intent trocarEmailIntent = new Intent(activity, TrocarEmailActivity.class);
+        activity.startActivity(trocarEmailIntent);
+    }
+
+    public void abrirTrocarSenha(){
+        Intent trocarSenhaIntent = new Intent(activity, TrocarSenhaActivity.class);
+        activity.startActivity(trocarSenhaIntent);
     }
 
 }

@@ -2,17 +2,22 @@ package itspay.br.com.services;
 
 import java.util.List;
 
+import itspay.br.com.model.BuscarEmailResponse;
 import itspay.br.com.model.Credencial;
 import itspay.br.com.model.CriarLoginResponse;
 import itspay.br.com.model.FazerLoginPortador;
 import itspay.br.com.model.FazerLoginPortadorResponse;
 import itspay.br.com.model.GetCredenciaisResponse;
 import itspay.br.com.model.PortadorLogin;
+import itspay.br.com.model.TrocarEmail;
+import itspay.br.com.model.TrocarSenhaPortador;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 /**
@@ -28,13 +33,28 @@ public interface PortadorService {
     Call<CriarLoginResponse> criarLogin(@Body PortadorLogin portadorLogin);
 
 
-    @GET("api/portador/credencial/{documento}/pessoa/{tipoPessoa}/processadora/{idProc}/instituicao/{idInst}")
+    @GET("api/portador/credencial/{documento}/pessoa/{tipoPessoa}/processadora/{idProcessadora}/instituicao/{idInstituicao}")
     Call<GetCredenciaisResponse> listaCredenciais(
                                      @Path("documento") String documento,
                                      @Path("tipoPessoa") long tipoPessoa,
-                                     @Path("idProc") long idProcessadora,
-                                     @Path("idInst") long idInstituicao,
+                                     @Path("idProcessadora") long idProcessadora,
+                                     @Path("idInstituicao") long idInstituicao,
                                      @Header("AuthorizationPortador") String token
                                      );
 
+    @GET("api/portador/login/logout")
+    Call<ResponseBody> logout();
+
+    @PUT("api/portador/login/trocar-email")
+    Call<ResponseBody> trocarEmail(@Body TrocarEmail trocarEmail,  @Header("AuthorizationPortador") String token);
+
+
+    @PUT("api/portador/login/trocar-senha")
+    Call<ResponseBody> trocarSenha(@Body TrocarSenhaPortador trocarSenhaPortador, @Header("AuthorizationPortador") String token);
+
+    @GET("api/portador/login/{idProcessadora}/{idInstituicao}/buscar-email/{documento}")
+    Call<BuscarEmailResponse> buscarEmail(@Path("idProcessadora") long idProcessadora,
+                                          @Path("idInstituicao") long idInstituicao,
+                                          @Path("documento") String documento,
+                                          @Header("AuthorizationPortador") String token);
 }

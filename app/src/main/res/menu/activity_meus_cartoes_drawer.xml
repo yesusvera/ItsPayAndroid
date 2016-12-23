@@ -17,13 +17,13 @@
     <item android:title="Ajustes Gerais">
         <menu>
             <item
-                android:id="@+id/nav_email_portador"
+                android:id="@+id/nav_trocar_email_portador"
                 android:icon="@android:drawable/ic_dialog_email"
-                android:title="Trocar Email do Portador" />
+                android:title="@string/action_settings_trocar_email_portador" />
             <item
                 android:id="@+id/nav_trocar_senha"
                 android:icon="@android:drawable/ic_partial_secure"
-                android:title="Trocar Senha do Login" />
+                android:title="@string/action_settings_trocar_senha_login" />
         </menu>
     </item>
 
@@ -46,12 +46,12 @@
 
 
 
-    <item android:title="Logout">
+    <item android:title="">
         <menu>
         <item
             android:id="@+id/nav_logout"
             android:icon="@android:drawable/ic_menu_revert"
-            android:title="Sair" />
+            android:title="@string/action_settings_logout" />
         </menu>
     </item>
 

@@ -2,8 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_settings_trocar_email_portador"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="@string/action_settings_trocar_email_portador"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_settings_trocar_senha_login"
+        android:orderInCategory="100"
+        android:title="@string/action_settings_trocar_senha_login"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_settings_logout"
+        android:orderInCategory="100"
+        android:title="@string/action_settings_logout"
         app:showAsAction="never" />
 </menu>
