@@ -103,19 +103,31 @@ public class MeusCartoesController extends BaseActivityController<MeusCartoesAct
     }
 
     public void logout(){
-        Call<ResponseBody> callLogout = ConnectPortadorService.getService().logout();
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setCancelable(false).setTitle("ItsPay").setMessage("Tem certeza que deseja sair?")
+                .setPositiveButton("Sair", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
 
-        callLogout.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                activity.finish();
-            }
+                        Call<ResponseBody> callLogout = ConnectPortadorService.getService().logout();
 
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                activity.finish();
-            }
-        });
+                        callLogout.enqueue(new Callback<ResponseBody>() {
+                            @Override
+                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                activity.finish();
+                            }
+
+                            @Override
+                            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                activity.finish();
+                            }
+                        });
+                    }
+                })
+                .setNegativeButton("Não", null)
+                .setCancelable(true);
+        builder.create().show();
+
     }
 
     public void abrirTrocarEmail(){

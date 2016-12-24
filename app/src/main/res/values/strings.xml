@@ -133,4 +133,5 @@
     <string name="dummy_content">DUMMY\nCONTENT</string>
 
     <string name="title_activity_trocar_senha">TrocarSenhaActivity</string>
+    <string name="title_activity_cartao">Cartão</string>
 </resources>

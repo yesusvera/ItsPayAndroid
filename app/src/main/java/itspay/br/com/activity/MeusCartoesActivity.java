@@ -1,20 +1,17 @@
 package itspay.br.com.activity;
 
-import android.Manifest;
 import android.annotation.TargetApi;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -22,11 +19,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.dexafree.materialList.card.Card;
 import com.dexafree.materialList.card.CardProvider;
-import com.dexafree.materialList.listeners.OnDismissCallback;
 import com.dexafree.materialList.listeners.RecyclerItemClickListener;
 import com.dexafree.materialList.view.MaterialListView;
 
@@ -36,7 +31,7 @@ import java.util.List;
 import itspay.br.com.controller.MeusCartoesController;
 import itspay.br.com.itspay.R;
 import itspay.br.com.model.Credencial;
-import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
+import jp.wasabeef.recyclerview.animators.SlideInDownAnimator;
 
 public class MeusCartoesActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -44,6 +39,7 @@ public class MeusCartoesActivity extends AppCompatActivity
     private MaterialListView mListView;
     private Credencial credenciais[];
     private MeusCartoesController meusCartoesController = new MeusCartoesController(this);
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,31 +66,18 @@ public class MeusCartoesActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        meusCartoesController.listarCredenciais();
 
-    }
-
-    public void configurarCartoes(){
-        // Bind the MaterialListView to a variable
         mListView = (MaterialListView) findViewById(R.id.material_listview);
-        mListView.setItemAnimator(new SlideInLeftAnimator());
-        mListView.getItemAnimator().setAddDuration(300);
-        mListView.getItemAnimator().setRemoveDuration(300);
-
-        // Set the dismiss listener
-        mListView.setOnDismissCallback(new OnDismissCallback() {
-            @Override
-            public void onDismiss(@NonNull Card card, int position) {
-                // Show a toast
-                Toast.makeText(MeusCartoesActivity.this, "You have dismissed a " + card.getTag(), Toast.LENGTH_SHORT).show();
-            }
-        });
 
         // Add the ItemTouchListener
         mListView.addOnItemTouchListener(new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(@NonNull Card card, int position) {
                 Log.d("CARD_TYPE", "" + card.getTag());
+                CartaoActivity.cartaoDetalhe = card;
+                CartaoActivity.credencialDetalhe = credenciais[position];
+                Intent intent = new Intent(MeusCartoesActivity.this, CartaoActivity.class);
+                MeusCartoesActivity.this.startActivity(intent);
             }
 
             @Override
@@ -103,7 +86,40 @@ public class MeusCartoesActivity extends AppCompatActivity
             }
         });
 
+        swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipeRefreshCredenciais);
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mListView.getAdapter().clearAll();
+                meusCartoesController.listarCredenciais();
+            }
+        });
+
+        swipeRefreshLayout.setRefreshing(true);
+        meusCartoesController.listarCredenciais();
+
+    }
+
+    public void configurarCartoes(){
+
+        mListView.setItemAnimator(new SlideInDownAnimator());
+        mListView.getItemAnimator().setAddDuration(300);
+        mListView.getItemAnimator().setRemoveDuration(300);
+
+//        // Set the dismiss listener
+//        mListView.setOnDismissCallback(new OnDismissCallback() {
+//            @Override
+//            public void onDismiss(@NonNull Card card, int position) {
+//                // Show a toast
+//                Toast.makeText(MeusCartoesActivity.this, "You have dismissed a " + card.getTag(), Toast.LENGTH_SHORT).show();
+//            }
+//        });
+
+
         adicionarCartoes();
+
+        swipeRefreshLayout.setRefreshing(false);
     }
 
     private void adicionarCartoes() {
@@ -114,13 +130,13 @@ public class MeusCartoesActivity extends AppCompatActivity
         mListView.getAdapter().addAll(cards);
     }
 
+
     public Card newCard(String credencialMascarada, String nomeProduto, String saldo) {
         String title = credencialMascarada;
         String description = "Saldo: R$"+ saldo;
 
         return new Card.Builder(this)
                 .setTag("SMALL_IMAGE_CARD")
-                .setDismissible()
                 .withProvider(new CardProvider())
                 .setLayout(R.layout.material_itspay_card)
                 .setTitle(nomeProduto)
@@ -142,7 +158,8 @@ public class MeusCartoesActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+//            super.onBackPressed();
+            meusCartoesController.logout();
         }
     }
 
@@ -202,8 +219,6 @@ public class MeusCartoesActivity extends AppCompatActivity
         } else if(id == R.id.nav_logout){
             meusCartoesController.logout();
         }
-
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

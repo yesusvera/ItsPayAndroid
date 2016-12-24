@@ -41,12 +41,18 @@
             android:name="itspay.br.com.activity.MeusCartoesActivity"
             android:label="@string/title_activity_meus_cartoes"
             android:theme="@style/AppTheme" />
-        <activity android:name="itspay.br.com.activity.TrocarEmailActivity"
+        <activity
+            android:name="itspay.br.com.activity.TrocarEmailActivity"
             android:label="Trocar Email"
-            android:theme="@style/TemaFormularios"/>
-        <activity android:name="itspay.br.com.activity.TrocarSenhaActivity"
+            android:theme="@style/TemaFormularios" />
+        <activity
+            android:name="itspay.br.com.activity.TrocarSenhaActivity"
             android:label="Trocar Senha"
-            android:theme="@style/TemaFormularios"></activity>
+            android:theme="@style/TemaFormularios" />
+        <activity
+            android:name="itspay.br.com.activity.CartaoActivity"
+            android:label="@string/title_activity_cartao"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

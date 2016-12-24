@@ -5,6 +5,7 @@ import itspay.br.com.model.CriarLoginResponse;
 import itspay.br.com.model.FazerLoginPortador;
 import itspay.br.com.model.FazerLoginPortadorResponse;
 import itspay.br.com.model.GetCredenciaisResponse;
+import itspay.br.com.model.GetExtratoCredencial;
 import itspay.br.com.model.ItsPayResponse;
 import itspay.br.com.model.PortadorLogin;
 import itspay.br.com.model.TrocarEmail;
@@ -55,5 +56,11 @@ public interface PortadorService {
                                           @Path("idInstituicao") long idInstituicao,
                                           @Path("documento") String documento,
                                           @Header("AuthorizationPortador") String token);
+
+    //{periodo} - Valores aceitos 15, 30 ou 45.
+    @GET("api/portador/credencial/{idCredencial}/extrato/periodo/{periodo}")
+    Call<GetExtratoCredencial> extratoCredencial(@Path("idCredencial") long idCredencial,
+                                                 @Path("periodo") String periodo,
+                                                 @Header("AuthorizationPortador") String token);
 
 }
