@@ -3,20 +3,17 @@ package itspay.br.com.controller;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.IOException;
 
 import itspay.br.com.activity.TrocarEmailActivity;
 import itspay.br.com.authentication.IdentityItsPay;
 import itspay.br.com.itspay.R;
 import itspay.br.com.model.BuscarEmailResponse;
+import itspay.br.com.model.ItsPayResponse;
 import itspay.br.com.model.TrocarEmail;
 import itspay.br.com.services.ConnectPortadorService;
 import itspay.br.com.util.ItsPayConstants;
 import itspay.br.com.util.validations.ValidationsForms;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -24,7 +21,6 @@ import retrofit2.Response;
 /**
  * Created by yesus on 23/12/16.
  */
-
 public class TrocarEmailController extends BaseActivityController<TrocarEmailActivity> {
 
     public TrocarEmailController(TrocarEmailActivity activity) {
@@ -44,59 +40,44 @@ public class TrocarEmailController extends BaseActivityController<TrocarEmailAct
         trocarEmail.setDocumento(IdentityItsPay.getInstance().getLoginPortador().getCpf());
         trocarEmail.setEmail(activity.getTxtEmail().getText().toString());
 
-        Call<ResponseBody> callTrocarEmail =
+        Call<ItsPayResponse> callTrocarEmail =
                 ConnectPortadorService.getService().trocarEmail(
                         trocarEmail,
                         IdentityItsPay.getInstance().getToken());
 
-        callTrocarEmail.enqueue(new Callback<ResponseBody>() {
+        callTrocarEmail.enqueue(new Callback<ItsPayResponse>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                try {
-                    if (response.body() != null) {
-                        JSONObject jsonObject = new JSONObject(response.body().string());
-                        String msg = jsonObject.getString("msg");
-
+            public void onResponse(Call<ItsPayResponse> call, Response<ItsPayResponse> response) {
+                if (response.body() != null) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                    builder.setCancelable(false).setMessage(response.body().getMsg())
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    activity.finish();
+                                }
+                            });
+                    builder.create().show();
+                }else if (response.errorBody() != null){
+                    try {
                         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-                        builder.setCancelable(false).setMessage(msg)
-                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        activity.finish();
-                                    }
-                                });
+                        builder.setCancelable(false).setMessage(response.errorBody().string())
+                                .setPositiveButton("OK", null);
                         builder.create().show();
-                    } else if (response.errorBody() != null) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response.errorBody().string());
-                            String msg = jsonObject.getString("msg");
-
-                            AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-                            builder.setCancelable(false).setMessage(msg)
-                                    .setPositiveButton("OK", null);
-                            builder.create().show();
-                        } catch (IOException ex) {
-                            ex.printStackTrace();
-                        } catch (JSONException ex) {
-                            ex.printStackTrace();
-                        }
+                    }catch (IOException e){
+                        e.printStackTrace();
                     }
-                }catch (JSONException e){
-                    e.printStackTrace();
-                } catch (IOException e){
-                    e.printStackTrace();
                 }
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(Call<ItsPayResponse> call, Throwable t) {
                 t.printStackTrace();
             }
         });
     }
 
     public void buscarEmail(){
-
         Call<BuscarEmailResponse> call =
                 ConnectPortadorService
                                     .getService()
@@ -117,9 +98,8 @@ public class TrocarEmailController extends BaseActivityController<TrocarEmailAct
 
             @Override
             public void onFailure(Call<BuscarEmailResponse> call, Throwable t) {
+                t.printStackTrace();
             }
         });
     }
-
-
 }

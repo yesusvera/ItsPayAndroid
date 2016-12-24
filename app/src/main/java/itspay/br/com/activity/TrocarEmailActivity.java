@@ -1,31 +1,13 @@
 package itspay.br.com.activity;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-
-import itspay.br.com.authentication.IdentityItsPay;
 import itspay.br.com.controller.TrocarEmailController;
 import itspay.br.com.itspay.R;
-import itspay.br.com.model.TrocarEmail;
-import itspay.br.com.services.ConnectPortadorService;
-import itspay.br.com.util.ItsPayConstants;
-import itspay.br.com.util.Utils;
-import itspay.br.com.util.validations.ValidationsForms;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class TrocarEmailActivity extends AppCompatActivity {
 

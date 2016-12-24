@@ -85,7 +85,7 @@ public class MeusCartoesController extends BaseActivityController<MeusCartoesAct
     public void enviarEmail(final String address, final String subject, final String text, final String title){
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setCancelable(false).setTitle("ItsPay").setMessage("Deseja realmente mandar um email para " + address)
-                .setPositiveButton("Ligar", new DialogInterface.OnClickListener() {
+                .setPositiveButton("Enviar email", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Intent email = new Intent(Intent.ACTION_SEND);
