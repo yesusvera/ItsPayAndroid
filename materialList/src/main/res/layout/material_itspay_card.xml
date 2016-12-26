@@ -16,27 +16,71 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="165dp"
-            android:background="@drawable/card3">
+            android:id="@+id/cardItsPayLinearLayout"
+            android:background="@drawable/card3"
+            android:layout_height="165dp">
 
-            <include layout="@layout/headline_16dp"/>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView android:id="@+id/title"
+                    style="@style/Material_Card_Title"
+                    tools:text="Vale Alimentação"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:shadowColor="#1C1C1C"
+                    android:shadowDx="-5"
+                    android:shadowDy="-5"
+                    android:shadowRadius="2"
+                    android:elevation="20dp"
+                    android:textColor="@android:color/white"
+                    android:fontFamily="sans-serif" />
+
+                <TextView android:id="@+id/subtitle"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:paddingLeft="16dp"
+                    tools:text="4006-xxxx-xxxx-1448"
+                    android:shadowColor="#1C1C1C"
+                    android:shadowDx="-5"
+                    android:shadowDy="-5"
+                    android:shadowRadius="2"
+                    android:elevation="20dp"
+                    android:textColor="@android:color/white"
+                    android:textStyle="normal|bold" />
+
+                <TextView android:id="@+id/subtitle2"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:paddingLeft="16dp"
+                    tools:text="Saldo: R$0,00"
+                    android:shadowColor="#1C1C1C"
+                    android:shadowDx="-5"
+                    android:shadowDy="-5"
+                    android:shadowRadius="2"
+                    android:elevation="20dp"
+                    android:textColor="@android:color/white"
+                    android:textStyle="normal|bold" />
+            </LinearLayout>
 
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent">
 
-                <ImageView
-                    android:layout_width="134dp"
-                    android:layout_height="match_parent"
-                    android:id="@+id/image"
-                    android:visibility="gone"
-                    android:padding="@dimen/big_padding"
-                    android:contentDescription="@null"
-                    android:scaleType="fitCenter"
-                    android:adjustViewBounds="true"/>
-
-                <include layout="@layout/supporting_text_16dp"/>
+                <TextView
+                    style="@style/Material_Card_Supporting_Text_16dp"
+                    tools:text="CARLOS FAGUNDES"
+                    android:id="@+id/supportingText"
+                    android:textStyle="normal|bold"
+                    android:shadowColor="#1C1C1C"
+                    android:shadowDx="-5"
+                    android:shadowDy="-5"
+                    android:shadowRadius="2"
+                    android:elevation="20dp"
+                    android:textColor="@android:color/white" />
             </LinearLayout>
 
         </LinearLayout>

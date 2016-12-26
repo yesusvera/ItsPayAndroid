@@ -3,6 +3,7 @@ package itspay.br.com.activity;
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -28,10 +29,16 @@ import com.dexafree.materialList.view.MaterialListView;
 import java.util.ArrayList;
 import java.util.List;
 
+import itspay.br.com.authentication.IdentityItsPay;
 import itspay.br.com.controller.MeusCartoesController;
 import itspay.br.com.itspay.R;
 import itspay.br.com.model.Credencial;
+import itspay.br.com.services.ConnectPortadorService;
 import jp.wasabeef.recyclerview.animators.SlideInDownAnimator;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MeusCartoesActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -40,6 +47,7 @@ public class MeusCartoesActivity extends AppCompatActivity
     private Credencial credenciais[];
     private MeusCartoesController meusCartoesController = new MeusCartoesController(this);
     private SwipeRefreshLayout swipeRefreshLayout;
+    private int countConexaoServicoPlastico;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,45 +115,72 @@ public class MeusCartoesActivity extends AppCompatActivity
         mListView.getItemAnimator().setAddDuration(300);
         mListView.getItemAnimator().setRemoveDuration(300);
 
-//        // Set the dismiss listener
-//        mListView.setOnDismissCallback(new OnDismissCallback() {
-//            @Override
-//            public void onDismiss(@NonNull Card card, int position) {
-//                // Show a toast
-//                Toast.makeText(MeusCartoesActivity.this, "You have dismissed a " + card.getTag(), Toast.LENGTH_SHORT).show();
-//            }
-//        });
+        countConexaoServicoPlastico = credenciais.length;
+
+        for(final Credencial cred : credenciais){
+            Call<ResponseBody> call = ConnectPortadorService
+                                            .getService()
+                                            .abrirPlastico(
+                                                        cred.getIdPlastico(),
+                                                        IdentityItsPay.getInstance().getToken());
+
+            call.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    countConexaoServicoPlastico--;
+
+//                    Bitmap bitmap = BitmapFactory.decodeByteArray(response.body().bytes(), 0, response.body().bytes().length);
+//                    ImageView img = (ImageView) findViewById(R.id.imgv1);
+//                    img.setImageBitmap(bitmap);
+
+                    cred.setDrawable(new BitmapDrawable(response.body().byteStream()));
+
+                    if(countConexaoServicoPlastico==0){
+                        adicionarCartoes();
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    countConexaoServicoPlastico--;
+
+                    if(countConexaoServicoPlastico==0){
+                        adicionarCartoes();
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                }
+            });
+        }
 
 
-        adicionarCartoes();
-
-        swipeRefreshLayout.setRefreshing(false);
     }
 
     private void adicionarCartoes() {
         List<Card> cards = new ArrayList<>();
         for (Credencial cred: credenciais) {
-            cards.add(newCard(cred.getCredencialMascarada(),cred.getNomeProduto(), Double.toString(cred.getSaldo())));
+            cards.add(newCard(cred));
         }
         mListView.getAdapter().addAll(cards);
     }
 
 
-    public Card newCard(String credencialMascarada, String nomeProduto, String saldo) {
-        String title = credencialMascarada;
-        String description = "Saldo: R$"+ saldo;
+    public Card newCard(Credencial cred) {
+        String saldo = "Saldo: R$"+ cred.getSaldo();
 
         return new Card.Builder(this)
-                .setTag("SMALL_IMAGE_CARD")
+                .setTag("CARD_ITSPAY")
                 .withProvider(new CardProvider())
                 .setLayout(R.layout.material_itspay_card)
-                .setTitle(nomeProduto)
-                .setTitleColor(Color.WHITE)
-                .setSubtitle(credencialMascarada)
-                .setSubtitleColor(Color.CYAN)
-                .setDescription(description)
-                .setDescriptionColor(Color.YELLOW)
-                .setDrawable(R.drawable.card1)
+                .setTitle(cred.getNomeProduto())
+                .setTitleColor(Color.parseColor("#F5F5F5"))
+                .setSubtitle(cred.getCredencialMascarada())
+                .setSubtitle2(saldo)
+                .setSubtitleColor(Color.parseColor("#F5F5F5"))
+                .setDescription(cred.getNomeImpresso())
+                .setDescriptionColor(Color.parseColor("#F5F5F5"))
+//                .setDrawable(R.drawable.card1)
+                .setDrawable(cred.getDrawable())
                 .endConfig()
                 .build();
 

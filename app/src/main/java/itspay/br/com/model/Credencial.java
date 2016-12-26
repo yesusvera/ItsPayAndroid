@@ -1,5 +1,7 @@
 package itspay.br.com.model;
 
+import android.graphics.drawable.Drawable;
+
 /**
  * Created by yesus on 19/12/16.
  */
@@ -34,6 +36,7 @@ public class Credencial {
     private long status;
     private long tipoConta;
     private String urlImagemProduto;
+    transient private Drawable drawable;
 
     public Credencial(String apelidoVirtual, String codigoSeguranca, String contaPagamento,
                       String credencialMascarada, String credencialMascaradaReduzida, String credencialUltimosDigitos,
@@ -304,6 +307,14 @@ public class Credencial {
 
     public void setUrlImagemProduto(String urlImagemProduto) {
         this.urlImagemProduto = urlImagemProduto;
+    }
+
+    public Drawable getDrawable() {
+        return drawable;
+    }
+
+    public void setDrawable(Drawable drawable) {
+        this.drawable = drawable;
     }
 
     @Override

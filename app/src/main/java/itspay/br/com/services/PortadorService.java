@@ -63,4 +63,7 @@ public interface PortadorService {
                                                  @Path("periodo") String periodo,
                                                  @Header("AuthorizationPortador") String token);
 
+    @GET("api/plastico/abrir/mobile/{idPlastico}")
+    Call<ResponseBody> abrirPlastico(@Path("idPlastico") long idPlastico,
+                                     @Header("AuthorizationPortador") String token);
 }
