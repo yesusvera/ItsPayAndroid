@@ -65,6 +65,7 @@ public class LoginController extends BaseActivityController<LoginActivity>{
                    IdentityItsPay.getInstance().setSetCookie(setCookie);
 
                    //redirecionando para meus cartões
+                   MeusCartoesActivity.FORCE_LOGOUT = false;
                    Intent intent = new Intent(activity, MeusCartoesActivity.class);
                    activity.startActivity(intent);
 

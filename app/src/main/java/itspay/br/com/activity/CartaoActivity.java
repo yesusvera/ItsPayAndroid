@@ -1,9 +1,9 @@
 package itspay.br.com.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -16,6 +16,12 @@ import com.dexafree.materialList.card.CardProvider;
 import com.dexafree.materialList.card.OnActionClickListener;
 import com.dexafree.materialList.card.action.TextViewAction;
 import com.dexafree.materialList.view.MaterialListView;
+import com.nightonke.boommenu.BoomButtons.BoomButton;
+import com.nightonke.boommenu.BoomButtons.ButtonPlaceEnum;
+import com.nightonke.boommenu.BoomMenuButton;
+import com.nightonke.boommenu.ButtonEnum;
+import com.nightonke.boommenu.OnBoomListener;
+import com.nightonke.boommenu.Piece.PiecePlaceEnum;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -40,6 +46,7 @@ public class CartaoActivity extends AppCompatActivity {
     private CartaoController cartaoController = new CartaoController(this);
     private SwipeRefreshLayout swipeRefreshExtrato;
     private String periodo = "15";
+    private BoomMenuButton bmb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,15 +67,59 @@ public class CartaoActivity extends AppCompatActivity {
         host = (TabHost)findViewById(R.id.tabhost);
         host.setup();
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
+
+        bmb = (BoomMenuButton) findViewById(R.id.bmb);
+        assert bmb != null;
+        bmb.setButtonEnum(ButtonEnum.TextInsideCircle);
+        bmb.setPiecePlaceEnum(PiecePlaceEnum.DOT_6_1);
+        bmb.setButtonPlaceEnum(ButtonPlaceEnum.SC_6_1);
+        bmb.setNormalColor(Color.parseColor("#e82c36"));
+
+        for (int i = 0; i < bmb.getPiecePlaceEnum().pieceNumber(); i++)
+            bmb.addBuilder(BuilderManagerFloatingButton.getTextInsideCircleButtonBuilder());
+
+
+        bmb.setOnBoomListener(new OnBoomListener() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void onClicked(int index, BoomButton boomButton) {
+               if(index == 5){
+                   logout();
+               }
+            }
+
+            @Override
+            public void onBackgroundClick() {
+
+            }
+
+            @Override
+            public void onBoomWillHide() {
+
+            }
+
+            @Override
+            public void onBoomDidHide() {
+
+            }
+
+            @Override
+            public void onBoomWillShow() {
+
+            }
+
+            @Override
+            public void onBoomDidShow() {
+
             }
         });
-
         configureTabs();
 
         swipeRefreshExtrato = (SwipeRefreshLayout)findViewById(R.id.swipeRefreshExtrato);
@@ -209,4 +260,20 @@ public class CartaoActivity extends AppCompatActivity {
     public void setMaterial_listViewExtrato(MaterialListView material_listViewExtrato) {
         this.material_listViewExtrato = material_listViewExtrato;
     }
+
+    public void logout(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(false).setTitle("ItsPay").setMessage("Tem certeza que deseja sair?")
+                .setPositiveButton("Sair", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        MeusCartoesActivity.FORCE_LOGOUT = true;
+                        finish();
+                    }
+                })
+                .setNegativeButton("Não", null)
+                .setCancelable(true);
+        builder.create().show();
+    }
+
 }

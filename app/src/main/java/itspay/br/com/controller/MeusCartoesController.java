@@ -118,20 +118,7 @@ public class MeusCartoesController extends BaseActivityController<MeusCartoesAct
                 .setPositiveButton("Sair", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-
-                        Call<ResponseBody> callLogout = ConnectPortadorService.getService().logout();
-
-                        callLogout.enqueue(new Callback<ResponseBody>() {
-                            @Override
-                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                                activity.finish();
-                            }
-
-                            @Override
-                            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                                activity.finish();
-                            }
-                        });
+                        forceLogout();
                     }
                 })
                 .setNegativeButton("Não", null)
@@ -139,6 +126,29 @@ public class MeusCartoesController extends BaseActivityController<MeusCartoesAct
         builder.create().show();
 
     }
+
+    public void forceLogout(){
+        Call<ResponseBody> callLogout = ConnectPortadorService.getService().logout();
+
+        callLogout.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                IdentityItsPay.getInstance().clean();
+                activity.finish();
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                IdentityItsPay.getInstance().clean();
+                activity.finish();
+                IdentityItsPay.getInstance().clean();
+            }
+        });
+    }
+
+
+
 
     public void abrirTrocarEmail(){
         Intent trocarEmailIntent = new Intent(activity, TrocarEmailActivity.class);

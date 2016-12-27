@@ -31,6 +31,16 @@
     <string name="prompt_confirmar_senha">Confirmar Senha</string>
     <string name="title_activity_cadastro_login">Cadastro</string>
     <string name="title_activity_termos_de_uso">Termos de Uso</string>
+
+    <string name="str_icone_transferir">Transferir</string>
+    <string name="str_icone_inserir_carga">Inserir Carga</string>
+    <string name="str_icone_cartoes_virtuais">Cartões Virtuais</string>
+    <string name="str_icone_ajustes_seguranca">Ajustes de Segurança</string>
+    <string name="str_icone_tarifas">Tarifas</string>
+    <string name="str_icone_logout">Logout</string>
+
+    <string name="texto_icone">Logout</string>
+
     <string name="large_text">
         "Material is the metaphor.\n\n"
 

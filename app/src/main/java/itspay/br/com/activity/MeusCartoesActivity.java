@@ -48,6 +48,7 @@ public class MeusCartoesActivity extends AppCompatActivity
     private MeusCartoesController meusCartoesController = new MeusCartoesController(this);
     private SwipeRefreshLayout swipeRefreshLayout;
     private int countConexaoServicoPlastico;
+    public static boolean FORCE_LOGOUT = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,6 +108,11 @@ public class MeusCartoesActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
+
+        if(FORCE_LOGOUT){
+            meusCartoesController.forceLogout();
+        }
+
         meusCartoesController.listarCredenciais();
     }
 
@@ -176,7 +182,6 @@ public class MeusCartoesActivity extends AppCompatActivity
                 .setSubtitleColor(Color.parseColor("#F5F5F5"))
                 .setDescription(cred.getNomeImpresso())
                 .setDescriptionColor(Color.parseColor("#F5F5F5"))
-//                .setDrawable(R.drawable.card1)
                 .setDrawable(cred.getDrawable())
                 .endConfig()
                 .build();
