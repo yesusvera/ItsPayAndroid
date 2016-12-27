@@ -99,14 +99,15 @@ public class MeusCartoesActivity extends AppCompatActivity
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mListView.getAdapter().clearAll();
                 meusCartoesController.listarCredenciais();
             }
         });
+    }
 
-        swipeRefreshLayout.setRefreshing(true);
+    @Override
+    protected void onResume() {
+        super.onResume();
         meusCartoesController.listarCredenciais();
-
     }
 
     public void configurarCartoes(){
@@ -129,15 +130,12 @@ public class MeusCartoesActivity extends AppCompatActivity
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     countConexaoServicoPlastico--;
 
-//                    Bitmap bitmap = BitmapFactory.decodeByteArray(response.body().bytes(), 0, response.body().bytes().length);
-//                    ImageView img = (ImageView) findViewById(R.id.imgv1);
-//                    img.setImageBitmap(bitmap);
-
-                    cred.setDrawable(new BitmapDrawable(response.body().byteStream()));
+                    if(response.body()!=null && response.body().byteStream()!=null) {
+                        cred.setDrawable(new BitmapDrawable(response.body().byteStream()));
+                    }
 
                     if(countConexaoServicoPlastico==0){
                         adicionarCartoes();
-                        swipeRefreshLayout.setRefreshing(false);
                     }
                 }
 
@@ -147,7 +145,6 @@ public class MeusCartoesActivity extends AppCompatActivity
 
                     if(countConexaoServicoPlastico==0){
                         adicionarCartoes();
-                        swipeRefreshLayout.setRefreshing(false);
                     }
                 }
             });
@@ -266,5 +263,21 @@ public class MeusCartoesActivity extends AppCompatActivity
 
     public void setCredenciais(Credencial[] credenciais) {
         this.credenciais = credenciais;
+    }
+
+    public SwipeRefreshLayout getSwipeRefreshLayout() {
+        return swipeRefreshLayout;
+    }
+
+    public void setSwipeRefreshLayout(SwipeRefreshLayout swipeRefreshLayout) {
+        this.swipeRefreshLayout = swipeRefreshLayout;
+    }
+
+    public MaterialListView getmListView() {
+        return mListView;
+    }
+
+    public void setmListView(MaterialListView mListView) {
+        this.mListView = mListView;
     }
 }

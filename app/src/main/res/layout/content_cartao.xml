@@ -5,24 +5,27 @@
     android:id="@+id/content_cartao"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="15dp"
-    android:paddingRight="15dp"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="itspay.br.com.activity.CartaoActivity"
     tools:showIn="@layout/activity_cartao">
 
+
     <com.dexafree.materialList.view.MaterialListView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/material_listview"/>
+        android:id="@+id/material_listview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp" />
 
     <TabHost
         android:id="@+id/tabhost"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/material_listview"
+        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/material_listview">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -45,6 +48,7 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -64,6 +68,22 @@
                 </LinearLayout>
             </FrameLayout>
         </LinearLayout>
+
+
     </TabHost>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshExtrato"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tabhost">
+
+        <com.dexafree.materialList.view.MaterialListView
+            android:id="@+id/material_listViewExtrato"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
 
 </RelativeLayout>

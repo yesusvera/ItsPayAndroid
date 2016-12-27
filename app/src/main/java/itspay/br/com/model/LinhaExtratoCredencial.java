@@ -4,20 +4,20 @@ package itspay.br.com.model;
  * Created by yesus on 24/12/16.
  */
 
-public class GetExtratoCredencial {
+public class LinhaExtratoCredencial {
     private String dataTransacao;
     private String dataTransacaoFmt;
     private String dataTransacaoFmtMes;
     private String descLocal;
     private String descSeguimento;
-    private long valorTransacao;
+    private float valorTransacao;
     private long idTransacao;
     private long sinal;
 
-    public GetExtratoCredencial() {
+    public LinhaExtratoCredencial() {
     }
 
-    private GetExtratoCredencial(String dataTransacao, String dataTransacaoFmt, String dataTransacaoFmtMes, String descLocal, String descSeguimento, long valorTransacao, long idTransacao, long sinal){
+    private LinhaExtratoCredencial(String dataTransacao, String dataTransacaoFmt, String dataTransacaoFmtMes, String descLocal, String descSeguimento, float valorTransacao, long idTransacao, long sinal){
         this.dataTransacao = dataTransacao;
         this.dataTransacaoFmt = dataTransacaoFmt;
         this.dataTransacaoFmtMes = dataTransacaoFmtMes;
@@ -68,11 +68,11 @@ public class GetExtratoCredencial {
         this.descSeguimento = descSeguimento;
     }
 
-    public long getValorTransacao() {
+    public float getValorTransacao() {
         return valorTransacao;
     }
 
-    public void setValorTransacao(long valorTransacao) {
+    public void setValorTransacao(float valorTransacao) {
         this.valorTransacao = valorTransacao;
     }
 
@@ -94,7 +94,7 @@ public class GetExtratoCredencial {
 
     @Override
     public String toString() {
-        return "GetExtratoCredencial{" +
+        return "LinhaExtratoCredencial{" +
                 "dataTransacao='" + dataTransacao + '\'' +
                 ", dataTransacaoFmt='" + dataTransacaoFmt + '\'' +
                 ", dataTransacaoFmtMes='" + dataTransacaoFmtMes + '\'' +

@@ -33,6 +33,9 @@ public class MeusCartoesController extends BaseActivityController<MeusCartoesAct
 
     public void listarCredenciais(){
 
+        activity.getmListView().getAdapter().clearAll();
+        activity.getSwipeRefreshLayout().setRefreshing(true);
+
         IdentityItsPay identity = IdentityItsPay.getInstance();
 
         Call<GetCredenciaisResponse> callListaCredencial
@@ -50,15 +53,22 @@ public class MeusCartoesController extends BaseActivityController<MeusCartoesAct
             @Override
             public void onResponse(Call<GetCredenciaisResponse> call, Response<GetCredenciaisResponse> response) {
                 if (response != null){
-                    activity.setCredenciais(response.body().getCredenciais());
-                    activity.configurarCartoes();
-                    Log.i("teste", response.toString());
+                    try {
+                        activity.setCredenciais(response.body().getCredenciais());
+                        activity.configurarCartoes();
+                        Log.i("teste", response.toString());
+
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    activity.getSwipeRefreshLayout().setRefreshing(false);
                 }
             }
 
             @Override
             public void onFailure(Call<GetCredenciaisResponse> call, Throwable t) {
                 t.printStackTrace();
+                activity.getSwipeRefreshLayout().setRefreshing(false);
             }
         });
     }

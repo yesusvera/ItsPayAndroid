@@ -2,7 +2,7 @@ package itspay.br.com.controller;
 
 import itspay.br.com.activity.CartaoActivity;
 import itspay.br.com.authentication.IdentityItsPay;
-import itspay.br.com.model.GetExtratoCredencial;
+import itspay.br.com.model.LinhaExtratoCredencial;
 import itspay.br.com.services.ConnectPortadorService;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -18,20 +18,31 @@ public class CartaoController extends BaseActivityController<CartaoActivity> {
     }
 
     public void carregarExtrato(){
-        Call<GetExtratoCredencial> call =  ConnectPortadorService.getService().extratoCredencial(
+        activity.getSwipeRefreshExtrato().setRefreshing(true);
+        activity.getMaterial_listViewExtrato().getAdapter().clearAll();
+
+        Call<LinhaExtratoCredencial[]> call =  ConnectPortadorService.getService().extratoCredencial(
                     activity.credencialDetalhe.getIdCredencial(),
-                    "45",
+                    activity.getPeriodo(),
                     IdentityItsPay.getInstance().getToken());
 
-        call.enqueue(new Callback<GetExtratoCredencial>() {
+        call.enqueue(new Callback<LinhaExtratoCredencial[]>() {
             @Override
-            public void onResponse(Call<GetExtratoCredencial> call, Response<GetExtratoCredencial> response) {
-                response.toString();
+            public void onResponse(Call<LinhaExtratoCredencial[]> call, Response<LinhaExtratoCredencial[]> response) {
+
+                try {
+                    activity.configurarExtrato(response.body());
+                }catch(Exception e){
+                    e.printStackTrace();
+                }finally {
+                    activity.getSwipeRefreshExtrato().setRefreshing(false);
+                }
             }
 
             @Override
-            public void onFailure(Call<GetExtratoCredencial> call, Throwable t) {
+            public void onFailure(Call<LinhaExtratoCredencial[]> call, Throwable t) {
                 t.printStackTrace();
+                activity.getSwipeRefreshExtrato().setRefreshing(false);
             }
         });
 
