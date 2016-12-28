@@ -1,6 +1,7 @@
 package itspay.br.com.services;
 
 import itspay.br.com.model.BuscarEmailResponse;
+import itspay.br.com.model.Credencial;
 import itspay.br.com.model.CriarLoginResponse;
 import itspay.br.com.model.FazerLoginPortador;
 import itspay.br.com.model.FazerLoginPortadorResponse;
@@ -41,6 +42,13 @@ public interface PortadorService {
                                      @Header("AuthorizationPortador") String token
                                      );
 
+
+    @GET("api/portador/credencial/{idCredencial}/detalhes")
+    Call<Credencial> credencialDetalhes(
+            @Path("idCredencial") long idCredencial,
+            @Header("AuthorizationPortador") String token
+    );
+
     @GET("api/portador/login/logout")
     Call<ResponseBody> logout();
 
@@ -58,10 +66,18 @@ public interface PortadorService {
                                           @Header("AuthorizationPortador") String token);
 
     //{periodo} - Valores aceitos 15, 30 ou 45.
+    @GET("api/portador/credencial/{idCredencial}/extrato/data_inicial/{dataInicial}/data_final/{dataFinal}")
+    Call<LinhaExtratoCredencial[]> extratoPeriodo(@Path("idCredencial") long idCredencial,
+                                                  @Path("dataInicial") String dataInicial,
+                                                  @Path("dataFinal") String dataFinal,
+                                                  @Header("AuthorizationPortador") String token);
+
+
+    //{periodo} - Valores aceitos 15, 30 ou 45.
     @GET("api/portador/credencial/{idCredencial}/extrato/periodo/{periodo}")
     Call<LinhaExtratoCredencial[]> extratoCredencial(@Path("idCredencial") long idCredencial,
-                                                         @Path("periodo") String periodo,
-                                                         @Header("AuthorizationPortador") String token);
+                                                     @Path("periodo") String periodo,
+                                                     @Header("AuthorizationPortador") String token);
 
     @GET("api/plastico/abrir/mobile/{idPlastico}")
     Call<ResponseBody> abrirPlastico(@Path("idPlastico") long idPlastico,

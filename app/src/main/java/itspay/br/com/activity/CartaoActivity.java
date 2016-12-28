@@ -33,15 +33,14 @@ import itspay.br.com.controller.CartaoController;
 import itspay.br.com.itspay.R;
 import itspay.br.com.model.Credencial;
 import itspay.br.com.model.LinhaExtratoCredencial;
-import jp.wasabeef.recyclerview.animators.SlideInDownAnimator;
-import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
+import itspay.br.com.util.Utils;
+import jp.wasabeef.recyclerview.animators.FadeInLeftAnimator;
 
 public class CartaoActivity extends AppCompatActivity {
 
     private TabHost host;
     private MaterialListView mListView;
     private MaterialListView material_listViewExtrato;
-    public static Card cartaoDetalhe;
     public static Credencial credencialDetalhe;
     private CartaoController cartaoController = new CartaoController(this);
     private SwipeRefreshLayout swipeRefreshExtrato;
@@ -62,7 +61,6 @@ public class CartaoActivity extends AppCompatActivity {
         mListView = (MaterialListView) findViewById(R.id.material_listview);
         material_listViewExtrato = (MaterialListView)findViewById(R.id.material_listViewExtrato);
 
-        configuraCartao();
 
         host = (TabHost)findViewById(R.id.tabhost);
         host.setup();
@@ -127,11 +125,13 @@ public class CartaoActivity extends AppCompatActivity {
         swipeRefreshExtrato.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                cartaoController.carregarCredencialDetalhe();
                 cartaoController.carregarExtrato();
             }
         });
 
         cartaoController.carregarExtrato();
+        cartaoController.carregarCredencialDetalhe();
     }
 
     public void configureTabs(){
@@ -156,24 +156,24 @@ public class CartaoActivity extends AppCompatActivity {
         host.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
             public void onTabChanged(String s) {
-                periodo = s;
+                setPeriodo(s);
                 cartaoController.carregarExtrato();
             }
         });
     }
 
     public void configuraCartao(){
-        mListView.setItemAnimator(new SlideInUpAnimator());
+        mListView.setItemAnimator(new FadeInLeftAnimator());
         mListView.getItemAnimator().setAddDuration(300);
         mListView.getItemAnimator().setRemoveDuration(300);
 
-        mListView.getAdapter().add(cartaoDetalhe);
+        mListView.getAdapter().add(Utils.novoCartaoCredencial(credencialDetalhe, this));
     }
 
 
     public void configurarExtrato(LinhaExtratoCredencial[] extrato){
 
-        material_listViewExtrato.setItemAnimator(new SlideInDownAnimator());
+        material_listViewExtrato.setItemAnimator(new FadeInLeftAnimator());
         material_listViewExtrato.getItemAnimator().setAddDuration(300);
         material_listViewExtrato.getItemAnimator().setRemoveDuration(300);
 
@@ -203,6 +203,7 @@ public class CartaoActivity extends AppCompatActivity {
         }
 
         return new Card.Builder(this)
+                .setDismissible()
                 .setTag("eye")
                 .withProvider(new CardProvider())
                 .setLayout(R.layout.material_itspay_extrato)
@@ -261,6 +262,22 @@ public class CartaoActivity extends AppCompatActivity {
         this.material_listViewExtrato = material_listViewExtrato;
     }
 
+    public static Credencial getCredencialDetalhe() {
+        return credencialDetalhe;
+    }
+
+    public static void setCredencialDetalhe(Credencial credencialDetalhe) {
+        CartaoActivity.credencialDetalhe = credencialDetalhe;
+    }
+
+    public MaterialListView getmListView() {
+        return mListView;
+    }
+
+    public void setmListView(MaterialListView mListView) {
+        this.mListView = mListView;
+    }
+
     public void logout(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(false).setTitle("ItsPay").setMessage("Tem certeza que deseja sair?")
@@ -275,5 +292,8 @@ public class CartaoActivity extends AppCompatActivity {
                 .setCancelable(true);
         builder.create().show();
     }
+
+
+
 
 }

@@ -88,6 +88,7 @@ public class LoginController extends BaseActivityController<LoginActivity>{
                        ex.printStackTrace();
                    }catch (JSONException ex){
                        ex.printStackTrace();
+                       activity.showProgress(false);
                    }
                }
             }

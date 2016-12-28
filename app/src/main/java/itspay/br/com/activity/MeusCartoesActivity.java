@@ -2,7 +2,6 @@ package itspay.br.com.activity;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,7 +21,6 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.dexafree.materialList.card.Card;
-import com.dexafree.materialList.card.CardProvider;
 import com.dexafree.materialList.listeners.RecyclerItemClickListener;
 import com.dexafree.materialList.view.MaterialListView;
 
@@ -34,7 +32,8 @@ import itspay.br.com.controller.MeusCartoesController;
 import itspay.br.com.itspay.R;
 import itspay.br.com.model.Credencial;
 import itspay.br.com.services.ConnectPortadorService;
-import jp.wasabeef.recyclerview.animators.SlideInDownAnimator;
+import itspay.br.com.util.Utils;
+import jp.wasabeef.recyclerview.animators.FadeInLeftAnimator;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -83,7 +82,6 @@ public class MeusCartoesActivity extends AppCompatActivity
             @Override
             public void onItemClick(@NonNull Card card, int position) {
                 Log.d("CARD_TYPE", "" + card.getTag());
-                CartaoActivity.cartaoDetalhe = card;
                 CartaoActivity.credencialDetalhe = credenciais[position];
                 Intent intent = new Intent(MeusCartoesActivity.this, CartaoActivity.class);
                 MeusCartoesActivity.this.startActivity(intent);
@@ -91,7 +89,7 @@ public class MeusCartoesActivity extends AppCompatActivity
 
             @Override
             public void onItemLongClick(@NonNull Card card, int position) {
-                Log.d("LONG_CLICK", "" + card.getTag());
+//                Log.d("LONG_CLICK", "" + card.getTag());
             }
         });
 
@@ -118,7 +116,7 @@ public class MeusCartoesActivity extends AppCompatActivity
 
     public void configurarCartoes(){
 
-        mListView.setItemAnimator(new SlideInDownAnimator());
+        mListView.setItemAnimator(new FadeInLeftAnimator());
         mListView.getItemAnimator().setAddDuration(300);
         mListView.getItemAnimator().setRemoveDuration(300);
 
@@ -162,31 +160,11 @@ public class MeusCartoesActivity extends AppCompatActivity
     private void adicionarCartoes() {
         List<Card> cards = new ArrayList<>();
         for (Credencial cred: credenciais) {
-            cards.add(newCard(cred));
+            cards.add(Utils.novoCartaoCredencial(cred, this));
         }
         mListView.getAdapter().addAll(cards);
     }
 
-
-    public Card newCard(Credencial cred) {
-        String saldo = "Saldo: R$"+ cred.getSaldo();
-
-        return new Card.Builder(this)
-                .setTag("CARD_ITSPAY")
-                .withProvider(new CardProvider())
-                .setLayout(R.layout.material_itspay_card)
-                .setTitle(cred.getNomeProduto())
-                .setTitleColor(Color.parseColor("#F5F5F5"))
-                .setSubtitle(cred.getCredencialMascarada())
-                .setSubtitle2(saldo)
-                .setSubtitleColor(Color.parseColor("#F5F5F5"))
-                .setDescription(cred.getNomeImpresso())
-                .setDescriptionColor(Color.parseColor("#F5F5F5"))
-                .setDrawable(cred.getDrawable())
-                .endConfig()
-                .build();
-
-    }
 
 
     @Override
