@@ -5,11 +5,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.widget.EditText;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-
 import itspay.br.com.activity.TrocarSenhaActivity;
 import itspay.br.com.authentication.IdentityItsPay;
 import itspay.br.com.itspay.R;
@@ -17,6 +12,7 @@ import itspay.br.com.model.ItsPayResponse;
 import itspay.br.com.model.TrocarSenhaPortador;
 import itspay.br.com.services.ConnectPortadorService;
 import itspay.br.com.util.ItsPayConstants;
+import itspay.br.com.util.UtilsActivity;
 import itspay.br.com.util.validations.ValidationsForms;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -75,22 +71,8 @@ public class TrocarSenhaController extends BaseActivityController<TrocarSenhaAct
                                 }
                             });
                     builder.create().show();
-                }else if (response.errorBody() != null){
-                    try {
-                        String jsonStr = response.errorBody().string();
-
-                        JSONObject reader = new JSONObject(jsonStr);
-                        String msg = reader.getString("msg");
-
-                        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-                        builder.setCancelable(false).setMessage(msg)
-                                .setPositiveButton("OK", null);
-                        builder.create().show();
-                    }catch (IOException e){
-                        e.printStackTrace();
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                }else{
+                    UtilsActivity.alertIfError(response.errorBody(), activity);
                 }
             }
 

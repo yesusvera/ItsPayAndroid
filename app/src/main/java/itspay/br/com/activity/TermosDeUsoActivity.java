@@ -1,14 +1,8 @@
 package itspay.br.com.activity;
 
-import android.app.Activity;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Window;
-import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
+import android.support.v7.app.AppCompatActivity;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.Toast;
 
 import itspay.br.com.itspay.R;
 

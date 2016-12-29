@@ -1,9 +1,6 @@
 package itspay.br.com.controller;
 
-import android.app.AlertDialog;
 import android.text.format.DateFormat;
-
-import org.json.JSONObject;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -13,6 +10,7 @@ import itspay.br.com.authentication.IdentityItsPay;
 import itspay.br.com.model.Credencial;
 import itspay.br.com.model.LinhaExtratoCredencial;
 import itspay.br.com.services.ConnectPortadorService;
+import itspay.br.com.util.UtilsActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -59,15 +57,7 @@ public class CartaoController extends BaseActivityController<CartaoActivity> {
                     if (response.body() != null) {
                         activity.configurarExtrato(response.body());
                     } else {
-                        String jsonStr = response.errorBody().string();
-
-                        JSONObject reader = new JSONObject(jsonStr);
-                        String msg = reader.getString("msg");
-
-                        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-                        builder.setCancelable(false).setTitle("ItsPay").setMessage(msg)
-                                .setPositiveButton("OK", null);
-                        builder.create().show();
+                        UtilsActivity.alertIfError(response.errorBody(), activity);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

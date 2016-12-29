@@ -48,8 +48,8 @@
                 android:hint="@string/prompt_favorecido"
                 android:imeActionLabel="@string/prompt_favorecido"
                 android:imeOptions="actionUnspecified|actionDone"
+                android:enabled="false"
                 android:inputType="text"
-                android:editable="false"
                 android:maxLines="1"
                 android:padding="15dp"/>
 
@@ -60,34 +60,45 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-            <EditText
-                android:id="@+id/valor"
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint="@string/prompt_valor"
-                android:imeActionLabel="@string/prompt_valor"
-                android:imeOptions="actionUnspecified|actionDone"
-                android:inputType="numberDecimal"
-                android:maxLines="1"
-                android:padding="15dp"/>
-            <EditText
-                android:id="@+id/tarifa"
+                android:layout_alignParentLeft="true">
+
+                <com.blackcat.currencyedittext.CurrencyEditText
+                    android:id="@+id/valor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="R$0,00"
+                    android:maxLength="15"
+                    android:padding="15dp"
+                    app:allow_negative_values="true"
+                    />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="@string/prompt_tarifa"
-                android:imeActionLabel="@string/prompt_valor"
-                android:imeOptions="actionUnspecified|actionDone"
-                android:inputType="numberDecimal"
-                android:maxLines="1"
-                android:padding="15dp"/>
+                android:layout_alignParentLeft="true">
+                <EditText
+                    android:id="@+id/tarifa"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/prompt_tarifa"
+                    android:maxLines="1"
+                    android:text="R$ 1,50"
+                    android:enabled="false"
+                    android:padding="15dp"/>
+            </android.support.design.widget.TextInputLayout>
 
         </LinearLayout>
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="5dp">
+            android:layout_height="wrap_content">
 
             <EditText
                 android:id="@+id/senhaCartao"

@@ -3,6 +3,7 @@ package itspay.br.com.util.mask;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
+
 import java.util.HashSet;
 import java.util.Set;
 

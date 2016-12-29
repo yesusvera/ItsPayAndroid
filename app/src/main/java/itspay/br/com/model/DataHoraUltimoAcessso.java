@@ -1,7 +1,5 @@
 package itspay.br.com.model;
 
-import java.io.Serializable;
-
 /**
  * Created by yesus on 16/12/16.
  */

@@ -6,9 +6,12 @@ import itspay.br.com.model.CriarLoginResponse;
 import itspay.br.com.model.FazerLoginPortador;
 import itspay.br.com.model.FazerLoginPortadorResponse;
 import itspay.br.com.model.GetCredenciaisResponse;
+import itspay.br.com.model.GetInfoPortadorCredencialRequest;
 import itspay.br.com.model.ItsPayResponse;
 import itspay.br.com.model.LinhaExtratoCredencial;
+import itspay.br.com.model.PortadorCredencial;
 import itspay.br.com.model.PortadorLogin;
+import itspay.br.com.model.TransferenciaMesmaInstituicao;
 import itspay.br.com.model.TrocarEmail;
 import itspay.br.com.model.TrocarSenhaPortador;
 import okhttp3.ResponseBody;
@@ -82,4 +85,18 @@ public interface PortadorService {
     @GET("api/plastico/abrir/mobile/{idPlastico}")
     Call<ResponseBody> abrirPlastico(@Path("idPlastico") long idPlastico,
                                      @Header("AuthorizationPortador") String token);
+
+    /**
+     * @param portadorCredencialRequest a credencial deve ser criptografada com SHA512
+     * @param token
+     * @return
+     */
+    @POST("api/portador/credencial/info-portador")
+    Call<PortadorCredencial> getPortadorCredencial(@Body GetInfoPortadorCredencialRequest portadorCredencialRequest,
+                                                   @Header("AuthorizationPortador") String token);
+
+
+    @POST("api/portador/conta/transferencia")
+    Call<ResponseBody> transferenciaOutroCartao(@Body TransferenciaMesmaInstituicao request,
+                                                @Header("AuthorizationPortador") String token);
 }
