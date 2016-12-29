@@ -89,4 +89,30 @@ public class ValidationsForms {
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
     }
+
+    /**
+     * Deve possuir letras e números e ter entre 8 e 30 caracteres.
+     * @param senha
+     * @return
+     */
+    public static boolean senhaValida(String senha){
+        if(senha==null || senha.length() < 8 || senha.length()>30) return false;
+
+        boolean temLetra = false;
+        boolean temDigito = false;
+
+        for(int i=0; i<senha.length(); i++){
+            if(Character.isLetter(senha.charAt(i))){
+                temLetra = true;
+            }else if (Character.isDigit(senha.charAt(i))) {
+                temDigito = true;
+            }
+        }
+
+        if(temDigito && temLetra){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

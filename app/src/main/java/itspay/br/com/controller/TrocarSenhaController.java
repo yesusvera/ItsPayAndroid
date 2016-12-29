@@ -17,6 +17,7 @@ import itspay.br.com.model.ItsPayResponse;
 import itspay.br.com.model.TrocarSenhaPortador;
 import itspay.br.com.services.ConnectPortadorService;
 import itspay.br.com.util.ItsPayConstants;
+import itspay.br.com.util.validations.ValidationsForms;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -35,6 +36,12 @@ public class TrocarSenhaController extends BaseActivityController<TrocarSenhaAct
         if(campoVazio(activity.getSenha())) return;
         if(campoVazio(activity.getNovaSenha())) return;
         if(campoVazio(activity.getConfirmarSenha())) return;
+
+        if(!ValidationsForms.senhaValida(activity.getNovaSenha().getText().toString())){
+            activity.getNovaSenha().setError(activity.getString(R.string.error_incorrect_password_input));
+            activity.getNovaSenha().requestFocus();
+            return;
+        }
 
         if(!activity.getNovaSenha().getText().toString().equals(activity.getConfirmarSenha().getText().toString())){
             activity.getConfirmarSenha().setError(activity.getString(R.string.error_senhas_incompativeis));

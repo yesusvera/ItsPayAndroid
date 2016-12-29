@@ -4,8 +4,17 @@
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Senha</string>
-    <string name="prompt_confirma_password">Confirmar Senha</string>
+    <string name="prompt_confirma_password">Confirmar Senha</string>v
+    <string name="prompt_numero_cartao_destino">Número do cartão de destino</string>
+    <string name="prompt_favorecido">Nome do Favorecido</string>
+    <string name="prompt_valor">Valor</string>
+    <string name="prompt_tarifa">Tarifa</string>
+    <string name="prompt_senha_cartao">Senha do Cartão</string>
+
+
     <string name="acao_criar_login">Criar Login</string>
+    <string name="acao_transferir">Transferir</string>
+
 
     <string name="action_sign_in">Login</string>
     <string name="action_sign_in_short">Sign in</string>
@@ -15,8 +24,8 @@
     <string name="error_invalid_email">Este endereço de email é inválido.</string>
     <string name="error_data_nascimento_invalida">Data de nascimento inválida.</string>
     <string name="error_invalid_cpf">Este cpf é inválido</string>
-    <string name="error_invalid_password">Senha muito curta</string>
-    <string name="error_incorrect_password_input">Informe uma senha de pelo menos 4 caracteres</string>
+    <string name="error_invalid_password">Digite a senha</string>
+    <string name="error_incorrect_password_input">A senha deve possuir números e letras e ter entre 8 e 30 caracteres.</string>
     <string name="error_incorrect_password">A senha é incorreta</string>
     <string name="error_senhas_incompativeis">As duas senhas não coincidem.</string>
     <string name="error_field_required">Este campo é obrigatório</string>

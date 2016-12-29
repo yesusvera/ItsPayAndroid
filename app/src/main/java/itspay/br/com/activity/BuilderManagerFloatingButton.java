@@ -14,7 +14,7 @@ import itspay.br.com.itspay.R;
  */
 public class BuilderManagerFloatingButton {
 
-    private static int[] imageResources = new int[]{
+    public static int[] imageResources = new int[]{
             R.drawable.menu_icon1,
             R.drawable.menu_icon2,
             R.drawable.menu_icon3,
@@ -22,7 +22,7 @@ public class BuilderManagerFloatingButton {
             R.drawable.menu_icon5,
             R.drawable.menu_icon6
     };
-    private static int[] textResources = new int[]{
+    public static int[] textResources = new int[]{
             R.string.str_icone_transferir,
             R.string.str_icone_inserir_carga,
             R.string.str_icone_cartoes_virtuais,

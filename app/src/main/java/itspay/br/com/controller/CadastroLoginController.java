@@ -118,7 +118,7 @@ public class CadastroLoginController extends BaseActivityController<CadastroLogi
             return false;
         }
 
-        if(activity.getSenha().getText().toString().length() < 3){
+        if(!ValidationsForms.senhaValida(activity.getSenha().getText().toString())){
             activity.getSenha().setError(activity.getString(R.string.error_incorrect_password_input));
             activity.getSenha().requestFocus();
             return false;

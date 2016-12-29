@@ -9,7 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="itspay.br.com.itspay.itspay.br.com.activity.CadastroLogin">
+    tools:context="itspay.br.com.activity.CadastroLoginActivity">
 
     <ScrollView
         android:id="@+id/cadastro_login_form"
@@ -132,7 +132,7 @@
                     android:hint="@string/prompt_password"
                     android:inputType="textPassword"
                     android:maxLines="1"
-                    android:maxLength="20"
+                    android:maxLength="30"
                     android:singleLine="true"
                     android:padding="15dp" />
 
@@ -151,7 +151,7 @@
                     android:hint="@string/prompt_confirma_password"
                     android:inputType="textPassword"
                     android:maxLines="1"
-                    android:maxLength="20"
+                    android:maxLength="30"
                     android:singleLine="true"
                     android:padding="15dp" />
 

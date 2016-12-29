@@ -16,6 +16,7 @@ import itspay.br.com.authentication.IdentityItsPay;
 import itspay.br.com.model.FazerLoginPortador;
 import itspay.br.com.model.FazerLoginPortadorResponse;
 import itspay.br.com.services.ConnectPortadorService;
+import itspay.br.com.util.ItsPayConstants;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -34,8 +35,8 @@ public class LoginController extends BaseActivityController<LoginActivity>{
         fazerLoginPortador.setArchitectureInfo("string");
         fazerLoginPortador.setCpf(activity.getmCpfView().getText().toString().replace(".", "").replace("-", ""));
         fazerLoginPortador.setDeviceId("string");
-        fazerLoginPortador.setIdInstituicao(101);
-        fazerLoginPortador.setIdProcessadora(10);
+        fazerLoginPortador.setIdInstituicao(ItsPayConstants.ID_INSTITUICAO);
+        fazerLoginPortador.setIdProcessadora(ItsPayConstants.ID_PROCESSADORA);
         fazerLoginPortador.setLatitude(castCoordenada(activity.getLatitude()));
         fazerLoginPortador.setLongitude(castCoordenada(activity.getLongitude()));
         fazerLoginPortador.setModel("string");
@@ -43,7 +44,7 @@ public class LoginController extends BaseActivityController<LoginActivity>{
         fazerLoginPortador.setPlataformVersion("string");
         fazerLoginPortador.setPlatformName("string");
         fazerLoginPortador.setSenha(activity.getmPasswordView().getText().toString());
-        fazerLoginPortador.setSistemaOperacional(1);
+        fazerLoginPortador.setSistemaOperacional(2);
         fazerLoginPortador.setVersaoConhecida("1.0.0");
         fazerLoginPortador.setVersaoInstalada("1.0.0");
 
@@ -64,10 +65,43 @@ public class LoginController extends BaseActivityController<LoginActivity>{
 
                    IdentityItsPay.getInstance().setSetCookie(setCookie);
 
-                   //redirecionando para meus cartões
-                   MeusCartoesActivity.FORCE_LOGOUT = false;
-                   Intent intent = new Intent(activity, MeusCartoesActivity.class);
-                   activity.startActivity(intent);
+
+                   if(response.body().isRequisitarAtualizacao()){
+                       AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                       builder.setCancelable(false).setMessage(response.body().getRequisicaoAtualizacaoMensagem())
+                               .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                   @Override
+                                   public void onClick(DialogInterface dialogInterface, int i) {
+                                       redirecionarMeusCartoes();
+                                   }
+                               })
+                                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        redirecionarMeusCartoes();
+                                    }
+                                });
+                       builder.create().show();
+                   }else if(response.body().isRequisitarPermissaoNotificacao()){
+                           AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                           builder.setCancelable(false).setMessage(response.body().getRequisicaoNotificacaoMensagem())
+                                   .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                       @Override
+                                       public void onClick(DialogInterface dialogInterface, int i) {
+                                           redirecionarMeusCartoes();
+                                       }
+                                   })
+                                   .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                                       @Override
+                                       public void onClick(DialogInterface dialogInterface, int i) {
+                                           redirecionarMeusCartoes();
+                                       }
+                                   });
+                           builder.create().show();
+
+                   }else{
+                       redirecionarMeusCartoes();
+                   }
 
                }else if(response.errorBody() != null){
                    try {
@@ -98,6 +132,13 @@ public class LoginController extends BaseActivityController<LoginActivity>{
                 t.printStackTrace();
             }
         });
+    }
+
+    public void redirecionarMeusCartoes(){
+        //redirecionando para meus cartões
+        MeusCartoesActivity.FORCE_LOGOUT = false;
+        Intent intent = new Intent(activity, MeusCartoesActivity.class);
+        activity.startActivity(intent);
     }
 
     public long castCoordenada(double coordenada){

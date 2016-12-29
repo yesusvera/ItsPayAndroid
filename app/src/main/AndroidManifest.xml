@@ -52,7 +52,15 @@
         <activity
             android:name="itspay.br.com.activity.CartaoActivity"
             android:label="@string/title_activity_cartao"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name="itspay.br.com.activity.TransferirOutroCartaoActivity"
+            android:label="Transferir para outro Cartão"
+            android:theme="@style/TemaFormularios" />
+        <activity
+            android:name="itspay.br.com.activity.TransferirContaCorrenteActivity"
+            android:label="Transferir para Conta Corrente"
+            android:theme="@style/TemaFormularios"/>
     </application>
 
 </manifest>
