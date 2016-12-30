@@ -62,7 +62,6 @@ public class TransferirOutroCartaoController extends BaseActivityController<Tran
         request.setCredencialDestino(credencialDestino);
         request.setIdInstituicaoOrigem(ItsPayConstants.ID_INSTITUICAO);
         request.setValorTransferencia(Double.parseDouble(activity.getValor().getText().toString().replace("R$","").replace(".", "").replace(",",".")));
-
         request.setPinCredencialOrigem(activity.getSenhaCartao().getText().toString());
 
         Call<ResponseBody> call = ConnectPortadorService.getService()

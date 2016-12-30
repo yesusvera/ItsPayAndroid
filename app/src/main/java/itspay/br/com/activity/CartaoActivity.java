@@ -113,10 +113,13 @@ public class CartaoActivity extends AppCompatActivity {
         bmb.setOnBoomListener(new OnBoomListener() {
             @Override
             public void onClicked(int index, BoomButton boomButton) {
-               if(BuilderManagerFloatingButton.textResources[index] == R.string.str_icone_logout){
-                   logout();
-               }else if(BuilderManagerFloatingButton.textResources[index] == R.string.str_icone_transferir){
-                   escolherTipoTransferencia();
+               int strSelectedResource = BuilderManagerFloatingButton.textResources[index];
+
+               switch(strSelectedResource){
+                   case R.string.str_icone_logout: logout(); break;
+                   case R.string.str_icone_transferir : escolherTipoTransferencia(); break;
+                   case R.string.str_icone_inserir_carga : inserirCarga(); break;
+
                }
             }
 
@@ -376,7 +379,9 @@ public class CartaoActivity extends AppCompatActivity {
 
     }
 
-
-
+    public void inserirCarga(){
+        Intent intent = new Intent(this, InserirCargaActivity.class);
+        this.startActivity(intent);
+    }
 
 }

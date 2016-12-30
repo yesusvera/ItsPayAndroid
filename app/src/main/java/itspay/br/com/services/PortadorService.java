@@ -1,16 +1,20 @@
 package itspay.br.com.services;
 
+import itspay.br.com.model.Banco;
+import itspay.br.com.model.BoletoCarga;
 import itspay.br.com.model.BuscarEmailResponse;
 import itspay.br.com.model.Credencial;
 import itspay.br.com.model.CriarLoginResponse;
 import itspay.br.com.model.FazerLoginPortador;
 import itspay.br.com.model.FazerLoginPortadorResponse;
+import itspay.br.com.model.GerarBoletoCarga;
 import itspay.br.com.model.GetCredenciaisResponse;
 import itspay.br.com.model.GetInfoPortadorCredencialRequest;
 import itspay.br.com.model.ItsPayResponse;
 import itspay.br.com.model.LinhaExtratoCredencial;
 import itspay.br.com.model.PortadorCredencial;
 import itspay.br.com.model.PortadorLogin;
+import itspay.br.com.model.TransferenciaContaCorrente;
 import itspay.br.com.model.TransferenciaMesmaInstituicao;
 import itspay.br.com.model.TrocarEmail;
 import itspay.br.com.model.TrocarSenhaPortador;
@@ -35,7 +39,6 @@ public interface PortadorService {
     @POST("api/portador/login")
     Call<CriarLoginResponse> criarLogin(@Body PortadorLogin portadorLogin);
 
-
     @GET("api/portador/credencial/{documento}/pessoa/{tipoPessoa}/processadora/{idProcessadora}/instituicao/{idInstituicao}")
     Call<GetCredenciaisResponse> listaCredenciais(
                                      @Path("documento") String documento,
@@ -44,7 +47,6 @@ public interface PortadorService {
                                      @Path("idInstituicao") long idInstituicao,
                                      @Header("AuthorizationPortador") String token
                                      );
-
 
     @GET("api/portador/credencial/{idCredencial}/detalhes")
     Call<Credencial> credencialDetalhes(
@@ -57,7 +59,6 @@ public interface PortadorService {
 
     @PUT("api/portador/login/trocar-email")
     Call<ItsPayResponse> trocarEmail(@Body TrocarEmail trocarEmail, @Header("AuthorizationPortador") String token);
-
 
     @PUT("api/portador/login/trocar-senha")
     Call<ItsPayResponse> trocarSenha(@Body TrocarSenhaPortador trocarSenhaPortador, @Header("AuthorizationPortador") String token);
@@ -74,7 +75,6 @@ public interface PortadorService {
                                                   @Path("dataInicial") String dataInicial,
                                                   @Path("dataFinal") String dataFinal,
                                                   @Header("AuthorizationPortador") String token);
-
 
     //{periodo} - Valores aceitos 15, 30 ou 45.
     @GET("api/portador/credencial/{idCredencial}/extrato/periodo/{periodo}")
@@ -95,8 +95,23 @@ public interface PortadorService {
     Call<PortadorCredencial> getPortadorCredencial(@Body GetInfoPortadorCredencialRequest portadorCredencialRequest,
                                                    @Header("AuthorizationPortador") String token);
 
-
     @POST("api/portador/conta/transferencia")
     Call<ResponseBody> transferenciaOutroCartao(@Body TransferenciaMesmaInstituicao request,
                                                 @Header("AuthorizationPortador") String token);
+
+    @POST("api/portador/conta/transferencia/conta/corrente")
+    Call<ResponseBody> transferenciaContaCorrente(@Body TransferenciaContaCorrente request,
+                                                @Header("AuthorizationPortador") String token);
+
+    @GET("api/banco")
+    Call<Banco[]> listaBancos(@Header("AuthorizationPortador") String token);
+
+    @POST("api/boleto/carga/gerar-linha-digitavel")
+    Call<BoletoCarga> gerarLinhaDigitavel(@Body GerarBoletoCarga request,
+                                          @Header("AuthorizationPortador") String token);
+
+    @POST("api/boleto/carga/enviar-boleto-email")
+    Call<ResponseBody> enviarBoletoEmail(@Body GerarBoletoCarga request,
+                                          @Header("AuthorizationPortador") String token);
+
 }

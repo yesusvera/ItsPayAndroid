@@ -91,12 +91,12 @@ public class ValidationsForms {
     }
 
     /**
-     * Deve possuir letras e números e ter entre 8 e 30 caracteres.
+     * Deve possuir letras e números e ter entre 6 e 30 caracteres.
      * @param senha
      * @return
      */
     public static boolean senhaValida(String senha){
-        if(senha==null || senha.length() < 8 || senha.length()>30) return false;
+        if(senha==null || senha.length() < 6 || senha.length()>30) return false;
 
         boolean temLetra = false;
         boolean temDigito = false;

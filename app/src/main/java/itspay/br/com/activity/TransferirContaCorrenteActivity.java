@@ -2,20 +2,24 @@ package itspay.br.com.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.blackcat.currencyedittext.CurrencyEditText;
+import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import java.util.Locale;
 
+import itspay.br.com.controller.TransferirContaCorrenteController;
 import itspay.br.com.itspay.R;
+import itspay.br.com.model.Banco;
 import itspay.br.com.model.Credencial;
 import itspay.br.com.util.mask.MaskEditTextChangedListener;
 
 public class TransferirContaCorrenteActivity extends AppCompatActivity {
 
-    private EditText bancoFavorecido;
     private EditText agencia;
     private EditText conta;
     private EditText cpf;
@@ -26,6 +30,12 @@ public class TransferirContaCorrenteActivity extends AppCompatActivity {
 
     private Credencial credencialDetalhe;
 
+    private Banco[] bancos;
+    private Banco bancoSelecionado;
+
+    private SearchableSpinner bancoFavorecidoSpinner;
+    private TransferirContaCorrenteController controller = new TransferirContaCorrenteController(this);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +45,6 @@ public class TransferirContaCorrenteActivity extends AppCompatActivity {
 
         setTitle("Saldo R$ "+ credencialDetalhe.getSaldo());
 
-        bancoFavorecido = (EditText)findViewById(R.id.banco_favorecido);
         agencia = (EditText)findViewById(R.id.agencia);
         conta = (EditText)findViewById(R.id.conta);
         cpf = (EditText)findViewById(R.id.cpf);
@@ -43,13 +52,123 @@ public class TransferirContaCorrenteActivity extends AppCompatActivity {
         valor = (CurrencyEditText)findViewById(R.id.valor);
         senhaCartao = (EditText)findViewById(R.id.senhaCartao);
         transferirButton = (Button)findViewById(R.id.transferir_button);
+        bancoFavorecidoSpinner = (SearchableSpinner)findViewById(R.id.banco_favorecido_spinner);
 
+        bancoFavorecidoSpinner.setTitle(getString(R.string.prompt_banco_favorecido));
+        bancoFavorecidoSpinner.setPositiveButton("Ok");
+
+        bancoFavorecidoSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                  bancoSelecionado = bancos[i];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                bancoSelecionado = null;
+            }
+        });
+
+        transferirButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                controller.transferir();
+            }
+        });
 
         valor.setLocale(new Locale("pt", "BR"));
         agencia.addTextChangedListener(new MaskEditTextChangedListener("####", agencia));
         conta.addTextChangedListener(new MaskEditTextChangedListener("#####-#", conta));
         cpf.addTextChangedListener(new MaskEditTextChangedListener("###.###.###-##", cpf));
 
+        controller.carregarListaBancos();
+    }
 
+    public SearchableSpinner getBancoFavorecidoSpinner() {
+        return bancoFavorecidoSpinner;
+    }
+
+    public void setBancoFavorecidoSpinner(SearchableSpinner bancoFavorecidoSpinner) {
+        this.bancoFavorecidoSpinner = bancoFavorecidoSpinner;
+    }
+
+    public Banco[] getBancos() {
+        return bancos;
+    }
+
+    public void setBancos(Banco[] bancos) {
+        this.bancos = bancos;
+    }
+
+    public EditText getAgencia() {
+        return agencia;
+    }
+
+    public void setAgencia(EditText agencia) {
+        this.agencia = agencia;
+    }
+
+    public EditText getConta() {
+        return conta;
+    }
+
+    public void setConta(EditText conta) {
+        this.conta = conta;
+    }
+
+    public EditText getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(EditText cpf) {
+        this.cpf = cpf;
+    }
+
+    public EditText getFavorecido() {
+        return favorecido;
+    }
+
+    public void setFavorecido(EditText favorecido) {
+        this.favorecido = favorecido;
+    }
+
+    public CurrencyEditText getValor() {
+        return valor;
+    }
+
+    public void setValor(CurrencyEditText valor) {
+        this.valor = valor;
+    }
+
+    public EditText getSenhaCartao() {
+        return senhaCartao;
+    }
+
+    public void setSenhaCartao(EditText senhaCartao) {
+        this.senhaCartao = senhaCartao;
+    }
+
+    public Button getTransferirButton() {
+        return transferirButton;
+    }
+
+    public void setTransferirButton(Button transferirButton) {
+        this.transferirButton = transferirButton;
+    }
+
+    public Credencial getCredencialDetalhe() {
+        return credencialDetalhe;
+    }
+
+    public void setCredencialDetalhe(Credencial credencialDetalhe) {
+        this.credencialDetalhe = credencialDetalhe;
+    }
+
+    public Banco getBancoSelecionado() {
+        return bancoSelecionado;
+    }
+
+    public void setBancoSelecionado(Banco bancoSelecionado) {
+        this.bancoSelecionado = bancoSelecionado;
     }
 }

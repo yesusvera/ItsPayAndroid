@@ -60,7 +60,16 @@
         <activity
             android:name="itspay.br.com.activity.TransferirContaCorrenteActivity"
             android:label="Transferir para Conta Corrente"
-            android:theme="@style/TemaFormularios"/>
+            android:theme="@style/TemaFormularios" />
+        <activity
+            android:name="itspay.br.com.activity.InserirCargaActivity"
+            android:label="Inserir Carga"
+            android:theme="@style/TemaFormularios" />
+        <activity android:name="itspay.br.com.activity.CargaInseridaActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan"
+            android:label="Carga Inserida"
+            android:theme="@style/TemaFormularios"
+            />
     </application>
 
 </manifest>

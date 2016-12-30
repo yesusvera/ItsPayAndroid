@@ -11,12 +11,18 @@
     <string name="prompt_agencia_sem_dv">Agência (Sem DV)</string>
     <string name="prompt_conta_com_dv">Conta (Com DV)</string>
     <string name="prompt_valor">Valor</string>
+    <string name="prompt_valor_carga">Valor da Carga</string>
+    <string name="prompt_vencimento">Vencimento</string>
+    <string name="prompt_linha_digitavel">Linha Digitável</string>
     <string name="prompt_tarifa">Tarifa</string>
     <string name="prompt_senha_cartao">Senha do Cartão</string>
 
 
     <string name="acao_criar_login">Criar Login</string>
     <string name="acao_transferir">Transferir</string>
+    <string name="acao_gerar_boleto">Gerar Boleto</string>
+    <string name="acao_enviar_email">Enviar Email</string>
+    <string name="acao_enviar_boleto_email">Enviar boleto para Email</string>
 
 
     <string name="action_sign_in">Login</string>
@@ -28,7 +34,7 @@
     <string name="error_data_nascimento_invalida">Data de nascimento inválida.</string>
     <string name="error_invalid_cpf">Este cpf é inválido</string>
     <string name="error_invalid_password">Digite a senha</string>
-    <string name="error_incorrect_password_input">A senha deve possuir números e letras e ter entre 8 e 30 caracteres.</string>
+    <string name="error_incorrect_password_input">A senha deve possuir números e letras e ter entre 6 e 30 caracteres.</string>
     <string name="error_incorrect_password">A senha é incorreta</string>
     <string name="error_senhas_incompativeis">As duas senhas não coincidem.</string>
     <string name="error_field_required">Este campo é obrigatório</string>
@@ -156,4 +162,16 @@
 
     <string name="title_activity_trocar_senha">TrocarSenhaActivity</string>
     <string name="title_activity_cartao">Cartão</string>
+
+    <string-array name="planets">
+        <item>Mercury</item>
+        <item>Venus</item>
+        <item>Earth</item>
+        <item>Mars</item>
+        <item>Jupiter</item>
+        <item>Saturn</item>
+        <item>Uranus</item>
+        <item>Neptune</item>
+        <item>Pluto</item>
+    </string-array>
 </resources>

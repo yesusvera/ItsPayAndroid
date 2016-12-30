@@ -16,6 +16,7 @@ import itspay.br.com.authentication.IdentityItsPay;
 import itspay.br.com.model.GetCredenciaisResponse;
 import itspay.br.com.services.ConnectPortadorService;
 import itspay.br.com.util.ItsPayConstants;
+import itspay.br.com.util.UtilsActivity;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -53,7 +54,7 @@ public class MeusCartoesController extends BaseActivityController<MeusCartoesAct
         callListaCredencial.enqueue(new Callback<GetCredenciaisResponse>() {
             @Override
             public void onResponse(Call<GetCredenciaisResponse> call, Response<GetCredenciaisResponse> response) {
-                if (response != null){
+                if (response.body() != null){
                     try {
                         activity.setCredenciais(response.body().getCredenciais());
                         activity.configurarCartoes();
@@ -62,8 +63,11 @@ public class MeusCartoesController extends BaseActivityController<MeusCartoesAct
                     }catch (Exception e){
                         e.printStackTrace();
                     }
-                    activity.getSwipeRefreshLayout().setRefreshing(false);
+                }else{
+                    UtilsActivity.alertIfError(response.errorBody(),activity);
                 }
+
+                activity.getSwipeRefreshLayout().setRefreshing(false);
             }
 
             @Override
