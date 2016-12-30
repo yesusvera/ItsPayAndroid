@@ -35,7 +35,7 @@ public class TransferirOutroCartaoActivity extends AppCompatActivity {
 
         credencialDetalhe =  CartaoActivity.credencialDetalhe;
 
-        setTitle("Saldo R$:"+ credencialDetalhe.getSaldo());
+        setTitle("Saldo R$ "+ credencialDetalhe.getSaldo());
 
         numeroCartaoDestino = (EditText)findViewById(R.id.numeroCartaoDestino);
         favorecido = (EditText)findViewById(R.id.favorecido);

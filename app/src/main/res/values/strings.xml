@@ -7,6 +7,9 @@
     <string name="prompt_confirma_password">Confirmar Senha</string>v
     <string name="prompt_numero_cartao_destino">Número do cartão de destino</string>
     <string name="prompt_favorecido">Nome do Favorecido</string>
+    <string name="prompt_banco_favorecido">Banco do Favorecido</string>
+    <string name="prompt_agencia_sem_dv">Agência (Sem DV)</string>
+    <string name="prompt_conta_com_dv">Conta (Com DV)</string>
     <string name="prompt_valor">Valor</string>
     <string name="prompt_tarifa">Tarifa</string>
     <string name="prompt_senha_cartao">Senha do Cartão</string>

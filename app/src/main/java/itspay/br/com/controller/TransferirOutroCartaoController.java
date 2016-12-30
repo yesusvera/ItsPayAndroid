@@ -43,23 +43,6 @@ public class TransferirOutroCartaoController extends BaseActivityController<Tran
                 }else {
                     UtilsActivity.alertIfError(response.errorBody(), activity);
                 }
-
-//                if(response.errorBody() != null){
-//                        try {
-//                            JSONObject jsonObject = new JSONObject(response.errorBody().string());
-//                            String msg = jsonObject.getString("msg");
-//
-//                            AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-//                            builder.setMessage(msg)
-//                                    .setPositiveButton("OK", null);
-//                            builder.create().show();
-//                        }catch (IOException ex){
-//                            ex.printStackTrace();
-//                        }catch (JSONException ex){
-//                            ex.printStackTrace();
-//                        }
-//                    }
-//                }
             }
 
             @Override

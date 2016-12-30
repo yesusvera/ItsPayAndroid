@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_transferir_conta_corrente"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
@@ -10,4 +11,176 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="itspay.br.com.activity.TransferirContaCorrenteActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="5dp">
+
+            <EditText
+                android:id="@+id/banco_favorecido"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/prompt_banco_favorecido"
+                android:imeActionLabel="@string/prompt_banco_favorecido"
+                android:imeOptions="actionUnspecified|actionDone"
+                android:inputType="text"
+                android:maxLines="1"
+                android:padding="15dp" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_weight="1">
+                <EditText
+                    android:id="@+id/agencia"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/prompt_agencia_sem_dv"
+                    android:maxLines="1"
+                    android:padding="15dp"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_weight="1">
+
+                <EditText
+                    android:id="@+id/conta"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/prompt_conta_com_dv"
+                    android:maxLines="1"
+                    android:padding="15dp"/>
+            </android.support.design.widget.TextInputLayout>
+
+        </LinearLayout>
+
+
+        <android.support.design.widget.TextInputLayout
+            app:counterMaxLength="13"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp">
+
+            <EditText
+                android:id="@+id/cpf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/prompt_cpf"
+                android:inputType="number"
+                android:maxLines="1"
+                android:padding="15dp"
+                android:text="845.217.561-23" />
+
+        </android.support.design.widget.TextInputLayout>
+
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="5dp">
+
+            <EditText
+                android:id="@+id/favorecido"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:hint="@string/prompt_favorecido"
+                android:imeActionLabel="@string/prompt_favorecido"
+                android:imeOptions="actionUnspecified|actionDone"
+                android:inputType="text"
+                android:maxLines="1"
+                android:padding="15dp" />
+
+        </android.support.design.widget.TextInputLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_weight="1"
+                android:hint="@string/prompt_valor">
+
+                <com.blackcat.currencyedittext.CurrencyEditText
+                    android:id="@+id/valor"
+                    app:allow_negative_values="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLength="15"
+                    android:padding="15dp"
+                    android:text="R$0,00" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_weight="1">
+
+                <EditText
+                    android:id="@+id/tarifa"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:hint="@string/prompt_tarifa"
+                    android:maxLines="1"
+                    android:padding="15dp"
+                    android:text="R$ 1,60" />
+            </android.support.design.widget.TextInputLayout>
+
+        </LinearLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/senhaCartao"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/prompt_senha_cartao"
+                android:imeActionLabel="@string/prompt_senha_cartao"
+                android:imeOptions="actionUnspecified|actionDone"
+                android:inputType="textPassword"
+                android:maxLength="30"
+                android:maxLines="1"
+                android:padding="15dp" />
+
+        </android.support.design.widget.TextInputLayout>
+
+
+        <Button
+            android:id="@+id/transferir_button"
+            style="?android:textAppearanceSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/back_button_itspay"
+            android:text="@string/acao_transferir"
+            android:textColor="@android:color/background_light"
+            android:textStyle="bold" />
+    </LinearLayout>
 </RelativeLayout>

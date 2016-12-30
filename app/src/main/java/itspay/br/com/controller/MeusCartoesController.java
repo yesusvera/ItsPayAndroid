@@ -38,6 +38,7 @@ public class MeusCartoesController extends BaseActivityController<MeusCartoesAct
 
         IdentityItsPay identity = IdentityItsPay.getInstance();
 
+
         Call<GetCredenciaisResponse> callListaCredencial
                 =  ConnectPortadorService
                         .getService()
