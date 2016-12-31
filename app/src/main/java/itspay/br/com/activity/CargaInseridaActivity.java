@@ -44,5 +44,52 @@ public class CargaInseridaActivity extends AppCompatActivity {
                 linhaDigitavel.selectAll();
             }
         });
+
+        enviarEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                controller.enviarBoletoEmail();
+            }
+        });
+    }
+
+    public EditText getValorCarga() {
+        return valorCarga;
+    }
+
+    public void setValorCarga(EditText valorCarga) {
+        this.valorCarga = valorCarga;
+    }
+
+    public EditText getVencimento() {
+        return vencimento;
+    }
+
+    public void setVencimento(EditText vencimento) {
+        this.vencimento = vencimento;
+    }
+
+    public EditText getLinhaDigitavel() {
+        return linhaDigitavel;
+    }
+
+    public void setLinhaDigitavel(EditText linhaDigitavel) {
+        this.linhaDigitavel = linhaDigitavel;
+    }
+
+    public static BoletoCarga getBoleto() {
+        return boleto;
+    }
+
+    public static void setBoleto(BoletoCarga boleto) {
+        CargaInseridaActivity.boleto = boleto;
+    }
+
+    public static GerarBoletoCarga getGerarBoletoCarga() {
+        return gerarBoletoCarga;
+    }
+
+    public static void setGerarBoletoCarga(GerarBoletoCarga gerarBoletoCarga) {
+        CargaInseridaActivity.gerarBoletoCarga = gerarBoletoCarga;
     }
 }

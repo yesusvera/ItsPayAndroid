@@ -12,6 +12,7 @@
     <string name="prompt_conta_com_dv">Conta (Com DV)</string>
     <string name="prompt_valor">Valor</string>
     <string name="prompt_valor_carga">Valor da Carga</string>
+    <string name="prompt_tarifa_carga">Tarifa da Carga</string>
     <string name="prompt_vencimento">Vencimento</string>
     <string name="prompt_linha_digitavel">Linha Digitável</string>
     <string name="prompt_tarifa">Tarifa</string>

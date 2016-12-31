@@ -25,7 +25,6 @@
                 android:id="@+id/valor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="R$0,00"
                 android:inputType="numberDecimal"
                 android:maxLength="15"
                 android:padding="15dp"
@@ -38,7 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="@string/prompt_valor"
+            android:hint="@string/prompt_tarifa_carga"
             android:layout_alignParentLeft="true">
 
             <com.blackcat.currencyedittext.CurrencyEditText
