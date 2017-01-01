@@ -4,10 +4,12 @@ import itspay.br.com.model.Banco;
 import itspay.br.com.model.BoletoCarga;
 import itspay.br.com.model.BuscarEmailResponse;
 import itspay.br.com.model.Credencial;
+import itspay.br.com.model.CredencialGerada;
 import itspay.br.com.model.CriarLoginResponse;
 import itspay.br.com.model.FazerLoginPortador;
 import itspay.br.com.model.FazerLoginPortadorResponse;
 import itspay.br.com.model.GerarBoletoCarga;
+import itspay.br.com.model.GerarCredencialRequest;
 import itspay.br.com.model.GetCredenciaisResponse;
 import itspay.br.com.model.GetInfoPortadorCredencialRequest;
 import itspay.br.com.model.ItsPayResponse;
@@ -41,12 +43,12 @@ public interface PortadorService {
 
     @GET("api/portador/credencial/{documento}/pessoa/{tipoPessoa}/processadora/{idProcessadora}/instituicao/{idInstituicao}")
     Call<GetCredenciaisResponse> listaCredenciais(
-                                     @Path("documento") String documento,
-                                     @Path("tipoPessoa") long tipoPessoa,
-                                     @Path("idProcessadora") long idProcessadora,
-                                     @Path("idInstituicao") long idInstituicao,
-                                     @Header("AuthorizationPortador") String token
-                                     );
+            @Path("documento") String documento,
+            @Path("tipoPessoa") long tipoPessoa,
+            @Path("idProcessadora") long idProcessadora,
+            @Path("idInstituicao") long idInstituicao,
+            @Header("AuthorizationPortador") String token
+    );
 
     @GET("api/portador/credencial/{idCredencial}/detalhes")
     Call<Credencial> credencialDetalhes(
@@ -101,7 +103,7 @@ public interface PortadorService {
 
     @POST("api/portador/conta/transferencia/conta/corrente")
     Call<ResponseBody> transferenciaContaCorrente(@Body TransferenciaContaCorrente request,
-                                                @Header("AuthorizationPortador") String token);
+                                                  @Header("AuthorizationPortador") String token);
 
     @GET("api/banco")
     Call<Banco[]> listaBancos(@Header("AuthorizationPortador") String token);
@@ -112,6 +114,14 @@ public interface PortadorService {
 
     @POST("api/boleto/carga/enviar-boleto-email")
     Call<ResponseBody> enviarBoletoEmail(@Body GerarBoletoCarga request,
-                                          @Header("AuthorizationPortador") String token);
+                                         @Header("AuthorizationPortador") String token);
+
+    @GET("api/portador/credencial/virtual/conta/{idConta}")
+    Call<GetCredenciaisResponse> listaCartoesVirtuais(@Path("idConta") long idConta,
+                                                      @Header("AuthorizationPortador") String token);
+
+    @POST("api/gerador/credencial")
+    Call<CredencialGerada> novoCartaoVirtual(@Body GerarCredencialRequest request,
+                                             @Header("AuthorizationPortador") String token);
 
 }

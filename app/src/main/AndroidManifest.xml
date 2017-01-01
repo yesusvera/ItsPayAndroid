@@ -65,10 +65,15 @@
             android:name="itspay.br.com.activity.InserirCargaActivity"
             android:label="Inserir Carga"
             android:theme="@style/TemaFormularios" />
-        <activity android:name="itspay.br.com.activity.CargaInseridaActivity"
-            android:windowSoftInputMode="stateHidden|adjustPan"
+        <activity
+            android:name="itspay.br.com.activity.CargaInseridaActivity"
             android:label="Carga Inserida"
             android:theme="@style/TemaFormularios"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity android:name="itspay.br.com.activity.CartoesVirtuaisActivity"
+            android:label="Cartões Virtuais"
+            android:theme="@style/TemaFormularios"
+            android:windowSoftInputMode="stateHidden|adjustPan"
             />
     </application>
 

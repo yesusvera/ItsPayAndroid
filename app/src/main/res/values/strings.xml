@@ -24,6 +24,7 @@
     <string name="acao_gerar_boleto">Gerar Boleto</string>
     <string name="acao_enviar_email">Enviar Email</string>
     <string name="acao_enviar_boleto_email">Enviar boleto para Email</string>
+    <string name="acao_requisitar_cartao_virtual">Requisitar um Cartão Virtual</string>
 
 
     <string name="action_sign_in">Login</string>

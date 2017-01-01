@@ -119,6 +119,7 @@ public class CartaoActivity extends AppCompatActivity {
                    case R.string.str_icone_logout: logout(); break;
                    case R.string.str_icone_transferir : escolherTipoTransferencia(); break;
                    case R.string.str_icone_inserir_carga : inserirCarga(); break;
+                   case R.string.str_icone_cartoes_virtuais : cartoesVirtuais(); break;
 
                }
             }
@@ -384,4 +385,8 @@ public class CartaoActivity extends AppCompatActivity {
         this.startActivity(intent);
     }
 
+    public void cartoesVirtuais(){
+        Intent intent = new Intent(this, CartoesVirtuaisActivity.class);
+        this.startActivity(intent);
+    }
 }
