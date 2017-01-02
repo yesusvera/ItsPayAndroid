@@ -40,6 +40,7 @@ public class CardProvider<T extends CardProvider> extends Observable {
     private String mTitle;
     private String mSubtitle;
     private String mSubtitle2;
+    private String mSubtitle3;
     private String mDescription;
     private boolean mDividerVisible;
     private boolean mFullWidthDivider;
@@ -278,6 +279,26 @@ public class CardProvider<T extends CardProvider> extends Observable {
 
 
     /**
+     * Get the subtitle.
+     *
+     * @return the subtitle.
+     */
+    public String getSubtitle3() {
+        return mSubtitle3;
+    }
+
+    /**
+     * Set the subtitle as resource.
+     *
+     * @param subtitle to set.
+     * @return the renderer.
+     */
+    @NonNull
+    public T setSubtitle3(@StringRes final int subtitle) {
+        return setSubtitle3(getContext().getString(subtitle));
+    }
+
+    /**
      * Set the subtitle.
      *
      * @param subtitle to set.
@@ -295,6 +316,15 @@ public class CardProvider<T extends CardProvider> extends Observable {
     @SuppressWarnings("unchecked")
     public T setSubtitle2(final String subtitle) {
         mSubtitle2 = subtitle;
+        notifyDataSetChanged();
+        return (T) this;
+    }
+
+
+    @NonNull
+    @SuppressWarnings("unchecked")
+    public T setSubtitle3(final String subtitle) {
+        mSubtitle3 = subtitle;
         notifyDataSetChanged();
         return (T) this;
     }
@@ -741,6 +771,19 @@ public class CardProvider<T extends CardProvider> extends Observable {
                 subtitle2.setVisibility(View.GONE);
             } else {
                 subtitle2.setVisibility(View.VISIBLE);
+            }
+        }
+
+        // Subtitle
+        final TextView subtitle3 = findViewById(view, R.id.subtitle3, TextView.class);
+        if (subtitle3 != null) {
+            subtitle3.setText(getSubtitle3());
+            subtitle3.setTextColor(getSubtitleColor());
+            subtitle3.setGravity(getSubtitleGravity());
+            if (getSubtitle3() == null || getSubtitle3().isEmpty()) {
+                subtitle3.setVisibility(View.GONE);
+            } else {
+                subtitle3.setVisibility(View.VISIBLE);
             }
         }
 

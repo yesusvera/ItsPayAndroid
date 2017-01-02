@@ -60,4 +60,43 @@ public abstract class Utils {
 
     }
 
+
+    public static Card novoCartaoVirtual(Credencial cred, Context context) {
+        String saldo = "Saldo: R$"+ cred.getSaldo();
+
+        return new Card.Builder(context)
+                .setTag("VIRTUAL CARD_ITSPAY")
+                .withProvider(new CardProvider())
+                .setLayout(R.layout.material_itspay_virtual_card)
+                .setTitle(cred.getApelidoVirtual())
+                .setTitleColor(Color.parseColor("#F5F5F5"))
+                .setSubtitle(getCredencialComEspacos(cred.getCredencialVirtual()))
+                .setSubtitle2(cred.getDataValidadeFmt())
+                .setSubtitle3(cred.getCodigoSeguranca())
+                .setSubtitleColor(Color.parseColor("#F5F5F5"))
+                .setDescription(cred.getNomeImpresso())
+                .setDescriptionColor(Color.parseColor("#F5F5F5"))
+                .setDrawable(cred.getDrawable())
+                .endConfig()
+                .build();
+
+    }
+
+    public static String getCredencialComEspacos(String numeroCredencialVirtual){
+        if(numeroCredencialVirtual.length() >= 16) {
+            String str = numeroCredencialVirtual.substring(0, 4)
+                    + " "
+                    + numeroCredencialVirtual.substring(4, 8)
+                    + " "
+                    + numeroCredencialVirtual.substring(8, 12)
+                    + " "
+                    + numeroCredencialVirtual.substring(12, 16);
+
+            return str;
+        }else{
+            return "";
+        }
+    }
+
+
 }

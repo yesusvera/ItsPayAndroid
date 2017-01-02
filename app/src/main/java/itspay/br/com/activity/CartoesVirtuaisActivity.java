@@ -18,7 +18,7 @@ import itspay.br.com.itspay.R;
 import itspay.br.com.model.Credencial;
 import itspay.br.com.services.ConnectPortadorService;
 import itspay.br.com.util.Utils;
-import jp.wasabeef.recyclerview.animators.FadeInLeftAnimator;
+import jp.wasabeef.recyclerview.animators.FlipInBottomXAnimator;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -57,7 +57,7 @@ public class CartoesVirtuaisActivity extends AppCompatActivity {
 
     public void configurarCartoes(){
 
-        mListView.setItemAnimator(new FadeInLeftAnimator());
+        mListView.setItemAnimator(new FlipInBottomXAnimator());
         mListView.getItemAnimator().setAddDuration(300);
         mListView.getItemAnimator().setRemoveDuration(300);
 
@@ -100,7 +100,7 @@ public class CartoesVirtuaisActivity extends AppCompatActivity {
     private void adicionarCartoes() {
         List<Card> cards = new ArrayList<>();
         for (Credencial cred: credenciais) {
-            cards.add(Utils.novoCartaoCredencial(cred, this));
+            cards.add(Utils.novoCartaoVirtual(cred, this));
         }
         mListView.getAdapter().addAll(cards);
     }
