@@ -31,7 +31,7 @@ public class BuilderManagerFloatingButton {
             R.string.str_icone_logout
     };
 
-    private static int imageResourceIndex = 0;
+    public static int imageResourceIndex = 0;
 
     static int getImageResource() {
         if (imageResourceIndex >= imageResources.length) imageResourceIndex = 0;
