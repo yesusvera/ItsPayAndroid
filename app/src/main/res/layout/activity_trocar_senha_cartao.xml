@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_trocar_senha_cartao"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="itspay.br.com.activity.TrocarSenhaCartaoActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="5dp">
+
+            <EditText
+                android:id="@+id/senha_atual"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/prompt_password"
+                android:imeActionId="@+id/login"
+                android:imeActionLabel="Senha Atual"
+                android:imeOptions="actionUnspecified|actionDone"
+                android:inputType="textPassword"
+                android:maxLength="30"
+                android:maxLines="1"
+                android:padding="15dp" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="5dp">
+
+            <EditText
+                android:id="@+id/nova_senha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nova Senha"
+                android:imeActionId="@+id/login"
+                android:imeActionLabel="Nova Senha"
+                android:imeOptions="actionUnspecified|actionDone"
+                android:inputType="textPassword"
+                android:maxLength="30"
+                android:maxLines="1"
+                android:padding="15dp" />
+
+        </android.support.design.widget.TextInputLayout>
+
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="5dp">
+
+            <EditText
+                android:id="@+id/confirmar_senha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Confirmar Nova Senha"
+                android:imeActionId="@+id/login"
+                android:imeActionLabel="Confirmar Nova Senha"
+                android:imeOptions="actionUnspecified|actionDone"
+                android:inputType="textPassword"
+                android:maxLength="30"
+                android:maxLines="1"
+                android:padding="15dp" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/trocar_senha_button"
+            style="?android:textAppearanceSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/back_button_itspay"
+            android:text="@string/action_trocar_senha"
+            android:textColor="@android:color/background_light"
+            android:textStyle="bold" />
+    </LinearLayout>
+</RelativeLayout>

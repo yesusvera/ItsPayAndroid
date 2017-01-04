@@ -13,6 +13,7 @@ import itspay.br.com.model.ItsPayResponse;
 import itspay.br.com.model.TrocarEmail;
 import itspay.br.com.services.ConnectPortadorService;
 import itspay.br.com.util.ItsPayConstants;
+import itspay.br.com.util.UtilsActivity;
 import itspay.br.com.util.validations.ValidationsForms;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -72,7 +73,7 @@ public class TrocarEmailController extends BaseActivityController<TrocarEmailAct
 
             @Override
             public void onFailure(Call<ItsPayResponse> call, Throwable t) {
-                t.printStackTrace();
+                UtilsActivity.alertIfSocketException(t, activity);
             }
         });
     }
@@ -98,7 +99,7 @@ public class TrocarEmailController extends BaseActivityController<TrocarEmailAct
 
             @Override
             public void onFailure(Call<BuscarEmailResponse> call, Throwable t) {
-                t.printStackTrace();
+                UtilsActivity.alertIfSocketException(t, activity);
             }
         });
     }

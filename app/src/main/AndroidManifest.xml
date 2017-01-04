@@ -38,6 +38,9 @@
             android:name="itspay.br.com.activity.TermosDeUsoActivity"
             android:theme="@style/TemaFormularios" />
         <activity
+            android:name="itspay.br.com.activity.TermosDeUsoCartaoVirtualActivity"
+            android:theme="@style/TemaFormularios" />
+        <activity
             android:name="itspay.br.com.activity.MeusCartoesActivity"
             android:label="@string/title_activity_meus_cartoes"
             android:theme="@style/AppTheme" />
@@ -70,11 +73,28 @@
             android:label="Carga Inserida"
             android:theme="@style/TemaFormularios"
             android:windowSoftInputMode="stateHidden|adjustPan" />
-        <activity android:name="itspay.br.com.activity.CartoesVirtuaisActivity"
+        <activity
+            android:name="itspay.br.com.activity.CartoesVirtuaisActivity"
             android:label="Cartões Virtuais"
             android:theme="@style/TemaFormularios"
-            android:windowSoftInputMode="stateHidden|adjustPan"
-            />
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name="itspay.br.com.activity.NovoCartaoVirtualActivity"
+            android:label="Novo Cartão Virtual"
+            android:theme="@style/TemaFormularios"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name="itspay.br.com.activity.AjustesSegurancaCartaoActivity"
+            android:label="Ajustes de Segurança"
+            android:theme="@style/TemaFormularios" />
+        <activity
+            android:name="itspay.br.com.activity.TarifasActivity"
+            android:label="Tarifas"
+            android:theme="@style/TemaFormularios" />
+        <activity
+            android:name="itspay.br.com.activity.TrocarSenhaCartaoActivity"
+            android:label="Trocar senha do cartão"
+            android:theme="@style/TemaFormularios" />
     </application>
 
 </manifest>

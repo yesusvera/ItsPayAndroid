@@ -72,13 +72,13 @@ public class TrocarSenhaController extends BaseActivityController<TrocarSenhaAct
                             });
                     builder.create().show();
                 }else{
-                    UtilsActivity.alertIfError(response.errorBody(), activity);
+                    UtilsActivity.alertMsg(response.errorBody(), activity);
                 }
             }
 
             @Override
             public void onFailure(Call<ItsPayResponse> call, Throwable t) {
-                t.printStackTrace();
+                UtilsActivity.alertIfSocketException(t, activity);
             }
         });
     }

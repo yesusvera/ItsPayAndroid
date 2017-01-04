@@ -48,7 +48,7 @@ public class CartoesVirtuaisController extends BaseActivityController<CartoesVir
                         e.printStackTrace();
                     }
                 } else {
-                    UtilsActivity.alertIfError(response.errorBody(), activity);
+                    UtilsActivity.alertMsg(response.errorBody(), activity);
                 }
 
                 activity.getSwipeRefreshLayout().setRefreshing(false);
@@ -56,6 +56,7 @@ public class CartoesVirtuaisController extends BaseActivityController<CartoesVir
 
             @Override
             public void onFailure(Call<GetCredenciaisResponse> call, Throwable t) {
+                UtilsActivity.alertIfSocketException(t, activity);
                 t.printStackTrace();
                 activity.getSwipeRefreshLayout().setRefreshing(false);
             }

@@ -115,4 +115,17 @@ public class ValidationsForms {
             return false;
         }
     }
+
+
+    /**
+     * Deve possuir letras e números e ter entre 4 e 30 caracteres.
+     * @param senha
+     * @return
+     */
+    public static boolean senhaCartaoValida(String senha){
+        if(senha==null || senha.length() < 4 || senha.length()>30)
+            return false;
+        else
+            return true;
+    }
 }

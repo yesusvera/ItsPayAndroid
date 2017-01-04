@@ -1,10 +1,12 @@
 package itspay.br.com.services;
 
+import itspay.br.com.model.AvisarPerdaOuRouboRequest;
 import itspay.br.com.model.Banco;
 import itspay.br.com.model.BoletoCarga;
 import itspay.br.com.model.BuscarEmailResponse;
 import itspay.br.com.model.Credencial;
 import itspay.br.com.model.CredencialGerada;
+import itspay.br.com.model.CredencialStatus;
 import itspay.br.com.model.CriarLoginResponse;
 import itspay.br.com.model.FazerLoginPortador;
 import itspay.br.com.model.FazerLoginPortadorResponse;
@@ -19,6 +21,8 @@ import itspay.br.com.model.PortadorLogin;
 import itspay.br.com.model.TransferenciaContaCorrente;
 import itspay.br.com.model.TransferenciaMesmaInstituicao;
 import itspay.br.com.model.TrocarEmail;
+import itspay.br.com.model.TrocarEstadoCredencialRequest;
+import itspay.br.com.model.TrocarPinRequest;
 import itspay.br.com.model.TrocarSenhaPortador;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -123,5 +127,26 @@ public interface PortadorService {
     @POST("api/gerador/credencial")
     Call<CredencialGerada> novoCartaoVirtual(@Body GerarCredencialRequest request,
                                              @Header("AuthorizationPortador") String token);
+
+    @GET("api/portador/credencial/status-habilitacao/{idCredencial}")
+    Call<CredencialStatus> listaStatusHabilitacao(@Path("idCredencial") long idCredencial,
+                                                  @Header("AuthorizationPortador") String token);
+
+    @POST("api/portador/credencial/trocar-estado")
+    Call<ResponseBody> trocarEstado(@Body TrocarEstadoCredencialRequest request,
+                                             @Header("AuthorizationPortador") String token);
+
+
+    @POST("api/portador/credencial/avisar-perda")
+    Call<ResponseBody> avisarPerda(@Body AvisarPerdaOuRouboRequest request,
+                                   @Header("AuthorizationPortador") String token);
+
+    @POST("api/portador/credencial/avisar-roubo")
+    Call<ResponseBody> avisarRoubo(@Body AvisarPerdaOuRouboRequest request,
+                                   @Header("AuthorizationPortador") String token);
+
+    @POST("api/portador/credencial/trocar-pin")
+    Call<ResponseBody> trocarSenhaCartao(@Body TrocarPinRequest request,
+                                   @Header("AuthorizationPortador") String token);
 
 }

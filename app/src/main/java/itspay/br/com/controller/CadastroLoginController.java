@@ -15,6 +15,7 @@ import itspay.br.com.model.CriarLoginResponse;
 import itspay.br.com.model.PortadorLogin;
 import itspay.br.com.services.ConnectPortadorService;
 import itspay.br.com.util.ItsPayConstants;
+import itspay.br.com.util.UtilsActivity;
 import itspay.br.com.util.validations.ValidationsForms;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -74,6 +75,7 @@ public class CadastroLoginController extends BaseActivityController<CadastroLogi
 
                 @Override
                 public void onFailure(Call<CriarLoginResponse> call, Throwable t) {
+                    UtilsActivity.alertIfSocketException(t, activity);
                     t.printStackTrace();
                 }
             });

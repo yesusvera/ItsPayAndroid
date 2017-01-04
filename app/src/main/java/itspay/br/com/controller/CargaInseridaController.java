@@ -29,14 +29,15 @@ public class CargaInseridaController extends BaseActivityController<CargaInserid
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if(response.body()!=null){
-                    UtilsActivity.alertIfError(response.body(), activity);
+                    UtilsActivity.alertMsg(response.body(), activity);
                 }else {
-                    UtilsActivity.alertIfError(response.errorBody(), activity);
+                    UtilsActivity.alertMsg(response.errorBody(), activity);
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
+                UtilsActivity.alertIfSocketException(t, activity);
                 t.printStackTrace();
             }
         });

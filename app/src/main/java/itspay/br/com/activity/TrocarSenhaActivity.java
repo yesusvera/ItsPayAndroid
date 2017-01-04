@@ -16,7 +16,7 @@ public class TrocarSenhaActivity extends AppCompatActivity {
     private EditText confirmarSenha;
     private Button trocar_senha_button;
 
-    private TrocarSenhaController trocarEmailController = new TrocarSenhaController(this);
+    private TrocarSenhaController trocarSenhaController = new TrocarSenhaController(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +31,7 @@ public class TrocarSenhaActivity extends AppCompatActivity {
         trocar_senha_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                trocarEmailController.trocarSenha();
+                trocarSenhaController.trocarSenha();
             }
         });
     }

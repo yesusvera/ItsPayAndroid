@@ -1,9 +1,11 @@
 package itspay.br.com.activity;
 
+import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Button;
 
 import com.dexafree.materialList.card.Card;
@@ -18,6 +20,7 @@ import itspay.br.com.itspay.R;
 import itspay.br.com.model.Credencial;
 import itspay.br.com.services.ConnectPortadorService;
 import itspay.br.com.util.Utils;
+import itspay.br.com.util.UtilsActivity;
 import jp.wasabeef.recyclerview.animators.FlipInBottomXAnimator;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -53,6 +56,14 @@ public class CartoesVirtuaisActivity extends AppCompatActivity {
                 controller.listarCartoesVirtuais();
             }
         });
+
+        requisitarButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(CartoesVirtuaisActivity.this, NovoCartaoVirtualActivity.class);
+                CartoesVirtuaisActivity.this.startActivity(intent);
+            }
+        });
     }
 
     public void configurarCartoes(){
@@ -86,6 +97,7 @@ public class CartoesVirtuaisActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    UtilsActivity.alertIfSocketException(t, CartoesVirtuaisActivity.this);
                     countConexaoServicoPlastico--;
 
                     if(countConexaoServicoPlastico==0){
@@ -99,9 +111,13 @@ public class CartoesVirtuaisActivity extends AppCompatActivity {
 
     private void adicionarCartoes() {
         List<Card> cards = new ArrayList<>();
-        for (Credencial cred: credenciais) {
+        for(int i=credenciais.length-1; i>=0;i--){
+            Credencial cred = credenciais[i];
             cards.add(Utils.novoCartaoVirtual(cred, this));
         }
+//        for (Credencial cred: credenciais) {
+//            cards.add(Utils.novoCartaoVirtual(cred, this));
+//        }
         mListView.getAdapter().addAll(cards);
     }
 

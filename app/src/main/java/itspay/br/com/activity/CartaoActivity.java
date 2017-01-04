@@ -40,6 +40,7 @@ import itspay.br.com.model.Credencial;
 import itspay.br.com.model.LinhaExtratoCredencial;
 import itspay.br.com.services.ConnectPortadorService;
 import itspay.br.com.util.Utils;
+import itspay.br.com.util.UtilsActivity;
 import jp.wasabeef.recyclerview.animators.FadeInLeftAnimator;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -81,7 +82,7 @@ public class CartaoActivity extends AppCompatActivity {
 
             @Override
             public void onItemLongClick(@NonNull Card card, int position) {
-
+                return;
             }
         });
         material_listViewExtrato = (MaterialListView)findViewById(R.id.material_listViewExtrato);
@@ -120,6 +121,8 @@ public class CartaoActivity extends AppCompatActivity {
                    case R.string.str_icone_transferir : escolherTipoTransferencia(); break;
                    case R.string.str_icone_inserir_carga : inserirCarga(); break;
                    case R.string.str_icone_cartoes_virtuais : cartoesVirtuais(); break;
+                   case R.string.str_icone_ajustes_seguranca : ajustesDeSeguranca(); break;
+                   case R.string.str_icone_tarifas : tarifas(); break;
 
                }
             }
@@ -225,6 +228,7 @@ public class CartaoActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
+                UtilsActivity.alertIfSocketException(t, CartaoActivity.this);
                 mListView.getAdapter().add(Utils.novoCartaoCredencial(credencialDetalhe, CartaoActivity.this));
             }
         });
@@ -373,11 +377,9 @@ public class CartaoActivity extends AppCompatActivity {
                                 break;
                             }
                         }
-
                     }
                 });
         builder.create().show();
-
     }
 
     public void inserirCarga(){
@@ -387,6 +389,16 @@ public class CartaoActivity extends AppCompatActivity {
 
     public void cartoesVirtuais(){
         Intent intent = new Intent(this, CartoesVirtuaisActivity.class);
+        this.startActivity(intent);
+    }
+
+    public void ajustesDeSeguranca(){
+        Intent intent = new Intent(this, AjustesSegurancaCartaoActivity.class);
+        this.startActivity(intent);
+    }
+
+    public void tarifas(){
+        Intent intent = new Intent(this, TarifasActivity.class);
         this.startActivity(intent);
     }
 }

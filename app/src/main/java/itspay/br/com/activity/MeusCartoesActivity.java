@@ -33,6 +33,7 @@ import itspay.br.com.itspay.R;
 import itspay.br.com.model.Credencial;
 import itspay.br.com.services.ConnectPortadorService;
 import itspay.br.com.util.Utils;
+import itspay.br.com.util.UtilsActivity;
 import jp.wasabeef.recyclerview.animators.FadeInLeftAnimator;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -145,6 +146,7 @@ public class MeusCartoesActivity extends AppCompatActivity
 
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    UtilsActivity.alertIfSocketException(t, MeusCartoesActivity.this);
                     countConexaoServicoPlastico--;
 
                     if(countConexaoServicoPlastico==0){

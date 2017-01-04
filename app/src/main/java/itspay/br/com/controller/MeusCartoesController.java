@@ -63,7 +63,7 @@ public class MeusCartoesController extends BaseActivityController<MeusCartoesAct
                         e.printStackTrace();
                     }
                 }else{
-                    UtilsActivity.alertIfError(response.errorBody(),activity);
+                    UtilsActivity.alertMsg(response.errorBody(),activity);
                 }
 
                 activity.getSwipeRefreshLayout().setRefreshing(false);
@@ -71,7 +71,7 @@ public class MeusCartoesController extends BaseActivityController<MeusCartoesAct
 
             @Override
             public void onFailure(Call<GetCredenciaisResponse> call, Throwable t) {
-                t.printStackTrace();
+                UtilsActivity.alertIfSocketException(t, activity);
                 activity.getSwipeRefreshLayout().setRefreshing(false);
             }
         });

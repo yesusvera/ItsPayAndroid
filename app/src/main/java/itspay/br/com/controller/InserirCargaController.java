@@ -50,12 +50,13 @@ public class InserirCargaController extends BaseActivityController<InserirCargaA
                 if(response.body()!=null){
                     redirecionaCargaInserida(response.body(), request);
                 }else{
-                    UtilsActivity.alertIfError(response.errorBody(), activity);
+                    UtilsActivity.alertMsg(response.errorBody(), activity);
                 }
             }
 
             @Override
             public void onFailure(Call<BoletoCarga> call, Throwable t) {
+                UtilsActivity.alertIfSocketException(t, activity);
                 t.printStackTrace();
             }
         });

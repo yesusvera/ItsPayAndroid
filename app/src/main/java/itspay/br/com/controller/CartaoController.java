@@ -57,7 +57,7 @@ public class CartaoController extends BaseActivityController<CartaoActivity> {
                     if (response.body() != null) {
                         activity.configurarExtrato(response.body());
                     } else {
-                        UtilsActivity.alertIfError(response.errorBody(), activity);
+                        UtilsActivity.alertMsg(response.errorBody(), activity);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -68,6 +68,7 @@ public class CartaoController extends BaseActivityController<CartaoActivity> {
 
             @Override
             public void onFailure(Call<LinhaExtratoCredencial[]> call, Throwable t) {
+                UtilsActivity.alertIfSocketException(t, activity);
                 t.printStackTrace();
                 activity.getSwipeRefreshExtrato().setRefreshing(false);
             }
@@ -96,7 +97,7 @@ public class CartaoController extends BaseActivityController<CartaoActivity> {
 
             @Override
             public void onFailure(Call<Credencial> call, Throwable t) {
-
+                UtilsActivity.alertIfSocketException(t, activity);
             }
         });
     }

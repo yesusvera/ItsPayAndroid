@@ -41,13 +41,13 @@ public class TransferirOutroCartaoController extends BaseActivityController<Tran
                 if(response.body()!=null){
                     activity.getFavorecido().setText(response.body().getNome());
                 }else {
-                    UtilsActivity.alertIfError(response.errorBody(), activity);
+                    UtilsActivity.alertMsg(response.errorBody(), activity);
                 }
             }
 
             @Override
             public void onFailure(Call<PortadorCredencial> call, Throwable t) {
-                t.printStackTrace();
+                UtilsActivity.alertIfSocketException(t, activity);
             }
         });
     }
@@ -73,13 +73,13 @@ public class TransferirOutroCartaoController extends BaseActivityController<Tran
                 if(response.body()!=null){
 
                 }else {
-                    UtilsActivity.alertIfError(response.errorBody(), activity);
+                    UtilsActivity.alertMsg(response.errorBody(), activity);
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                t.printStackTrace();
+                UtilsActivity.alertIfSocketException(t, activity);
             }
         });
     }

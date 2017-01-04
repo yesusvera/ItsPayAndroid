@@ -95,7 +95,7 @@
                         android:maxLength="30"
                         android:maxLines="1"
                         android:padding="15dp"
-                        android:text="123" />
+                        android:text="teste123" />
 
                 </android.support.design.widget.TextInputLayout>
 

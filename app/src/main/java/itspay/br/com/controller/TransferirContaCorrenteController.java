@@ -50,13 +50,13 @@ public class TransferirContaCorrenteController extends BaseActivityController<Tr
                     activity.getBancoFavorecidoSpinner().setAdapter(adapter);
 
                 } else {
-                    UtilsActivity.alertIfError(response.errorBody(), activity);
+                    UtilsActivity.alertMsg(response.errorBody(), activity);
                 }
             }
 
             @Override
             public void onFailure(Call<Banco[]> call, Throwable t) {
-                t.printStackTrace();
+                UtilsActivity.alertIfSocketException(t, activity);
             }
         });
     }
@@ -97,14 +97,13 @@ public class TransferirContaCorrenteController extends BaseActivityController<Tr
                 if (response.body() != null) {
 
                 } else {
-                    UtilsActivity.alertIfError(response.errorBody(), activity);
+                    UtilsActivity.alertMsg(response.errorBody(), activity);
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-                t.printStackTrace();
+                UtilsActivity.alertIfSocketException(t, activity);
             }
         });
     }

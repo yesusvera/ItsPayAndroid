@@ -17,6 +17,7 @@ import itspay.br.com.model.FazerLoginPortador;
 import itspay.br.com.model.FazerLoginPortadorResponse;
 import itspay.br.com.services.ConnectPortadorService;
 import itspay.br.com.util.ItsPayConstants;
+import itspay.br.com.util.UtilsActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -129,7 +130,8 @@ public class LoginController extends BaseActivityController<LoginActivity>{
 
             @Override
             public void onFailure(Call<FazerLoginPortadorResponse> call, Throwable t) {
-                t.printStackTrace();
+                UtilsActivity.alertIfSocketException(t, activity);
+                activity.showProgress(false);
             }
         });
     }

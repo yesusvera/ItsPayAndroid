@@ -43,10 +43,11 @@ import itspay.br.com.util.validations.ValidationsForms;
 /**
  * Created by yesus on 12/12/16.
  */
+
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor>, LocationListener{
+public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor>, LocationListener {
 
     private static final int PERMISSION_ACCESS_COARSE_LOCATION = 312;
     // UI references.
@@ -106,14 +107,20 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.ACCESS_COARSE_LOCATION },
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
                     PERMISSION_ACCESS_COARSE_LOCATION);
         }
     }
 
     @Override
     protected void onResume() {
+
+        if (getIntent().getBooleanExtra("SAIR", false)) {
+            finish();
+        }
+
         super.onResume();
+
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
             locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -147,17 +154,17 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     @Override
     public void onProviderDisabled(String provider) {
-        Log.d("Latitude","disable");
+        Log.d("Latitude", "disable");
     }
 
     @Override
     public void onProviderEnabled(String provider) {
-        Log.d("Latitude","enable");
+        Log.d("Latitude", "enable");
     }
 
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
-        Log.d("Latitude","status");
+        Log.d("Latitude", "status");
     }
 
     /**
@@ -194,7 +201,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mCpfView.setError(getString(R.string.error_invalid_cpf));
             focusView = mCpfView;
             cancel = true;
-       }
+        }
 
         if (cancel) {
             // There was an error; don't attempt login and focus the first
