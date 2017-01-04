@@ -1,11 +1,15 @@
 package itspay.br.com.controller;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.widget.Switch;
 import android.widget.TextView;
 
 import itspay.br.com.activity.AjustesSegurancaCartaoActivity;
 import itspay.br.com.authentication.IdentityItsPay;
+import itspay.br.com.itspay.R;
+import itspay.br.com.model.AvisarPerdaOuRouboRequest;
 import itspay.br.com.model.CredencialStatus;
 import itspay.br.com.model.TrocarEstadoCredencialRequest;
 import itspay.br.com.services.ConnectPortadorService;
@@ -73,7 +77,78 @@ public class AjustesSegurancaoCartaoController extends BaseActivityController<Aj
         });
     }
 
-    public void trocaEstado(int tipoEstado){
+    public void comunicarPerda() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setMessage(activity.getString(R.string.prompt_confirma_notificar_perda))
+                .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        AvisarPerdaOuRouboRequest request = new AvisarPerdaOuRouboRequest();
+                        request.setIdCredencial(activity.credencialDetalhe.getIdCredencial());
+                        request.setIdUsuario(ItsPayConstants.ID_USUARIO);
+                        request.setStatus(activity.credencialDetalhe.getStatus());
+
+                        Call<ResponseBody> call = ConnectPortadorService
+                                .getService().avisarPerda(request, IdentityItsPay.getInstance().getToken());
+
+                        call.enqueue(new Callback<ResponseBody>() {
+                            @Override
+                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                if(response.body()!=null){
+                                    UtilsActivity.alertMsg(response.body(), activity);
+                                }else{
+                                    UtilsActivity.alertMsg(response.errorBody(), activity);
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                UtilsActivity.alertIfSocketException(t, activity);
+                            }
+                        });
+                    }
+                }).setNegativeButton("Não", null);
+        builder.create().show();
+
+    }
+
+    public void comunicarRoubo() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setMessage(activity.getString(R.string.prompt_confirma_notificar_roubo))
+                .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        AvisarPerdaOuRouboRequest request = new AvisarPerdaOuRouboRequest();
+                        request.setIdCredencial(activity.credencialDetalhe.getIdCredencial());
+                        request.setIdUsuario(ItsPayConstants.ID_USUARIO);
+                        request.setStatus(activity.credencialDetalhe.getStatus());
+
+                        Call<ResponseBody> call = ConnectPortadorService
+                                .getService().avisarRoubo(request, IdentityItsPay.getInstance().getToken());
+
+                        call.enqueue(new Callback<ResponseBody>() {
+                            @Override
+                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                if(response.body()!=null){
+                                    UtilsActivity.alertMsg(response.body(), activity);
+                                }else{
+                                    UtilsActivity.alertMsg(response.errorBody(), activity);
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                UtilsActivity.alertIfSocketException(t, activity);
+                            }
+                        });
+                    }
+                }).setNegativeButton("Não", null);
+        builder.create().show();
+    }
+
+    public void trocaEstado(int tipoEstado) {
         TrocarEstadoCredencialRequest request = new TrocarEstadoCredencialRequest();
         request.setTipoEstado(tipoEstado);
         request.setIdUsuario(ItsPayConstants.ID_USUARIO);
@@ -87,10 +162,10 @@ public class AjustesSegurancaoCartaoController extends BaseActivityController<Aj
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if(response.body()!=null){
+                if (response.body() != null) {
                     UtilsActivity.alertMsg(response.body(), activity);
                     carregaStatusServico();
-                }else{
+                } else {
                     UtilsActivity.alertMsg(response.errorBody(), activity);
                 }
             }
@@ -112,23 +187,23 @@ public class AjustesSegurancaoCartaoController extends BaseActivityController<Aj
         configuraSubtitulos();
     }
 
-    public void configSubtitleSwitch(TextView subtitulo, boolean estado){
-        subtitulo.setText(estado?"Habilitado":"Desabilitado");
-        subtitulo.setTextColor(estado? Color.GREEN: Color.RED);
+    public void configSubtitleSwitch(TextView subtitulo, boolean estado) {
+        subtitulo.setText(estado ? "Habilitado" : "Desabilitado");
+        subtitulo.setTextColor(estado ? Color.GREEN : Color.RED);
     }
 
-    public void configuraSubtitulos(){
+    public void configuraSubtitulos() {
 
         configSubtitleSwitch(activity.textAvisosNotificacoes, activity.switchAvisosNotificacoes.isChecked());
         configSubtitleSwitch(activity.textSaque, activity.switchSaque.isChecked());
         configSubtitleSwitch(activity.textUsoExterior, activity.switchUsoExterior.isChecked());
         configSubtitleSwitch(activity.textUsoInternet, activity.switchUsoInternet.isChecked());
 
-        activity.textBloqueioCartao.setText(activity.switchBloqueioCartao.isChecked()?"Bloqueado":"Desbloqueado");
-        activity.textBloqueioCartao.setTextColor(activity.switchBloqueioCartao.isChecked()? Color.RED: Color.GREEN);
+        activity.textBloqueioCartao.setText(activity.switchBloqueioCartao.isChecked() ? "Bloqueado" : "Desbloqueado");
+        activity.textBloqueioCartao.setTextColor(activity.switchBloqueioCartao.isChecked() ? Color.RED : Color.GREEN);
     }
 
-    public void configuraChangeListener(){
+    public void configuraChangeListener() {
         activity.switchAvisosNotificacoes.setOnCheckedChangeListener(activity.changeListenerSwitch);
         activity.switchBloqueioCartao.setOnCheckedChangeListener(activity.changeListenerSwitch);
         activity.switchUsoExterior.setOnCheckedChangeListener(activity.changeListenerSwitch);
@@ -136,7 +211,7 @@ public class AjustesSegurancaoCartaoController extends BaseActivityController<Aj
         activity.switchSaque.setOnCheckedChangeListener(activity.changeListenerSwitch);
     }
 
-    public void removeChangeListener(){
+    public void removeChangeListener() {
         activity.switchAvisosNotificacoes.setOnCheckedChangeListener(null);
         activity.switchBloqueioCartao.setOnCheckedChangeListener(null);
         activity.switchUsoExterior.setOnCheckedChangeListener(null);

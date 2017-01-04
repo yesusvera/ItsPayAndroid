@@ -1,5 +1,7 @@
 package itspay.br.com.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -89,11 +91,41 @@ public class AjustesSegurancaCartaoActivity extends AppCompatActivity {
                 AjustesSegurancaCartaoActivity.this.startActivity(intent);
             }
         });
+
+
+        comunicarPerdaButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                comunicarPerdaOuRoubo();
+            }
+        });
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         controller.carregaStatusServico();
+    }
+
+    private void comunicarPerdaOuRoubo(){
+        final CharSequence[] items = {"Comunicar Perda do cartão", "Comunicar Roubo do cartão"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("ItsPay").setCancelable(true).setNegativeButton("Cancelar", null)
+                .setItems(items, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        switch (i){
+                            case 0 : {
+                                controller.comunicarPerda();
+                                break;
+                            }
+                            case 1 : {
+                                controller.comunicarRoubo();
+                                break;
+                            }
+                        }
+                    }
+                });
+        builder.create().show();
     }
 }

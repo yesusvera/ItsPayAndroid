@@ -26,6 +26,8 @@
     <string name="prompt_uso_exterior">Uso no Exterior</string>
     <string name="prompt_uso_internet">Uso na Internet</string>
     <string name="prompt_saque">Saque</string>
+    <string name="prompt_confirma_notificar_perda">Você tem certeza que deseja notificar Perda deste cartão?</string>
+    <string name="prompt_confirma_notificar_roubo">Você tem certeza que deseja notificar Roubo deste cartão?</string>
 
 
     <string name="acao_criar_login">Criar Login</string>
