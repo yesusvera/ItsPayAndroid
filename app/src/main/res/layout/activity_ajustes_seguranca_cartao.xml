@@ -11,15 +11,15 @@
     tools:context="itspay.br.com.activity.AjustesSegurancaCartaoActivity">
 
 
-        <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/swipeRefreshLayout"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -46,9 +46,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Desabilitado" />
+
+                    <View style="@style/Divider" />
                 </LinearLayout>
 
-                <View style="@style/Divider" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -67,77 +68,82 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Desbloqueado" />
-                </LinearLayout>
 
-                <View style="@style/Divider" />
+                    <View style="@style/Divider" />
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:id="@+id/layoutMenuProduto">
 
-                    <Switch
-                        android:id="@+id/switch_uso_exterior"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:tag="1"
-                        android:text="@string/prompt_uso_exterior" />
+                        android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/subtitle_uso_exterior"
+                        <Switch
+                            android:id="@+id/switch_uso_exterior"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:tag="1"
+                            android:text="@string/prompt_uso_exterior" />
+
+                        <TextView
+                            android:id="@+id/subtitle_uso_exterior"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Desabilitado" />
+
+                        <View style="@style/Divider" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Desabilitado" />
+                        android:orientation="vertical">
+
+                        <Switch
+                            android:id="@+id/switch_uso_internet"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:tag="2"
+                            android:text="@string/prompt_uso_internet" />
+
+                        <TextView
+                            android:id="@+id/subtitle_uso_internet"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Desabilitado" />
+
+                        <View style="@style/Divider" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <Switch
+                            android:id="@+id/switch_saque"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:tag="3"
+                            android:text="@string/prompt_saque" />
+
+                        <TextView
+                            android:id="@+id/subtitle_saque"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Desabilitado" />
+
+                        <View style="@style/Divider" />
+                    </LinearLayout>
+
                 </LinearLayout>
-
-
-                <View style="@style/Divider" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <Switch
-                        android:id="@+id/switch_uso_internet"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:tag="2"
-                        android:text="@string/prompt_uso_internet" />
-
-                    <TextView
-                        android:id="@+id/subtitle_uso_internet"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Desabilitado" />
-
-                </LinearLayout>
-
-
-                <View style="@style/Divider" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <Switch
-                        android:id="@+id/switch_saque"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:tag="3"
-                        android:text="@string/prompt_saque" />
-
-                    <TextView
-                        android:id="@+id/subtitle_saque"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Desabilitado" />
-
-                </LinearLayout>
-
-
-                <View style="@style/Divider" />
 
                 <Button
                     android:id="@+id/trocar_senha_cartao_button"
@@ -163,8 +169,8 @@
                     android:textStyle="bold" />
 
             </LinearLayout>
-            </ScrollView>
-        </android.support.v4.widget.SwipeRefreshLayout>
+        </ScrollView>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 
 </RelativeLayout>

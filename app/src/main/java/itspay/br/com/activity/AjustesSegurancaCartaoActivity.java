@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -40,6 +41,8 @@ public class AjustesSegurancaCartaoActivity extends AppCompatActivity {
 
     public Credencial credencialDetalhe;
 
+    public LinearLayout layoutMenuProduto;
+
 
     public CompoundButton.OnCheckedChangeListener changeListenerSwitch = new CompoundButton.OnCheckedChangeListener() {
         @Override
@@ -65,6 +68,8 @@ public class AjustesSegurancaCartaoActivity extends AppCompatActivity {
         switchUsoExterior = (Switch) findViewById(R.id.switch_uso_exterior);
         switchUsoInternet = (Switch) findViewById(R.id.switch_uso_internet);
         switchSaque = (Switch) findViewById(R.id.switch_saque);
+
+        layoutMenuProduto = (LinearLayout)findViewById(R.id.layoutMenuProduto);
 
         textAvisosNotificacoes = (TextView) findViewById(R.id.subtitle_avisos_notificacoes);
         textBloqueioCartao = (TextView) findViewById(R.id.subtitle_bloqueio_cartao);
@@ -99,6 +104,10 @@ public class AjustesSegurancaCartaoActivity extends AppCompatActivity {
                 comunicarPerdaOuRoubo();
             }
         });
+
+        if(credencialDetalhe.getIdProduto()==2 || credencialDetalhe.getIdProduto()==3){
+            layoutMenuProduto.setVisibility(View.GONE);
+        }
     }
 
     @Override

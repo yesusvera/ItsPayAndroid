@@ -1,6 +1,7 @@
 package itspay.br.com.controller;
 
 import android.text.format.DateFormat;
+import android.view.View;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -25,6 +26,7 @@ public class CartaoController extends BaseActivityController<CartaoActivity> {
     }
 
     public void carregarExtrato() {
+        activity.txtMensagemExtrato.setVisibility(View.GONE);
         activity.getSwipeRefreshExtrato().setRefreshing(true);
         activity.getMaterial_listViewExtrato().getAdapter().clearAll();
 
@@ -56,6 +58,10 @@ public class CartaoController extends BaseActivityController<CartaoActivity> {
                 try {
                     if (response.body() != null) {
                         activity.configurarExtrato(response.body());
+
+                        if(response.body().length == 0 ){
+                            activity.txtMensagemExtrato.setVisibility(View.VISIBLE);
+                        }
                     } else {
                         UtilsActivity.alertMsg(response.errorBody(), activity);
                     }

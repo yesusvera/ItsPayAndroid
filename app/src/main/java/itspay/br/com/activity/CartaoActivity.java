@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.TabHost;
+import android.widget.TextView;
 
 import com.dexafree.materialList.card.Card;
 import com.dexafree.materialList.card.CardProvider;
@@ -57,6 +58,7 @@ public class CartaoActivity extends AppCompatActivity {
     private SwipeRefreshLayout swipeRefreshExtrato;
     private String periodo = "15";
     private BoomMenuButton bmb;
+    public TextView txtMensagemExtrato;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,8 +88,7 @@ public class CartaoActivity extends AppCompatActivity {
             }
         });
         material_listViewExtrato = (MaterialListView)findViewById(R.id.material_listViewExtrato);
-
-
+        txtMensagemExtrato = (TextView) findViewById(R.id.text_mensagem_extrato);
 
         host = (TabHost)findViewById(R.id.tabhost);
         host.setup();
@@ -188,8 +189,14 @@ public class CartaoActivity extends AppCompatActivity {
             }
         });
 
-        cartaoController.carregarExtrato();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
         cartaoController.carregarCredencialDetalhe();
+        cartaoController.carregarExtrato();
     }
 
     public void configureTabs(){
