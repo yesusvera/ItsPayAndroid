@@ -87,7 +87,7 @@ public class AjustesSegurancaoCartaoController extends BaseActivityController<Aj
                         AvisarPerdaOuRouboRequest request = new AvisarPerdaOuRouboRequest();
                         request.setIdCredencial(activity.credencialDetalhe.getIdCredencial());
                         request.setIdUsuario(ItsPayConstants.ID_USUARIO);
-                        request.setStatus(activity.credencialDetalhe.getStatus());
+                        request.setStatus(1);
 
                         Call<ResponseBody> call = ConnectPortadorService
                                 .getService().avisarPerda(request, IdentityItsPay.getInstance().getToken());
@@ -123,7 +123,7 @@ public class AjustesSegurancaoCartaoController extends BaseActivityController<Aj
                         AvisarPerdaOuRouboRequest request = new AvisarPerdaOuRouboRequest();
                         request.setIdCredencial(activity.credencialDetalhe.getIdCredencial());
                         request.setIdUsuario(ItsPayConstants.ID_USUARIO);
-                        request.setStatus(activity.credencialDetalhe.getStatus());
+                        request.setStatus(2);
 
                         Call<ResponseBody> call = ConnectPortadorService
                                 .getService().avisarRoubo(request, IdentityItsPay.getInstance().getToken());
