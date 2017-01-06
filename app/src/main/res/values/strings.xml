@@ -82,6 +82,8 @@
     </string>
 
     <string name="mensagem_sem_internet">Aconteceu uma falha na comunicação. Verifique sua rede.</string>
+    <string name="mensagem_sessao_expirou">A sessão expirou.</string>
+    <string name="mensagem_timeout">A rede está lenta. Verifique sua conexão.</string>
     <string name="mensagem_sem_movimentacao">Sem movimentos neste Período.</string>
 
     <string name="action_settings_trocar_email_portador">Trocar Email do Portador</string>

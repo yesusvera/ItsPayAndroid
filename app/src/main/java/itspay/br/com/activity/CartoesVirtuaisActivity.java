@@ -72,7 +72,7 @@ public class CartoesVirtuaisActivity extends AppCompatActivity {
         mListView.getItemAnimator().setAddDuration(300);
         mListView.getItemAnimator().setRemoveDuration(300);
 
-        configurarCartoes();
+        adicionarCartoes();
 
         countConexaoServicoPlastico = credenciais.length;
 

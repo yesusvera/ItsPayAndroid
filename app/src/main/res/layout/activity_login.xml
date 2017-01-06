@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_login"
+    android:background="@drawable/back_bahamas"
     android:gravity="center_horizontal"
     android:orientation="vertical"
     android:paddingBottom="0dp"
@@ -48,7 +48,7 @@
                 android:layout_marginLeft="40dp"
                 android:layout_marginRight="40dp"
                 android:layout_marginTop="5dp"
-                app:srcCompat="@drawable/financial_logo" />
+                app:srcCompat="@drawable/bahamas_logo" />
 
 
 

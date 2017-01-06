@@ -51,7 +51,7 @@ public class BuilderManagerFloatingButton {
         return new TextInsideCircleButton.Builder()
                 .normalImageRes(getImageResource())
                 .normalTextRes(getTextResource())
-                .pieceColor(Color.WHITE).normalColor(Color.parseColor("#e82c36"));
+                .pieceColor(Color.WHITE).normalColor(Color.parseColor("#ab772d"));
                 //.normalTextRes(R.string.texto_icone);
     }
 
@@ -59,7 +59,7 @@ public class BuilderManagerFloatingButton {
         return new TextInsideCircleButton.Builder()
                 .normalImageRes(getImageResource())
 //                .normalTextRes(R.string.texto_icone)
-                .pieceColor(Color.WHITE).unableColor(R.color.red_itspay);
+                .pieceColor(Color.WHITE).unableColor(R.color.primary_bahamas);
     }
 
     static TextOutsideCircleButton.Builder getTextOutsideCircleButtonBuilder() {

@@ -20,16 +20,37 @@ import okhttp3.ResponseBody;
 
 public class UtilsActivity {
 
-    public static void alertMsg(ResponseBody body, Context context) {
+    public static void alertMsg(ResponseBody body, final Context context, DialogInterface.OnClickListener onClickListener) {
         if (body != null) {
             try {
                 JSONObject jsonObject = new JSONObject(body.string());
-                String msg = jsonObject.getString("msg");
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setMessage(msg)
-                        .setPositiveButton("OK", null);
-                builder.create().show();
+                if(!jsonObject.isNull("msg")) {
+                    String msg = jsonObject.getString("msg");
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setMessage(msg)
+                            .setPositiveButton("OK", onClickListener);
+                    builder.create().show();
+                }else{
+                    if(!jsonObject.isNull("status")){
+                        long status = jsonObject.getLong("status");
+                        if(status == 403){
+                            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                            builder.setMessage(context.getString(R.string.mensagem_sessao_expirou))
+                                    .setPositiveButton("OK", null)
+                                    .setNegativeButton("Fazer Login", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                            Intent it = new Intent(context.getApplicationContext(), LoginActivity.class);
+                                            it.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                            context.startActivity(it);
+                                        }
+                                    });
+                            builder.create().show();
+                        }
+                    }
+                }
             } catch (IOException ex) {
                 ex.printStackTrace();
             } catch (JSONException ex) {
@@ -38,22 +59,8 @@ public class UtilsActivity {
         }
     }
 
-    public static void alertMsg(ResponseBody body, Context context, DialogInterface.OnClickListener onClickListener) {
-        if (body != null) {
-            try {
-                JSONObject jsonObject = new JSONObject(body.string());
-                String msg = jsonObject.getString("msg");
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setMessage(msg)
-                        .setPositiveButton("OK", onClickListener);
-                builder.create().show();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            } catch (JSONException ex) {
-                ex.printStackTrace();
-            }
-        }
+    public static void alertMsg(ResponseBody body, Context context) {
+        alertMsg(body, context, null);
     }
 
     public static void alertIfSocketException(Throwable t, final Context context) {
@@ -61,6 +68,20 @@ public class UtilsActivity {
         if (t instanceof java.net.SocketException) {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setMessage(context.getString(R.string.mensagem_sem_internet))
+                    .setPositiveButton("OK", null)
+                    .setNegativeButton("Sair do aplicativo", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            Intent it = new Intent(context.getApplicationContext(), LoginActivity.class);
+                            it.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            it.putExtra("SAIR", true);
+                            context.startActivity(it);
+                        }
+                    });
+            builder.create().show();
+        }else if(t instanceof  java.net.SocketTimeoutException){
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setMessage(context.getString(R.string.mensagem_timeout))
                     .setPositiveButton("OK", null)
                     .setNegativeButton("Sair do aplicativo", new DialogInterface.OnClickListener() {
                         @Override

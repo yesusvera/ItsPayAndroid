@@ -43,6 +43,7 @@ import itspay.br.com.services.ConnectPortadorService;
 import itspay.br.com.util.Utils;
 import itspay.br.com.util.UtilsActivity;
 import jp.wasabeef.recyclerview.animators.FadeInLeftAnimator;
+import jp.wasabeef.recyclerview.animators.FlipInBottomXAnimator;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -130,7 +131,7 @@ public class CartaoActivity extends AppCompatActivity {
             bmb.setButtonPlaceEnum(ButtonPlaceEnum.SC_6_1);
         }
 
-        bmb.setNormalColor(Color.parseColor("#e82c36"));
+        bmb.setNormalColor(Color.parseColor("#00273f"));
 
         for (int i = 0; i < bmb.getPiecePlaceEnum().pieceNumber(); i++)
             bmb.addBuilder(BuilderManagerFloatingButton.getTextInsideCircleButtonBuilder());
@@ -195,8 +196,8 @@ public class CartaoActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        cartaoController.carregarCredencialDetalhe();
         cartaoController.carregarExtrato();
+        cartaoController.carregarCredencialDetalhe();
     }
 
     public void configureTabs(){
@@ -228,7 +229,7 @@ public class CartaoActivity extends AppCompatActivity {
     }
 
     public void configuraCartao(){
-        mListView.setItemAnimator(new FadeInLeftAnimator());
+        mListView.setItemAnimator(new FlipInBottomXAnimator());
         mListView.getItemAnimator().setAddDuration(300);
         mListView.getItemAnimator().setRemoveDuration(300);
         mListView.setOnClickListener(new View.OnClickListener() {
@@ -238,6 +239,8 @@ public class CartaoActivity extends AppCompatActivity {
             }
         });
 
+        mListView.getAdapter().clearAll();
+        mListView.getAdapter().add(Utils.novoCartaoCredencial(credencialDetalhe, CartaoActivity.this));
 
         //PEGANDO A FOTO
         Call<ResponseBody> call = ConnectPortadorService
@@ -317,7 +320,6 @@ public class CartaoActivity extends AppCompatActivity {
                             public void onActionClicked(View view, Card card) {
                                 if(card.getTag().equals("eye")){
                                     view.setBackgroundDrawable(CartaoActivity.this.getResources().getDrawable(R.drawable.eye_slash));
-//                                    linhaExtrato.
                                     card.setTag("eye_slash");
                                 }else{
                                    view.setBackgroundDrawable(CartaoActivity.this.getResources().getDrawable(R.drawable.eye));
@@ -327,9 +329,6 @@ public class CartaoActivity extends AppCompatActivity {
                             }
                         })
                 )
-
-//                .setDrawable(R.drawable.card1)
-//                .setDrawable(cred.getDrawable())
                 .endConfig()
                 .build();
     }

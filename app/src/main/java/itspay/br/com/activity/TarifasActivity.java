@@ -87,7 +87,7 @@ public class TarifasActivity extends AppCompatActivity {
 //                .setSubtitle(tarifa.getDescTransacaoReduzida())
 //                .setSubtitleColor(Color.GRAY)
                 .setDescription(" R$ " + valorTarifa + "")
-                .setDescriptionGravity(Gravity.CENTER_VERTICAL)
+                .setDescriptionGravity(Gravity.CENTER_VERTICAL + Gravity.RIGHT)
                 .setDividerColor(Color.LTGRAY)
                 .endConfig()
                 .build();

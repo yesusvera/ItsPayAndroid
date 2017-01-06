@@ -34,7 +34,7 @@ import itspay.br.com.model.Credencial;
 import itspay.br.com.services.ConnectPortadorService;
 import itspay.br.com.util.Utils;
 import itspay.br.com.util.UtilsActivity;
-import jp.wasabeef.recyclerview.animators.FadeInLeftAnimator;
+import jp.wasabeef.recyclerview.animators.FlipInBottomXAnimator;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -117,7 +117,7 @@ public class MeusCartoesActivity extends AppCompatActivity
 
     public void configurarCartoes(){
 
-        mListView.setItemAnimator(new FadeInLeftAnimator());
+        mListView.setItemAnimator(new FlipInBottomXAnimator());
         mListView.getItemAnimator().setAddDuration(300);
         mListView.getItemAnimator().setRemoveDuration(300);
 
