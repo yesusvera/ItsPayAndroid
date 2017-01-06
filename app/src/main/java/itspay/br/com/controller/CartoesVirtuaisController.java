@@ -23,7 +23,6 @@ public class CartoesVirtuaisController extends BaseActivityController<CartoesVir
 
     public void listarCartoesVirtuais() {
 
-        activity.getmListView().getAdapter().clearAll();
         activity.getSwipeRefreshLayout().setRefreshing(true);
 
         IdentityItsPay identity = IdentityItsPay.getInstance();

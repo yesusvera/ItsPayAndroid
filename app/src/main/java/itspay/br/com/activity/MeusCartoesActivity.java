@@ -121,6 +121,8 @@ public class MeusCartoesActivity extends AppCompatActivity
         mListView.getItemAnimator().setAddDuration(300);
         mListView.getItemAnimator().setRemoveDuration(300);
 
+        adicionarCartoes();
+
         countConexaoServicoPlastico = credenciais.length;
 
         for(final Credencial cred : credenciais){
@@ -155,11 +157,10 @@ public class MeusCartoesActivity extends AppCompatActivity
                 }
             });
         }
-
-
     }
 
     private void adicionarCartoes() {
+        mListView.getAdapter().clearAll();
         List<Card> cards = new ArrayList<>();
         for (Credencial cred: credenciais) {
             cards.add(Utils.novoCartaoCredencial(cred, this));

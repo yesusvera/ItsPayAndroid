@@ -249,17 +249,19 @@ public class CartaoActivity extends AppCompatActivity {
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-
                 if(response.body()!=null && response.body().byteStream()!=null) {
                     credencialDetalhe.setDrawable(new BitmapDrawable(response.body().byteStream()));
                 }
 
+                mListView.getAdapter().clearAll();
                 mListView.getAdapter().add(Utils.novoCartaoCredencial(credencialDetalhe, CartaoActivity.this));
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 UtilsActivity.alertIfSocketException(t, CartaoActivity.this);
+
+                mListView.getAdapter().clearAll();
                 mListView.getAdapter().add(Utils.novoCartaoCredencial(credencialDetalhe, CartaoActivity.this));
             }
         });
@@ -269,13 +271,11 @@ public class CartaoActivity extends AppCompatActivity {
 
 
     public void configurarExtrato(LinhaExtratoCredencial[] extrato){
-
         material_listViewExtrato.setItemAnimator(new FadeInLeftAnimator());
         material_listViewExtrato.getItemAnimator().setAddDuration(300);
         material_listViewExtrato.getItemAnimator().setRemoveDuration(300);
 
         adicionarLinhasExtrato(extrato);
-
     }
 
     private void adicionarLinhasExtrato(LinhaExtratoCredencial[] extrato) {

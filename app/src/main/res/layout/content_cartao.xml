@@ -12,16 +12,6 @@
     tools:showIn="@layout/activity_cartao">
 
 
-    <com.nightonke.boommenu.BoomMenuButton
-        android:id="@+id/bmb"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_gravity="bottom|end"
-        android:layout_marginBottom="20dp"
-        android:alpha="0.55" />
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshExtrato"
@@ -112,10 +102,12 @@
                     android:layout_height="wrap_content"
                     android:text="@string/mensagem_sem_movimentacao"
                     android:gravity="center"/>
-
-
             </LinearLayout>
         </ScrollView>
 
+
+
     </android.support.v4.widget.SwipeRefreshLayout>
+
+
 </RelativeLayout>

@@ -14,8 +14,10 @@ import itspay.br.com.model.GerarBoletoCarga;
 import itspay.br.com.model.GerarCredencialRequest;
 import itspay.br.com.model.GetCredenciaisResponse;
 import itspay.br.com.model.GetInfoPortadorCredencialRequest;
+import itspay.br.com.model.GetPerfilTarifarioResponse;
 import itspay.br.com.model.ItsPayResponse;
 import itspay.br.com.model.LinhaExtratoCredencial;
+import itspay.br.com.model.PerfilsTarifario;
 import itspay.br.com.model.PortadorCredencial;
 import itspay.br.com.model.PortadorLogin;
 import itspay.br.com.model.TransferenciaContaCorrente;
@@ -134,7 +136,7 @@ public interface PortadorService {
 
     @POST("api/portador/credencial/trocar-estado")
     Call<ResponseBody> trocarEstado(@Body TrocarEstadoCredencialRequest request,
-                                             @Header("AuthorizationPortador") String token);
+                                    @Header("AuthorizationPortador") String token);
 
 
     @POST("api/portador/credencial/avisar-perda")
@@ -147,6 +149,13 @@ public interface PortadorService {
 
     @POST("api/portador/credencial/trocar-pin")
     Call<ResponseBody> trocarSenhaCartao(@Body TrocarPinRequest request,
-                                   @Header("AuthorizationPortador") String token);
+                                         @Header("AuthorizationPortador") String token);
 
+    @GET("api/portador/conta/buscar-tarifas/conta/{idConta}")
+    Call<GetPerfilTarifarioResponse> listaTarifas(@Path("idConta") long idConta,
+                                                  @Header("AuthorizationPortador") String token);
+
+    @GET("api/perfiltarifario/conta/{idConta}")
+    Call<PerfilsTarifario> getTarifa(@Path("idConta") long idConta,
+                                     @Header("AuthorizationPortador") String token);
 }

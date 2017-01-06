@@ -72,6 +72,8 @@ public class CartoesVirtuaisActivity extends AppCompatActivity {
         mListView.getItemAnimator().setAddDuration(300);
         mListView.getItemAnimator().setRemoveDuration(300);
 
+        configurarCartoes();
+
         countConexaoServicoPlastico = credenciais.length;
 
         for(final Credencial cred : credenciais){
@@ -110,14 +112,14 @@ public class CartoesVirtuaisActivity extends AppCompatActivity {
 
 
     private void adicionarCartoes() {
+
+        mListView.getAdapter().clearAll();
+
         List<Card> cards = new ArrayList<>();
         for(int i=credenciais.length-1; i>=0;i--){
             Credencial cred = credenciais[i];
             cards.add(Utils.novoCartaoVirtual(cred, this));
         }
-//        for (Credencial cred: credenciais) {
-//            cards.add(Utils.novoCartaoVirtual(cred, this));
-//        }
         mListView.getAdapter().addAll(cards);
     }
 
