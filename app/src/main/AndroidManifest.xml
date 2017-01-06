@@ -33,28 +33,35 @@
         </activity>
         <activity
             android:name="itspay.br.com.activity.CadastroLoginActivity"
-            android:theme="@style/TemaFormularios" />
+            android:theme="@style/TemaFormularios"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
         <activity
             android:name="itspay.br.com.activity.TermosDeUsoActivity"
-            android:theme="@style/TemaFormularios" />
+            android:theme="@style/TemaFormularios"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
         <activity
             android:name="itspay.br.com.activity.TermosDeUsoCartaoVirtualActivity"
-            android:theme="@style/TemaFormularios" />
+            android:theme="@style/TemaFormularios"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
         <activity
             android:name="itspay.br.com.activity.MeusCartoesActivity"
             android:label="@string/title_activity_meus_cartoes"
+            android:windowSoftInputMode="stateHidden|adjustPan"
             android:theme="@style/AppTheme" />
         <activity
             android:name="itspay.br.com.activity.TrocarEmailActivity"
             android:label="Trocar Email"
+            android:windowSoftInputMode="stateHidden|adjustPan"
             android:theme="@style/TemaFormularios" />
         <activity
             android:name="itspay.br.com.activity.TrocarSenhaActivity"
             android:label="Trocar Senha"
+            android:windowSoftInputMode="stateHidden|adjustPan"
             android:theme="@style/TemaFormularios" />
         <activity
             android:name="itspay.br.com.activity.CartaoActivity"
             android:label="@string/title_activity_cartao"
+            android:windowSoftInputMode="stateHidden|adjustPan"
             android:theme="@style/AppTheme" />
         <activity
             android:name="itspay.br.com.activity.TransferirOutroCartaoActivity"
