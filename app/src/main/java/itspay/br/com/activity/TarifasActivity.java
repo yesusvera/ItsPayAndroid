@@ -37,6 +37,7 @@ public class TarifasActivity extends AppCompatActivity {
 
         credencialDetalhe = CartaoActivity.credencialDetalhe;
 
+        
         materialListView = (MaterialListView) findViewById(R.id.material_listview);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
 

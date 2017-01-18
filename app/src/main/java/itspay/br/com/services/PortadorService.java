@@ -17,7 +17,7 @@ import itspay.br.com.model.GetInfoPortadorCredencialRequest;
 import itspay.br.com.model.GetPerfilTarifarioResponse;
 import itspay.br.com.model.ItsPayResponse;
 import itspay.br.com.model.LinhaExtratoCredencial;
-import itspay.br.com.model.PerfilsTarifario;
+import itspay.br.com.model.Pedido;
 import itspay.br.com.model.PortadorCredencial;
 import itspay.br.com.model.PortadorLogin;
 import itspay.br.com.model.TransferenciaContaCorrente;
@@ -155,7 +155,10 @@ public interface PortadorService {
     Call<GetPerfilTarifarioResponse> listaTarifas(@Path("idConta") long idConta,
                                                   @Header("AuthorizationPortador") String token);
 
-    @GET("api/perfiltarifario/conta/{idConta}")
-    Call<PerfilsTarifario> getTarifa(@Path("idConta") long idConta,
-                                     @Header("AuthorizationPortador") String token);
+
+    @GET("api/mktplace/portador/pedido/pessoa/{documento}/processadora/{idProcessadora}/instituicao/{idInstituicao}")
+    Call<Pedido[]> buscarPedidos(@Path("documento") String documento,
+                                 @Path("idProcessadora") long idProcessadora,
+                                 @Path("idInstituicao") long idInstituicao,
+                                 @Header("AuthorizationPortador") String token);
 }

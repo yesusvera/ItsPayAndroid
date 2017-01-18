@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -61,8 +60,7 @@ public class MeusCartoesActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Irá abrir o MarketPlace", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                abrirMarketPlace();
             }
         });
 
@@ -107,12 +105,15 @@ public class MeusCartoesActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-
         if(FORCE_LOGOUT){
             meusCartoesController.forceLogout();
         }
-
         meusCartoesController.listarCredenciais();
+    }
+
+    public void abrirMarketPlace(){
+        Intent intent = new Intent(this, MarketPlaceActivity.class);
+        startActivity(intent);
     }
 
     public void configurarCartoes(){
@@ -167,8 +168,6 @@ public class MeusCartoesActivity extends AppCompatActivity
         }
         mListView.getAdapter().addAll(cards);
     }
-
-
 
     @Override
     public void onBackPressed() {
