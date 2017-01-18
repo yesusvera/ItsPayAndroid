@@ -10,16 +10,14 @@ import com.dexafree.materialList.card.Card;
 import com.dexafree.materialList.card.CardProvider;
 import com.dexafree.materialList.view.MaterialListView;
 
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import itspay.br.com.controller.TarifaController;
 import itspay.br.com.itspay.R;
 import itspay.br.com.model.Credencial;
 import itspay.br.com.model.PerfilsTarifario;
+import itspay.br.com.util.Utils;
 import jp.wasabeef.recyclerview.animators.FadeInLeftAnimator;
 
 public class TarifasActivity extends AppCompatActivity {
@@ -74,10 +72,8 @@ public class TarifasActivity extends AppCompatActivity {
 
 
     private Card novaLinhaTarifa(final PerfilsTarifario tarifa) {
-        DecimalFormat formatoDois = new DecimalFormat("##,###,###,##0.00", new DecimalFormatSymbols(new Locale("pt", "BR")));
-        formatoDois.setMinimumFractionDigits(2);
-        formatoDois.setParseBigDecimal(true);
-        String valorTarifa = formatoDois.format(tarifa.getValorTarifa());
+
+        String valorTarifa = Utils.formataMoeda(tarifa.getValorTarifa());
 
         return new Card.Builder(this)
                 .setTag("tarifa")

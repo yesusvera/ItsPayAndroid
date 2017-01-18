@@ -7,12 +7,24 @@ import android.graphics.Color;
 import com.dexafree.materialList.card.Card;
 import com.dexafree.materialList.card.CardProvider;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 import java.util.Set;
 
 import itspay.br.com.itspay.R;
 import itspay.br.com.model.Credencial;
 
 public abstract class Utils {
+
+    public static String formataMoeda(double valor){
+        DecimalFormat formatoDois = new DecimalFormat("##,###,###,##0.00", new DecimalFormatSymbols(new Locale("pt", "BR")));
+        formatoDois.setMinimumFractionDigits(2);
+        formatoDois.setParseBigDecimal(true);
+        String valorFormatado = formatoDois.format(valor);
+
+        return valorFormatado;
+    }
 
     public static String unmask(String s, Set<String> replaceSymbols) {
 

@@ -112,7 +112,11 @@
             android:name="itspay.br.com.activity.MarketPlaceActivity"
             android:label="@string/title_activity_market_place"
             android:theme="@style/AppTheme" />
-
+        <activity android:name="itspay.br.com.activity.PedidoDetalheActivity"
+            android:label="Detalhes do Pedido"
+            android:theme="@style/TemaFormularios"
+            android:windowSoftInputMode="stateHidden|adjustPan"
+            />
     </application>
 
 </manifest>
