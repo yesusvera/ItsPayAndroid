@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimaryDark">#303f9f</color>
     <color name="colorAccent">#FF4081</color>
     <color name="primary_bahamas">#ab772d</color>
     <color name="red_itspay_bkp">#e82c36</color>
     <color name="green_bahamas">#1FAA23</color>
 
 
+    <color name="azul_bahamas">#00273f</color>
 
     <!--Cores do Folding Cell -->
     <color name="bgBackSideColor">#f4f0ff</color>

@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_weight="6"
-        android:background="@color/bgTitleLeft"
+        android:background="@color/azul_bahamas"
         android:gravity="center_horizontal"
         android:orientation="vertical"
         android:paddingLeft="5dp"
@@ -53,7 +53,8 @@
             android:layout_height="wrap_content"
             android:paddingRight="8dp"
             android:paddingLeft="5dp"
-            android:src="@drawable/from_to_purple" />
+            android:src="@drawable/from_to_purple"
+            android:backgroundTint="@color/azul_bahamas" />
 
         <LinearLayout
             android:layout_width="match_parent"

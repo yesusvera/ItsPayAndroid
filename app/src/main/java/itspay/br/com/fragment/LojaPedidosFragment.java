@@ -112,24 +112,18 @@ public class LojaPedidosFragment extends Fragment {
         theListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
-                controller.buscarPedidoDetalhe(LojaPedidosFragment.this, pedidos.get(pos),view, adapter,pos);
+                if (!((FoldingCell) view).isUnfolded()) {
+                    controller.buscarPedidoDetalhe(LojaPedidosFragment.this, pedidos.get(pos),view, adapter,pos);
+                }
+                // toggle clicked celula_pedido state
+                ((FoldingCell) view).toggle(false);
+                // register in adapter that state for selected celula_pedido is toggled
+                adapter.registerToggle(pos);
             }
         });
     }
 
     public void clickPedido(View view, FoldingCellPedidosAdapter adapter, int pos, PedidoDetalhe pedidoDetalhe){
-
-        desenhaPedidoDetalhe(view, pedidoDetalhe);
-
-        // toggle clicked celula_pedido state
-        ((FoldingCell) view).toggle(false);
-        // register in adapter that state for selected celula_pedido is toggled
-        adapter.registerToggle(pos);
-
-    }
-
-
-    public void desenhaPedidoDetalhe(View view, PedidoDetalhe pedidoDetalhe){
         TextView nomeParceiro = (TextView)view.findViewById(R.id.text_nome_parceiro);
         TextView valorTotal = (TextView)view.findViewById(R.id.text_valor_total);
         TextView endereco1 = (TextView)view.findViewById(R.id.text_endereco_entrega);
@@ -142,16 +136,17 @@ public class LojaPedidosFragment extends Fragment {
         TextView button_status_pedido = (TextView)view.findViewById(R.id.btn_status_pedido);
 
         nomeParceiro.setText(pedidoDetalhe.getNomeParceiro());
-        valorTotal.setText("R$" + Utils.formataMoeda(pedidoDetalhe.getValorTotal()));
-        endereco1.setText("Frete: "+ Utils.formataMoeda(pedidoDetalhe.getValorFrete()));
+        valorTotal.setText("R$ " + Utils.formataMoeda(pedidoDetalhe.getValorTotal()));
+        endereco1.setText("Frete: R$ "+ Utils.formataMoeda(pedidoDetalhe.getValorFrete()));
         endereco2.setText(pedidoDetalhe.getEnderecoCompleto());
         quantidadeParcelas.setText(pedidoDetalhe.getQuantidadeParcelas() + "x");
-        valorParcela.setText("R$"+ Utils.formataMoeda(pedidoDetalhe.getValorParcela()));
-        valorTotalInferior.setText("R$" + Utils.formataMoeda(pedidoDetalhe.getValorTotal()));
+        valorParcela.setText("R$ "+ Utils.formataMoeda(pedidoDetalhe.getValorParcela()));
+        valorTotalInferior.setText("R$ " + Utils.formataMoeda(pedidoDetalhe.getValorTotal()));
         ultimos4Digitos.setText(pedidoDetalhe.getUltimos4Digitos());
         nomeImpresso.setText(pedidoDetalhe.getNomeImpresso());
         button_status_pedido.setText(pedidoDetalhe.getDescStatus());
     }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

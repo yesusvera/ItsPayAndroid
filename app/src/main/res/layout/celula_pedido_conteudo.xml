@@ -9,7 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/bgContentTop"
+        android:background="@color/azul_bahamas"
         android:orientation="horizontal"
         android:paddingBottom="7dp"
         android:paddingLeft="12dp"
@@ -27,9 +27,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="-"
+            android:text="Carregando..."
             android:textColor="@android:color/white"
-            android:textSize="20sp" />
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/text_valor_total"
@@ -39,7 +39,7 @@
             android:gravity="right"
             android:text="R$ -"
             android:textColor="@android:color/white"
-            android:textSize="20sp"
+            android:textSize="15sp"
             android:textStyle="bold" />
 
     </LinearLayout>
@@ -122,10 +122,10 @@
         android:layout_height="wrap_content"
         android:background="@color/bgContent"
         android:orientation="vertical"
-        android:paddingBottom="6dp"
+        android:paddingBottom="0dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:paddingTop="9dp">
+        android:paddingTop="4dp">
 
 
         <!-- divider line -->
@@ -161,9 +161,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/label_endereco_entrega"
-                    android:text="-"
+                    android:text="Carregando..."
                     android:textColor="@color/mainTextColor"
-                    android:textSize="18sp"
+                    android:textSize="13sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -171,9 +171,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/text_endereco_entrega"
-                    android:text="-"
+                    android:text="-\n\n\n"
                     android:textColor="@color/mainTextColor"
-                    android:textSize="14sp" />
+                    android:textSize="11sp" />
 
             </LinearLayout>
 
@@ -181,27 +181,29 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:paddingLeft="8dp"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/label_para"
+                    android:id="@+id/label_cartao"
                     style="@style/ContentMainBadgeTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/label_para" />
+                    android:text="@string/label_cartao" />
 
                 <TextView
-                    android:id="@+id/text_ultimos_4_digitos"
+
+                    android:id="@+id/text_nome_impresso"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/label_para"
-                    android:text="-"
+                    android:layout_below="@id/label_cartao"
+                    android:text="Carregando..."
                     android:textColor="@color/mainTextColor"
-                    android:textSize="18sp"
+                    android:textSize="13sp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/text_nome_impresso"
+                    android:id="@+id/text_ultimos_4_digitos"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/text_ultimos_4_digitos"
@@ -255,9 +257,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/label_pagamento"
-                        android:text="-"
+                        android:text="Carregando..."
                         android:textColor="@color/mainTextColor"
-                        android:textSize="18sp"
+                        android:textSize="13sp"
                         android:paddingRight="5dp"
                         android:textStyle="bold" />
 
@@ -278,6 +280,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:paddingLeft="8dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -294,9 +297,9 @@
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
                     android:layout_below="@+id/label_valor_total"
-                    android:text="-"
+                    android:text="Carregando..."
                     android:textColor="@color/mainTextColor"
-                    android:textSize="18sp"
+                    android:textSize="13sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -311,19 +314,20 @@
 
         </LinearLayout>
 
+
+
         <!-- request button -->
         <TextView
             android:id="@+id/btn_status_pedido"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="@color/btnRequest"
-            android:padding="10dp"
-            android:text="-"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@android:color/holo_green_dark"
+            android:text="Carregando..."
             android:textAlignment="center"
-            android:textColor="@color/mainTextColor"
-            android:textSize="20sp" />
-
+            android:textColor="@color/bgContent"
+            android:textSize="15sp" />
     </LinearLayout>
 
 </LinearLayout>

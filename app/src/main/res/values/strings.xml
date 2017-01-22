@@ -34,6 +34,7 @@
     <string name="label_pagamento">Pagamento</string>
     <string name="label_valor_total">Valor Total</string>
     <string name="label_para">Para</string>
+    <string name="label_cartao">Cartão</string>
 
     <string name="titulo_loja">Loja</string>
     <string name="titulo_meus_pedidos">Pedidos</string>

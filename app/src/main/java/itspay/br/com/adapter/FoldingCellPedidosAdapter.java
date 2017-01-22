@@ -66,7 +66,7 @@ public class FoldingCellPedidosAdapter extends ArrayAdapter<Pedido> {
         viewHolder.preco.setText("R$ "+ Utils.formataMoeda(pedido.getValorTotal()));
         viewHolder.data.setText(pedido.getDataHoraPedidoStr());
         viewHolder.pedido.setText("Pedido Nº"+ pedido.getIdPedido());
-        viewHolder.endereco.setText(pedido.getQuantidadeParcelas() + "x");
+        viewHolder.endereco.setText("Frete: R$" + Utils.formataMoeda(pedido.getValorFrete()));
 
         return cell;
     }
