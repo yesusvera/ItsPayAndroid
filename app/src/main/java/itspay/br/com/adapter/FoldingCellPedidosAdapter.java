@@ -66,16 +66,7 @@ public class FoldingCellPedidosAdapter extends ArrayAdapter<Pedido> {
         viewHolder.preco.setText("R$ "+ Utils.formataMoeda(pedido.getValorTotal()));
         viewHolder.data.setText(pedido.getDataHoraPedidoStr());
         viewHolder.pedido.setText("Pedido Nº"+ pedido.getIdPedido());
-        viewHolder.endereco.setText("asdfasdfdsafzxcvxzcvxczvasdfwq qwwqerwqre");
-//
-        // set custom btn handler for list item from that item
-//        if (pedido.getRequestBtnClickListener() != null) {
-//            viewHolder.contentRequestBtn.setOnClickListener(pedido.getRequestBtnClickListener());
-//        } else {
-//            // (optionally) add "default" handler if no handler found in item
-//            viewHolder.contentRequestBtn.setOnClickListener(defaultRequestBtnClickListener);
-//        }
-
+        viewHolder.endereco.setText(pedido.getQuantidadeParcelas() + "x");
 
         return cell;
     }

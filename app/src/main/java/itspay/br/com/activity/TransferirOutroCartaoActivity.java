@@ -49,7 +49,7 @@ public class TransferirOutroCartaoActivity extends AppCompatActivity {
             public void onFocusChange(View view, boolean hasfocus) {
                 if(!hasfocus){
                     favorecido.setText("");
-                    if(numeroCartaoDestino.getText().toString().length() == 19){
+                    if(numeroCartaoDestino.getText().toString().length() == 23){
                         controller.preencherNomePortadorCredencial();
                     }else{
                         numeroCartaoDestino.setError("Preencha corretamente o número do cartão");
@@ -66,7 +66,7 @@ public class TransferirOutroCartaoActivity extends AppCompatActivity {
         });
 
         valor.setLocale(new Locale("pt", "BR"));
-        numeroCartaoDestino.addTextChangedListener(new MaskEditTextChangedListener("####.####.####.####", numeroCartaoDestino));
+        numeroCartaoDestino.addTextChangedListener(new MaskEditTextChangedListener("####.####.####.####.###", numeroCartaoDestino));
     }
 
 

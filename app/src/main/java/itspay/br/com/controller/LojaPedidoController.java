@@ -1,8 +1,12 @@
 package itspay.br.com.controller;
 
+import android.view.View;
+
+import itspay.br.com.adapter.FoldingCellPedidosAdapter;
 import itspay.br.com.authentication.IdentityItsPay;
 import itspay.br.com.fragment.LojaPedidosFragment;
 import itspay.br.com.model.Pedido;
+import itspay.br.com.model.PedidoDetalhe;
 import itspay.br.com.services.ConnectPortadorService;
 import itspay.br.com.util.ItsPayConstants;
 import itspay.br.com.util.UtilsActivity;
@@ -43,6 +47,30 @@ public class LojaPedidoController {
             }
         });
 
+    }
+
+    public void buscarPedidoDetalhe(final LojaPedidosFragment rootView, Pedido pedido,
+                                    final View view, final FoldingCellPedidosAdapter adapter, final int pos){
+
+        Call<PedidoDetalhe> call = ConnectPortadorService.getService()
+                                .buscarPedidoDetalhe(pedido.getIdPedido(),
+                                                     IdentityItsPay.getInstance().getToken());
+
+        call.enqueue(new Callback<PedidoDetalhe>() {
+            @Override
+            public void onResponse(Call<PedidoDetalhe> call, Response<PedidoDetalhe> response) {
+                if(response.body() !=null){
+                    rootView.clickPedido(view, adapter, pos, response.body());
+                }else{
+                    UtilsActivity.alertMsg(response.errorBody(), rootView.getContext());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<PedidoDetalhe> call, Throwable t) {
+                UtilsActivity.alertIfSocketException(t, rootView.getContext());
+            }
+        });
     }
 
 }

@@ -62,7 +62,7 @@ public class TransferirOutroCartaoController extends BaseActivityController<Tran
         request.setCredencialDestino(credencialDestino);
         request.setIdInstituicaoOrigem(ItsPayConstants.ID_INSTITUICAO);
         request.setValorTransferencia(Double.parseDouble(activity.getValor().getText().toString().replace("R$","").replace(".", "").replace(",",".")));
-        request.setPinCredencialOrigem(activity.getSenhaCartao().getText().toString());
+        request.setPinCredencialOrigem(EncriptSHA512.encript(activity.getSenhaCartao().getText().toString() +  IdentityItsPay.getInstance().getToken()));
 
         Call<ResponseBody> call = ConnectPortadorService.getService()
                                         .transferenciaOutroCartao(request, IdentityItsPay.getInstance().getToken() );
@@ -71,7 +71,8 @@ public class TransferirOutroCartaoController extends BaseActivityController<Tran
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if(response.body()!=null){
-
+                    UtilsActivity.alertMsg(response.body(), activity);
+                    activity.finish();
                 }else {
                     UtilsActivity.alertMsg(response.errorBody(), activity);
                 }

@@ -10,8 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
-import com.dexafree.materialList.view.MaterialListView;
 import com.ramotion.foldingcell.FoldingCell;
 
 import java.util.ArrayList;
@@ -21,6 +21,8 @@ import itspay.br.com.adapter.FoldingCellPedidosAdapter;
 import itspay.br.com.controller.LojaPedidoController;
 import itspay.br.com.itspay.R;
 import itspay.br.com.model.Pedido;
+import itspay.br.com.model.PedidoDetalhe;
+import itspay.br.com.util.Utils;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -42,7 +44,6 @@ public class LojaPedidosFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public MaterialListView materialListView;
     public SwipeRefreshLayout swipeRefreshLayout;
 
     private LojaPedidoController controller = new LojaPedidoController();
@@ -83,9 +84,7 @@ public class LojaPedidosFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_loja_pedidos, container, false);
-//        materialListView = (MaterialListView) rootView.findViewById(R.id.material_listview);
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshLayout);
 //
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -100,38 +99,11 @@ public class LojaPedidosFragment extends Fragment {
         return rootView;
     }
 
-    public void configurarPedidos(Pedido[] listaPedidos){
+    public void configurarPedidos(final Pedido[] listaPedidos){
 
         ListView theListView = (ListView) rootView.findViewById(R.id.mainListView);
 
-
-
-        /*****
-        // prepare elements to display
-        final ArrayList<Item> items = Item.getTestingList();
-
-        // add custom btn handler to first list item
-        items.get(0).setRequestBtnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getActivity().getApplicationContext(), "CUSTOM HANDLER FOR FIRST BUTTON", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        // create custom adapter that holds elements and their state (we need hold a id's of unfolded elements for reusable elements)
-        final FoldingCellListAdapter adapter = new FoldingCellListAdapter(getContext(), items);
-
-
-        // add default btn handler for each request btn on each item if custom handler not found
-        adapter.setDefaultRequestBtnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getActivity().getApplicationContext(), "DEFAULT HANDLER FOR ALL BUTTONS", Toast.LENGTH_SHORT).show();
-            }
-        });
-         ****/
-
-        ArrayList<Pedido> pedidos = new ArrayList<>(Arrays.asList(listaPedidos));
+        final ArrayList<Pedido> pedidos = new ArrayList<>(Arrays.asList(listaPedidos));
 
         final FoldingCellPedidosAdapter adapter = new FoldingCellPedidosAdapter(getActivity(), pedidos);
 
@@ -140,51 +112,46 @@ public class LojaPedidosFragment extends Fragment {
         theListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
-                // toggle clicked celula_pedido state
-                ((FoldingCell) view).toggle(false);
-                // register in adapter that state for selected celula_pedido is toggled
-                adapter.registerToggle(pos);
+                controller.buscarPedidoDetalhe(LojaPedidosFragment.this, pedidos.get(pos),view, adapter,pos);
             }
         });
     }
 
-//
-//    public void configurarPedidos(Pedido[] listaPedidos) {
-//        materialListView.setItemAnimator(new FadeInLeftAnimator());
-//        materialListView.getItemAnimator().setAddDuration(300);
-//        materialListView.getItemAnimator().setRemoveDuration(300);
-//
-//        materialListView.getAdapter().clearAll();
-//
-//        List<Card> cards = new ArrayList<>();
-//        for (Pedido pedido : listaPedidos) {
-//            cards.add(novaLinhaPedido(pedido));
-//        }
-//        materialListView.getAdapter().addAll(cards);
-//
-//        swipeRefreshLayout.setRefreshing(false);
-//    }
-//
-//    private Card novaLinhaPedido(final Pedido pedido) {
-//        DecimalFormat formatoDois = new DecimalFormat("##,###,###,##0.00", new DecimalFormatSymbols(new Locale("pt", "BR")));
-//        formatoDois.setMinimumFractionDigits(2);
-//        formatoDois.setParseBigDecimal(true);
-//        String valorPedido = formatoDois.format(pedido.getValorTotal());
-//
-//        return new Card.Builder(rootView.getContext())
-//                .setTag("pedido")
-//                .withProvider(new CardProvider())
-//                .setLayout(R.layout.material_itspay_pedido)
-//                .setTitle("Pedido Nº"+ pedido.getIdPedido())
-//                .setTitleColor(Color.BLACK)
-//                .setSubtitle(pedido.getDataHoraPedidoStr())
-//                .setSubtitleColor(Color.GRAY)
-//                .setDescription(" R$ " + valorPedido + "")
-//                .setDescriptionGravity(Gravity.CENTER_VERTICAL + Gravity.RIGHT)
-//                .setDescriptionColor(getActivity().getResources().getColor(R.color.green_bahamas))
-//                .endConfig()
-//                .build();
-//    }
+    public void clickPedido(View view, FoldingCellPedidosAdapter adapter, int pos, PedidoDetalhe pedidoDetalhe){
+
+        desenhaPedidoDetalhe(view, pedidoDetalhe);
+
+        // toggle clicked celula_pedido state
+        ((FoldingCell) view).toggle(false);
+        // register in adapter that state for selected celula_pedido is toggled
+        adapter.registerToggle(pos);
+
+    }
+
+
+    public void desenhaPedidoDetalhe(View view, PedidoDetalhe pedidoDetalhe){
+        TextView nomeParceiro = (TextView)view.findViewById(R.id.text_nome_parceiro);
+        TextView valorTotal = (TextView)view.findViewById(R.id.text_valor_total);
+        TextView endereco1 = (TextView)view.findViewById(R.id.text_endereco_entrega);
+        TextView endereco2 = (TextView)view.findViewById(R.id.text_endereco_entrega2);
+        TextView quantidadeParcelas = (TextView)view.findViewById(R.id.text_qtde_parcelas);
+        TextView valorParcela = (TextView)view.findViewById(R.id.text_valor_parcela);
+        TextView valorTotalInferior = (TextView)view.findViewById(R.id.text_inferior_valor_total);
+        TextView ultimos4Digitos = (TextView)view.findViewById(R.id.text_ultimos_4_digitos);
+        TextView nomeImpresso = (TextView)view.findViewById(R.id.text_nome_impresso);
+        TextView button_status_pedido = (TextView)view.findViewById(R.id.btn_status_pedido);
+
+        nomeParceiro.setText(pedidoDetalhe.getNomeParceiro());
+        valorTotal.setText("R$" + Utils.formataMoeda(pedidoDetalhe.getValorTotal()));
+        endereco1.setText("Frete: "+ Utils.formataMoeda(pedidoDetalhe.getValorFrete()));
+        endereco2.setText(pedidoDetalhe.getEnderecoCompleto());
+        quantidadeParcelas.setText(pedidoDetalhe.getQuantidadeParcelas() + "x");
+        valorParcela.setText("R$"+ Utils.formataMoeda(pedidoDetalhe.getValorParcela()));
+        valorTotalInferior.setText("R$" + Utils.formataMoeda(pedidoDetalhe.getValorTotal()));
+        ultimos4Digitos.setText(pedidoDetalhe.getUltimos4Digitos());
+        nomeImpresso.setText(pedidoDetalhe.getNomeImpresso());
+        button_status_pedido.setText(pedidoDetalhe.getDescStatus());
+    }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

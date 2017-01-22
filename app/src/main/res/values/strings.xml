@@ -29,10 +29,15 @@
     <string name="prompt_confirma_notificar_perda">Você tem certeza que deseja notificar Perda deste cartão?</string>
     <string name="prompt_confirma_notificar_roubo">Você tem certeza que deseja notificar Roubo deste cartão?</string>
 
+
+    <string name="label_endereco_entrega">Entregar no endereço</string>
+    <string name="label_pagamento">Pagamento</string>
+    <string name="label_valor_total">Valor Total</string>
+    <string name="label_para">Para</string>
+
     <string name="titulo_loja">Loja</string>
     <string name="titulo_meus_pedidos">Pedidos</string>
     <string name="titulo_carrinho">Carrinho</string>
-
 
     <string name="acao_criar_login">Criar Login</string>
     <string name="acao_transferir">Transferir</string>
