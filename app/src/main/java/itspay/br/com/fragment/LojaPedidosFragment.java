@@ -50,6 +50,8 @@ public class LojaPedidosFragment extends Fragment {
 
     private View rootView;
 
+    public ArrayList<Integer> pedidosCarregadosIndex = new ArrayList<>();
+
     public LojaPedidosFragment() {
         // Required empty public constructor
     }
@@ -113,7 +115,18 @@ public class LojaPedidosFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
                 if (!((FoldingCell) view).isUnfolded()) {
-                    controller.buscarPedidoDetalhe(LojaPedidosFragment.this, pedidos.get(pos),view, adapter,pos);
+                    //Somente busca no serviço se ele já não foi carregado.
+                    boolean jaCarregado = false;
+                    for(Integer index: pedidosCarregadosIndex ){
+                        if(index.intValue() == pos){
+                            jaCarregado = true;
+                            break;
+                        }
+                    }
+
+                    if(!jaCarregado) {
+                        controller.buscarPedidoDetalhe(LojaPedidosFragment.this, pedidos.get(pos), view, adapter, pos);
+                    }
                 }
                 // toggle clicked celula_pedido state
                 ((FoldingCell) view).toggle(false);
@@ -124,6 +137,7 @@ public class LojaPedidosFragment extends Fragment {
     }
 
     public void clickPedido(View view, FoldingCellPedidosAdapter adapter, int pos, PedidoDetalhe pedidoDetalhe){
+
         TextView nomeParceiro = (TextView)view.findViewById(R.id.text_nome_parceiro);
         TextView valorTotal = (TextView)view.findViewById(R.id.text_valor_total);
         TextView endereco1 = (TextView)view.findViewById(R.id.text_endereco_entrega);

@@ -2,6 +2,8 @@ package itspay.br.com.controller;
 
 import android.view.View;
 
+import java.util.ArrayList;
+
 import itspay.br.com.adapter.FoldingCellPedidosAdapter;
 import itspay.br.com.authentication.IdentityItsPay;
 import itspay.br.com.fragment.LojaPedidosFragment;
@@ -21,6 +23,8 @@ import retrofit2.Response;
 public class LojaPedidoController {
 
     public void listarPedidos(final LojaPedidosFragment rootView){
+
+        rootView.pedidosCarregadosIndex = new ArrayList<>();
 
         Call<Pedido[]> call =  ConnectPortadorService.getService().buscarPedidos(
                 IdentityItsPay.getInstance().getLoginPortador().getCpf(),
@@ -60,6 +64,7 @@ public class LojaPedidoController {
             @Override
             public void onResponse(Call<PedidoDetalhe> call, Response<PedidoDetalhe> response) {
                 if(response.body() !=null){
+                    rootView.pedidosCarregadosIndex.add(pos);
                     rootView.clickPedido(view, adapter, pos, response.body());
                 }else{
                     UtilsActivity.alertMsg(response.errorBody(), rootView.getContext());
