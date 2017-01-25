@@ -44,77 +44,11 @@
 
     </LinearLayout>
 
-    <!-- content header image -->
-    <RelativeLayout
+    <!-- Lista de produtos -->
+    <com.dexafree.materialList.view.MaterialListView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:id="@+id/head_image"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scaleType="centerCrop"
-            android:src="@drawable/head_image" />
-
-        <TextView
-            android:id="@+id/head_image_left_text"
-            style="@style/ContentImageBadgeText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/head_image"
-            android:layout_alignStart="@id/head_image"
-            android:paddingBottom="10dp"
-            android:paddingStart="20dp"
-            android:text="@string/requests_count_mock" />
-
-        <TextView
-            style="@style/ContentImageBadgeTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@id/head_image_left_text"
-            android:layout_alignStart="@id/head_image_left_text"
-            android:paddingStart="20dp"
-            android:text="@string/requests_count_badge" />
-
-        <TextView
-            android:id="@+id/head_image_right_text"
-            style="@style/ContentImageBadgeText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/head_image"
-            android:layout_alignEnd="@id/head_image"
-            android:paddingBottom="10dp"
-            android:paddingEnd="20dp"
-            android:text="@string/weight_mock" />
-
-        <TextView
-            style="@style/ContentImageBadgeTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@id/head_image_right_text"
-            android:layout_alignStart="@id/head_image_right_text"
-            android:text="@string/weight_badge" />
-
-        <TextView
-            android:id="@+id/head_image_center_text"
-            style="@style/ContentImageBadgeText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/head_image"
-            android:layout_centerHorizontal="true"
-            android:paddingBottom="10dp"
-            android:text="@string/pledge_mock" />
-
-        <TextView
-            style="@style/ContentImageBadgeTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@id/head_image_center_text"
-            android:layout_alignStart="@id/head_image_center_text"
-            android:text="@string/pledge_badge" />
-
-
-    </RelativeLayout>
+        android:layout_height="wrap_content"
+        android:id="@+id/material_listview_produtos" />
 
     <!-- content body layout -->
     <LinearLayout

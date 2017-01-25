@@ -17,6 +17,7 @@ import itspay.br.com.model.GetInfoPortadorCredencialRequest;
 import itspay.br.com.model.GetPerfilTarifarioResponse;
 import itspay.br.com.model.ItsPayResponse;
 import itspay.br.com.model.LinhaExtratoCredencial;
+import itspay.br.com.model.ParceiroResponse;
 import itspay.br.com.model.Pedido;
 import itspay.br.com.model.PedidoDetalhe;
 import itspay.br.com.model.PortadorCredencial;
@@ -167,4 +168,9 @@ public interface PortadorService {
     Call<PedidoDetalhe> buscarPedidoDetalhe(
                                  @Path("idPedido") long idPedido,
                                  @Header("AuthorizationPortador") String token);
+
+    @GET("api/mktplace/portador/parceiro-produto/{idProcessadora}/{idInstituicao}/")
+    Call<ParceiroResponse[]> getParceiros( @Path("idProcessadora") long idProcessadora,
+                                         @Path("idInstituicao") long idInstituicao,
+                                         @Header("AuthorizationPortador") String token);
 }

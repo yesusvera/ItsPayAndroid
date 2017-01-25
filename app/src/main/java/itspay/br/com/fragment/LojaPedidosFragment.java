@@ -1,6 +1,7 @@
 package itspay.br.com.fragment;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,17 +13,23 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.dexafree.materialList.card.Card;
+import com.dexafree.materialList.card.CardProvider;
+import com.dexafree.materialList.view.MaterialListView;
 import com.ramotion.foldingcell.FoldingCell;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import itspay.br.com.adapter.FoldingCellPedidosAdapter;
 import itspay.br.com.controller.LojaPedidoController;
 import itspay.br.com.itspay.R;
+import itspay.br.com.model.ItemPedido;
 import itspay.br.com.model.Pedido;
 import itspay.br.com.model.PedidoDetalhe;
 import itspay.br.com.util.Utils;
+import jp.wasabeef.recyclerview.animators.FlipInBottomXAnimator;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -101,7 +108,7 @@ public class LojaPedidosFragment extends Fragment {
         return rootView;
     }
 
-    public void configurarPedidos(final Pedido[] listaPedidos){
+    public void configurarPedidos(final Pedido[] listaPedidos) {
 
         ListView theListView = (ListView) rootView.findViewById(R.id.mainListView);
 
@@ -117,14 +124,14 @@ public class LojaPedidosFragment extends Fragment {
                 if (!((FoldingCell) view).isUnfolded()) {
                     //Somente busca no serviço se ele já não foi carregado.
                     boolean jaCarregado = false;
-                    for(Integer index: pedidosCarregadosIndex ){
-                        if(index.intValue() == pos){
+                    for (Integer index : pedidosCarregadosIndex) {
+                        if (index.intValue() == pos) {
                             jaCarregado = true;
                             break;
                         }
                     }
 
-                    if(!jaCarregado) {
+                    if (!jaCarregado) {
                         controller.buscarPedidoDetalhe(LojaPedidosFragment.this, pedidos.get(pos), view, adapter, pos);
                     }
                 }
@@ -136,29 +143,60 @@ public class LojaPedidosFragment extends Fragment {
         });
     }
 
-    public void clickPedido(View view, FoldingCellPedidosAdapter adapter, int pos, PedidoDetalhe pedidoDetalhe){
+    public void clickPedido(View view, FoldingCellPedidosAdapter adapter, int pos, PedidoDetalhe pedidoDetalhe) {
 
-        TextView nomeParceiro = (TextView)view.findViewById(R.id.text_nome_parceiro);
-        TextView valorTotal = (TextView)view.findViewById(R.id.text_valor_total);
-        TextView endereco1 = (TextView)view.findViewById(R.id.text_endereco_entrega);
-        TextView endereco2 = (TextView)view.findViewById(R.id.text_endereco_entrega2);
-        TextView quantidadeParcelas = (TextView)view.findViewById(R.id.text_qtde_parcelas);
-        TextView valorParcela = (TextView)view.findViewById(R.id.text_valor_parcela);
-        TextView valorTotalInferior = (TextView)view.findViewById(R.id.text_inferior_valor_total);
-        TextView ultimos4Digitos = (TextView)view.findViewById(R.id.text_ultimos_4_digitos);
-        TextView nomeImpresso = (TextView)view.findViewById(R.id.text_nome_impresso);
-        TextView button_status_pedido = (TextView)view.findViewById(R.id.btn_status_pedido);
+        TextView nomeParceiro = (TextView) view.findViewById(R.id.text_nome_parceiro);
+        TextView valorTotal = (TextView) view.findViewById(R.id.text_valor_total);
+        TextView endereco1 = (TextView) view.findViewById(R.id.text_endereco_entrega);
+        TextView endereco2 = (TextView) view.findViewById(R.id.text_endereco_entrega2);
+        TextView quantidadeParcelas = (TextView) view.findViewById(R.id.text_qtde_parcelas);
+        TextView valorParcela = (TextView) view.findViewById(R.id.text_valor_parcela);
+        TextView valorTotalInferior = (TextView) view.findViewById(R.id.text_inferior_valor_total);
+        TextView ultimos4Digitos = (TextView) view.findViewById(R.id.text_ultimos_4_digitos);
+        TextView nomeImpresso = (TextView) view.findViewById(R.id.text_nome_impresso);
+        TextView button_status_pedido = (TextView) view.findViewById(R.id.btn_status_pedido);
 
         nomeParceiro.setText(pedidoDetalhe.getNomeParceiro());
         valorTotal.setText("R$ " + Utils.formataMoeda(pedidoDetalhe.getValorTotal()));
-        endereco1.setText("Frete: R$ "+ Utils.formataMoeda(pedidoDetalhe.getValorFrete()));
+        endereco1.setText("Frete: R$ " + Utils.formataMoeda(pedidoDetalhe.getValorFrete()));
         endereco2.setText(pedidoDetalhe.getEnderecoCompleto());
         quantidadeParcelas.setText(pedidoDetalhe.getQuantidadeParcelas() + "x");
-        valorParcela.setText("R$ "+ Utils.formataMoeda(pedidoDetalhe.getValorParcela()));
+        valorParcela.setText("R$ " + Utils.formataMoeda(pedidoDetalhe.getValorParcela()));
         valorTotalInferior.setText("R$ " + Utils.formataMoeda(pedidoDetalhe.getValorTotal()));
         ultimos4Digitos.setText(pedidoDetalhe.getUltimos4Digitos());
         nomeImpresso.setText(pedidoDetalhe.getNomeImpresso());
         button_status_pedido.setText(pedidoDetalhe.getDescStatus());
+
+        if (pedidoDetalhe.getItensPedido() != null) {
+            MaterialListView materialListViewProdutos = (MaterialListView) view.findViewById(R.id.material_listview_produtos);
+            materialListViewProdutos.setItemAnimator(new FlipInBottomXAnimator());
+            materialListViewProdutos.getItemAnimator().setAddDuration(300);
+            materialListViewProdutos.getItemAnimator().setRemoveDuration(300);
+
+            materialListViewProdutos.getAdapter().clearAll();
+
+            List<Card> cards = new ArrayList<>();
+
+
+            for (ItemPedido produto : pedidoDetalhe.getItensPedido()) {
+
+                Card card = new Card.Builder(LojaPedidosFragment.this.getContext())
+                        .setTag("Produto Pedido")
+                        .withProvider(new CardProvider())
+                        .setLayout(R.layout.item_produto_pedido)
+                        .setTitle(produto.getNomeProduto())
+                        .setTitleColor(Color.DKGRAY)
+                        .setSubtitle(produto.getQuantidadeItem() + "")
+                        .setSubtitle2("R$" + Utils.formataMoeda(produto.getValorTotalItem()))
+                        .setSubtitleColor(Color.DKGRAY)
+                        .endConfig()
+                        .build();
+
+            cards.add(card);
+        }
+
+            materialListViewProdutos.getAdapter().addAll(cards);
+        }
     }
 
 

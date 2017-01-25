@@ -1,7 +1,5 @@
 package itspay.br.com.model;
 
-import java.util.Arrays;
-
 /**
  * Created by yesus on 21/01/17.
  */
@@ -37,9 +35,9 @@ public class PedidoDetalhe {
     private String nomeParceiro;
     private double valorParcela;
     private String enderecoCompleto;
-    private ItemPedido itemPedido[];
+    private ItemPedido itensPedido[];
 
-    public PedidoDetalhe(long idPedido, long idParceiro, long idProcessadora, long idInstituicao, long idConta, long idCredencial, double valorTotal, long quantidadeParcelas, long status, String descStatus, String dataHoraStatus, String dataHoraPedido, long idEndereco, String cep, String logradouro, String numero, String complemento, String bairro, String cidade, String uf, long tipoEntrega, String descTipoEntrega, String dataHoraStatusStr, String dataHoraPedidoStr, double valorFrete, String nomeImpresso, String ultimos4Digitos, String nomeParceiro, double valorParcela, String enderecoCompleto, ItemPedido[] itemPedido) {
+    public PedidoDetalhe(long idPedido, long idParceiro, long idProcessadora, long idInstituicao, long idConta, long idCredencial, double valorTotal, long quantidadeParcelas, long status, String descStatus, String dataHoraStatus, String dataHoraPedido, long idEndereco, String cep, String logradouro, String numero, String complemento, String bairro, String cidade, String uf, long tipoEntrega, String descTipoEntrega, String dataHoraStatusStr, String dataHoraPedidoStr, double valorFrete, String nomeImpresso, String ultimos4Digitos, String nomeParceiro, double valorParcela, String enderecoCompleto, ItemPedido[] itensPedido) {
         this.idPedido = idPedido;
         this.idParceiro = idParceiro;
         this.idProcessadora = idProcessadora;
@@ -70,7 +68,7 @@ public class PedidoDetalhe {
         this.nomeParceiro = nomeParceiro;
         this.valorParcela = valorParcela;
         this.enderecoCompleto = enderecoCompleto;
-        this.itemPedido = itemPedido;
+        this.itensPedido = itensPedido;
     }
 
     public PedidoDetalhe() {
@@ -316,48 +314,11 @@ public class PedidoDetalhe {
         this.enderecoCompleto = enderecoCompleto;
     }
 
-    public ItemPedido[] getItemPedido() {
-        return itemPedido;
+    public ItemPedido[] getItensPedido() {
+        return itensPedido;
     }
 
-    public void setItemPedido(ItemPedido[] itemPedido) {
-        this.itemPedido = itemPedido;
-    }
-
-    @Override
-    public String toString() {
-        return "PedidoDetalhe{" +
-                "idPedido=" + idPedido +
-                ", idParceiro=" + idParceiro +
-                ", idProcessadora=" + idProcessadora +
-                ", idInstituicao=" + idInstituicao +
-                ", idConta=" + idConta +
-                ", idCredencial=" + idCredencial +
-                ", valorTotal=" + valorTotal +
-                ", quantidadeParcelas=" + quantidadeParcelas +
-                ", status=" + status +
-                ", descStatus='" + descStatus + '\'' +
-                ", dataHoraStatus='" + dataHoraStatus + '\'' +
-                ", dataHoraPedido='" + dataHoraPedido + '\'' +
-                ", idEndereco=" + idEndereco +
-                ", cep='" + cep + '\'' +
-                ", logradouro='" + logradouro + '\'' +
-                ", numero='" + numero + '\'' +
-                ", complemento='" + complemento + '\'' +
-                ", bairro='" + bairro + '\'' +
-                ", cidade='" + cidade + '\'' +
-                ", uf='" + uf + '\'' +
-                ", tipoEntrega=" + tipoEntrega +
-                ", descTipoEntrega='" + descTipoEntrega + '\'' +
-                ", dataHoraStatusStr='" + dataHoraStatusStr + '\'' +
-                ", dataHoraPedidoStr='" + dataHoraPedidoStr + '\'' +
-                ", valorFrete=" + valorFrete +
-                ", nomeImpresso='" + nomeImpresso + '\'' +
-                ", ultimos4Digitos='" + ultimos4Digitos + '\'' +
-                ", nomeParceiro='" + nomeParceiro + '\'' +
-                ", valorParcela=" + valorParcela +
-                ", enderecoCompleto='" + enderecoCompleto + '\'' +
-                ", itemPedido=" + Arrays.toString(itemPedido) +
-                '}';
+    public void setItensPedido(ItemPedido[] itensPedido) {
+        this.itensPedido = itensPedido;
     }
 }

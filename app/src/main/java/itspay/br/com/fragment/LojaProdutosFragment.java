@@ -1,14 +1,28 @@
 package itspay.br.com.fragment;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.dexafree.materialList.card.Card;
+import com.dexafree.materialList.card.CardProvider;
+import com.dexafree.materialList.view.MaterialListView;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import itspay.br.com.controller.LojaProdutosController;
 import itspay.br.com.itspay.R;
+import itspay.br.com.model.ParceiroResponse;
+import itspay.br.com.model.Produto;
+import itspay.br.com.util.Utils;
+import jp.wasabeef.recyclerview.animators.FlipInBottomXAnimator;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,6 +43,16 @@ public class LojaProdutosFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    private View rootView;
+
+    public SwipeRefreshLayout swipeRefreshLayout;
+
+    public MaterialListView materialListView;
+
+    public ParceiroResponse listaParceiroResponse[];
+
+    private LojaProdutosController controller = new LojaProdutosController();
 
     public LojaProdutosFragment() {
         // Required empty public constructor
@@ -64,9 +88,63 @@ public class LojaProdutosFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_loja_produtos, container, false);
+
+        rootView = inflater.inflate(R.layout.fragment_loja_produtos, container, false);
+        swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshLayout);
+//
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                controller.listaParceiros(LojaProdutosFragment.this);
+            }
+        });
+        materialListView = (MaterialListView) rootView.findViewById(R.id.material_listview);
+
+        controller.listaParceiros(LojaProdutosFragment.this);
+
+        return rootView;
     }
+
+    public void listarProdutos(){
+        materialListView.setItemAnimator(new FlipInBottomXAnimator());
+        materialListView.getItemAnimator().setAddDuration(300);
+        materialListView.getItemAnimator().setRemoveDuration(300);
+
+        materialListView.getAdapter().clearAll();
+
+        List<Card> cards = new ArrayList<>();
+
+        for(ParceiroResponse parceiroResponse: listaParceiroResponse) {
+            for (Produto produto : parceiroResponse.getProdutos()) {
+
+                String precoDe = "R$" + Utils.formataMoeda(produto.getReferencias()[0].getPrecoDe());
+                String precoPor = "R$" + Utils.formataMoeda(produto.getReferencias()[0].getPrecoPor());
+                String description = parceiroResponse.getQuantMaxParcelaSemJuros() +
+                        "x de R$" +
+                        Utils.formataMoeda(
+                                produto.getReferencias()[0].getPrecoPor() /
+                                        parceiroResponse.getQuantMaxParcelaSemJuros());
+
+                Card card = new Card.Builder(this.getContext())
+                        .setTag("Produto Pedido")
+                        .withProvider(new CardProvider())
+                        .setLayout(R.layout.item_produto_loja)
+                        .setTitle(produto.getNomeProduto())
+                        .setTitleColor(Color.DKGRAY)
+                        .setSubtitle(precoDe)
+                        .setSubtitle2(precoPor)
+                        .setSubtitle3(description)
+                        .setSubtitleColor(Color.BLACK)
+                        .endConfig()
+                        .build();
+
+                cards.add(card);
+            }
+
+        }
+        materialListView.getAdapter().addAll(cards);
+    }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
