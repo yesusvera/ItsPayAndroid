@@ -2,6 +2,7 @@ package itspay.br.com.fragment;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,12 +18,19 @@ import com.dexafree.materialList.view.MaterialListView;
 import java.util.ArrayList;
 import java.util.List;
 
+import itspay.br.com.authentication.IdentityItsPay;
 import itspay.br.com.controller.LojaProdutosController;
 import itspay.br.com.itspay.R;
 import itspay.br.com.model.ParceiroResponse;
 import itspay.br.com.model.Produto;
+import itspay.br.com.services.ConnectPortadorService;
 import itspay.br.com.util.Utils;
+import itspay.br.com.util.UtilsActivity;
 import jp.wasabeef.recyclerview.animators.FlipInBottomXAnimator;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -125,8 +133,9 @@ public class LojaProdutosFragment extends Fragment {
                                 produto.getReferencias()[0].getPrecoPor() /
                                         parceiroResponse.getQuantMaxParcelaSemJuros());
 
-                Card card = new Card.Builder(this.getContext())
-                        .setTag("Produto Pedido")
+
+                final Card card = new Card.Builder(this.getContext())
+                        .setTag("Produto Loja")
                         .withProvider(new CardProvider())
                         .setLayout(R.layout.item_produto_loja)
                         .setTitle(produto.getNomeProduto())
@@ -135,8 +144,31 @@ public class LojaProdutosFragment extends Fragment {
                         .setSubtitle2(precoPor)
                         .setSubtitle3(description)
                         .setSubtitleColor(Color.BLACK)
+                        .setKeepLayoutXml(true)
                         .endConfig()
                         .build();
+
+
+                if(produto.getImagens()!=null && produto.getImagens().length>0) {
+
+                    Call<ResponseBody> call = ConnectPortadorService.getService().abrirImagemProduto(produto.getImagens()[0].getIdImagem(),
+                            IdentityItsPay.getInstance().getToken());
+
+                    call.enqueue(new Callback<ResponseBody>() {
+                        @Override
+                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                            if (response.body() != null && response.body().byteStream() != null) {
+                                card.getProvider().setDrawable(new BitmapDrawable(response.body().byteStream()));
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+                            UtilsActivity.alertIfSocketException(t, LojaProdutosFragment.this.getContext());
+                        }
+                    });
+
+                }
 
                 cards.add(card);
             }

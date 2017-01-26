@@ -16,7 +16,9 @@
         <com.dexafree.materialList.view.MaterialListView
             android:id="@+id/material_listview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            />
 
     </android.support.v4.widget.SwipeRefreshLayout>
 

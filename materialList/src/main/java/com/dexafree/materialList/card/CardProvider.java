@@ -42,6 +42,7 @@ public class CardProvider<T extends CardProvider> extends Observable {
     private String mSubtitle2;
     private String mSubtitle3;
     private String mDescription;
+    private boolean keepLayoutXml;
     private boolean mDividerVisible;
     private boolean mFullWidthDivider;
     private int mTitleGravity;
@@ -426,6 +427,13 @@ public class CardProvider<T extends CardProvider> extends Observable {
         return (T) this;
     }
 
+
+    public T setKeepLayoutXml(@NonNull final boolean keepLayoutXml) {
+        this.keepLayoutXml = keepLayoutXml;
+        notifyDataSetChanged();
+        return (T) this;
+    }
+
     /**
      * Get the drawable.
      *
@@ -743,20 +751,24 @@ public class CardProvider<T extends CardProvider> extends Observable {
         final TextView title = findViewById(view, R.id.title, TextView.class);
         if (title != null) {
             title.setText(getTitle());
-            title.setTextColor(getTitleColor());
-            title.setGravity(getTitleGravity());
+            if(!keepLayoutXml) {
+                title.setTextColor(getTitleColor());
+                title.setGravity(getTitleGravity());
+            }
         }
 
         // Subtitle
         final TextView subtitle = findViewById(view, R.id.subtitle, TextView.class);
         if (subtitle != null) {
             subtitle.setText(getSubtitle());
-            subtitle.setTextColor(getSubtitleColor());
-            subtitle.setGravity(getSubtitleGravity());
-            if (getSubtitle() == null || getSubtitle().isEmpty()) {
-                subtitle.setVisibility(View.GONE);
-            } else {
-                subtitle.setVisibility(View.VISIBLE);
+            if(!keepLayoutXml) {
+                subtitle.setTextColor(getSubtitleColor());
+                subtitle.setGravity(getSubtitleGravity());
+                if (getSubtitle() == null || getSubtitle().isEmpty()) {
+                    subtitle.setVisibility(View.GONE);
+                } else {
+                    subtitle.setVisibility(View.VISIBLE);
+                }
             }
         }
 
@@ -765,12 +777,14 @@ public class CardProvider<T extends CardProvider> extends Observable {
         final TextView subtitle2 = findViewById(view, R.id.subtitle2, TextView.class);
         if (subtitle2 != null) {
             subtitle2.setText(getSubtitle2());
-            subtitle2.setTextColor(getSubtitleColor());
-            subtitle2.setGravity(getSubtitleGravity());
-            if (getSubtitle2() == null || getSubtitle2().isEmpty()) {
-                subtitle2.setVisibility(View.GONE);
-            } else {
-                subtitle2.setVisibility(View.VISIBLE);
+            if(!keepLayoutXml) {
+                subtitle2.setTextColor(getSubtitleColor());
+                subtitle2.setGravity(getSubtitleGravity());
+                if (getSubtitle2() == null || getSubtitle2().isEmpty()) {
+                    subtitle2.setVisibility(View.GONE);
+                } else {
+                    subtitle2.setVisibility(View.VISIBLE);
+                }
             }
         }
 
@@ -778,12 +792,14 @@ public class CardProvider<T extends CardProvider> extends Observable {
         final TextView subtitle3 = findViewById(view, R.id.subtitle3, TextView.class);
         if (subtitle3 != null) {
             subtitle3.setText(getSubtitle3());
-            subtitle3.setTextColor(getSubtitleColor());
-            subtitle3.setGravity(getSubtitleGravity());
-            if (getSubtitle3() == null || getSubtitle3().isEmpty()) {
-                subtitle3.setVisibility(View.GONE);
-            } else {
-                subtitle3.setVisibility(View.VISIBLE);
+            if(!keepLayoutXml) {
+                subtitle3.setTextColor(getSubtitleColor());
+                subtitle3.setGravity(getSubtitleGravity());
+                if (getSubtitle3() == null || getSubtitle3().isEmpty()) {
+                    subtitle3.setVisibility(View.GONE);
+                } else {
+                    subtitle3.setVisibility(View.VISIBLE);
+                }
             }
         }
 
@@ -791,8 +807,10 @@ public class CardProvider<T extends CardProvider> extends Observable {
         final TextView supportingText = findViewById(view, R.id.supportingText, TextView.class);
         if (supportingText != null) {
             supportingText.setText(getDescription());
-            supportingText.setTextColor(getDescriptionColor());
-            supportingText.setGravity(getDescriptionGravity());
+            if(!keepLayoutXml) {
+                supportingText.setTextColor(getDescriptionColor());
+                supportingText.setGravity(getDescriptionGravity());
+            }
         }
 
         // Image

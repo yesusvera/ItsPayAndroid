@@ -173,4 +173,8 @@ public interface PortadorService {
     Call<ParceiroResponse[]> getParceiros( @Path("idProcessadora") long idProcessadora,
                                          @Path("idInstituicao") long idInstituicao,
                                          @Header("AuthorizationPortador") String token);
+
+    @GET("api/mktplace/administrativo/imagem/sku/{idImagem}")
+    Call<ResponseBody> abrirImagemProduto(@Path("idImagem") long idImagem,
+                                          @Header("AuthorizationPortador") String token);
 }

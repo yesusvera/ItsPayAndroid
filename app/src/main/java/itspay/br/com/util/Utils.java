@@ -3,6 +3,7 @@ package itspay.br.com.util;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 
 import com.dexafree.materialList.card.Card;
 import com.dexafree.materialList.card.CardProvider;
@@ -12,8 +13,14 @@ import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 import java.util.Set;
 
+import itspay.br.com.authentication.IdentityItsPay;
 import itspay.br.com.itspay.R;
 import itspay.br.com.model.Credencial;
+import itspay.br.com.services.ConnectPortadorService;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public abstract class Utils {
 
@@ -52,10 +59,10 @@ public abstract class Utils {
         return maskedText;
     }
 
-    public static Card novoCartaoCredencial(Credencial cred, Context context) {
+    public static Card novoCartaoCredencial(final Credencial cred, final Context context) {
         String saldo = "Saldo: R$"+ cred.getSaldo();
 
-        return new Card.Builder(context)
+        final Card card =  new Card.Builder(context)
                 .setTag("CARD_ITSPAY")
                 .withProvider(new CardProvider())
                 .setLayout(R.layout.material_itspay_card)
@@ -69,6 +76,33 @@ public abstract class Utils {
                 .setDrawable(cred.getDrawable())
                 .endConfig()
                 .build();
+
+
+
+            Call<ResponseBody> call = ConnectPortadorService
+                                            .getService()
+                                            .abrirPlastico(
+                                                        cred.getIdPlastico(),
+                                                        IdentityItsPay.getInstance().getToken());
+
+            call.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                    if(response.body()!=null && response.body().byteStream()!=null) {
+                        card.getProvider().setDrawable(new BitmapDrawable(response.body().byteStream()));
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    UtilsActivity.alertIfSocketException(t, context);
+
+                }
+            });
+
+        return card;
 
     }
 
