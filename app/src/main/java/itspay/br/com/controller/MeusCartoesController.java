@@ -33,7 +33,7 @@ public class MeusCartoesController extends BaseActivityController<MeusCartoesAct
     }
 
     public void listarCredenciais(){
-
+        activity.getmListView().getAdapter().clearAll();
         activity.getSwipeRefreshLayout().setRefreshing(true);
 
         IdentityItsPay identity = IdentityItsPay.getInstance();

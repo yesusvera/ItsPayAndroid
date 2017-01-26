@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -34,20 +33,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import itspay.br.com.authentication.IdentityItsPay;
 import itspay.br.com.controller.CartaoController;
 import itspay.br.com.itspay.R;
 import itspay.br.com.model.Credencial;
 import itspay.br.com.model.LinhaExtratoCredencial;
-import itspay.br.com.services.ConnectPortadorService;
 import itspay.br.com.util.Utils;
-import itspay.br.com.util.UtilsActivity;
 import jp.wasabeef.recyclerview.animators.FadeInLeftAnimator;
 import jp.wasabeef.recyclerview.animators.FlipInBottomXAnimator;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class CartaoActivity extends AppCompatActivity {
 
@@ -230,7 +222,7 @@ public class CartaoActivity extends AppCompatActivity {
 
     public void configuraCartao(){
         mListView.setItemAnimator(new FlipInBottomXAnimator());
-        mListView.getItemAnimator().setAddDuration(300);
+        mListView.getItemAnimator().setAddDuration(500);
         mListView.getItemAnimator().setRemoveDuration(300);
         mListView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -240,34 +232,34 @@ public class CartaoActivity extends AppCompatActivity {
         });
 
         mListView.getAdapter().clearAll();
-        mListView.getAdapter().add(Utils.novoCartaoCredencial(credencialDetalhe, CartaoActivity.this));
+        mListView.getAdapter().add(new Utils().novoCartaoCredencial(credencialDetalhe, CartaoActivity.this));
 
         //PEGANDO A FOTO
-        Call<ResponseBody> call = ConnectPortadorService
-                .getService()
-                .abrirPlastico(
-                        credencialDetalhe.getIdPlastico(),
-                        IdentityItsPay.getInstance().getToken());
-
-        call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if(response.body()!=null && response.body().byteStream()!=null) {
-                    credencialDetalhe.setDrawable(new BitmapDrawable(response.body().byteStream()));
-                }
-
-                mListView.getAdapter().clearAll();
-                mListView.getAdapter().add(Utils.novoCartaoCredencial(credencialDetalhe, CartaoActivity.this));
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                UtilsActivity.alertIfSocketException(t, CartaoActivity.this);
-
-                mListView.getAdapter().clearAll();
-                mListView.getAdapter().add(Utils.novoCartaoCredencial(credencialDetalhe, CartaoActivity.this));
-            }
-        });
+//        Call<ResponseBody> call = ConnectPortadorService
+//                .getService()
+//                .abrirPlastico(
+//                        credencialDetalhe.getIdPlastico(),
+//                        IdentityItsPay.getInstance().getToken());
+//
+//        call.enqueue(new Callback<ResponseBody>() {
+//            @Override
+//            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+//                if(response.body()!=null && response.body().byteStream()!=null) {
+//                    credencialDetalhe.setDrawable(new BitmapDrawable(response.body().byteStream()));
+//                }
+//
+//                mListView.getAdapter().clearAll();
+//                mListView.getAdapter().add(new Utils().novoCartaoCredencial(credencialDetalhe, CartaoActivity.this));
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ResponseBody> call, Throwable t) {
+//                UtilsActivity.alertIfSocketException(t, CartaoActivity.this);
+//
+//                mListView.getAdapter().clearAll();
+//                mListView.getAdapter().add(new Utils().novoCartaoCredencial(credencialDetalhe, CartaoActivity.this));
+//            }
+//        });
 
 
     }

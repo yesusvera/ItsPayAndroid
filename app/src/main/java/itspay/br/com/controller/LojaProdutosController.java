@@ -17,6 +17,7 @@ import retrofit2.Response;
 public class LojaProdutosController {
 
     public void listaParceiros(final LojaProdutosFragment fragment){
+        fragment.materialListView.getAdapter().clearAll();
         fragment.swipeRefreshLayout.setRefreshing(true);
         Call<ParceiroResponse[]> call = ConnectPortadorService.getService().getParceiros(
                                 ItsPayConstants.ID_PROCESSADORA,

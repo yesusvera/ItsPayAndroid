@@ -1,7 +1,6 @@
 package itspay.br.com.activity;
 
 import android.content.Intent;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -14,18 +13,11 @@ import com.dexafree.materialList.view.MaterialListView;
 import java.util.ArrayList;
 import java.util.List;
 
-import itspay.br.com.authentication.IdentityItsPay;
 import itspay.br.com.controller.CartoesVirtuaisController;
 import itspay.br.com.itspay.R;
 import itspay.br.com.model.Credencial;
-import itspay.br.com.services.ConnectPortadorService;
 import itspay.br.com.util.Utils;
-import itspay.br.com.util.UtilsActivity;
 import jp.wasabeef.recyclerview.animators.FlipInBottomXAnimator;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class CartoesVirtuaisActivity extends AppCompatActivity {
 
@@ -34,7 +26,6 @@ public class CartoesVirtuaisActivity extends AppCompatActivity {
     private SwipeRefreshLayout swipeRefreshLayout;
     private CartoesVirtuaisController controller = new CartoesVirtuaisController(this);
     private Credencial credenciais[];
-    private int countConexaoServicoPlastico;
     private Credencial credencialDetalhe;
 
     @Override
@@ -74,40 +65,6 @@ public class CartoesVirtuaisActivity extends AppCompatActivity {
 
         adicionarCartoes();
 
-        countConexaoServicoPlastico = credenciais.length;
-
-        for(final Credencial cred : credenciais){
-            Call<ResponseBody> call = ConnectPortadorService
-                    .getService()
-                    .abrirPlastico(
-                            cred.getIdPlastico(),
-                            IdentityItsPay.getInstance().getToken());
-
-            call.enqueue(new Callback<ResponseBody>() {
-                @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    countConexaoServicoPlastico--;
-
-                    if(response.body()!=null && response.body().byteStream()!=null) {
-                        cred.setDrawable(new BitmapDrawable(response.body().byteStream()));
-                    }
-
-                    if(countConexaoServicoPlastico==0){
-                        adicionarCartoes();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    UtilsActivity.alertIfSocketException(t, CartoesVirtuaisActivity.this);
-                    countConexaoServicoPlastico--;
-
-                    if(countConexaoServicoPlastico==0){
-                        adicionarCartoes();
-                    }
-                }
-            });
-        }
     }
 
 

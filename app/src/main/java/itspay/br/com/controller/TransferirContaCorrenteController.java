@@ -10,6 +10,7 @@ import itspay.br.com.authentication.IdentityItsPay;
 import itspay.br.com.model.Banco;
 import itspay.br.com.model.TransferenciaContaCorrente;
 import itspay.br.com.services.ConnectPortadorService;
+import itspay.br.com.util.EncriptSHA512;
 import itspay.br.com.util.ItsPayConstants;
 import itspay.br.com.util.UtilsActivity;
 import okhttp3.ResponseBody;
@@ -63,7 +64,7 @@ public class TransferirContaCorrenteController extends BaseActivityController<Tr
 
     public void transferir() {
         TransferenciaContaCorrente request = new TransferenciaContaCorrente();
-        request.setPinCredencialOrigem(activity.getSenhaCartao().getText().toString());
+        request.setPinCredencialOrigem(EncriptSHA512.encript(activity.getSenhaCartao().getText().toString() +  IdentityItsPay.getInstance().getToken()));
         request.setValorTransferencia(Double.parseDouble(activity.getValor().getText().toString().replace("R$", "").replace(".", "").replace(",", ".")));
         request.setIdCredencialOrigem(activity.getCredencialDetalhe().getIdCredencial());
         request.setIdInstituicaoOrigem(ItsPayConstants.ID_INSTITUICAO);
@@ -79,10 +80,12 @@ public class TransferirContaCorrenteController extends BaseActivityController<Tr
             e.printStackTrace();
         }
 
+
         if(activity.getBancoSelecionado()!=null) {
             request.setIdBancoDestino(activity.getBancoSelecionado().getIdBanco());
         }
 
+        request.setIdInstituicaoOrigem(ItsPayConstants.ID_INSTITUICAO);
 
         Call<ResponseBody> call = ConnectPortadorService
                 .getService()
@@ -95,7 +98,7 @@ public class TransferirContaCorrenteController extends BaseActivityController<Tr
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.body() != null) {
-
+                    UtilsActivity.alertMsg(response.body(), activity);
                 } else {
                     UtilsActivity.alertMsg(response.errorBody(), activity);
                 }

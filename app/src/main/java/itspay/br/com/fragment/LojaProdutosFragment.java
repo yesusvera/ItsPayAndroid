@@ -26,7 +26,7 @@ import itspay.br.com.model.Produto;
 import itspay.br.com.services.ConnectPortadorService;
 import itspay.br.com.util.Utils;
 import itspay.br.com.util.UtilsActivity;
-import jp.wasabeef.recyclerview.animators.FlipInBottomXAnimator;
+import jp.wasabeef.recyclerview.animators.FlipInTopXAnimator;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -47,7 +47,7 @@ public class LojaProdutosFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
 
-    
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -105,22 +105,28 @@ public class LojaProdutosFragment extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                controller.listaParceiros(LojaProdutosFragment.this);
+                LojaProdutosFragment.this.onResume();
             }
         });
         materialListView = (MaterialListView) rootView.findViewById(R.id.material_listview);
 
-        controller.listaParceiros(LojaProdutosFragment.this);
+
 
         return rootView;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        controller.listaParceiros(LojaProdutosFragment.this);
+    }
+
     public void listarProdutos(){
-        materialListView.setItemAnimator(new FlipInBottomXAnimator());
-        materialListView.getItemAnimator().setAddDuration(300);
+        materialListView.setItemAnimator(new FlipInTopXAnimator());
+        materialListView.getItemAnimator().setAddDuration(500);
         materialListView.getItemAnimator().setRemoveDuration(300);
 
-        materialListView.getAdapter().clearAll();
 
         List<Card> cards = new ArrayList<>();
 
@@ -146,6 +152,7 @@ public class LojaProdutosFragment extends Fragment {
                         .setSubtitle2(precoPor)
                         .setSubtitle3(description)
                         .setSubtitleColor(Color.BLACK)
+                        .setDescription(produto.getDescricao())
                         .setKeepLayoutXml(true)
                         .endConfig()
                         .build();
@@ -161,6 +168,7 @@ public class LojaProdutosFragment extends Fragment {
                         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                             if (response.body() != null && response.body().byteStream() != null) {
                                 card.getProvider().setDrawable(new BitmapDrawable(response.body().byteStream()));
+
                             }
                         }
 

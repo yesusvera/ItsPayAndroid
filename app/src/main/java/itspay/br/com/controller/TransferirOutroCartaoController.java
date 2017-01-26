@@ -1,5 +1,7 @@
 package itspay.br.com.controller;
 
+import android.content.DialogInterface;
+
 import itspay.br.com.activity.TransferirOutroCartaoActivity;
 import itspay.br.com.authentication.IdentityItsPay;
 import itspay.br.com.model.GetInfoPortadorCredencialRequest;
@@ -53,6 +55,10 @@ public class TransferirOutroCartaoController extends BaseActivityController<Tran
     }
 
     public void transferirParaOutroCartao(){
+
+        activity.dismissKeyboard();
+        activity.setLoading(true);
+
         String credencialDestino = activity.getNumeroCartaoDestino().getText().toString().replace(".", "");
         credencialDestino = EncriptSHA512.encript(credencialDestino);
 
@@ -71,16 +77,23 @@ public class TransferirOutroCartaoController extends BaseActivityController<Tran
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if(response.body()!=null){
-                    UtilsActivity.alertMsg(response.body(), activity);
-                    activity.finish();
+                    UtilsActivity.alertMsg(response.body(), activity, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            activity.finish();
+                        }
+                    });
                 }else {
                     UtilsActivity.alertMsg(response.errorBody(), activity);
                 }
+
+                activity.setLoading(false);
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 UtilsActivity.alertIfSocketException(t, activity);
+                activity.setLoading(false);
             }
         });
     }

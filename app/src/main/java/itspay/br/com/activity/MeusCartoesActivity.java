@@ -38,7 +38,6 @@ public class MeusCartoesActivity extends AppCompatActivity
     private Credencial credenciais[];
     private MeusCartoesController meusCartoesController = new MeusCartoesController(this);
     private SwipeRefreshLayout swipeRefreshLayout;
-    private int countConexaoServicoPlastico;
     public static boolean FORCE_LOGOUT = false;
 
     @Override
@@ -89,7 +88,7 @@ public class MeusCartoesActivity extends AppCompatActivity
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                meusCartoesController.listarCredenciais();
+                onResume();
             }
         });
     }
@@ -111,54 +110,17 @@ public class MeusCartoesActivity extends AppCompatActivity
     public void configurarCartoes(){
 
         mListView.setItemAnimator(new FlipInBottomXAnimator());
-        mListView.getItemAnimator().setAddDuration(300);
+        mListView.getItemAnimator().setAddDuration(500);
         mListView.getItemAnimator().setRemoveDuration(300);
 
         adicionarCartoes();
-
-        countConexaoServicoPlastico = credenciais.length;
-
-        //TODO DESCOMENTAR AQUI, CARREGANDO IMAGENS DOS CARTOES.
-//
-//        for(final Credencial cred : credenciais){
-//            Call<ResponseBody> call = ConnectPortadorService
-//                                            .getService()
-//                                            .abrirPlastico(
-//                                                        cred.getIdPlastico(),
-//                                                        IdentityItsPay.getInstance().getToken());
-//
-//            call.enqueue(new Callback<ResponseBody>() {
-//                @Override
-//                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-//                    countConexaoServicoPlastico--;
-//
-//                    if(response.body()!=null && response.body().byteStream()!=null) {
-//                        cred.setDrawable(new BitmapDrawable(response.body().byteStream()));
-//                    }
-//
-//                    if(countConexaoServicoPlastico==0){
-//                        adicionarCartoes();
-//                    }
-//                }
-//
-//                @Override
-//                public void onFailure(Call<ResponseBody> call, Throwable t) {
-//                    UtilsActivity.alertIfSocketException(t, MeusCartoesActivity.this);
-//                    countConexaoServicoPlastico--;
-//
-//                    if(countConexaoServicoPlastico==0){
-//                        adicionarCartoes();
-//                    }
-//                }
-//            });
-//        }
     }
 
     private void adicionarCartoes() {
         mListView.getAdapter().clearAll();
         List<Card> cards = new ArrayList<>();
-        for (Credencial cred: credenciais) {
-            cards.add(Utils.novoCartaoCredencial(cred, this));
+        for(int i=0; i<credenciais.length; i++){
+            cards.add(new Utils().novoCartaoCredencial(credenciais[i], this));
         }
         mListView.getAdapter().addAll(cards);
     }

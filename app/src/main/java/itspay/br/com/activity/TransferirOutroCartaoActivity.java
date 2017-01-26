@@ -1,10 +1,14 @@
 package itspay.br.com.activity;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 import com.blackcat.currencyedittext.CurrencyEditText;
 
@@ -22,8 +26,10 @@ public class TransferirOutroCartaoActivity extends AppCompatActivity {
     private CurrencyEditText valor;
     private EditText tarifa;
     private EditText senhaCartao;
-    private Button transferirButton;
+    public Button transferirButton;
     private Credencial credencialDetalhe;
+    public LinearLayout mainLayout;
+    public ProgressBar progress;
 
     private TransferirOutroCartaoController controller = new TransferirOutroCartaoController(this);
 
@@ -36,6 +42,9 @@ public class TransferirOutroCartaoActivity extends AppCompatActivity {
         credencialDetalhe =  CartaoActivity.credencialDetalhe;
 
         setTitle("Saldo R$ "+ credencialDetalhe.getSaldo());
+
+        mainLayout = (LinearLayout)findViewById(R.id.mainLayout);
+        progress = (ProgressBar)findViewById(R.id.progress);
 
         numeroCartaoDestino = (EditText)findViewById(R.id.numeroCartaoDestino);
         favorecido = (EditText)findViewById(R.id.favorecido);
@@ -69,6 +78,24 @@ public class TransferirOutroCartaoActivity extends AppCompatActivity {
         numeroCartaoDestino.addTextChangedListener(new MaskEditTextChangedListener("####.####.####.####.###", numeroCartaoDestino));
     }
 
+
+    public void setLoading(boolean loading){
+        if(loading){
+            mainLayout.setVisibility(View.INVISIBLE);
+            progress.setVisibility(View.VISIBLE);
+        }else{
+            mainLayout.setVisibility(View.VISIBLE);
+            progress.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    public void dismissKeyboard(){
+        InputMethodManager inputMethodManager =
+                (InputMethodManager) this.getSystemService(
+                        Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(
+                this.getCurrentFocus().getWindowToken(), 0);
+    }
 
     public Credencial getCredencialDetalhe() {
         return credencialDetalhe;

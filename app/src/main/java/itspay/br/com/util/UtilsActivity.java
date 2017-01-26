@@ -65,6 +65,7 @@ public class UtilsActivity {
 
     public static void alertIfSocketException(Throwable t, final Context context) {
         t.printStackTrace();
+        if(context==null) return;
         if (t instanceof java.net.SocketException) {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setMessage(context.getString(R.string.mensagem_sem_internet))
