@@ -42,6 +42,7 @@ public class AjustesSegurancaCartaoActivity extends AppCompatActivity {
     public Credencial credencialDetalhe;
 
     public LinearLayout layoutMenuProduto;
+    public LinearLayout layoutSwitchInternet;
 
 
     public CompoundButton.OnCheckedChangeListener changeListenerSwitch = new CompoundButton.OnCheckedChangeListener() {
@@ -50,6 +51,36 @@ public class AjustesSegurancaCartaoActivity extends AppCompatActivity {
             try {
                 Integer estado = new Integer(compoundButton.getTag().toString());
                 controller.trocaEstado(estado);
+            }catch (NumberFormatException nfe){
+                nfe.printStackTrace();
+            }
+        }
+    };
+
+
+    public CompoundButton.OnCheckedChangeListener changeListenerSwitchBloqueioCartao = new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(final CompoundButton compoundButton, boolean b) {
+            try {
+                AlertDialog.Builder builder = new AlertDialog.Builder(AjustesSegurancaCartaoActivity.this);
+                builder.setMessage(getString(R.string.mensagem_confirma_alteracao_bloqueio))
+                        .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Integer estado = new Integer(compoundButton.getTag().toString());
+                                controller.trocaEstado(estado);
+                            }
+                        })
+                        .setNegativeButton("Não", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                controller.removeChangeListener();
+                                compoundButton.setChecked(!compoundButton.isChecked());
+                                controller.configuraChangeListener();
+                            }
+                        });
+                builder.create().show();
+
             }catch (NumberFormatException nfe){
                 nfe.printStackTrace();
             }
@@ -70,6 +101,7 @@ public class AjustesSegurancaCartaoActivity extends AppCompatActivity {
         switchSaque = (Switch) findViewById(R.id.switch_saque);
 
         layoutMenuProduto = (LinearLayout)findViewById(R.id.layoutMenuProduto);
+        layoutSwitchInternet = (LinearLayout)findViewById(R.id.layoutSwitchInternet);
 
         textAvisosNotificacoes = (TextView) findViewById(R.id.subtitle_avisos_notificacoes);
         textBloqueioCartao = (TextView) findViewById(R.id.subtitle_bloqueio_cartao);
@@ -105,7 +137,10 @@ public class AjustesSegurancaCartaoActivity extends AppCompatActivity {
             }
         });
 
-        if(credencialDetalhe.getIdProduto()==2 || credencialDetalhe.getIdProduto()==3){
+        if(credencialDetalhe.getIdProdutoPlataforma()==2 || credencialDetalhe.getIdProdutoPlataforma()==3){
+            layoutMenuProduto.setVisibility(View.GONE);
+            layoutSwitchInternet.setVisibility(View.GONE);
+        }else if(credencialDetalhe.getIdProdutoPlataforma()==4){
             layoutMenuProduto.setVisibility(View.GONE);
         }
     }

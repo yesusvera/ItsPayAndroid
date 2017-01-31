@@ -1,6 +1,8 @@
 package itspay.br.com.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -17,6 +19,7 @@ import java.util.Locale;
 import itspay.br.com.controller.TransferirOutroCartaoController;
 import itspay.br.com.itspay.R;
 import itspay.br.com.model.Credencial;
+import itspay.br.com.util.Utils;
 import itspay.br.com.util.mask.MaskEditTextChangedListener;
 
 public class TransferirOutroCartaoActivity extends AppCompatActivity {
@@ -41,7 +44,7 @@ public class TransferirOutroCartaoActivity extends AppCompatActivity {
 
         credencialDetalhe =  CartaoActivity.credencialDetalhe;
 
-        setTitle("Saldo R$ "+ credencialDetalhe.getSaldo());
+        setTitle("Saldo R$ "+ Utils.formataMoeda(credencialDetalhe.getSaldo()));
 
         mainLayout = (LinearLayout)findViewById(R.id.mainLayout);
         progress = (ProgressBar)findViewById(R.id.progress);
@@ -58,7 +61,7 @@ public class TransferirOutroCartaoActivity extends AppCompatActivity {
             public void onFocusChange(View view, boolean hasfocus) {
                 if(!hasfocus){
                     favorecido.setText("");
-                    if(numeroCartaoDestino.getText().toString().length() == 23){
+                    if(numeroCartaoDestino.getText().toString().length() >= 19){
                         controller.preencherNomePortadorCredencial();
                     }else{
                         numeroCartaoDestino.setError("Preencha corretamente o número do cartão");
@@ -70,7 +73,17 @@ public class TransferirOutroCartaoActivity extends AppCompatActivity {
         transferirButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                controller.transferirParaOutroCartao();
+                AlertDialog.Builder builder = new AlertDialog.Builder(TransferirOutroCartaoActivity.this);
+                builder.setMessage(getString(R.string.mensagem_confirmacao_transf))
+                        .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                controller.transferirParaOutroCartao();
+                            }
+                        })
+                        .setNegativeButton("Não", null);
+                builder.create().show();
+
             }
         });
 

@@ -26,8 +26,10 @@
     <string name="prompt_uso_exterior">Uso no Exterior</string>
     <string name="prompt_uso_internet">Uso na Internet</string>
     <string name="prompt_saque">Saque</string>
-    <string name="prompt_confirma_notificar_perda">Você tem certeza que deseja notificar Perda deste cartão?</string>
-    <string name="prompt_confirma_notificar_roubo">Você tem certeza que deseja notificar Roubo deste cartão?</string>
+    <string name="prompt_confirma_notificar_perda">Deseja realmente informar a perda deste cartão.
+                                                    \nEste cartão será cancelado e um novo cartão será emitido.</string>
+    <string name="prompt_confirma_notificar_roubo">Deseja realmente informar o roubo deste cartão.
+                                                    \nEste cartão será cancelado e um novo cartão será emitido.</string>
 
 
     <string name="label_endereco_entrega">Entregar no endereço</string>
@@ -35,6 +37,9 @@
     <string name="label_valor_total">Valor Total</string>
     <string name="label_para">Para</string>
     <string name="label_cartao">Cartão</string>
+    <string name="label_quantidade">Quantidade</string>
+    <string name="label_mais">+</string>
+    <string name="label_menos">-</string>
 
     <string name="titulo_loja">Loja</string>
     <string name="titulo_meus_pedidos">Pedidos</string>
@@ -50,6 +55,7 @@
     <string name="acao_concordo">Concordo</string>
     <string name="acao_trocar_senha_cartao">Trocar Senha do Cartão</string>
     <string name="acao_comunicar_perda_roubo">Comunicar Perda ou Roubo</string>
+    <string name="acao_adicionar_carrinho">Adicionar ao Carrinho</string>
 
 
     <string name="action_sign_in">Login</string>
@@ -75,7 +81,7 @@
     <string name="prompt_numero_cartao">Número do Cartão</string>
     <string name="prompt_data_nascimento">Data de Nascimento</string>
     <string name="prompt_confirmar_senha">Confirmar Senha</string>
-    <string name="title_activity_cadastro_login">Cadastro</string>
+    <string name="title_activity_cadastro_login">Cadastro Login</string>
     <string name="title_activity_termos_de_uso">Termos de Uso</string>
 
     <string name="str_icone_transferir">Transferir</string>
@@ -92,7 +98,9 @@
     </string>
 
     <string name="mensagem_sem_internet">Aconteceu uma falha na comunicação. Verifique sua rede.</string>
+    <string name="mensagem_confirmacao_transf">Confirma esta transferência?</string>
     <string name="mensagem_sessao_expirou">A sessão expirou.</string>
+    <string name="mensagem_confirma_alteracao_bloqueio">Confirma a alteração do estado do bloqueio?</string>
     <string name="mensagem_timeout">A rede está lenta. Verifique sua conexão.</string>
     <string name="mensagem_sem_movimentacao">Sem movimentos neste Período.</string>
 

@@ -150,7 +150,7 @@ public interface PortadorService {
                                    @Header("AuthorizationPortador") String token);
 
     @POST("api/portador/credencial/trocar-pin")
-    Call<ResponseBody> trocarSenhaCartao(@Body TrocarPinRequest request,
+    Call<Boolean> trocarSenhaCartao(@Body TrocarPinRequest request,
                                          @Header("AuthorizationPortador") String token);
 
     @GET("api/portador/conta/buscar-tarifas/conta/{idConta}")

@@ -88,7 +88,7 @@ public class MeusCartoesActivity extends AppCompatActivity
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                onResume();
+                recreate();
             }
         });
     }
@@ -113,17 +113,15 @@ public class MeusCartoesActivity extends AppCompatActivity
         mListView.getItemAnimator().setAddDuration(500);
         mListView.getItemAnimator().setRemoveDuration(300);
 
-        adicionarCartoes();
-    }
-
-    private void adicionarCartoes() {
         mListView.getAdapter().clearAll();
         List<Card> cards = new ArrayList<>();
+        Utils utils = new Utils();
         for(int i=0; i<credenciais.length; i++){
-            cards.add(new Utils().novoCartaoCredencial(credenciais[i], this));
+            cards.add(utils.novoCartaoCredencial(credenciais[i], this));
         }
         mListView.getAdapter().addAll(cards);
     }
+
 
     @Override
     public void onBackPressed() {

@@ -89,7 +89,7 @@ public class CartaoActivity extends AppCompatActivity {
         bmb = (BoomMenuButton) findViewById(R.id.bmb);
         assert bmb != null;
         bmb.setButtonEnum(ButtonEnum.TextInsideCircle);
-        if(credencialDetalhe.getIdProduto()==2 || credencialDetalhe.getIdProduto()==3){
+        if(credencialDetalhe.getIdProdutoPlataforma()==2 || credencialDetalhe.getIdProdutoPlataforma()==3){
             BuilderManagerFloatingButton.imageResourceIndex = 0;
             BuilderManagerFloatingButton.imageResources = new int[]{
                     R.drawable.menu_icon4,
@@ -101,6 +101,21 @@ public class CartaoActivity extends AppCompatActivity {
             };
             bmb.setPiecePlaceEnum(PiecePlaceEnum.DOT_2_1);
             bmb.setButtonPlaceEnum(ButtonPlaceEnum.SC_2_1);
+        }else if(credencialDetalhe.getIdProdutoPlataforma()==4){
+            BuilderManagerFloatingButton.imageResourceIndex = 0;
+            BuilderManagerFloatingButton.imageResources = new int[]{
+                    R.drawable.menu_icon3,
+                    R.drawable.menu_icon4,
+                    R.drawable.menu_icon6
+
+            };
+            BuilderManagerFloatingButton.textResources = new int[]{
+                    R.string.str_icone_cartoes_virtuais,
+                    R.string.str_icone_ajustes_seguranca,
+                    R.string.str_icone_logout
+            };
+            bmb.setPiecePlaceEnum(PiecePlaceEnum.DOT_3_1);
+            bmb.setButtonPlaceEnum(ButtonPlaceEnum.SC_3_1);
         }else{
             BuilderManagerFloatingButton.imageResourceIndex = 0;
             BuilderManagerFloatingButton.imageResources = new int[]{

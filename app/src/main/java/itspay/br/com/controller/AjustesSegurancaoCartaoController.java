@@ -96,7 +96,12 @@ public class AjustesSegurancaoCartaoController extends BaseActivityController<Aj
                             @Override
                             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                                 if(response.body()!=null){
-                                    UtilsActivity.alertMsg(response.body(), activity);
+                                    UtilsActivity.alertMsg(response.body(), activity, new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                            activity.finish();
+                                        }
+                                    });
                                 }else{
                                     UtilsActivity.alertMsg(response.errorBody(), activity);
                                 }
@@ -132,7 +137,12 @@ public class AjustesSegurancaoCartaoController extends BaseActivityController<Aj
                             @Override
                             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                                 if(response.body()!=null){
-                                    UtilsActivity.alertMsg(response.body(), activity);
+                                    UtilsActivity.alertMsg(response.body(), activity, new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                            activity.finish();
+                                        }
+                                    });
                                 }else{
                                     UtilsActivity.alertMsg(response.errorBody(), activity);
                                 }
@@ -205,7 +215,7 @@ public class AjustesSegurancaoCartaoController extends BaseActivityController<Aj
 
     public void configuraChangeListener() {
         activity.switchAvisosNotificacoes.setOnCheckedChangeListener(activity.changeListenerSwitch);
-        activity.switchBloqueioCartao.setOnCheckedChangeListener(activity.changeListenerSwitch);
+        activity.switchBloqueioCartao.setOnCheckedChangeListener(activity.changeListenerSwitchBloqueioCartao);
         activity.switchUsoExterior.setOnCheckedChangeListener(activity.changeListenerSwitch);
         activity.switchUsoInternet.setOnCheckedChangeListener(activity.changeListenerSwitch);
         activity.switchSaque.setOnCheckedChangeListener(activity.changeListenerSwitch);

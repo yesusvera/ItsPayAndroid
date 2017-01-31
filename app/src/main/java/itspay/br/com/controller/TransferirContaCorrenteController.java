@@ -1,5 +1,6 @@
 package itspay.br.com.controller;
 
+import android.content.DialogInterface;
 import android.widget.ArrayAdapter;
 
 import java.util.ArrayList;
@@ -63,6 +64,8 @@ public class TransferirContaCorrenteController extends BaseActivityController<Tr
     }
 
     public void transferir() {
+        activity.setLoading(true);
+
         TransferenciaContaCorrente request = new TransferenciaContaCorrente();
         request.setPinCredencialOrigem(EncriptSHA512.encript(activity.getSenhaCartao().getText().toString() +  IdentityItsPay.getInstance().getToken()));
         request.setValorTransferencia(Double.parseDouble(activity.getValor().getText().toString().replace("R$", "").replace(".", "").replace(",", ".")));
@@ -98,10 +101,18 @@ public class TransferirContaCorrenteController extends BaseActivityController<Tr
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.body() != null) {
-                    UtilsActivity.alertMsg(response.body(), activity);
+                    UtilsActivity.alertMsg(response.body(), activity, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            activity.finish();
+                        }
+                    });
+
                 } else {
                     UtilsActivity.alertMsg(response.errorBody(), activity);
                 }
+
+                activity.setLoading(false);
             }
 
             @Override

@@ -10,8 +10,8 @@ public class FazerLoginPortador {
     private String deviceId;
     private long idInstituicao;
     private long idProcessadora;
-    private long latitude;
-    private long longitude;
+    private double latitude;
+    private double longitude;
     private String model;
     private long origemAcesso;
     private String plataformVersion;
@@ -23,7 +23,7 @@ public class FazerLoginPortador {
 
     public FazerLoginPortador(){}
 
-    public FazerLoginPortador(String architectureInfo, String cpf, String deviceId, long idInstituicao, long idProcessadora, long latitude, long longitude, String model, long origemAcesso, String plataformVersion, String platformName, String senha, long sistemaOperacional, String versaoConhecida, String versaoInstalada){
+    public FazerLoginPortador(String architectureInfo, String cpf, String deviceId, long idInstituicao, long idProcessadora, double latitude, double longitude, String model, long origemAcesso, String plataformVersion, String platformName, String senha, long sistemaOperacional, String versaoConhecida, String versaoInstalada){
         this.architectureInfo = architectureInfo;
         this.cpf = cpf;
         this.deviceId = deviceId;
@@ -61,11 +61,11 @@ public class FazerLoginPortador {
         return idProcessadora;
     }
 
-    public long getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public long getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
@@ -121,11 +121,11 @@ public class FazerLoginPortador {
         this.idProcessadora = idProcessadora;
     }
 
-    public void setLatitude(long latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
-    public void setLongitude(long longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 

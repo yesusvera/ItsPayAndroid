@@ -105,11 +105,11 @@ public class LojaProdutosFragment extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                LojaProdutosFragment.this.onResume();
+                controller.listaParceiros(LojaProdutosFragment.this);
+                rootView.invalidate();
             }
         });
         materialListView = (MaterialListView) rootView.findViewById(R.id.material_listview);
-
 
 
         return rootView;
@@ -128,6 +128,7 @@ public class LojaProdutosFragment extends Fragment {
         materialListView.getItemAnimator().setRemoveDuration(300);
 
 
+
         List<Card> cards = new ArrayList<>();
 
         for(ParceiroResponse parceiroResponse: listaParceiroResponse) {
@@ -140,7 +141,6 @@ public class LojaProdutosFragment extends Fragment {
                         Utils.formataMoeda(
                                 produto.getReferencias()[0].getPrecoPor() /
                                         parceiroResponse.getQuantMaxParcelaSemJuros());
-
 
                 final Card card = new Card.Builder(this.getContext())
                         .setTag("Produto Loja")
@@ -157,9 +157,9 @@ public class LojaProdutosFragment extends Fragment {
                         .endConfig()
                         .build();
 
+                cards.add(card);
 
                 if(produto.getImagens()!=null && produto.getImagens().length>0) {
-
                     Call<ResponseBody> call = ConnectPortadorService.getService().abrirImagemProduto(produto.getImagens()[0].getIdImagem(),
                             IdentityItsPay.getInstance().getToken());
 
@@ -168,7 +168,6 @@ public class LojaProdutosFragment extends Fragment {
                         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                             if (response.body() != null && response.body().byteStream() != null) {
                                 card.getProvider().setDrawable(new BitmapDrawable(response.body().byteStream()));
-
                             }
                         }
 
@@ -177,10 +176,8 @@ public class LojaProdutosFragment extends Fragment {
                             UtilsActivity.alertIfSocketException(t, LojaProdutosFragment.this.getContext());
                         }
                     });
-
                 }
 
-                cards.add(card);
             }
 
         }

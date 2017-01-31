@@ -73,10 +73,8 @@ public class Utils {
                 .setSubtitleColor(Color.parseColor("#F5F5F5"))
                 .setDescription(cred.getNomeImpresso())
                 .setDescriptionColor(Color.parseColor("#F5F5F5"))
-                .setDrawable(cred.getDrawable())
                 .endConfig()
                 .build();
-
 
 
             Call<ResponseBody> call = ConnectPortadorService
@@ -89,7 +87,7 @@ public class Utils {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
-                    if(response.body()!=null && response.body().byteStream()!=null) {
+                    if(response.body()!=null && response.body().byteStream() != null) {
                         card.getProvider().setDrawable(new BitmapDrawable(response.body().byteStream()));
                     }
 
@@ -97,7 +95,7 @@ public class Utils {
 
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    UtilsActivity.alertIfSocketException(t, context);
+//                    UtilsActivity.alertIfSocketException(t, context);
 
                 }
             });
@@ -122,7 +120,6 @@ public class Utils {
                 .setSubtitleColor(Color.parseColor("#F5F5F5"))
                 .setDescription(cred.getNomeImpresso())
                 .setDescriptionColor(Color.parseColor("#F5F5F5"))
-                .setDrawable(cred.getDrawable())
                 .endConfig()
                 .build();
 

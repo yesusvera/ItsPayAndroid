@@ -38,8 +38,11 @@ public class LoginController extends BaseActivityController<LoginActivity>{
         fazerLoginPortador.setDeviceId("string");
         fazerLoginPortador.setIdInstituicao(ItsPayConstants.ID_INSTITUICAO);
         fazerLoginPortador.setIdProcessadora(ItsPayConstants.ID_PROCESSADORA);
-        fazerLoginPortador.setLatitude(castCoordenada(activity.getLatitude()));
-        fazerLoginPortador.setLongitude(castCoordenada(activity.getLongitude()));
+//        fazerLoginPortador.setLatitude(castCoordenada(activity.getLatitude()));
+//        fazerLoginPortador.setLongitude(castCoordenada(activity.getLongitude()));
+//
+        fazerLoginPortador.setLatitude(activity.getLatitude());
+        fazerLoginPortador.setLongitude(activity.getLongitude());
         fazerLoginPortador.setModel("string");
         fazerLoginPortador.setOrigemAcesso(1);
         fazerLoginPortador.setPlataformVersion("string");

@@ -44,11 +44,6 @@
 
     </LinearLayout>
 
-    <!-- Lista de produtos -->
-    <com.dexafree.materialList.view.MaterialListView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/material_listview_produtos" />
 
     <!-- content body layout -->
     <LinearLayout
@@ -61,6 +56,12 @@
         android:paddingRight="20dp"
         android:paddingTop="4dp">
 
+
+        <!-- Lista de produtos -->
+        <!--<com.dexafree.materialList.view.MaterialListView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:id="@+id/material_listview_produtos" />-->
 
         <!-- divider line -->
         <ImageView

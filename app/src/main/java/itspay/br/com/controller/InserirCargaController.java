@@ -35,7 +35,12 @@ public class InserirCargaController extends BaseActivityController<InserirCargaA
         request.setEmailDestino(activity.getCredencialDetalhe().getEmail());
         request.setIdInstituicao(ItsPayConstants.ID_INSTITUICAO);
         request.setIdProcessadora(ItsPayConstants.ID_PROCESSADORA);
-        request.setValor(Double.parseDouble(activity.getValor().getText().toString().replace("R$","").replace(".", "").replace(",",".")));
+
+        try {
+            request.setValor(Double.parseDouble(activity.getValor().getText().toString().replace("R$", "").replace(".", "").replace(",", ".")));
+        }catch (NumberFormatException nfe){
+            nfe.printStackTrace();
+        }
         request.setIdProduto(activity.getCredencialDetalhe().getIdProduto());
         request.setVencimento(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").format(new Date()));
 

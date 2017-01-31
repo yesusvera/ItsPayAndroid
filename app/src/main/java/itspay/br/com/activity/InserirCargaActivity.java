@@ -28,7 +28,7 @@ public class InserirCargaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_inserir_carga);
 
         credencialDetalhe =  CartaoActivity.credencialDetalhe;
-        setTitle("Saldo R$ "+ credencialDetalhe.getSaldo());
+//        setTitle("Saldo R$ "+ credencialDetalhe.getSaldo());
 
         valor = (CurrencyEditText)findViewById(R.id.valor);
         gerarBoletoButton = (Button)findViewById(R.id.gerar_boleto_button);

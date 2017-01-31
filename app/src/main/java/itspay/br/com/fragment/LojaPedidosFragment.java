@@ -1,7 +1,6 @@
 package itspay.br.com.fragment;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,23 +12,17 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.dexafree.materialList.card.Card;
-import com.dexafree.materialList.card.CardProvider;
-import com.dexafree.materialList.view.MaterialListView;
 import com.ramotion.foldingcell.FoldingCell;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import itspay.br.com.adapter.FoldingCellPedidosAdapter;
 import itspay.br.com.controller.LojaPedidoController;
 import itspay.br.com.itspay.R;
-import itspay.br.com.model.ItemPedido;
 import itspay.br.com.model.Pedido;
 import itspay.br.com.model.PedidoDetalhe;
 import itspay.br.com.util.Utils;
-import jp.wasabeef.recyclerview.animators.FlipInBottomXAnimator;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -58,6 +51,8 @@ public class LojaPedidosFragment extends Fragment {
     private View rootView;
 
     public ArrayList<Integer> pedidosCarregadosIndex = new ArrayList<>();
+
+    private ListView theListView;
 
     public LojaPedidosFragment() {
         // Required empty public constructor
@@ -110,7 +105,7 @@ public class LojaPedidosFragment extends Fragment {
 
     public void configurarPedidos(final Pedido[] listaPedidos) {
 
-        ListView theListView = (ListView) rootView.findViewById(R.id.mainListView);
+        theListView = (ListView) rootView.findViewById(R.id.mainListView);
 
         final ArrayList<Pedido> pedidos = new ArrayList<>(Arrays.asList(listaPedidos));
 
@@ -143,7 +138,7 @@ public class LojaPedidosFragment extends Fragment {
         });
     }
 
-    public void clickPedido(View view, FoldingCellPedidosAdapter adapter, int pos, PedidoDetalhe pedidoDetalhe) {
+    public void clickPedido(final View view, FoldingCellPedidosAdapter adapter, final int pos, PedidoDetalhe pedidoDetalhe) {
 
         TextView nomeParceiro = (TextView) view.findViewById(R.id.text_nome_parceiro);
         TextView valorTotal = (TextView) view.findViewById(R.id.text_valor_total);
@@ -167,36 +162,67 @@ public class LojaPedidosFragment extends Fragment {
         nomeImpresso.setText(pedidoDetalhe.getNomeImpresso());
         button_status_pedido.setText(pedidoDetalhe.getDescStatus());
 
-        if (pedidoDetalhe.getItensPedido() != null) {
-            MaterialListView materialListViewProdutos = (MaterialListView) view.findViewById(R.id.material_listview_produtos);
-            materialListViewProdutos.setItemAnimator(new FlipInBottomXAnimator());
-            materialListViewProdutos.getItemAnimator().setAddDuration(300);
-            materialListViewProdutos.getItemAnimator().setRemoveDuration(300);
-
-            materialListViewProdutos.getAdapter().clearAll();
-
-            List<Card> cards = new ArrayList<>();
-
-
-            for (ItemPedido produto : pedidoDetalhe.getItensPedido()) {
-
-                Card card = new Card.Builder(LojaPedidosFragment.this.getContext())
-                        .setTag("Produto Pedido")
-                        .withProvider(new CardProvider())
-                        .setLayout(R.layout.item_produto_pedido)
-                        .setTitle(produto.getNomeProduto())
-                        .setTitleColor(Color.DKGRAY)
-                        .setSubtitle(produto.getQuantidadeItem() + "")
-                        .setSubtitle2("R$" + Utils.formataMoeda(produto.getValorTotalItem()))
-                        .setSubtitleColor(Color.DKGRAY)
-                        .endConfig()
-                        .build();
-
-            cards.add(card);
-        }
-
-            materialListViewProdutos.getAdapter().addAll(cards);
-        }
+//        if (pedidoDetalhe.getItensPedido() != null) {
+//            MaterialListView materialListViewProdutos = (MaterialListView) view.findViewById(R.id.material_listview_produtos);
+//
+//            materialListViewProdutos.setItemAnimator(new FlipInBottomXAnimator());
+//            materialListViewProdutos.getItemAnimator().setAddDuration(300);
+//            materialListViewProdutos.getItemAnimator().setRemoveDuration(300);
+//
+//            materialListViewProdutos.addOnItemTouchListener(new RecyclerItemClickListener.OnItemClickListener() {
+//                @Override
+//                public void onItemClick(@NonNull Card card, int position) {
+//                    theListView.getOnItemClickListener().onItemClick(null,view, pos, 0 );
+//                }
+//
+//                @Override
+//                public void onItemLongClick(@NonNull Card card, int position) {
+//
+//                }
+//            });
+//
+//            materialListViewProdutos.getAdapter().clearAll();
+//
+//            List<Card> cards = new ArrayList<>();
+//
+//
+//            for (ItemPedido produto : pedidoDetalhe.getItensPedido()) {
+//
+//                final Card card = new Card.Builder(LojaPedidosFragment.this.getContext())
+//                        .setTag("Produto Pedido")
+//                        .withProvider(new CardProvider())
+//                        .setLayout(R.layout.item_produto_pedido)
+//                        .setTitle(produto.getNomeProduto())
+//                        .setTitleColor(Color.DKGRAY)
+//                        .setSubtitle(produto.getQuantidadeItem() + "")
+//                        .setSubtitle2("R$" + Utils.formataMoeda(produto.getValorTotalItem()))
+//                        .setSubtitleColor(Color.DKGRAY)
+//                        .setKeepLayoutXml(true)
+//                        .endConfig()
+//                        .build();
+//
+//                Call<ResponseBody> call = ConnectPortadorService.getService().abrirImagemProduto(produto.getIdSKU(),
+//                        IdentityItsPay.getInstance().getToken());
+//
+//                call.enqueue(new Callback<ResponseBody>() {
+//                    @Override
+//                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+//                        if (response.body() != null && response.body().byteStream() != null) {
+//                            card.getProvider().setDrawable(new BitmapDrawable(response.body().byteStream()));
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+//                        UtilsActivity.alertIfSocketException(t, LojaPedidosFragment.this.getContext());
+//                    }
+//                });
+//
+//                cards.add(card);
+//            }
+//
+//            materialListViewProdutos.getAdapter().addAll(cards);
+//        }
     }
 
 
