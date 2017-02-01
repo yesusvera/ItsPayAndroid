@@ -134,6 +134,8 @@ public class LojaProdutosFragment extends Fragment {
             }
         });
 
+        controller.listaParceiros(LojaProdutosFragment.this);
+
 
         return rootView;
     }
@@ -141,8 +143,6 @@ public class LojaProdutosFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
-        controller.listaParceiros(LojaProdutosFragment.this);
     }
 
     public void listarProdutos(){

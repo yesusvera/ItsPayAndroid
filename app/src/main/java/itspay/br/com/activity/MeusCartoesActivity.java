@@ -91,6 +91,8 @@ public class MeusCartoesActivity extends AppCompatActivity
                 recreate();
             }
         });
+
+        meusCartoesController.listarCredenciais();
     }
 
     @Override
@@ -99,7 +101,6 @@ public class MeusCartoesActivity extends AppCompatActivity
         if(FORCE_LOGOUT){
             meusCartoesController.forceLogout();
         }
-        meusCartoesController.listarCredenciais();
     }
 
     public void abrirMarketPlace(){
