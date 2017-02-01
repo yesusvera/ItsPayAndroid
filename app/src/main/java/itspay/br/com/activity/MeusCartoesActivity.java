@@ -148,7 +148,6 @@ public class MeusCartoesActivity extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings_trocar_email_portador) {
             meusCartoesController.abrirTrocarEmail();
             return true;
@@ -180,7 +179,7 @@ public class MeusCartoesActivity extends AppCompatActivity
             Intent intent = new Intent(MeusCartoesActivity.this, TermosDeUsoActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_marketplace) {
-
+            abrirMarketPlace();
         } else if(id == R.id.nav_call_sac){
             meusCartoesController.ligar("08009406020");
         } else if(id == R.id.nav_call_ouvidoria){

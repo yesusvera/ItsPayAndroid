@@ -1,10 +1,12 @@
 package itspay.br.com.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
@@ -13,16 +15,19 @@ import android.view.ViewGroup;
 
 import com.dexafree.materialList.card.Card;
 import com.dexafree.materialList.card.CardProvider;
+import com.dexafree.materialList.listeners.RecyclerItemClickListener;
 import com.dexafree.materialList.view.MaterialListView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import itspay.br.com.activity.ProdutoDetalheActivity;
 import itspay.br.com.authentication.IdentityItsPay;
 import itspay.br.com.controller.LojaProdutosController;
 import itspay.br.com.itspay.R;
 import itspay.br.com.model.ParceiroResponse;
 import itspay.br.com.model.Produto;
+import itspay.br.com.model.ProdutoDetalhe;
 import itspay.br.com.services.ConnectPortadorService;
 import itspay.br.com.util.Utils;
 import itspay.br.com.util.UtilsActivity;
@@ -112,6 +117,24 @@ public class LojaProdutosFragment extends Fragment {
         materialListView = (MaterialListView) rootView.findViewById(R.id.material_listview);
 
 
+        materialListView.addOnItemTouchListener(new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(@NonNull Card card, int position) {
+                ProdutoDetalhe produtoDetalhe = (ProdutoDetalhe)card.getTag();
+
+                ProdutoDetalheActivity.produtoDetalhe = produtoDetalhe;
+                Intent produtoDetalheIntent = new Intent(LojaProdutosFragment.this.getActivity(), ProdutoDetalheActivity.class);
+                LojaProdutosFragment.this.getActivity().startActivity(produtoDetalheIntent);
+
+            }
+
+            @Override
+            public void onItemLongClick(@NonNull Card card, int position) {
+
+            }
+        });
+
+
         return rootView;
     }
 
@@ -127,8 +150,6 @@ public class LojaProdutosFragment extends Fragment {
         materialListView.getItemAnimator().setAddDuration(500);
         materialListView.getItemAnimator().setRemoveDuration(300);
 
-
-
         List<Card> cards = new ArrayList<>();
 
         for(ParceiroResponse parceiroResponse: listaParceiroResponse) {
@@ -143,7 +164,7 @@ public class LojaProdutosFragment extends Fragment {
                                         parceiroResponse.getQuantMaxParcelaSemJuros());
 
                 final Card card = new Card.Builder(this.getContext())
-                        .setTag("Produto Loja")
+                        .setTag(new ProdutoDetalhe(parceiroResponse,produto))
                         .withProvider(new CardProvider())
                         .setLayout(R.layout.item_produto_loja)
                         .setTitle(produto.getNomeProduto())
