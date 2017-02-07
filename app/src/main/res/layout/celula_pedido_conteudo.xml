@@ -255,14 +255,15 @@
         <TextView
             android:id="@+id/btn_status_pedido"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="10dp"
             android:background="@android:color/holo_green_dark"
             android:text="Carregando..."
-            android:textAlignment="center"
             android:textColor="@color/bgContent"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:textAlignment="gravity"
+            android:gravity="center_vertical|center_horizontal" />
     </LinearLayout>
 
 </LinearLayout>

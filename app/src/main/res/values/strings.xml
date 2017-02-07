@@ -32,6 +32,7 @@
                                                     \nEste cartão será cancelado e um novo cartão será emitido.</string>
 
 
+    <string name="label_sem_produtos_carrinho">Você não adicionou nenhum produto ao carrinho.</string>
     <string name="label_endereco_entrega">Entregar no endereço</string>
     <string name="label_pagamento">Pagamento</string>
     <string name="label_valor_total">Valor Total</string>
@@ -56,6 +57,8 @@
     <string name="acao_trocar_senha_cartao">Trocar Senha do Cartão</string>
     <string name="acao_comunicar_perda_roubo">Comunicar Perda ou Roubo</string>
     <string name="acao_adicionar_carrinho">Adicionar ao Carrinho</string>
+    <string name="acao_continuar">Continuar</string>
+    <string name="acao_limpar_lista">Limpar a lista</string>
 
 
     <string name="action_sign_in">Login</string>
