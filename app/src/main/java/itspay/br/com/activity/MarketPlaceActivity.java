@@ -12,28 +12,26 @@ import android.support.v7.widget.Toolbar;
 import android.text.SpannableStringBuilder;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import itspay.br.com.fragment.LojaCarrinhoFragment;
 import itspay.br.com.fragment.LojaPedidosFragment;
 import itspay.br.com.fragment.LojaProdutosFragment;
 import itspay.br.com.itspay.R;
+import itspay.br.com.singleton.CarrinhoSingleton;
 
 public class MarketPlaceActivity extends AppCompatActivity {
 
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
+
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
     /**
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+
+    private TabLayout tabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +48,7 @@ public class MarketPlaceActivity extends AppCompatActivity {
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-          TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -61,10 +59,62 @@ public class MarketPlaceActivity extends AppCompatActivity {
 //                        .setAction("Action", null).show();
 //            }
 //        });
+//
+//        tabLayout.getTabAt(0).setIcon(R.drawable.loja);
+//        tabLayout.getTabAt(1).setIcon(R.drawable.meus_pedidos);
+//        tabLayout.getTabAt(2).setIcon(R.drawable.carrinho_market);
+        tabLayout.getTabAt(0).setCustomView(R.layout.tab_loja_personalizado);
+        tabLayout.getTabAt(1).setCustomView(R.layout.tab_loja_personalizado);
+        tabLayout.getTabAt(2).setCustomView(R.layout.tab_loja_personalizado);
 
-        tabLayout.getTabAt(0).setIcon(R.drawable.loja);
-        tabLayout.getTabAt(1).setIcon(R.drawable.meus_pedidos);
-        tabLayout.getTabAt(2).setIcon(R.drawable.carrinho_market);
+        configuraTabPersonalizado(tabLayout.getTabAt(0).getCustomView(),
+                getDrawable(R.drawable.loja),
+                View.GONE,
+                getResources().getString(R.string.titulo_loja)
+        );
+        configuraTabPersonalizado(tabLayout.getTabAt(1).getCustomView(),
+                getDrawable(R.drawable.meus_pedidos),
+                View.GONE,
+                getResources().getString(R.string.titulo_meus_pedidos)
+        );
+        configuraTabPersonalizado(tabLayout.getTabAt(2).getCustomView(),
+                getDrawable(R.drawable.carrinho_market),
+                View.VISIBLE,
+                getResources().getString(R.string.titulo_carrinho)
+        );
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        configuraBadgedCarrinho();
+    }
+
+    public void configuraBadgedCarrinho(){
+        View view = tabLayout.getTabAt(2).getCustomView();
+        TextView txtBadget = (TextView)view.findViewById(R.id.txt_badged);
+
+        int qtde =  CarrinhoSingleton.getInstance().getListaProdutosCarrinho().size();
+
+        if(qtde == 0){
+            txtBadget.setVisibility(View.GONE);
+        }else {
+            txtBadget.setVisibility(View.VISIBLE);
+            txtBadget.setText("" + CarrinhoSingleton.getInstance().getListaProdutosCarrinho().size());
+        }
+    }
+
+    public void configuraTabPersonalizado(View view, Drawable icone, int visibility, String nomeTab){
+
+        TextView txtIcone = (TextView)view.findViewById(R.id.txt_icone);
+        TextView txtBadget = (TextView)view.findViewById(R.id.txt_badged);
+        TextView txtNomeTab = (TextView)view.findViewById(R.id.txt_nome_tab);
+
+        txtIcone.setBackground(icone);
+        txtBadget.setVisibility(visibility);
+        txtNomeTab.setText(nomeTab);
     }
 
 

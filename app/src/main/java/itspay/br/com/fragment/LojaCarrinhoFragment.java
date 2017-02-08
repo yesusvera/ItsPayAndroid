@@ -1,5 +1,6 @@
 package itspay.br.com.fragment;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -17,11 +18,14 @@ import android.widget.TextView;
 
 import com.dexafree.materialList.card.Card;
 import com.dexafree.materialList.card.CardProvider;
+import com.dexafree.materialList.card.OnActionClickListener;
+import com.dexafree.materialList.card.action.TextViewAction;
 import com.dexafree.materialList.view.MaterialListView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import itspay.br.com.activity.MarketPlaceActivity;
 import itspay.br.com.authentication.IdentityItsPay;
 import itspay.br.com.itspay.R;
 import itspay.br.com.model.Produto;
@@ -82,6 +86,12 @@ public class LojaCarrinhoFragment extends Fragment {
     public void onResume() {
         super.onResume();
         listarProdutos();
+
+        Activity activity = getActivity();
+        if(activity instanceof MarketPlaceActivity){
+            MarketPlaceActivity marketPlaceActivity = (MarketPlaceActivity)activity;
+            marketPlaceActivity.configuraBadgedCarrinho();
+        }
     }
 
     @Override
@@ -128,6 +138,7 @@ public class LojaCarrinhoFragment extends Fragment {
             linearLayoutCarrinho.setVisibility(View.GONE);
         }
 
+        materialListView.getAdapter().clearAll();
         materialListView.setItemAnimator(new FlipInTopXAnimator());
         materialListView.getItemAnimator().setAddDuration(500);
         materialListView.getItemAnimator().setRemoveDuration(300);
@@ -153,6 +164,24 @@ public class LojaCarrinhoFragment extends Fragment {
             final Card card = new Card.Builder(this.getContext())
                     .setTag(produtoCarrinho)
                     .withProvider(new CardProvider())
+                    .addAction(R.id.text_excluir, new TextViewAction(getActivity()).setListener(
+                            new OnActionClickListener() {
+                                @Override
+                                public void onActionClicked(View view, final Card card) {
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                                    builder.setMessage(getString(R.string.prompt_excluir_produto_carrinho))
+                                            .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialogInterface, int i) {
+                                                    CarrinhoSingleton.getInstance().getListaProdutosCarrinho().remove(card.getTag());
+                                                    onResume();
+                                                }
+                                            })
+                                            .setNegativeButton("Não", null);
+                                    builder.create().show();
+                                }
+                            }
+                    ))
                     .setLayout(R.layout.item_produto_carrinho)
                     .setTitle(produto.getNomeProduto())
                     .setTitleColor(Color.DKGRAY)
@@ -164,6 +193,7 @@ public class LojaCarrinhoFragment extends Fragment {
                     .setKeepLayoutXml(true)
                     .endConfig()
                     .build();
+
 
             cards.add(card);
 

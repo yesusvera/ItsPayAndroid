@@ -1,5 +1,6 @@
 package itspay.br.com.fragment;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -21,6 +22,7 @@ import com.dexafree.materialList.view.MaterialListView;
 import java.util.ArrayList;
 import java.util.List;
 
+import itspay.br.com.activity.MarketPlaceActivity;
 import itspay.br.com.activity.ProdutoDetalheActivity;
 import itspay.br.com.authentication.IdentityItsPay;
 import itspay.br.com.controller.LojaProdutosController;
@@ -142,6 +144,13 @@ public class LojaProdutosFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
+        Activity activity = getActivity();
+
+        if(activity instanceof MarketPlaceActivity){
+            MarketPlaceActivity marketPlaceActivity = (MarketPlaceActivity)activity;
+            marketPlaceActivity.configuraBadgedCarrinho();
+        }
     }
 
     public void listarProdutos(){
