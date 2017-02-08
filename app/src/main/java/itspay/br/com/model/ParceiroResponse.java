@@ -130,7 +130,7 @@ public class ParceiroResponse {
         this.quantMaxParcelaComJuros = quantMaxParcelaComJuros;
     }
 
-    public long getQuantMaxParcelaSemJuros() {
+    public long     getQuantMaxParcelaSemJuros() {
         return quantMaxParcelaSemJuros;
     }
 

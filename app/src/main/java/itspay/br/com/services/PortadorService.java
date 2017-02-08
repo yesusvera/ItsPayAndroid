@@ -8,11 +8,14 @@ import itspay.br.com.model.Credencial;
 import itspay.br.com.model.CredencialGerada;
 import itspay.br.com.model.CredencialStatus;
 import itspay.br.com.model.CriarLoginResponse;
+import itspay.br.com.model.EnderecoPessoa;
 import itspay.br.com.model.FazerLoginPortador;
 import itspay.br.com.model.FazerLoginPortadorResponse;
+import itspay.br.com.model.FazerPedidoMKTPlace;
 import itspay.br.com.model.GerarBoletoCarga;
 import itspay.br.com.model.GerarCredencialRequest;
 import itspay.br.com.model.GetCredenciaisResponse;
+import itspay.br.com.model.GetFormasEnvioResponse;
 import itspay.br.com.model.GetInfoPortadorCredencialRequest;
 import itspay.br.com.model.GetPerfilTarifarioResponse;
 import itspay.br.com.model.ItsPayResponse;
@@ -157,7 +160,6 @@ public interface PortadorService {
     Call<GetPerfilTarifarioResponse> listaTarifas(@Path("idConta") long idConta,
                                                   @Header("AuthorizationPortador") String token);
 
-
     @GET("api/mktplace/portador/pedido/pessoa/{documento}/processadora/{idProcessadora}/instituicao/{idInstituicao}")
     Call<Pedido[]> buscarPedidos(@Path("documento") String documento,
                                  @Path("idProcessadora") long idProcessadora,
@@ -177,4 +179,27 @@ public interface PortadorService {
     @GET("api/mktplace/administrativo/imagem/sku/{idImagem}")
     Call<ResponseBody> abrirImagemProduto(@Path("idImagem") long idImagem,
                                           @Header("AuthorizationPortador") String token);
+
+    @GET("api/mktplace/portador/formas-envio/{idParceiro}/endereco/{idEndereco}")
+    Call<GetFormasEnvioResponse[]> getFormasEntrega(@Path("idParceiro") long idParceiro,
+                                                      @Path("idEndereco") long idEndereco,
+                                                    @Header("AuthorizationPortador") String token);
+
+    @GET("api/endereco/{documento}/pessoa/{tipoPessoa}/processadora/{idProc}/instituicao/{idInst}/status/{status}/")
+    Call<EnderecoPessoa[]> getEnderecoPortador(@Path("documento") String documento,
+                                               @Path("tipoPessoa") long tipoPessoa,
+                                               @Path("idProc") long idProc,
+                                               @Path("idInst") long idInst,
+                                               @Path("status") long status,
+                                               @Header("AuthorizationPortador") String token);
+
+    @POST("api/mktplace/portador/pedido")
+    Call<ParceiroResponse> efetuarPedido(@Body FazerPedidoMKTPlace request,
+                                        @Header("AuthorizationPortador") String token);
+
+    @GET("api/mktplace/portador/parcelas/{idParceiro}/valor/{valorCarrinho}")
+    Call<ResponseBody> getParcelamento(@Path("idParceiro") long idParceiro,
+                                    @Path("valorCarrinho") double valorCarrinho,
+                                    @Header("AuthorizationPortador") String token);
+
 }
