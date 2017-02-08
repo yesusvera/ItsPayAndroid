@@ -1,37 +1,45 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="itspay.br.com.fragment.LojaCarrinhoFragment">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <LinearLayout
         android:id="@+id/linear_conteudo_carrinho"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:visibility="gone"
-        android:orientation="vertical">
+        android:layout_marginTop="16dp"
+        android:orientation="vertical"
+        android:visibility="visible">
 
         <TextView
+            android:id="@+id/text_grupo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="GRUPO X"
             android:textSize="12sp" />
 
-        <com.dexafree.materialList.view.MaterialListView
-            android:id="@+id/material_listView_produtos"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            <com.dexafree.materialList.view.MaterialListView
+                android:id="@+id/material_listView_produtos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:column_count_landscape="3"
+                app:column_count_portrait="2" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:gravity="right"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp">
+            android:orientation="horizontal"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -39,6 +47,7 @@
                 android:textSize="12sp" />
 
             <TextView
+                android:id="@+id/text_valor_total"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="R$ 99999,99"
@@ -67,6 +76,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:layout_marginBottom="100dp"
             android:background="@drawable/back_button_itspay"
             android:text="@string/acao_limpar_lista"
             android:textAllCaps="false"
@@ -75,6 +85,8 @@
 
 
     </LinearLayout>
+
+    </ScrollView>
 
     <LinearLayout
         android:id="@+id/linear_sem_produtos"
@@ -87,13 +99,13 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="80dp"
-            android:src="@drawable/carrinho_market_v2"/>
+            android:src="@drawable/carrinho_market_v2" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/label_sem_produtos_carrinho"
             android:layout_marginTop="16dp"
+            android:text="@string/label_sem_produtos_carrinho"
             android:textAlignment="center"
             android:textSize="16sp"
             android:textStyle="normal|bold" />

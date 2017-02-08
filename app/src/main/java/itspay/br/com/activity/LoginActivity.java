@@ -37,6 +37,7 @@ import java.util.List;
 
 import itspay.br.com.controller.LoginController;
 import itspay.br.com.itspay.R;
+import itspay.br.com.singleton.CarrinhoSingleton;
 import itspay.br.com.util.mask.MaskEditTextChangedListener;
 import itspay.br.com.util.validations.ValidationsForms;
 
@@ -212,6 +213,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // perform the user login attempt.
             showProgress(true);
 
+            CarrinhoSingleton.getInstance().esvaziarCarrinho();
             new LoginController(this).login();
 
 

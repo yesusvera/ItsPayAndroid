@@ -1,16 +1,40 @@
 package itspay.br.com.fragment;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.dexafree.materialList.card.Card;
+import com.dexafree.materialList.card.CardProvider;
+import com.dexafree.materialList.view.MaterialListView;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import itspay.br.com.authentication.IdentityItsPay;
 import itspay.br.com.itspay.R;
+import itspay.br.com.model.Produto;
+import itspay.br.com.model.ProdutoCarrinho;
+import itspay.br.com.services.ConnectPortadorService;
 import itspay.br.com.singleton.CarrinhoSingleton;
+import itspay.br.com.util.Utils;
+import itspay.br.com.util.UtilsActivity;
+import jp.wasabeef.recyclerview.animators.FlipInTopXAnimator;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LojaCarrinhoFragment extends Fragment {
 
@@ -24,6 +48,11 @@ public class LojaCarrinhoFragment extends Fragment {
     private View rootView;
     private LinearLayout linearLayoutSemProduto;
     private LinearLayout linearLayoutCarrinho;
+    private Button btnLimparLista;
+    private Button btnContinuar;
+    private TextView textGrupo;
+    private TextView textValorTotal;
+    public MaterialListView materialListView;
 
     private OnFragmentInteractionListener mListener;
 
@@ -59,22 +88,109 @@ public class LojaCarrinhoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        rootView =  inflater.inflate(R.layout.fragment_loja_carrinho, container, false);
+        rootView = inflater.inflate(R.layout.fragment_loja_carrinho, container, false);
 
         linearLayoutCarrinho = (LinearLayout) rootView.findViewById(R.id.linear_conteudo_carrinho);
         linearLayoutSemProduto = (LinearLayout) rootView.findViewById(R.id.linear_sem_produtos);
+        btnLimparLista = (Button) rootView.findViewById(R.id.btn_limpar_lista);
+        btnContinuar = (Button) rootView.findViewById(R.id.btn_continuar);
+        textGrupo = (TextView) rootView.findViewById(R.id.text_grupo);
+        textValorTotal = (TextView) rootView.findViewById(R.id.text_valor_total);
+
+        materialListView = (MaterialListView) rootView.findViewById(R.id.material_listView_produtos);
+
+        btnLimparLista.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setMessage(getActivity().getString(R.string.prompt_limpar_carrinho))
+                        .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                CarrinhoSingleton.getInstance().esvaziarCarrinho();
+                                onResume();
+                            }
+                        })
+                        .setNegativeButton("Não", null);
+                builder.create().show();
+            }
+        });
 
         return rootView;
     }
 
-    public void listarProdutos(){
-        if(CarrinhoSingleton.getInstance().temProduto()){
+    public void listarProdutos() {
+        if (CarrinhoSingleton.getInstance().temProduto()) {
             linearLayoutSemProduto.setVisibility(View.GONE);
             linearLayoutCarrinho.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             linearLayoutSemProduto.setVisibility(View.VISIBLE);
             linearLayoutCarrinho.setVisibility(View.GONE);
         }
+
+        materialListView.setItemAnimator(new FlipInTopXAnimator());
+        materialListView.getItemAnimator().setAddDuration(500);
+        materialListView.getItemAnimator().setRemoveDuration(300);
+
+        List<Card> cards = new ArrayList<>();
+
+        double valorTotal = 0;
+
+        for (ProdutoCarrinho produtoCarrinho : CarrinhoSingleton.getInstance().getListaProdutosCarrinho()) {
+
+            textGrupo.setText(produtoCarrinho.getProdutoDetalhe().getParceiroResponse().getNomeParceiro());
+
+            Produto produto = produtoCarrinho.getProdutoDetalhe().getProduto();
+
+            String precoPor = "R$" + Utils.formataMoeda(produto.getReferencias()[0].getPrecoPor());
+
+            double subtotal = produtoCarrinho.getQuantidade() * produto.getReferencias()[0].getPrecoPor();
+
+            valorTotal += subtotal;
+
+            String strSubtotal = "R$ " + Utils.formataMoeda(subtotal);
+
+            final Card card = new Card.Builder(this.getContext())
+                    .setTag(produtoCarrinho)
+                    .withProvider(new CardProvider())
+                    .setLayout(R.layout.item_produto_carrinho)
+                    .setTitle(produto.getNomeProduto())
+                    .setTitleColor(Color.DKGRAY)
+                    .setSubtitle("Quantidade: " + produtoCarrinho.getQuantidade())
+                    .setSubtitle2(precoPor)
+                    .setSubtitle3(strSubtotal)
+                    .setSubtitleColor(Color.BLACK)
+                    .setDescription("Subtotal:")
+                    .setKeepLayoutXml(true)
+                    .endConfig()
+                    .build();
+
+            cards.add(card);
+
+            if (produto.getImagens() != null && produto.getImagens().length > 0) {
+                Call<ResponseBody> call = ConnectPortadorService.getService().abrirImagemProduto(produto.getImagens()[0].getIdImagem(),
+                        IdentityItsPay.getInstance().getToken());
+
+                call.enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        if (response.body() != null && response.body().byteStream() != null) {
+                            card.getProvider().setDrawable(new BitmapDrawable(response.body().byteStream()));
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        UtilsActivity.alertIfSocketException(t, LojaCarrinhoFragment.this.getContext());
+                    }
+                });
+            }
+
+        }
+
+        textValorTotal.setText("R$ " + Utils.formataMoeda(valorTotal));
+
+        materialListView.getAdapter().addAll(cards);
     }
 
 

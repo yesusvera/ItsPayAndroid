@@ -31,8 +31,12 @@ public class CarrinhoSingleton {
         return listaProdutosCarrinho.size() > 0;
     }
 
-    public void limparLista(){
+    public void esvaziarCarrinho(){
         listaProdutosCarrinho.clear();
+    }
+
+    public List<ProdutoCarrinho> getListaProdutosCarrinho() {
+        return listaProdutosCarrinho;
     }
 
     public static CarrinhoSingleton getInstance(){

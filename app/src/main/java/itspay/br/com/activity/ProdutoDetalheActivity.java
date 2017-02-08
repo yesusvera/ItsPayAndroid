@@ -19,9 +19,11 @@ import itspay.br.com.controller.ProdutoDetalheController;
 import itspay.br.com.itspay.R;
 import itspay.br.com.model.Caracteristica;
 import itspay.br.com.model.Imagen;
+import itspay.br.com.model.ProdutoCarrinho;
 import itspay.br.com.model.ProdutoDetalhe;
 import itspay.br.com.model.Referencia;
 import itspay.br.com.services.ConnectPortadorService;
+import itspay.br.com.singleton.CarrinhoSingleton;
 import itspay.br.com.util.Utils;
 import itspay.br.com.util.UtilsActivity;
 import me.relex.circleindicator.CircleIndicator;
@@ -103,7 +105,7 @@ public class ProdutoDetalheActivity extends AppCompatActivity {
         btnAdicionarCarrinho.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                adicionarAoCarrinho();
+                escolherReferencia();
             }
         });
 
@@ -175,7 +177,7 @@ public class ProdutoDetalheActivity extends AppCompatActivity {
         }
     }
 
-    public void adicionarAoCarrinho() {
+    public void escolherReferencia() {
         ArrayList<CharSequence> listaReferencia = new ArrayList<>();
 
         for(Referencia ref: produtoDetalhe.getProduto().getReferencias()){
@@ -197,11 +199,23 @@ public class ProdutoDetalheActivity extends AppCompatActivity {
                 .setItems(items, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-
+                        adicionarAoCarrinho(produtoDetalhe.getProduto().getReferencias()[i]);
                     }
                 });
         builder.create().show();
     }
+
+    public void adicionarAoCarrinho(Referencia referencia){
+        ProdutoCarrinho produtoCarrinho = new ProdutoCarrinho();
+        produtoCarrinho.setQuantidade(quantidade);
+        produtoCarrinho.setProdutoDetalhe(produtoDetalhe);
+        produtoCarrinho.setReferencia(referencia);
+
+        CarrinhoSingleton.getInstance().adicionarProduto(produtoCarrinho);
+
+        finish();
+    }
+    
 
     //-----------------------------------------------------------------------------
     // Here's what the app should do to add a view to the ViewPager.
