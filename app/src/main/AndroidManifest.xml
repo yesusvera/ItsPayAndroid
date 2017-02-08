@@ -117,12 +117,11 @@
             android:label="Detalhes do Pedido"
             android:theme="@style/TemaFormularios"
             android:windowSoftInputMode="stateHidden|adjustPan" />
-
-        <activity android:name="itspay.br.com.activity.ProdutoDetalheActivity"
+        <activity
+            android:name="itspay.br.com.activity.ProdutoDetalheActivity"
             android:label="Detalhes do Produto"
             android:theme="@style/TemaFormularios"
-            android:windowSoftInputMode="stateHidden|adjustPan"
-            />
+            android:windowSoftInputMode="stateHidden|adjustPan" />
     </application>
 
 </manifest>

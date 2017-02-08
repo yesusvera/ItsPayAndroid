@@ -126,7 +126,29 @@ public class LojaCarrinhoFragment extends Fragment {
             }
         });
 
+        btnContinuar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                escolherFormasEntrega();
+            }
+        });
+
         return rootView;
+    }
+
+
+    public void escolherFormasEntrega(){
+        CharSequence[] items = {getString(R.string.label_entrega_endereco_vendedor),
+                                getString(R.string.label_entrega_meu_endereco)};
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Escolha a forma de Entrega").setCancelable(true).setNegativeButton("Cancelar", null)
+                .setItems(items, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+        builder.create().show();
     }
 
     public void listarProdutos() {
@@ -194,7 +216,6 @@ public class LojaCarrinhoFragment extends Fragment {
                     .endConfig()
                     .build();
 
-
             cards.add(card);
 
             if (produto.getImagens() != null && produto.getImagens().length > 0) {
@@ -215,11 +236,9 @@ public class LojaCarrinhoFragment extends Fragment {
                     }
                 });
             }
-
         }
 
         textValorTotal.setText("R$ " + Utils.formataMoeda(valorTotal));
-
         materialListView.getAdapter().addAll(cards);
     }
 

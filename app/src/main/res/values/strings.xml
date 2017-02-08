@@ -43,6 +43,8 @@
     <string name="label_quantidade">Quantidade</string>
     <string name="label_mais">+</string>
     <string name="label_menos">-</string>
+    <string name="label_entrega_endereco_vendedor">Retirar no Endereço do Vendedor</string>
+    <string name="label_entrega_meu_endereco">Entregar no meu Endereço</string>
 
     <string name="titulo_loja">Loja</string>
     <string name="titulo_meus_pedidos">Pedidos</string>

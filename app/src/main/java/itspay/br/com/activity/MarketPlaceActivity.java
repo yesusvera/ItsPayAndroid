@@ -51,18 +51,6 @@ public class MarketPlaceActivity extends AppCompatActivity {
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
-//
-//        tabLayout.getTabAt(0).setIcon(R.drawable.loja);
-//        tabLayout.getTabAt(1).setIcon(R.drawable.meus_pedidos);
-//        tabLayout.getTabAt(2).setIcon(R.drawable.carrinho_market);
         tabLayout.getTabAt(0).setCustomView(R.layout.tab_loja_personalizado);
         tabLayout.getTabAt(1).setCustomView(R.layout.tab_loja_personalizado);
         tabLayout.getTabAt(2).setCustomView(R.layout.tab_loja_personalizado);

@@ -181,9 +181,9 @@ public interface PortadorService {
                                           @Header("AuthorizationPortador") String token);
 
     @GET("api/mktplace/portador/formas-envio/{idParceiro}/endereco/{idEndereco}")
-    Call<GetFormasEnvioResponse[]> getFormasEntrega(@Path("idParceiro") long idParceiro,
-                                                      @Path("idEndereco") long idEndereco,
-                                                    @Header("AuthorizationPortador") String token);
+    Call<GetFormasEnvioResponse[]> getFormasEnvio(@Path("idParceiro") long idParceiro,
+                                                  @Path("idEndereco") long idEndereco,
+                                                  @Header("AuthorizationPortador") String token);
 
     @GET("api/endereco/{documento}/pessoa/{tipoPessoa}/processadora/{idProc}/instituicao/{idInst}/status/{status}/")
     Call<EnderecoPessoa[]> getEnderecoPortador(@Path("documento") String documento,
