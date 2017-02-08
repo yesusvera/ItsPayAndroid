@@ -7,54 +7,6 @@
     android:paddingTop="0dp"
     tools:context="itspay.br.com.activity.ProdutoDetalheActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:background="@color/azul_bahamas"
-        android:orientation="horizontal"
-        android:padding="0dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Subtotal"
-                android:textAlignment="center"
-                android:textColor="@android:color/white" />
-
-            <TextView
-                android:id="@+id/text_subtotal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="R$ 999999,00"
-                android:textAlignment="center"
-                android:textColor="@android:color/white" />
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/btn_adicionar_carrinho"
-            style="?android:textAppearanceSmall"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_weight="1"
-            android:background="@drawable/back_button_itspay"
-            android:text="@string/acao_adicionar_carrinho"
-            android:textAllCaps="false"
-            android:textColor="@android:color/background_light"
-            android:textStyle="bold" />
-    </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -237,4 +189,54 @@
         </LinearLayout>
 
     </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="@color/azul_bahamas"
+        android:orientation="horizontal"
+        android:padding="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Subtotal"
+                android:textAlignment="center"
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:id="@+id/text_subtotal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="R$ 999999,00"
+                android:textAlignment="center"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_adicionar_carrinho"
+            style="?android:textAppearanceSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_weight="1"
+            android:background="@drawable/back_button_itspay"
+            android:text="@string/acao_adicionar_carrinho"
+            android:textAllCaps="false"
+            android:textColor="@android:color/background_light"
+            android:textStyle="bold" />
+    </LinearLayout>
+
 </RelativeLayout>

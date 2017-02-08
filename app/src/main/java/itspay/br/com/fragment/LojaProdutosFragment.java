@@ -116,7 +116,6 @@ public class LojaProdutosFragment extends Fragment {
         });
         materialListView = (MaterialListView) rootView.findViewById(R.id.material_listview);
 
-
         materialListView.addOnItemTouchListener(new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(@NonNull Card card, int position) {
