@@ -1,5 +1,7 @@
 package itspay.br.com.services;
 
+import java.util.ArrayList;
+
 import itspay.br.com.model.AvisarPerdaOuRouboRequest;
 import itspay.br.com.model.Banco;
 import itspay.br.com.model.BoletoCarga;
@@ -172,9 +174,9 @@ public interface PortadorService {
                                  @Header("AuthorizationPortador") String token);
 
     @GET("api/mktplace/portador/parceiro-produto/{idProcessadora}/{idInstituicao}/")
-    Call<ParceiroResponse[]> getParceiros( @Path("idProcessadora") long idProcessadora,
-                                         @Path("idInstituicao") long idInstituicao,
-                                         @Header("AuthorizationPortador") String token);
+    Call<ArrayList<ParceiroResponse>> getParceiros(@Path("idProcessadora") long idProcessadora,
+                                                   @Path("idInstituicao") long idInstituicao,
+                                                   @Header("AuthorizationPortador") String token);
 
     @GET("api/mktplace/administrativo/imagem/sku/{idImagem}")
     Call<ResponseBody> abrirImagemProduto(@Path("idImagem") long idImagem,

@@ -10,9 +10,14 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.TextView;
 
 import com.dexafree.materialList.card.Card;
 import com.dexafree.materialList.card.CardProvider;
@@ -47,13 +52,16 @@ import retrofit2.Response;
  * Use the {@link LojaProdutosFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class LojaProdutosFragment extends Fragment {
+public class LojaProdutosFragment extends Fragment  {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-
+    boolean verificadorOpçoes;
+    ArrayList<String> countries;
+    public ArrayList<ParceiroResponse> listaParceiroResponse;
+    public ArrayList<ParceiroResponse> listaParceiroResponse2;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -61,13 +69,15 @@ public class LojaProdutosFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
+     public AutoCompleteTextView textView;
+
     private View rootView;
 
     public SwipeRefreshLayout swipeRefreshLayout;
 
     public MaterialListView materialListView;
 
-    public ParceiroResponse listaParceiroResponse[];
+    public TextView txtSearch;
 
     private LojaProdutosController controller = new LojaProdutosController();
 
@@ -108,10 +118,13 @@ public class LojaProdutosFragment extends Fragment {
 
         rootView = inflater.inflate(R.layout.fragment_loja_produtos, container, false);
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshLayout);
-//
+        txtSearch = (TextView) rootView.findViewById(R.id.txt_search);
+        textView = (AutoCompleteTextView) rootView.findViewById(R.id.autocomplete_country);
+
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                verificadorOpçoes = false;
                 controller.listaParceiros(LojaProdutosFragment.this);
                 rootView.invalidate();
             }
@@ -135,6 +148,8 @@ public class LojaProdutosFragment extends Fragment {
             }
         });
 
+        açoesDosComponentes();
+
         controller.listaParceiros(LojaProdutosFragment.this);
 
 
@@ -157,10 +172,14 @@ public class LojaProdutosFragment extends Fragment {
         materialListView.setItemAnimator(new FlipInTopXAnimator());
         materialListView.getItemAnimator().setAddDuration(500);
         materialListView.getItemAnimator().setRemoveDuration(300);
+        createComponent(listaParceiroResponse);
+    }
 
+    public void createComponent(ArrayList<ParceiroResponse> listaParceiro ){
         List<Card> cards = new ArrayList<>();
+        ArrayList<String> valueString = new ArrayList<>();
 
-        for(ParceiroResponse parceiroResponse: listaParceiroResponse) {
+        for(ParceiroResponse parceiroResponse: listaParceiro) {
             for (Produto produto : parceiroResponse.getProdutos()) {
 
                 String precoDe = "R$" + Utils.formataMoeda(produto.getReferencias()[0].getPrecoDe());
@@ -170,6 +189,8 @@ public class LojaProdutosFragment extends Fragment {
                         Utils.formataMoeda(
                                 produto.getReferencias()[0].getPrecoPor() /
                                         parceiroResponse.getQuantMaxParcelaSemJuros());
+
+                valueString.add(produto.getNomeProduto());
 
                 final Card card = new Card.Builder(this.getContext())
                         .setTag(new ProdutoDetalhe(parceiroResponse,produto))
@@ -210,6 +231,15 @@ public class LojaProdutosFragment extends Fragment {
             }
 
         }
+
+        if(!verificadorOpçoes) {
+            countries = valueString;
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, countries);
+            textView.setAdapter(adapter);
+            verificadorOpçoes = true;
+        }
+
+
         materialListView.getAdapter().addAll(cards);
     }
 
@@ -219,17 +249,6 @@ public class LojaProdutosFragment extends Fragment {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
     }
 
     @Override
@@ -252,4 +271,58 @@ public class LojaProdutosFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
-}
+
+
+    public void açoesDosComponentes (){
+
+        txtSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                txtSearch.setVisibility(View.GONE);
+                textView.setVisibility(View.VISIBLE);
+            }
+        });
+
+
+        //Click on KeyBoard
+        textView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean handled = false;
+                if (actionId == 5) {
+
+                    List<ParceiroResponse> listaParceiro = listaParceiroResponse2;
+                    ArrayList<Produto> listaProduto = new ArrayList<>();
+                    ArrayList<ParceiroResponse> filterList = new ArrayList<>();
+
+                    //materialListView.removeAllViews();
+                    //materialListView.getAdapter().clear();
+
+                    if (textView.getText() != null && textView.getText().length() > 0) {
+                        for(ParceiroResponse parceiroResponse: listaParceiro) {
+                            for (Produto produto : parceiroResponse.getProdutos()) {
+                                if ((produto.getNomeProduto().toUpperCase()).contains(textView.getText().toString().toUpperCase())) {
+                                    listaProduto.add(produto);
+                                }
+                            }
+
+                            parceiroResponse.setProdutos(listaProduto);
+                            filterList.add(parceiroResponse);
+                        }
+
+                    } else {
+                        filterList = listaParceiroResponse2;
+                    }
+
+                    createComponent(filterList);
+
+
+                    //rootView.invalidate();
+                }
+                ((InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(textView.getWindowToken(), 0);
+                return handled;
+            }
+        });
+    }
+
+ }

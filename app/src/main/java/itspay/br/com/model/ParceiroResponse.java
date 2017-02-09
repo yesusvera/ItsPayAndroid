@@ -1,5 +1,6 @@
 package itspay.br.com.model;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -16,13 +17,13 @@ public class ParceiroResponse {
     private long jurosAoMes;
     private String nomeImagem;
     private String nomeParceiro;
-    private Produto produtos[];
+    private ArrayList<Produto> produtos;
     private long quantMaxParcelaComJuros;
     private long quantMaxParcelaSemJuros;
     private long status;
     private Unidade unidades[];
 
-    public ParceiroResponse(String cnpj, String dataHoraStatus, long entrega, long idParceiro, long idUsuarioInclusao, long idUsuarioManutencao, long jurosAoMes, String nomeImagem, String nomeParceiro, Produto[] produtos, long quantMaxParcelaComJuros, long quantMaxParcelaSemJuros, long status, Unidade[] unidades) {
+    public ParceiroResponse(String cnpj, String dataHoraStatus, long entrega, long idParceiro, long idUsuarioInclusao, long idUsuarioManutencao, long jurosAoMes, String nomeImagem, String nomeParceiro, ArrayList<Produto>  produtos, long quantMaxParcelaComJuros, long quantMaxParcelaSemJuros, long status, Unidade[] unidades) {
         this.cnpj = cnpj;
         this.dataHoraStatus = dataHoraStatus;
         this.entrega = entrega;
@@ -114,11 +115,11 @@ public class ParceiroResponse {
         this.nomeParceiro = nomeParceiro;
     }
 
-    public Produto[] getProdutos() {
+    public ArrayList<Produto> getProdutos() {
         return produtos;
     }
 
-    public void setProdutos(Produto[] produtos) {
+    public void setProdutos(ArrayList<Produto>  produtos) {
         this.produtos = produtos;
     }
 
@@ -166,7 +167,7 @@ public class ParceiroResponse {
                 ", jurosAoMes=" + jurosAoMes +
                 ", nomeImagem='" + nomeImagem + '\'' +
                 ", nomeParceiro='" + nomeParceiro + '\'' +
-                ", produtos=" + Arrays.toString(produtos) +
+                ", produtos=" + produtos +
                 ", quantMaxParcelaComJuros=" + quantMaxParcelaComJuros +
                 ", quantMaxParcelaSemJuros=" + quantMaxParcelaSemJuros +
                 ", status=" + status +

@@ -1,5 +1,6 @@
 package itspay.br.com.controller;
 
+import java.util.ArrayList;
 import itspay.br.com.authentication.IdentityItsPay;
 import itspay.br.com.fragment.LojaProdutosFragment;
 import itspay.br.com.model.ParceiroResponse;
@@ -19,18 +20,19 @@ public class LojaProdutosController {
     public void listaParceiros(final LojaProdutosFragment fragment){
         fragment.materialListView.getAdapter().clearAll();
         fragment.swipeRefreshLayout.setRefreshing(true);
-        Call<ParceiroResponse[]> call = ConnectPortadorService.getService().getParceiros(
+        Call<ArrayList<ParceiroResponse>> call = ConnectPortadorService.getService().getParceiros(
                                 ItsPayConstants.ID_PROCESSADORA,
                                 ItsPayConstants.ID_INSTITUICAO,
                                 IdentityItsPay.getInstance().getToken());
 
 
-        call.enqueue(new Callback<ParceiroResponse[]>() {
+        call.enqueue(new Callback<ArrayList<ParceiroResponse> >() {
             @Override
-            public void onResponse(Call<ParceiroResponse[]> call, Response<ParceiroResponse[]> response) {
+            public void onResponse(Call<ArrayList<ParceiroResponse>>call, Response<ArrayList<ParceiroResponse> > response) {
 
                 if(response.body()!=null){
                     fragment.listaParceiroResponse = response.body();
+                    fragment.listaParceiroResponse2 = response.body();
                     fragment.listarProdutos();
                 }else{
                     UtilsActivity.alertMsg(response.errorBody(), fragment.getContext());
@@ -39,7 +41,7 @@ public class LojaProdutosController {
             }
 
             @Override
-            public void onFailure(Call<ParceiroResponse[]> call, Throwable t) {
+            public void onFailure(Call<ArrayList<ParceiroResponse>> call, Throwable t) {
                 UtilsActivity.alertIfSocketException(t, fragment.getContext());
                 fragment.swipeRefreshLayout.setRefreshing(false);
             }
