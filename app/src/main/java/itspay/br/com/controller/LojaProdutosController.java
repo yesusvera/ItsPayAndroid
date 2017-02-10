@@ -1,6 +1,7 @@
 package itspay.br.com.controller;
 
 import java.util.ArrayList;
+
 import itspay.br.com.authentication.IdentityItsPay;
 import itspay.br.com.fragment.LojaProdutosFragment;
 import itspay.br.com.model.ParceiroResponse;
@@ -32,7 +33,6 @@ public class LojaProdutosController {
 
                 if(response.body()!=null){
                     fragment.listaParceiroResponse = response.body();
-                    fragment.listaParceiroResponse2 = response.body();
                     fragment.listarProdutos();
                 }else{
                     UtilsActivity.alertMsg(response.errorBody(), fragment.getContext());

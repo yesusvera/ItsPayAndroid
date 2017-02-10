@@ -61,7 +61,7 @@ public class LojaProdutosFragment extends Fragment  {
     boolean verificadorOpçoes;
     ArrayList<String> countries;
     public ArrayList<ParceiroResponse> listaParceiroResponse;
-    public ArrayList<ParceiroResponse> listaParceiroResponse2;
+//    public ArrayList<ParceiroResponse> listaParceiroResponse2;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -194,6 +194,7 @@ public class LojaProdutosFragment extends Fragment  {
 
                 final Card card = new Card.Builder(this.getContext())
                         .setTag(new ProdutoDetalhe(parceiroResponse,produto))
+                        .setDismissible()
                         .withProvider(new CardProvider())
                         .setLayout(R.layout.item_produto_loja)
                         .setTitle(produto.getNomeProduto())
@@ -291,27 +292,29 @@ public class LojaProdutosFragment extends Fragment  {
                 boolean handled = false;
                 if (actionId == 5) {
 
-                    List<ParceiroResponse> listaParceiro = listaParceiroResponse2;
                     ArrayList<Produto> listaProduto = new ArrayList<>();
                     ArrayList<ParceiroResponse> filterList = new ArrayList<>();
 
-                    //materialListView.removeAllViews();
-                    //materialListView.getAdapter().clear();
+
+                    materialListView.getAdapter().clearAll();
 
                     if (textView.getText() != null && textView.getText().length() > 0) {
-                        for(ParceiroResponse parceiroResponse: listaParceiro) {
-                            for (Produto produto : parceiroResponse.getProdutos()) {
+                        for(ParceiroResponse parceiroResponse: listaParceiroResponse) {
+
+                            ParceiroResponse pRTemp = parceiroResponse.clone();
+
+                            for (Produto produto : pRTemp.getProdutos()) {
                                 if ((produto.getNomeProduto().toUpperCase()).contains(textView.getText().toString().toUpperCase())) {
                                     listaProduto.add(produto);
                                 }
                             }
 
-                            parceiroResponse.setProdutos(listaProduto);
-                            filterList.add(parceiroResponse);
+                            pRTemp.setProdutos(listaProduto);
+                            filterList.add(pRTemp);
                         }
 
                     } else {
-                        filterList = listaParceiroResponse2;
+                        filterList = listaParceiroResponse;
                     }
 
                     createComponent(filterList);

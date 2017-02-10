@@ -7,7 +7,7 @@ import java.util.Arrays;
  * Created by yesus on 24/01/17.
  */
 
-public class ParceiroResponse {
+public class ParceiroResponse  implements  Cloneable{
     private String cnpj;
     private String dataHoraStatus;
     private long entrega;
@@ -173,5 +173,16 @@ public class ParceiroResponse {
                 ", status=" + status +
                 ", unidades=" + Arrays.toString(unidades) +
                 '}';
+    }
+
+    @Override
+    public ParceiroResponse clone(){
+        try {
+            return (ParceiroResponse)super.clone();
+        }catch (CloneNotSupportedException ex){
+            ex.printStackTrace();
+        }
+
+        return null;
     }
 }
