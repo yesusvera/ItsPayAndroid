@@ -122,6 +122,11 @@
             android:label="Detalhes do Produto"
             android:theme="@style/TemaFormularios"
             android:windowSoftInputMode="stateHidden|adjustPan" />
+
+        <activity android:name="itspay.br.com.activity.EnderecoActivity"
+            android:label="Endereços"
+            android:theme="@style/TemaFormularios"
+            android:windowSoftInputMode="stateHidden|adjustPan"></activity>
     </application>
 
 </manifest>
