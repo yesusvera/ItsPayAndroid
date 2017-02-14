@@ -1,12 +1,55 @@
 <resources>
 
+
+    <!--Edit-->
+
+
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
         <item name="colorPrimary">#00273f</item>
         <item name="colorPrimaryDark">#00273f</item>
         <item name="colorAccent">#ab772d</item>
+
+
+        <!--Financial
+        <item name="colorPrimary">#EF3D3C</item>
+        <item name="colorPrimaryDark">#EF3D3C</item>
+        <item name="colorAccent">#EF3D3C</item>
+        -->
     </style>
+
+    <style name="TemaFormularios" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here.-->
+        <item name="colorPrimary">#00273f</item>
+        <item name="colorPrimaryDark">#00273f</item>
+        <item name="colorAccent">#ab772d</item>
+
+        <!--Financial
+        <item name="colorPrimary">#EF3D3C</item>
+        <item name="colorPrimaryDark">@android:color/white</item>
+        <item name="colorAccent">@android:color/white</item>
+        -->
+    </style>
+
+    <style name="IvBackApp">
+       <item name="android:background">@drawable/back_bahamas</item>
+
+    </style>
+
+    <style name="IvLogoClient">
+        <item name="android:src">@drawable/bahamas_logo</item>
+        <!-- <item name="android:src">@drawable/ic_financial_logo</item>-->
+    </style>
+
+    <style name="IvAppLogo">
+        <item name="android:src">@mipmap/ic_launcher</item>
+    <!-- <item name="android:src">@mipmap/ic_launch_financial</item>-->
+    </style>
+
+
+
+<!-- ###################### ############################# ####################################-->
+
 
     <style name="TemaFormularios_ITSPAY" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
@@ -16,25 +59,18 @@
     </style>
 
 
-    <style name="TemaFormularios" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">#00273f</item>
-        <item name="colorPrimaryDark">#00273f</item>
-        <item name="colorAccent">#ab772d</item>
-    </style>
-
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+<style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <style name="Divider">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">1dp</item>
-        <item name="android:background">@color/divider_grey</item>
-    </style>
+<style name="Divider">
+<item name="android:layout_width">match_parent</item>
+<item name="android:layout_height">1dp</item>
+<item name="android:background">@color/divider_grey</item>
+</style>
 
 
-    <!-- STYLES DO FOLDING EXAMPLE -->
+<!-- STYLES DO FOLDING EXAMPLE -->
     <style name="ContentImageBadgeTitle" parent="AppTheme">
         <item name="android:alpha">0.5</item>
         <item name="android:textColor">@android:color/white</item>

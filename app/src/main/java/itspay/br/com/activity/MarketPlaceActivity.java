@@ -50,6 +50,7 @@ public class MarketPlaceActivity extends AppCompatActivity {
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+        tabLayout.setSelectedTabIndicatorColor(getColor(R.color.indicator_tab));
 
         tabLayout.getTabAt(0).setCustomView(R.layout.tab_loja_personalizado);
         tabLayout.getTabAt(1).setCustomView(R.layout.tab_loja_personalizado);
