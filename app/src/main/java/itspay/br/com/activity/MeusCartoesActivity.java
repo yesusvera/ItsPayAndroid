@@ -29,6 +29,8 @@ import itspay.br.com.controller.MeusCartoesController;
 import itspay.br.com.itspay.R;
 import itspay.br.com.model.Credencial;
 import itspay.br.com.util.Utils;
+import itspay.br.com.util.notification.CustomNotification;
+import itspay.br.com.util.usersharepreferences.SharedPreferenceUtil;
 import jp.wasabeef.recyclerview.animators.FlipInBottomXAnimator;
 
 public class MeusCartoesActivity extends AppCompatActivity
@@ -46,6 +48,11 @@ public class MeusCartoesActivity extends AppCompatActivity
         setContentView(R.layout.activity_meus_cartoes);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
+       if(!SharedPreferenceUtil.getBooleanPreference(getBaseContext(),"isGoMarktplace",false)) {
+           CustomNotification.getInstance().notificationBuilder(getBaseContext(), R.drawable.cart, R.color.red_itspay_bkp, getString(R.string.app_name), "Conheça nossa Loja e aproveite as ofertas.");
+       }
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

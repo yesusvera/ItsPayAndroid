@@ -20,6 +20,7 @@ import itspay.br.com.fragment.LojaPedidosFragment;
 import itspay.br.com.fragment.LojaProdutosFragment;
 import itspay.br.com.itspay.R;
 import itspay.br.com.singleton.CarrinhoSingleton;
+import itspay.br.com.util.usersharepreferences.SharedPreferenceUtil;
 
 public class MarketPlaceActivity extends AppCompatActivity {
 
@@ -37,6 +38,8 @@ public class MarketPlaceActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_market_place);
+
+        SharedPreferenceUtil.setBooleanPreference(getBaseContext(),"isGoMarktplace",true);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
