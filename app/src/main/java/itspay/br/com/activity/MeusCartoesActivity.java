@@ -17,10 +17,14 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import com.dexafree.materialList.card.Card;
 import com.dexafree.materialList.listeners.RecyclerItemClickListener;
 import com.dexafree.materialList.view.MaterialListView;
+import com.example.tutoriallibrary.showcaseview.ShowcaseView;
+import com.example.tutoriallibrary.showcaseview.targets.ViewTarget;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,8 +38,10 @@ import itspay.br.com.util.usersharepreferences.SharedPreferenceUtil;
 import jp.wasabeef.recyclerview.animators.FlipInBottomXAnimator;
 
 public class MeusCartoesActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
 
+    private ShowcaseView sv;
+    FloatingActionButton fab;
     private MaterialListView mListView;
     private Credencial credenciais[];
     private MeusCartoesController meusCartoesController = new MeusCartoesController(this);
@@ -49,12 +55,7 @@ public class MeusCartoesActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
-       if(!SharedPreferenceUtil.getBooleanPreference(getBaseContext(),"isGoMarktplace",false)) {
-           CustomNotification.getInstance().notificationBuilder(getBaseContext(), R.drawable.cart, R.color.red_itspay_bkp, getString(R.string.app_name), "Conheça nossa Loja e aproveite as ofertas.");
-       }
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -102,12 +103,44 @@ public class MeusCartoesActivity extends AppCompatActivity
         meusCartoesController.listarCredenciais();
     }
 
+
+    private void isAlertMarketPlace(){
+
+        if(!SharedPreferenceUtil.getBooleanPreference(getBaseContext(),"isGoMarktplace",false) && SharedPreferenceUtil.getBooleanPreference(getBaseContext(),"isTutorialMarktPlace",false)) {
+            CustomNotification.getInstance().notificationBuilder(getBaseContext(), R.drawable.cart, R.color.red_itspay_bkp, getString(R.string.app_name), "Conheça nossa Loja e aproveite as ofertas.");
+        }
+
+        if(!SharedPreferenceUtil.getBooleanPreference(getBaseContext(),"isTutorialMarktPlace",false)) {
+
+            RelativeLayout.LayoutParams lps = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            lps.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+            lps.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+            int margin = ((Number) (getResources().getDisplayMetrics().density * 12)).intValue();
+            lps.setMargins(margin, margin, margin, margin);
+
+            ViewTarget target = new ViewTarget(R.id.fab, this);
+            sv = new ShowcaseView.Builder(this)
+                    .withMaterialShowcase()
+                    .setTarget(target)
+                    .setContentTitle(R.string.app_name)
+                    .setContentText(R.string.decription_marketplace)
+                    .setStyle(R.style.CustomShowcaseTheme2)
+                    .replaceEndButton(R.layout.view_custom_button)
+                    .build();
+            sv.setButtonPosition(lps);
+
+            sv.show();
+            SharedPreferenceUtil.setBooleanPreference(getBaseContext(),"isTutorialMarktPlace", true);
+        }
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
         if(FORCE_LOGOUT){
             meusCartoesController.forceLogout();
         }
+        isAlertMarketPlace();
     }
 
     public void abrirMarketPlace(){
@@ -189,11 +222,11 @@ public class MeusCartoesActivity extends AppCompatActivity
         } else if (id == R.id.nav_marketplace) {
             abrirMarketPlace();
         } else if(id == R.id.nav_call_sac){
-            meusCartoesController.ligar("08009406020");
+            meusCartoesController.ligar("3232294950");
         } else if(id == R.id.nav_call_ouvidoria){
-            meusCartoesController.ligar("35129797");
+            meusCartoesController.ligar("3208002859632");
         } else if(id == R.id.nav_email_fale_conosco){
-            meusCartoesController.enviarEmail("sac@financialcartoes.com.br", "", "","");
+            meusCartoesController.enviarEmail(getString(R.string.info_email), "", "","");
         } else if(id == R.id.nav_logout){
             meusCartoesController.logout();
         }
@@ -225,5 +258,17 @@ public class MeusCartoesActivity extends AppCompatActivity
 
     public void setmListView(MaterialListView mListView) {
         this.mListView = mListView;
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        if (sv.isShown()) {
+            sv.setStyle(R.style.CustomShowcaseTheme);
+        } else {
+            sv.show();
+        }
+
+
     }
 }

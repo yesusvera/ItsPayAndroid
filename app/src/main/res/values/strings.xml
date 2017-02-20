@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ItsPay</string>
+    <string name="app_name">Bahamas</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
@@ -246,5 +246,11 @@
     <string name="content_to1_mock">46th Ave</string>
     <string name="content_to2_mock">Woodside, NY 11101</string>
     <string name="title_activity_main2">Main2Activity</string>
+
+
+    <string name="info_email">creditoecobranca@bahamascard.com.br</string>
+
+   <!-- <string name="info_email">sac@financialcartoes.com.br</string> -->
+
 
 </resources>

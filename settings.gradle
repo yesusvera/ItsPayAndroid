@@ -1,1 +1,1 @@
-include ':app', ':card.io-5.4.2', ':materialList', ':folding-cell'
+include ':app', ':card.io-5.4.2', ':materialList', ':folding-cell', ':tutoriallibrary'
