@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_resumo_pedido"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="itspay.br.com.activity.ResumoPedidoActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/linear_conteudo_carrinho"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="16dp"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <TextView
+                android:id="@+id/text_grupo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="GRUPO X"
+                android:textSize="12sp" />
+
+            <com.dexafree.materialList.view.MaterialListView
+                android:id="@+id/material_listView_produtos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:column_count_landscape="3"
+                app:column_count_portrait="2" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:orientation="vertical"
+                android:paddingBottom="5dp"
+                android:paddingTop="16dp">
+
+                <TextView
+                    android:id="@+id/text_forma_entrega"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Retirar"
+                    android:textSize="12sp"
+                    android:textStyle="normal|bold" />
+
+                <TextView
+                    android:id="@+id/text_endereco_entrega"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Endereço"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:orientation="horizontal"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:id="@+id/text_nome_credencial"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="NOME CREDENCIAL"
+                    android:textAllCaps="false"
+                    android:textSize="12sp"
+                    android:textStyle="normal|bold" />
+
+                <TextView
+                    android:id="@+id/text_numero_credencial"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:gravity="right"
+                    android:text="0000"
+                    android:textColor="@color/grey_title"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pagamento"
+                    android:textAllCaps="false"
+                    android:textSize="12sp"
+                    android:textStyle="normal|bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="right">
+
+                    <TextView
+                        android:id="@+id/text_qtde_parcelas"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingRight="5dp"
+                        android:text="1x"
+                        android:textColor="@color/grey_title"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/text_valor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:forceHasOverlappingRendering="false"
+                        android:text="R$ 999999,99"
+                        android:textColor="@color/green_bahamas"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:orientation="horizontal"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Valor Total:"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/text_valor_total"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="R$ 99999,99"
+                    android:textColor="@color/primary_bahamas"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_continuar"
+                style="?android:textAppearanceSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/back_button_itspay"
+                android:text="@string/acao_finalizar_compra"
+                android:textAllCaps="false"
+                android:textColor="@android:color/background_light"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

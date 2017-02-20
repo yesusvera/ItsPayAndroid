@@ -63,7 +63,7 @@ public class Utils {
         String saldo = "Saldo: R$"+ cred.getSaldo();
 
         final Card card =  new Card.Builder(context)
-                .setTag("CARDITSPAY"+cred.getIdProduto())
+                .setTag(cred)
                 .withProvider(new CardProvider())
                 .setLayout(R.layout.material_itspay_card)
                 .setTitle(cred.getNomeProduto())

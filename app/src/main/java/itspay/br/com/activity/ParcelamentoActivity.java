@@ -1,7 +1,6 @@
 package itspay.br.com.activity;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -15,41 +14,43 @@ import com.dexafree.materialList.view.MaterialListView;
 import java.util.ArrayList;
 import java.util.List;
 
-import itspay.br.com.controller.EnderecoController;
+import itspay.br.com.controller.ParcelamentoController;
 import itspay.br.com.itspay.R;
-import itspay.br.com.model.EnderecoPessoa;
+import itspay.br.com.model.Parcela;
 import itspay.br.com.singleton.CarrinhoSingleton;
+import itspay.br.com.util.Utils;
 import jp.wasabeef.recyclerview.animators.FadeInLeftAnimator;
 
-public class EnderecoActivity extends AppCompatActivity {
+public class ParcelamentoActivity extends AppCompatActivity {
 
-    public EnderecoPessoa[] enderecos;
     private MaterialListView mListView;
     public SwipeRefreshLayout swipeRefreshLayout;
-    private EnderecoController controller = new EnderecoController(this);
+    public Parcela parcelas[];
+
+    private ParcelamentoController controller = new ParcelamentoController(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_endereco);
+        setContentView(R.layout.activity_parcelamento);
 
         mListView = (MaterialListView) findViewById(R.id.material_listview);
-        swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipeRefresh);
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                controller.buscarEnderecos();
+                controller.listarParcelamento();
             }
         });
 
         mListView.addOnItemTouchListener(new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(@NonNull Card card, int position) {
-                EnderecoPessoa enderecoPessoa = (EnderecoPessoa)card.getTag();
-                CarrinhoSingleton.getInstance().getRequestPedido().setIdEndereco(enderecoPessoa.getIdEndereco());
+                Parcela parcela = (Parcela)card.getTag();
+                CarrinhoSingleton.getInstance().getRequestPedido().setQuantidadeParcelas(parcela.getQuantidadeParcelas());
 
-                Intent intent = new Intent(EnderecoActivity.this, FormaEnvioActivity.class);
+                Intent intent = new Intent(ParcelamentoActivity.this, ResumoPedidoActivity.class);
                 startActivity(intent);
             }
 
@@ -63,10 +64,10 @@ public class EnderecoActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        controller.buscarEnderecos();
+        controller.listarParcelamento();
     }
 
-    public void listarEnderecos(){
+    public void listaParcelamento() {
         mListView.setItemAnimator(new FadeInLeftAnimator());
         mListView.getItemAnimator().setAddDuration(300);
         mListView.getItemAnimator().setRemoveDuration(300);
@@ -74,18 +75,14 @@ public class EnderecoActivity extends AppCompatActivity {
 
         List<Card> cards = new ArrayList<>();
 
-        for(EnderecoPessoa endTmp : enderecos) {
+        for (Parcela parcela : parcelas) {
             Card card = new Card.Builder(this)
-                    .setTag(endTmp)
+                    .setTag(parcela)
                     .withProvider(new CardProvider())
-                    .setLayout(R.layout.material_item_simples)
-                    .setTitle(endTmp.getLogradouro()    + " " +
-                              endTmp.getNumero()        + " " +
-                              endTmp.getComplemento()   + " " +
-                              endTmp.getBairro()        + " ")
-                    .setSubtitle(endTmp.getCidade() + "/" + endTmp.getUf())
-                    .setTitleColor(Color.BLACK)
-                    .setSubtitleColor(Color.GRAY)
+                    .setLayout(R.layout.material_itspay_parcelamento)
+                    .setTitle(parcela.getQuantidadeParcelas() + "x")
+                    .setSubtitle("R$ " + Utils.formataMoeda(parcela.getValorParcela()))
+                    .setSubtitle2("R$ " + Utils.formataMoeda(parcela.getValorParcela() * parcela.getQuantidadeParcelas()))
                     .setKeepLayoutXml(true)
                     .endConfig()
                     .build();

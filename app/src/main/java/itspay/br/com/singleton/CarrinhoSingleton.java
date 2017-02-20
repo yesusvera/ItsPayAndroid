@@ -3,6 +3,8 @@ package itspay.br.com.singleton;
 import java.util.ArrayList;
 import java.util.List;
 
+import itspay.br.com.model.FazerPedidoMKTPlace;
+import itspay.br.com.model.Produto;
 import itspay.br.com.model.ProdutoCarrinho;
 
 /**
@@ -12,6 +14,8 @@ import itspay.br.com.model.ProdutoCarrinho;
 public class CarrinhoSingleton {
 
     private static CarrinhoSingleton carrinho = new CarrinhoSingleton();
+
+    private FazerPedidoMKTPlace requestMKT = new FazerPedidoMKTPlace();
 
     private List<ProdutoCarrinho> listaProdutosCarrinho = new ArrayList<>();
 
@@ -33,6 +37,11 @@ public class CarrinhoSingleton {
 
     public void esvaziarCarrinho(){
         listaProdutosCarrinho.clear();
+        requestMKT = new FazerPedidoMKTPlace();
+    }
+
+    public void limparPedido(){
+        requestMKT = new FazerPedidoMKTPlace();
     }
 
     public List<ProdutoCarrinho> getListaProdutosCarrinho() {
@@ -46,5 +55,17 @@ public class CarrinhoSingleton {
         return carrinho;
     }
 
+    public double getValorTotal(){
+        double valorTotal = 0;
+        for (ProdutoCarrinho produtoCarrinho : getListaProdutosCarrinho()) {
+            Produto produto = produtoCarrinho.getProdutoDetalhe().getProduto();
+            double subtotal = produtoCarrinho.getQuantidade() * produto.getReferencias()[0].getPrecoPor();
+            valorTotal += subtotal;
+        }
+        return valorTotal;
+    }
 
+    public FazerPedidoMKTPlace getRequestPedido() {
+        return requestMKT;
+    }
 }

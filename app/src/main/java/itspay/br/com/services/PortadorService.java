@@ -23,6 +23,7 @@ import itspay.br.com.model.GetPerfilTarifarioResponse;
 import itspay.br.com.model.ItsPayResponse;
 import itspay.br.com.model.LinhaExtratoCredencial;
 import itspay.br.com.model.ParceiroResponse;
+import itspay.br.com.model.ParcelasResponse;
 import itspay.br.com.model.Pedido;
 import itspay.br.com.model.PedidoDetalhe;
 import itspay.br.com.model.PortadorCredencial;
@@ -162,6 +163,15 @@ public interface PortadorService {
     Call<GetPerfilTarifarioResponse> listaTarifas(@Path("idConta") long idConta,
                                                   @Header("AuthorizationPortador") String token);
 
+    @GET("api/portador/credencial/{documento}/pessoa/{tipoPessoa}/processadora/{idProc}/instituicao/{idInst}/desbloqueadas")
+    Call<GetCredenciaisResponse> listaCredenciaisLoja(
+            @Path("documento") String documento,
+            @Path("tipoPessoa") long tipoPessoa,
+            @Path("idProc") long idProcessadora,
+            @Path("idInst") long idInstituicao,
+            @Header("AuthorizationPortador") String token
+    );
+
     @GET("api/mktplace/portador/pedido/pessoa/{documento}/processadora/{idProcessadora}/instituicao/{idInstituicao}")
     Call<Pedido[]> buscarPedidos(@Path("documento") String documento,
                                  @Path("idProcessadora") long idProcessadora,
@@ -200,8 +210,7 @@ public interface PortadorService {
                                         @Header("AuthorizationPortador") String token);
 
     @GET("api/mktplace/portador/parcelas/{idParceiro}/valor/{valorCarrinho}")
-    Call<ResponseBody> getParcelamento(@Path("idParceiro") long idParceiro,
-                                    @Path("valorCarrinho") double valorCarrinho,
-                                    @Header("AuthorizationPortador") String token);
-
+    Call<ParcelasResponse> getParcelamento(@Path("idParceiro") long idParceiro,
+                                           @Path("valorCarrinho") double valorCarrinho,
+                                           @Header("AuthorizationPortador") String token);
 }

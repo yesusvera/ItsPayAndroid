@@ -15,23 +15,30 @@
         card_view:cardElevation="7dp">
 
         <LinearLayout
-            android:id="@+id/cardItsPayLinearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:paddingTop="15dp"
-            android:paddingBottom="10dp"
-            android:orientation="vertical">
+            android:orientation="horizontal">
+
+            <LinearLayout
+
+                android:id="@+id/cardItsPayLinearLayout"
+                android:layout_weight="4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:paddingBottom="10dp"
+                android:paddingTop="15dp">
 
                 <TextView
                     android:id="@+id/title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="16dp"
                     android:gravity="center_horizontal"
+                    android:paddingLeft="16dp"
                     android:textColor="@android:color/black"
-                    tools:text="Item"
-                    android:textSize="11sp" />
+                    android:textSize="11sp"
+                    tools:text="Item" />
 
                 <TextView
                     android:id="@+id/subtitle"
@@ -39,13 +46,22 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="16dp"
                     android:textAllCaps="false"
-
                     android:textColor="@color/description_color"
-                    tools:text="descritivo"
-                    android:textSize="11sp" />
+                    android:textSize="11sp"
+                    tools:text="descritivo" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/supportingText"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|center_horizontal"
+                android:textColor="@android:color/holo_green_dark"
+                tools:text="R$0,00" />
 
         </LinearLayout>
-
 
 
     </android.support.v7.widget.CardView>

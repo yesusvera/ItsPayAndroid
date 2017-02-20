@@ -14,7 +14,7 @@ public class ParceiroResponse  implements  Cloneable{
     private long idParceiro;
     private long idUsuarioInclusao;
     private long idUsuarioManutencao;
-    private long jurosAoMes;
+    private double jurosAoMes;
     private String nomeImagem;
     private String nomeParceiro;
     private ArrayList<Produto> produtos;
@@ -23,7 +23,7 @@ public class ParceiroResponse  implements  Cloneable{
     private long status;
     private Unidade unidades[];
 
-    public ParceiroResponse(String cnpj, String dataHoraStatus, long entrega, long idParceiro, long idUsuarioInclusao, long idUsuarioManutencao, long jurosAoMes, String nomeImagem, String nomeParceiro, ArrayList<Produto>  produtos, long quantMaxParcelaComJuros, long quantMaxParcelaSemJuros, long status, Unidade[] unidades) {
+    public ParceiroResponse(String cnpj, String dataHoraStatus, long entrega, long idParceiro, long idUsuarioInclusao, long idUsuarioManutencao, double jurosAoMes, String nomeImagem, String nomeParceiro, ArrayList<Produto>  produtos, long quantMaxParcelaComJuros, long quantMaxParcelaSemJuros, long status, Unidade[] unidades) {
         this.cnpj = cnpj;
         this.dataHoraStatus = dataHoraStatus;
         this.entrega = entrega;
@@ -91,11 +91,11 @@ public class ParceiroResponse  implements  Cloneable{
         this.idUsuarioManutencao = idUsuarioManutencao;
     }
 
-    public long getJurosAoMes() {
+    public double getJurosAoMes() {
         return jurosAoMes;
     }
 
-    public void setJurosAoMes(long jurosAoMes) {
+    public void setJurosAoMes(double jurosAoMes) {
         this.jurosAoMes = jurosAoMes;
     }
 

@@ -15,23 +15,25 @@ import com.dexafree.materialList.view.MaterialListView;
 import java.util.ArrayList;
 import java.util.List;
 
-import itspay.br.com.controller.EnderecoController;
+import itspay.br.com.controller.FormaEnvioController;
 import itspay.br.com.itspay.R;
-import itspay.br.com.model.EnderecoPessoa;
+import itspay.br.com.model.GetFormasEnvioResponse;
 import itspay.br.com.singleton.CarrinhoSingleton;
+import itspay.br.com.util.Utils;
 import jp.wasabeef.recyclerview.animators.FadeInLeftAnimator;
 
-public class EnderecoActivity extends AppCompatActivity {
+public class FormaEnvioActivity extends AppCompatActivity {
 
-    public EnderecoPessoa[] enderecos;
     private MaterialListView mListView;
     public SwipeRefreshLayout swipeRefreshLayout;
-    private EnderecoController controller = new EnderecoController(this);
+
+    private FormaEnvioController controller = new FormaEnvioController(this);
+    public GetFormasEnvioResponse[] formasEnvio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_endereco);
+        setContentView(R.layout.activity_forma_envio);
 
         mListView = (MaterialListView) findViewById(R.id.material_listview);
         swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipeRefresh);
@@ -39,23 +41,22 @@ public class EnderecoActivity extends AppCompatActivity {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                controller.buscarEnderecos();
+                controller.listarFormasEnvio();
             }
         });
 
         mListView.addOnItemTouchListener(new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(@NonNull Card card, int position) {
-                EnderecoPessoa enderecoPessoa = (EnderecoPessoa)card.getTag();
-                CarrinhoSingleton.getInstance().getRequestPedido().setIdEndereco(enderecoPessoa.getIdEndereco());
+                GetFormasEnvioResponse formaEnvio = (GetFormasEnvioResponse)card.getTag();
+                CarrinhoSingleton.getInstance().getRequestPedido().setValorFrete(formaEnvio.getValor());
 
-                Intent intent = new Intent(EnderecoActivity.this, FormaEnvioActivity.class);
+                Intent intent = new Intent(FormaEnvioActivity.this, CartoesLojaActivity.class);
                 startActivity(intent);
             }
 
             @Override
             public void onItemLongClick(@NonNull Card card, int position) {
-
             }
         });
     }
@@ -63,10 +64,11 @@ public class EnderecoActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        controller.buscarEnderecos();
+        controller.listarFormasEnvio();
+
     }
 
-    public void listarEnderecos(){
+    public void listaFormaEnvio(){
         mListView.setItemAnimator(new FadeInLeftAnimator());
         mListView.getItemAnimator().setAddDuration(300);
         mListView.getItemAnimator().setRemoveDuration(300);
@@ -74,18 +76,17 @@ public class EnderecoActivity extends AppCompatActivity {
 
         List<Card> cards = new ArrayList<>();
 
-        for(EnderecoPessoa endTmp : enderecos) {
+        for(GetFormasEnvioResponse formaEnvio : formasEnvio) {
             Card card = new Card.Builder(this)
-                    .setTag(endTmp)
+                    .setTag(formaEnvio)
                     .withProvider(new CardProvider())
-                    .setLayout(R.layout.material_item_simples)
-                    .setTitle(endTmp.getLogradouro()    + " " +
-                              endTmp.getNumero()        + " " +
-                              endTmp.getComplemento()   + " " +
-                              endTmp.getBairro()        + " ")
-                    .setSubtitle(endTmp.getCidade() + "/" + endTmp.getUf())
+                    .setLayout(R.layout.material_itspay_forma_envio)
+                    .setTitle(formaEnvio.getTitulo())
+                    .setSubtitle(formaEnvio.getDescricao())
+                    .setDescription("R$"+ Utils.formataMoeda(formaEnvio.getValor()))
                     .setTitleColor(Color.BLACK)
                     .setSubtitleColor(Color.GRAY)
+                    .setDescriptionColor(Color.GREEN)
                     .setKeepLayoutXml(true)
                     .endConfig()
                     .build();

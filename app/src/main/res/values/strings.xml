@@ -62,6 +62,7 @@
     <string name="acao_comunicar_perda_roubo">Comunicar Perda ou Roubo</string>
     <string name="acao_adicionar_carrinho">Adicionar ao Carrinho</string>
     <string name="acao_continuar">Continuar</string>
+    <string name="acao_finalizar_compra">Finalizar Compra</string>
     <string name="acao_limpar_lista">Limpar a lista</string>
 
 

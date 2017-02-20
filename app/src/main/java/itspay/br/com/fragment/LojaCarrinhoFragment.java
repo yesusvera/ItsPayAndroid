@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -26,21 +25,15 @@ import com.dexafree.materialList.view.MaterialListView;
 import java.util.ArrayList;
 import java.util.List;
 
+import itspay.br.com.activity.CartoesLojaActivity;
 import itspay.br.com.activity.EnderecoActivity;
 import itspay.br.com.activity.MarketPlaceActivity;
-import itspay.br.com.authentication.IdentityItsPay;
 import itspay.br.com.itspay.R;
 import itspay.br.com.model.Produto;
 import itspay.br.com.model.ProdutoCarrinho;
-import itspay.br.com.services.ConnectPortadorService;
 import itspay.br.com.singleton.CarrinhoSingleton;
 import itspay.br.com.util.Utils;
-import itspay.br.com.util.UtilsActivity;
 import jp.wasabeef.recyclerview.animators.FlipInTopXAnimator;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class LojaCarrinhoFragment extends Fragment {
 
@@ -88,9 +81,11 @@ public class LojaCarrinhoFragment extends Fragment {
         super.onResume();
         listarProdutos();
 
+        CarrinhoSingleton.getInstance().limparPedido();
+
         Activity activity = getActivity();
-        if(activity instanceof MarketPlaceActivity){
-            MarketPlaceActivity marketPlaceActivity = (MarketPlaceActivity)activity;
+        if (activity instanceof MarketPlaceActivity) {
+            MarketPlaceActivity marketPlaceActivity = (MarketPlaceActivity) activity;
             marketPlaceActivity.configuraBadgedCarrinho();
         }
     }
@@ -138,20 +133,25 @@ public class LojaCarrinhoFragment extends Fragment {
     }
 
 
-    public void escolherFormasEntrega(){
+    public void escolherFormasEntrega() {
         CharSequence[] items = {getString(R.string.label_entrega_endereco_vendedor),
-                                getString(R.string.label_entrega_meu_endereco)};
+                getString(R.string.label_entrega_meu_endereco)};
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Escolha a forma de Entrega").setCancelable(true).setNegativeButton("Cancelar", null)
                 .setItems(items, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        switch (i){
-                            case 0: break;
-                            case 1:
+                        switch (i) {
+                            case 0: {
+                                Intent intent = new Intent(LojaCarrinhoFragment.this.getActivity(), CartoesLojaActivity.class);
+                                startActivity(intent);
+                                break;
+                            }
+                            case 1: {
                                 Intent intent = new Intent(LojaCarrinhoFragment.this.getActivity(), EnderecoActivity.class);
                                 startActivity(intent);
                                 break;
+                            }
                         }
                     }
                 });
@@ -225,24 +225,24 @@ public class LojaCarrinhoFragment extends Fragment {
 
             cards.add(card);
 
-            if (produto.getImagens() != null && produto.getImagens().length > 0) {
-                Call<ResponseBody> call = ConnectPortadorService.getService().abrirImagemProduto(produto.getImagens()[0].getIdImagem(),
-                        IdentityItsPay.getInstance().getToken());
-
-                call.enqueue(new Callback<ResponseBody>() {
-                    @Override
-                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        if (response.body() != null && response.body().byteStream() != null) {
-                            card.getProvider().setDrawable(new BitmapDrawable(response.body().byteStream()));
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<ResponseBody> call, Throwable t) {
-                        UtilsActivity.alertIfSocketException(t, LojaCarrinhoFragment.this.getContext());
-                    }
-                });
-            }
+//            if (produto.getImagens() != null && produto.getImagens().length > 0) {
+//                Call<ResponseBody> call = ConnectPortadorService.getService().abrirImagemProduto(produto.getImagens()[0].getIdImagem(),
+//                        IdentityItsPay.getInstance().getToken());
+//
+//                call.enqueue(new Callback<ResponseBody>() {
+//                    @Override
+//                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+//                        if (response.body() != null && response.body().byteStream() != null) {
+//                            card.getProvider().setDrawable(new BitmapDrawable(response.body().byteStream()));
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+//                        UtilsActivity.alertIfSocketException(t, LojaCarrinhoFragment.this.getContext());
+//                    }
+//                });
+//            }
         }
 
         textValorTotal.setText("R$ " + Utils.formataMoeda(valorTotal));

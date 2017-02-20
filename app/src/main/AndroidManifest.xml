@@ -122,11 +122,31 @@
             android:label="Detalhes do Produto"
             android:theme="@style/TemaFormularios"
             android:windowSoftInputMode="stateHidden|adjustPan" />
-
-        <activity android:name="itspay.br.com.activity.EnderecoActivity"
+        <activity
+            android:name="itspay.br.com.activity.EnderecoActivity"
             android:label="Endereços"
             android:theme="@style/TemaFormularios"
-            android:windowSoftInputMode="stateHidden|adjustPan"></activity>
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name="itspay.br.com.activity.FormaEnvioActivity"
+            android:label="Forma de Envio"
+            android:theme="@style/TemaFormularios"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name="itspay.br.com.activity.CartoesLojaActivity"
+            android:label="Escolha o Cartão"
+            android:theme="@style/TemaFormularios"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name="itspay.br.com.activity.ParcelamentoActivity"
+            android:label="Parcelamento"
+            android:theme="@style/TemaFormularios"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity android:name="itspay.br.com.activity.ResumoPedidoActivity"
+            android:label="Resumo"
+            android:theme="@style/TemaFormularios"
+            android:windowSoftInputMode="stateHidden|adjustPan"
+            />
     </application>
 
 </manifest>

@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -29,20 +28,13 @@ import java.util.List;
 
 import itspay.br.com.activity.MarketPlaceActivity;
 import itspay.br.com.activity.ProdutoDetalheActivity;
-import itspay.br.com.authentication.IdentityItsPay;
 import itspay.br.com.controller.LojaProdutosController;
 import itspay.br.com.itspay.R;
 import itspay.br.com.model.ParceiroResponse;
 import itspay.br.com.model.Produto;
 import itspay.br.com.model.ProdutoDetalhe;
-import itspay.br.com.services.ConnectPortadorService;
 import itspay.br.com.util.Utils;
-import itspay.br.com.util.UtilsActivity;
 import jp.wasabeef.recyclerview.animators.FlipInTopXAnimator;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -52,7 +44,7 @@ import retrofit2.Response;
  * Use the {@link LojaProdutosFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class LojaProdutosFragment extends Fragment  {
+public class LojaProdutosFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -69,7 +61,7 @@ public class LojaProdutosFragment extends Fragment  {
 
     private OnFragmentInteractionListener mListener;
 
-     public AutoCompleteTextView textView;
+    public AutoCompleteTextView textView;
 
     private View rootView;
 
@@ -134,7 +126,7 @@ public class LojaProdutosFragment extends Fragment  {
         materialListView.addOnItemTouchListener(new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(@NonNull Card card, int position) {
-                ProdutoDetalhe produtoDetalhe = (ProdutoDetalhe)card.getTag();
+                ProdutoDetalhe produtoDetalhe = (ProdutoDetalhe) card.getTag();
 
                 ProdutoDetalheActivity.produtoDetalhe = produtoDetalhe;
                 Intent produtoDetalheIntent = new Intent(LojaProdutosFragment.this.getActivity(), ProdutoDetalheActivity.class);
@@ -162,24 +154,24 @@ public class LojaProdutosFragment extends Fragment  {
 
         Activity activity = getActivity();
 
-        if(activity instanceof MarketPlaceActivity){
-            MarketPlaceActivity marketPlaceActivity = (MarketPlaceActivity)activity;
+        if (activity instanceof MarketPlaceActivity) {
+            MarketPlaceActivity marketPlaceActivity = (MarketPlaceActivity) activity;
             marketPlaceActivity.configuraBadgedCarrinho();
         }
     }
 
-    public void listarProdutos(){
+    public void listarProdutos() {
         materialListView.setItemAnimator(new FlipInTopXAnimator());
         materialListView.getItemAnimator().setAddDuration(500);
         materialListView.getItemAnimator().setRemoveDuration(300);
         createComponent(listaParceiroResponse);
     }
 
-    public void createComponent(ArrayList<ParceiroResponse> listaParceiro ){
+    public void createComponent(ArrayList<ParceiroResponse> listaParceiro) {
         List<Card> cards = new ArrayList<>();
         ArrayList<String> valueString = new ArrayList<>();
 
-        for(ParceiroResponse parceiroResponse: listaParceiro) {
+        for (ParceiroResponse parceiroResponse : listaParceiro) {
             for (Produto produto : parceiroResponse.getProdutos()) {
 
                 String precoDe = "R$" + Utils.formataMoeda(produto.getReferencias()[0].getPrecoDe());
@@ -193,7 +185,7 @@ public class LojaProdutosFragment extends Fragment  {
                 valueString.add(produto.getNomeProduto());
 
                 final Card card = new Card.Builder(this.getContext())
-                        .setTag(new ProdutoDetalhe(parceiroResponse,produto))
+                        .setTag(new ProdutoDetalhe(parceiroResponse, produto))
                         .setDismissible()
                         .withProvider(new CardProvider())
                         .setLayout(R.layout.item_produto_loja)
@@ -210,30 +202,30 @@ public class LojaProdutosFragment extends Fragment  {
 
                 cards.add(card);
 
-                if(produto.getImagens()!=null && produto.getImagens().length>0) {
-                    Call<ResponseBody> call = ConnectPortadorService.getService().abrirImagemProduto(produto.getImagens()[0].getIdImagem(),
-                            IdentityItsPay.getInstance().getToken());
-
-                    call.enqueue(new Callback<ResponseBody>() {
-                        @Override
-                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                            if (response.body() != null && response.body().byteStream() != null) {
-                                card.getProvider().setDrawable(new BitmapDrawable(response.body().byteStream()));
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<ResponseBody> call, Throwable t) {
-                            UtilsActivity.alertIfSocketException(t, LojaProdutosFragment.this.getContext());
-                        }
-                    });
-                }
+//                if (produto.getImagens() != null && produto.getImagens().length > 0) {
+//                    Call<ResponseBody> call = ConnectPortadorService.getService().abrirImagemProduto(produto.getImagens()[0].getIdImagem(),
+//                            IdentityItsPay.getInstance().getToken());
+//
+//                    call.enqueue(new Callback<ResponseBody>() {
+//                        @Override
+//                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+//                            if (response.body() != null && response.body().byteStream() != null) {
+//                                card.getProvider().setDrawable(new BitmapDrawable(response.body().byteStream()));
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+//                            UtilsActivity.alertIfSocketException(t, LojaProdutosFragment.this.getContext());
+//                        }
+//                    });
+//                }
 
             }
 
         }
 
-        if(!verificadorOpçoes) {
+        if (!verificadorOpçoes) {
             countries = valueString;
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, countries);
             textView.setAdapter(adapter);
@@ -274,7 +266,7 @@ public class LojaProdutosFragment extends Fragment  {
     }
 
 
-    public void açoesDosComponentes (){
+    public void açoesDosComponentes() {
 
         txtSearch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -299,7 +291,7 @@ public class LojaProdutosFragment extends Fragment  {
                     materialListView.getAdapter().clearAll();
 
                     if (textView.getText() != null && textView.getText().length() > 0) {
-                        for(ParceiroResponse parceiroResponse: listaParceiroResponse) {
+                        for (ParceiroResponse parceiroResponse : listaParceiroResponse) {
 
                             ParceiroResponse pRTemp = parceiroResponse.clone();
 
@@ -328,4 +320,4 @@ public class LojaProdutosFragment extends Fragment  {
         });
     }
 
- }
+}

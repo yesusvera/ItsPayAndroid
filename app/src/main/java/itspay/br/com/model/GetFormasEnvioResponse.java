@@ -7,9 +7,9 @@ package itspay.br.com.model;
 public class GetFormasEnvioResponse {
     private String descricao;
     private String titulo;
-    private long valor;
+    private double valor;
 
-    public GetFormasEnvioResponse(String descricao, String titulo, long valor) {
+    public GetFormasEnvioResponse(String descricao, String titulo, double valor) {
         this.descricao = descricao;
         this.titulo = titulo;
         this.valor = valor;
@@ -34,11 +34,11 @@ public class GetFormasEnvioResponse {
         this.titulo = titulo;
     }
 
-    public long getValor() {
+    public double getValor() {
         return valor;
     }
 
-    public void setValor(long valor) {
+    public void setValor(double valor) {
         this.valor = valor;
     }
 

@@ -17,10 +17,10 @@ public class FazerPedidoMKTPlace {
     private long quantidadeParcelas;
     private String senhaCredencial;
     private long tipoEntrega;
-    private long valorFrete;
+    private double valorFrete;
 
 
-    public FazerPedidoMKTPlace(long idConta, long idCredencial, long idEndereco, long idInstituicao, long idParceiro, long idProcessadora, ItemPedidoReduzido[] itens, long quantidadeParcelas, String senhaCredencial, long tipoEntrega, long valorFrete) {
+    public FazerPedidoMKTPlace(long idConta, long idCredencial, long idEndereco, long idInstituicao, long idParceiro, long idProcessadora, ItemPedidoReduzido[] itens, long quantidadeParcelas, String senhaCredencial, long tipoEntrega, double valorFrete) {
         this.idConta = idConta;
         this.idCredencial = idCredencial;
         this.idEndereco = idEndereco;
@@ -117,11 +117,11 @@ public class FazerPedidoMKTPlace {
         this.tipoEntrega = tipoEntrega;
     }
 
-    public long getValorFrete() {
+    public double getValorFrete() {
         return valorFrete;
     }
 
-    public void setValorFrete(long valorFrete) {
+    public void setValorFrete(double valorFrete) {
         this.valorFrete = valorFrete;
     }
 
