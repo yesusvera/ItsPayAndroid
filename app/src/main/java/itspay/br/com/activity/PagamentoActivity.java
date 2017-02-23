@@ -1,5 +1,7 @@
 package itspay.br.com.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -19,7 +21,7 @@ public class PagamentoActivity extends AppCompatActivity {
     public LinearLayout mainLayout;
     public ProgressBar progress;
     private TextView txtValor;
-    private EditText txtSenha;
+    public EditText txtSenha;
     private Button btnPagar;
 
     private CarrinhoSingleton carrinho = CarrinhoSingleton.getInstance();
@@ -41,9 +43,34 @@ public class PagamentoActivity extends AppCompatActivity {
         btnPagar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                controller.efetuarPedido();
+                fazerPedido();
             }
         });
+    }
+
+    public void fazerPedido(){
+        if(txtSenha.getText().toString().isEmpty()){
+            txtSenha.setError(getString(R.string.error_invalid_password));
+            return;
+        }
+
+        String vlTotal = "R$ " + "R$ " + Utils.formataMoeda(carrinho.getParcela().getValorParcela() * carrinho.getParcela().getQuantidadeParcelas());
+        String qtdeParcelas = "" + carrinho.getParcela().getQuantidadeParcelas();
+
+        String message  = getString(R.string.prompt_autorizar_compra,vlTotal, qtdeParcelas);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Atenção")
+                .setMessage(message)
+                .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        controller.efetuarPedido();
+                    }
+                })
+                .setNegativeButton("Não",null);
+        builder.create().show();
+
     }
 
     public void setLoading(boolean loading) {

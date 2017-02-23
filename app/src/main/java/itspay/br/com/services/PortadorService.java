@@ -206,7 +206,7 @@ public interface PortadorService {
                                                @Header("AuthorizationPortador") String token);
 
     @POST("api/mktplace/portador/pedido")
-    Call<ParceiroResponse> efetuarPedido(@Body FazerPedidoMKTPlace request,
+    Call<Integer> efetuarPedido(@Body FazerPedidoMKTPlace request,
                                         @Header("AuthorizationPortador") String token);
 
     @GET("api/mktplace/portador/parcelas/{idParceiro}/valor/{valorCarrinho}")

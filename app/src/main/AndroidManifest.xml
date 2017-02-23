@@ -125,31 +125,37 @@
         <activity
             android:name="itspay.br.com.activity.EnderecoActivity"
             android:label="Endereços"
+            android:noHistory="true"
             android:theme="@style/TemaFormularios"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name="itspay.br.com.activity.FormaEnvioActivity"
             android:label="Forma de Envio"
+            android:noHistory="true"
             android:theme="@style/TemaFormularios"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name="itspay.br.com.activity.CartoesLojaActivity"
             android:label="Escolha o Cartão"
+            android:noHistory="true"
             android:theme="@style/TemaFormularios"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name="itspay.br.com.activity.ParcelamentoActivity"
             android:label="Parcelamento"
+            android:noHistory="true"
             android:theme="@style/TemaFormularios"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name="itspay.br.com.activity.ResumoPedidoActivity"
             android:label="Resumo"
+            android:noHistory="true"
             android:theme="@style/TemaFormularios"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name="itspay.br.com.activity.PagamentoActivity"
             android:label="Pagamento"
+            android:noHistory="true"
             android:theme="@style/TemaFormularios"
             android:windowSoftInputMode="stateHidden|adjustPan"/>
     </application>
