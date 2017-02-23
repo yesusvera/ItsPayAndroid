@@ -27,6 +27,7 @@
     <string name="prompt_uso_internet">Uso na Internet</string>
     <string name="prompt_saque">Saque</string>
     <string name="prompt_limpar_carrinho">Deseja limpar a lista completamente?</string>
+    <string name="prompt_autorizar_compra">Deseja autorizar esta compra no valor de %1$s em %2$sx?</string>
     <string name="prompt_excluir_produto_carrinho">Deseja realmente retirar este produto do carrinho?</string>
     <string name="prompt_confirma_notificar_perda">Deseja realmente informar a perda deste cartão.
                                                     \nEste cartão será cancelado e um novo cartão será emitido.</string>
