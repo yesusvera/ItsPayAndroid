@@ -34,6 +34,7 @@ public class PagamentoActivity extends AppCompatActivity {
         progress = (ProgressBar) findViewById(R.id.progress);
         txtValor = (TextView) findViewById(R.id.text_valor);
         txtSenha = (EditText) findViewById(R.id.text_senha_credencial);
+        btnPagar = (Button) findViewById(R.id.btn_pagar);
 
         txtValor.setText("R$ " + Utils.formataMoeda(carrinho.getParcela().getValorParcela() * carrinho.getParcela().getQuantidadeParcelas()));
 

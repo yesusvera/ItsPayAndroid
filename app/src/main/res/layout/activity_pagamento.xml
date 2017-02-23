@@ -51,7 +51,8 @@
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingTop="16dp">
 
                 <EditText
                     android:id="@+id/text_senha_credencial"
@@ -70,7 +71,7 @@
 
 
             <Button
-                android:id="@+id/pagar_button"
+                android:id="@+id/btn_pagar"
                 style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
