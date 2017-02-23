@@ -50,6 +50,7 @@ public class FormaEnvioActivity extends AppCompatActivity {
             public void onItemClick(@NonNull Card card, int position) {
                 GetFormasEnvioResponse formaEnvio = (GetFormasEnvioResponse)card.getTag();
                 CarrinhoSingleton.getInstance().getRequestPedido().setValorFrete(formaEnvio.getValor());
+                CarrinhoSingleton.getInstance().setFormaEnvio(formaEnvio);
 
                 Intent intent = new Intent(FormaEnvioActivity.this, CartoesLojaActivity.class);
                 startActivity(intent);

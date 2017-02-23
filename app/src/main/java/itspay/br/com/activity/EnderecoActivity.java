@@ -48,6 +48,7 @@ public class EnderecoActivity extends AppCompatActivity {
             public void onItemClick(@NonNull Card card, int position) {
                 EnderecoPessoa enderecoPessoa = (EnderecoPessoa)card.getTag();
                 CarrinhoSingleton.getInstance().getRequestPedido().setIdEndereco(enderecoPessoa.getIdEndereco());
+                CarrinhoSingleton.getInstance().setEnderecoPessoa(enderecoPessoa);
 
                 Intent intent = new Intent(EnderecoActivity.this, FormaEnvioActivity.class);
                 startActivity(intent);

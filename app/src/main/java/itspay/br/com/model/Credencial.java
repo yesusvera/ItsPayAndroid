@@ -38,6 +38,10 @@ public class Credencial {
     private String urlImagemProduto;
     transient private Drawable drawable;
 
+
+    public Credencial() {
+    }
+
     public Credencial(String apelidoVirtual, String codigoSeguranca, String contaPagamento,
                       String credencialMascarada, String credencialMascaradaReduzida, String credencialUltimosDigitos,
                       String credencialVirtual, String dataHoraInclusao, String dataSaldo,

@@ -29,6 +29,7 @@ public class ParcelamentoActivity extends AppCompatActivity {
 
     private ParcelamentoController controller = new ParcelamentoController(this);
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,8 +48,9 @@ public class ParcelamentoActivity extends AppCompatActivity {
         mListView.addOnItemTouchListener(new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(@NonNull Card card, int position) {
-                Parcela parcela = (Parcela)card.getTag();
+                Parcela parcela = (Parcela) card.getTag();
                 CarrinhoSingleton.getInstance().getRequestPedido().setQuantidadeParcelas(parcela.getQuantidadeParcelas());
+                CarrinhoSingleton.getInstance().setParcela(parcela);
 
                 Intent intent = new Intent(ParcelamentoActivity.this, ResumoPedidoActivity.class);
                 startActivity(intent);
@@ -56,7 +58,6 @@ public class ParcelamentoActivity extends AppCompatActivity {
 
             @Override
             public void onItemLongClick(@NonNull Card card, int position) {
-
             }
         });
     }

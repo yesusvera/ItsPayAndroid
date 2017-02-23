@@ -49,6 +49,7 @@ public class CartoesLojaActivity extends AppCompatActivity {
             public void onItemClick(@NonNull Card card, int position) {
                 Credencial credencial = (Credencial) card.getTag();
                 CarrinhoSingleton.getInstance().getRequestPedido().setIdCredencial(credencial.getIdCredencial());
+                CarrinhoSingleton.getInstance().setCredencial(credencial);
 
                 Intent intent = new Intent(CartoesLojaActivity.this, ParcelamentoActivity.class);
                 startActivity(intent);

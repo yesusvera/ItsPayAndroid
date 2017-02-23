@@ -64,6 +64,7 @@
     <string name="acao_continuar">Continuar</string>
     <string name="acao_finalizar_compra">Finalizar Compra</string>
     <string name="acao_limpar_lista">Limpar a lista</string>
+    <string name="acao_pagar">Pagar</string>
 
 
     <string name="action_sign_in">Login</string>
@@ -250,7 +251,7 @@
 
     <string name="info_email">creditoecobranca@bahamascard.com.br</string>
 
-   <!-- <string name="info_email">sac@financialcartoes.com.br</string> -->
+    <!-- <string name="info_email">sac@financialcartoes.com.br</string> -->
 
 
 </resources>

@@ -5,15 +5,14 @@
     android:id="@+id/activity_resumo_pedido"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="itspay.br.com.activity.ResumoPedidoActivity">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <LinearLayout
             android:id="@+id/linear_conteudo_carrinho"
@@ -22,6 +21,7 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginTop="16dp"
+            android:paddingBottom="50dp"
             android:orientation="vertical"
             android:visibility="visible">
 
@@ -37,32 +37,51 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:column_count_landscape="3"
-                app:column_count_portrait="2" />
+                app:column_count_portrait="2" android:paddingBottom="16dp"/>
+
+
+
+            <View style="@style/Divider"/>
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="left"
-                android:orientation="vertical"
-                android:paddingBottom="5dp"
-                android:paddingTop="16dp">
-
+                android:orientation="horizontal"
+                android:paddingBottom="5dp">
                 <TextView
-                    android:id="@+id/text_forma_entrega"
+                    android:id="@+id/text_forma_entrega_titulo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Retirar"
+                    android:text="Forma de Entrega"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="12dp"
                     android:textSize="12sp"
                     android:textStyle="normal|bold" />
 
                 <TextView
-                    android:id="@+id/text_endereco_entrega"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/text_forma_entrega_valor"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Endereço"
+                    android:gravity="right"
+                    android:text="R$9999,99"
+                    android:paddingBottom="12dp"
+                    android:paddingTop="16dp"
                     android:textSize="12sp" />
+
             </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/text_endereco_entrega"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Endereço"
+                android:paddingBottom="16dp"
+                android:textSize="12sp" />
+
+
+            <View style="@style/Divider" />
 
 
             <LinearLayout
@@ -80,6 +99,8 @@
                     android:text="NOME CREDENCIAL"
                     android:textAllCaps="false"
                     android:textSize="12sp"
+                    android:paddingBottom="12dp"
+                    android:paddingTop="16dp"
                     android:textStyle="normal|bold" />
 
                 <TextView
@@ -89,9 +110,14 @@
                     android:layout_gravity="right"
                     android:gravity="right"
                     android:text="0000"
+                    android:paddingBottom="12dp"
+                    android:paddingTop="16dp"
                     android:textColor="@color/grey_title"
                     android:textSize="12sp" />
             </LinearLayout>
+
+
+            <View style="@style/Divider" />
 
 
             <LinearLayout
@@ -106,6 +132,8 @@
                     android:layout_height="wrap_content"
                     android:text="Pagamento"
                     android:textAllCaps="false"
+                    android:paddingBottom="12dp"
+                    android:paddingTop="16dp"
                     android:textSize="12sp"
                     android:textStyle="normal|bold" />
 
@@ -120,19 +148,26 @@
                         android:layout_height="wrap_content"
                         android:paddingRight="5dp"
                         android:text="1x"
+                        android:paddingBottom="12dp"
+                        android:paddingTop="16dp"
                         android:textColor="@color/grey_title"
                         android:textSize="12sp" />
 
                     <TextView
-                        android:id="@+id/text_valor"
+                        android:id="@+id/text_valor_parcela"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:forceHasOverlappingRendering="false"
                         android:text="R$ 999999,99"
+                        android:paddingBottom="12dp"
+                        android:paddingTop="16dp"
                         android:textColor="@color/green_bahamas"
                         android:textSize="12sp" />
                 </LinearLayout>
             </LinearLayout>
+
+
+            <View style="@style/Divider" />
 
 
             <LinearLayout
@@ -140,8 +175,8 @@
                 android:layout_height="wrap_content"
                 android:gravity="right"
                 android:orientation="horizontal"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp">
+                android:paddingBottom="12dp"
+                android:paddingTop="16dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -159,7 +194,7 @@
             </LinearLayout>
 
             <Button
-                android:id="@+id/btn_continuar"
+                android:id="@+id/btn_finalizar_compra"
                 style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
