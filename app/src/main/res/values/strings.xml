@@ -1,10 +1,18 @@
 <resources>
-    <string name="app_name">Bahamas</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Senha</string>
-    <string name="prompt_confirma_password">Confirmar Senha</string>v
+    <string name="prompt_confirma_password">Confirmar Senha</string>
+
+    <string name="prompt_confirma_password_acess">Confirmar Senha de Acesso</string>
+    <string name="prompt_password_acess">Senha de Acesso</string>
+
+    <string name="prompt_numero_celular">Número Celular</string>
+
+    <string name="prompt_chave_aceso">Chave de acesso</string>
+
+
     <string name="prompt_numero_cartao_destino">Número do cartão de destino</string>
     <string name="prompt_favorecido">Nome do Favorecido</string>
     <string name="prompt_banco_favorecido">Banco do Favorecido</string>
@@ -250,9 +258,11 @@
     <string name="title_activity_main2">Main2Activity</string>
 
 
-    <string name="info_email">creditoecobranca@bahamascard.com.br</string>
+    <!--<string name="info_email">creditoecobranca@bahamascard.com.br</string>-->
 
-    <!-- <string name="info_email">sac@financialcartoes.com.br</string> -->
+    <string name="info_email">sac@financialcartoes.com.br</string>
 
+    <!--<string name="app_name">Bahamas</string>-->
+    <string name="app_name">Financial</string>
 
 </resources>

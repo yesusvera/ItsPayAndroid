@@ -25,11 +25,11 @@
     <color name="black_overlay">#66000000</color>
 
     <!--Bahamas-->
-    <color name="primary_bahamas">#ab772d</color>
-    <color name="indicator_tab">#ab772d</color>
+    <!--<color name="primary_bahamas">#ab772d</color>-->
+    <!--<color name="indicator_tab">#ab772d</color>-->
 
-    <!--Financial
+    <!--Financial-->
     <color name="primary_bahamas">#EF3D3C</color>
-    <color name="indicator_tab">#00273f</color>-->
+    <color name="indicator_tab">#00273f</color>
 
 </resources>

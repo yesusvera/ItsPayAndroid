@@ -1,19 +1,20 @@
 package itspay.br.com.activity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
 
 import io.card.payment.CardIOActivity;
 import io.card.payment.CreditCard;
 import itspay.br.com.controller.CadastroLoginController;
 import itspay.br.com.itspay.R;
+import itspay.br.com.singleton.CadastroSingleton;
 import itspay.br.com.util.mask.MaskEditTextChangedListener;
 
 /**
@@ -24,64 +25,64 @@ public class CadastroLoginActivity extends AppCompatActivity {
     private EditText numeroCartao;
     private EditText dataNascimento;
     private EditText cpf;
-    private EditText email;
-    private EditText senha;
-    private EditText confirmacaoSenha;
-
-    private TextView txtViewTermosDeUso;
-
-    private CheckBox termosDeUso;
-
-    private Button criarLogin;
-
+    private EditText numerocelular;
     private ImageButton scanButton;
+    private Button proximaPagina;
+
+    CadastroSingleton mCadastroSingleton;
 
     private int MY_SCAN_REQUEST_CODE = 100; // arbitrary int
 
+    private CadastroLoginController mCadastroLoginController;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_login);
         setTitle(R.string.title_activity_cadastro_login);
 
+        initView();
+
+        proximaPagina.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                validView();
+            }
+        });
+    }
+
+    private void validView(){
+        if (mCadastroLoginController.validaFormulario1(this)){
+            Intent intent = new Intent(this,TokenActivity.class);
+            startActivity(intent);
+        }
+    }
+
+    private void initView(){
+
+        mCadastroLoginController = new CadastroLoginController(getBaseContext());
+        mCadastroSingleton = CadastroSingleton.getInstance();
+
+        // Attach the page change listener inside the activity
+
         numeroCartao = (EditText)findViewById(R.id.numeroCartao);
         dataNascimento = (EditText)findViewById(R.id.dataNascimento);
         cpf = (EditText)findViewById(R.id.cpf);
-        email = (EditText)findViewById(R.id.email);
-        senha = (EditText)findViewById(R.id.senha);
-        confirmacaoSenha = (EditText)findViewById(R.id.confirmacaoSenha);
-        termosDeUso = (CheckBox)findViewById(R.id.checkTermosDeUso);
-        criarLogin = (Button)findViewById(R.id.buttonCriarLogin);
-        txtViewTermosDeUso = (TextView) findViewById(R.id.txtViewTermosDeUso);
+        numerocelular = (EditText)findViewById(R.id.numero_celular);
+        scanButton = (ImageButton) findViewById(R.id.scanCardButton);
+        proximaPagina = (Button)findViewById(R.id.btn_next_page);
+
 
         numeroCartao.addTextChangedListener(new MaskEditTextChangedListener("####.####.####.####", numeroCartao));
         cpf.addTextChangedListener(new MaskEditTextChangedListener("###.###.###-##", cpf));
         dataNascimento.addTextChangedListener(new MaskEditTextChangedListener("##/##/####", dataNascimento));
 
-        scanButton = (ImageButton) findViewById(R.id.scanCardButton);
-
-        criarLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new CadastroLoginController(CadastroLoginActivity.this).criarLogin();
-            }
-        });
-
-        txtViewTermosDeUso.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(CadastroLoginActivity.this, TermosDeUsoActivity.class);
-                startActivity(intent);
-            }
-        });
-
     }
 
     public void onScanPress(View v) {
         // This method is set up as an onClick handler in the layout xml
-        // e.g. android:onClick="onScanPress"
-
+        // e.g. android:onClick="onScanPress"onScanPress
         Intent scanIntent = new Intent(this, CardIOActivity.class);
 
         // customize these values to suit your needs.
@@ -101,7 +102,7 @@ public class CadastroLoginActivity extends AppCompatActivity {
         // MY_SCAN_REQUEST_CODE is arbitrary and is only used within this activity.
         startActivityForResult(scanIntent, MY_SCAN_REQUEST_CODE);
     }
-
+//
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -166,35 +167,11 @@ public class CadastroLoginActivity extends AppCompatActivity {
         this.cpf = cpf;
     }
 
-    public EditText getEmail() {
-        return email;
+    public EditText getNumerocelular() {
+        return numerocelular;
     }
 
-    public void setEmail(EditText email) {
-        this.email = email;
-    }
-
-    public EditText getSenha() {
-        return senha;
-    }
-
-    public void setSenha(EditText senha) {
-        this.senha = senha;
-    }
-
-    public CheckBox getTermosDeUso() {
-        return termosDeUso;
-    }
-
-    public void setTermosDeUso(CheckBox termosDeUso) {
-        this.termosDeUso = termosDeUso;
-    }
-
-    public EditText getConfirmacaoSenha() {
-        return confirmacaoSenha;
-    }
-
-    public void setConfirmacaoSenha(EditText confirmacaoSenha) {
-        this.confirmacaoSenha = confirmacaoSenha;
+    public void setNumerocelular(EditText numerocelular) {
+        this.numerocelular = numerocelular;
     }
 }

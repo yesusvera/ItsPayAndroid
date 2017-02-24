@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="itspay.br.com.activity.CadastroLoginPage2Activity"
     android:layout_marginTop="10dp"
     android:padding="10dp">
 
@@ -19,62 +20,18 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@android:drawable/ic_menu_camera"
-                    android:id="@+id/scanCardButton"
-                    android:layout_weight="1"
-                    android:onClick="onScanPress"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginEnd="15dp"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true" />
-
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:counterMaxLength="13"
-
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true">
-
-                    <EditText
-                        android:id="@+id/numeroCartao"
-                        android:layout_width="255dp"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/prompt_numero_cartao"
-                        android:inputType="number"
-                        android:maxLines="1"
-                        android:singleLine="true"
-                        android:paddingLeft="15dp" />
-
-
-                </android.support.design.widget.TextInputLayout>
-
-            </RelativeLayout>
-
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:counterMaxLength="10"
                 android:layout_marginTop="7dp">
 
                 <EditText
-                    android:id="@+id/dataNascimento"
+                    android:id="@+id/email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/prompt_data_nascimento"
-                    android:inputType="date"
+                    android:hint="@string/prompt_email"
+                    android:inputType="textEmailAddress"
                     android:maxLines="1"
-                    android:maxLength="10"
                     android:singleLine="true"
                     android:padding="15dp" />
 
@@ -83,16 +40,17 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:counterMaxLength="20"
                 android:layout_marginTop="7dp">
 
                 <EditText
-                    android:id="@+id/cpf"
+                    android:id="@+id/senha"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/prompt_cpf"
-                    android:inputType="number"
+                    android:hint="@string/prompt_password_acess"
+                    android:inputType="textPassword"
                     android:maxLines="1"
-                    android:maxLength="14"
+                    android:maxLength="30"
                     android:singleLine="true"
                     android:padding="15dp" />
 
@@ -101,35 +59,61 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:counterMaxLength="20"
                 android:layout_marginTop="7dp">
 
                 <EditText
-                    android:id="@+id/numero_celular"
+                    android:id="@+id/confirmacaoSenha"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/prompt_numero_celular"
-                    android:inputType="number"
+                    android:hint="@string/prompt_confirma_password_acess"
+                    android:inputType="textPassword"
                     android:maxLines="1"
+                    android:maxLength="30"
                     android:singleLine="true"
                     android:padding="15dp" />
 
             </android.support.design.widget.TextInputLayout>
-
         </LinearLayout>
     </ScrollView>
 
+    <LinearLayout
+        android:id="@+id/layout_criarlogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:padding="8dp">
+
+    <CheckBox
+        android:text="Concordo com os"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/checkTermosDeUso"
+        android:layout_gravity="center"
+        android:textColor="?android:attr/textColorTertiary"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:text="Termos de Uso e Políticas de Privacidade"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtViewTermosDeUso"
+        android:layout_marginTop="5dp"
+        android:textStyle="normal|bold"
+        android:gravity="center" />
+
     <Button
-        android:id="@+id/btn_next_page"
+        android:id="@+id/buttonCriarLogin"
         style="?android:textAppearanceSmall"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/back_button_itspay"
-        android:text="Continuar"
+        android:text="@string/acao_criar_login"
         android:textColor="@android:color/background_light"
         android:textStyle="bold"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="11dp" />
-
+        android:layout_marginTop="20dp" />
+    </LinearLayout>
 </RelativeLayout>

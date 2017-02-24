@@ -1,0 +1,67 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="itspay.br.com.activity.TokenActivity"
+    android:padding="16dp"
+    android:weightSum="1">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Para continuar o cadastro,\nDigite o \ncódigo enviado por SMS \npara seu celular."
+        android:textSize="20dp"
+        android:textAlignment="center"
+        android:id="@+id/textView4"
+        android:paddingBottom="8dp"/>
+
+
+    <TextView
+        android:text="Não recebi o código de acesso"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtViewTermosDeUso"
+        android:textStyle="normal|bold"
+        android:gravity="center"
+        android:layout_marginBottom="15dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:id="@+id/btn_confirma_token"
+        style="?android:textAppearanceSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/back_button_itspay"
+        android:text="OK"
+        android:textColor="@android:color/background_light"
+        android:textStyle="bold"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:id="@+id/text_input_token"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
+        android:layout_below="@+id/textView4"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <EditText
+            android:id="@+id/ed_token"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/prompt_chave_aceso"
+            android:inputType="number"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:padding="15dp" />
+
+    </android.support.design.widget.TextInputLayout>
+
+
+</RelativeLayout>
