@@ -102,6 +102,7 @@
     <string name="title_activity_cadastro_login">Cadastro Login</string>
     <string name="title_activity_termos_de_uso">Termos de Uso</string>
 
+    <string name="str_icone_alterar_senha">Senha do Cartão</string>
     <string name="str_icone_transferir">Transferir</string>
     <string name="str_icone_inserir_carga">Inserir Carga</string>
     <string name="str_icone_cartoes_virtuais">Cartões Virtuais</string>

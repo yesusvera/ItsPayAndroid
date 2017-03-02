@@ -50,7 +50,6 @@ public class TokenActivity extends AppCompatActivity {
 
     private void moke(){
         CustomNotification.getInstance().notificationBuilder(getBaseContext(), R.mipmap.ic_launch_financial, R.color.red_itspay_bkp, getString(R.string.app_name), "A Chave de acesso é: 123");
-
     }
 
 }

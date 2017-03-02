@@ -155,6 +155,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
                     android:layout_marginTop="16dp"
+                    android:visibility="gone"
                     android:background="@drawable/back_button_itspay"
                     android:text="@string/acao_trocar_senha_cartao"
                     android:textColor="@android:color/background_light"

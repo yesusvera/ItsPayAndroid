@@ -1,6 +1,8 @@
 package itspay.br.com.activity;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -10,9 +12,14 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TabHost;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dexafree.materialList.card.Card;
 import com.dexafree.materialList.card.CardProvider;
@@ -38,6 +45,7 @@ import itspay.br.com.itspay.R;
 import itspay.br.com.model.Credencial;
 import itspay.br.com.model.LinhaExtratoCredencial;
 import itspay.br.com.util.Utils;
+import itspay.br.com.util.usersharepreferences.SharedPreferenceUtil;
 import jp.wasabeef.recyclerview.animators.FadeInLeftAnimator;
 import jp.wasabeef.recyclerview.animators.FlipInBottomXAnimator;
 
@@ -93,29 +101,33 @@ public class CartaoActivity extends AppCompatActivity {
             BuilderManagerFloatingButton.imageResourceIndex = 0;
             BuilderManagerFloatingButton.imageResources = new int[]{
                     R.drawable.menu_icon4,
-                    R.drawable.menu_icon6
+                    R.drawable.menu_icon6,
+                    R.drawable.ic_password_card
             };
             BuilderManagerFloatingButton.textResources = new int[]{
                     R.string.str_icone_ajustes_seguranca,
-                    R.string.str_icone_logout
+                    R.string.str_icone_logout,
+                    R.string.str_icone_alterar_senha
             };
-            bmb.setPiecePlaceEnum(PiecePlaceEnum.DOT_2_1);
-            bmb.setButtonPlaceEnum(ButtonPlaceEnum.SC_2_1);
+            bmb.setPiecePlaceEnum(PiecePlaceEnum.DOT_4_1);
+            bmb.setButtonPlaceEnum(ButtonPlaceEnum.SC_4_1);
         }else if(credencialDetalhe.getIdProdutoPlataforma()==4){
             BuilderManagerFloatingButton.imageResourceIndex = 0;
             BuilderManagerFloatingButton.imageResources = new int[]{
                     R.drawable.menu_icon3,
                     R.drawable.menu_icon4,
-                    R.drawable.menu_icon6
+                    R.drawable.menu_icon6,
+                    R.drawable.ic_password_card
 
             };
             BuilderManagerFloatingButton.textResources = new int[]{
                     R.string.str_icone_cartoes_virtuais,
                     R.string.str_icone_ajustes_seguranca,
-                    R.string.str_icone_logout
+                    R.string.str_icone_logout,
+                    R.string.str_icone_alterar_senha
             };
-            bmb.setPiecePlaceEnum(PiecePlaceEnum.DOT_3_1);
-            bmb.setButtonPlaceEnum(ButtonPlaceEnum.SC_3_1);
+            bmb.setPiecePlaceEnum(PiecePlaceEnum.DOT_4_1);
+            bmb.setButtonPlaceEnum(ButtonPlaceEnum.SC_4_1);
         }else{
             BuilderManagerFloatingButton.imageResourceIndex = 0;
             BuilderManagerFloatingButton.imageResources = new int[]{
@@ -124,7 +136,8 @@ public class CartaoActivity extends AppCompatActivity {
                     R.drawable.menu_icon3,
                     R.drawable.menu_icon4,
                     R.drawable.menu_icon5,
-                    R.drawable.menu_icon6
+                    R.drawable.menu_icon6,
+                    R.drawable.ic_password_card
             };
             BuilderManagerFloatingButton.textResources = new int[]{
                     R.string.str_icone_transferir,
@@ -132,10 +145,11 @@ public class CartaoActivity extends AppCompatActivity {
                     R.string.str_icone_cartoes_virtuais,
                     R.string.str_icone_ajustes_seguranca,
                     R.string.str_icone_tarifas,
-                    R.string.str_icone_logout
+                    R.string.str_icone_logout,
+                    R.string.str_icone_alterar_senha
             };
-            bmb.setPiecePlaceEnum(PiecePlaceEnum.DOT_6_1);
-            bmb.setButtonPlaceEnum(ButtonPlaceEnum.SC_6_1);
+            bmb.setPiecePlaceEnum(PiecePlaceEnum.DOT_7_1);
+            bmb.setButtonPlaceEnum(ButtonPlaceEnum.SC_7_1);
         }
 
         bmb.setNormalColor(Color.parseColor("#00273f"));
@@ -156,6 +170,7 @@ public class CartaoActivity extends AppCompatActivity {
                    case R.string.str_icone_cartoes_virtuais : cartoesVirtuais(); break;
                    case R.string.str_icone_ajustes_seguranca : ajustesDeSeguranca(); break;
                    case R.string.str_icone_tarifas : tarifas(); break;
+                   case R.string.str_icone_alterar_senha : alterarSenhaDoCartao(); break;
 
                }
             }
@@ -437,5 +452,44 @@ public class CartaoActivity extends AppCompatActivity {
     public void tarifas(){
         Intent intent = new Intent(this, TarifasActivity.class);
         this.startActivity(intent);
+    }
+
+    public void alterarSenhaDoCartao(){
+
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.custom_dialog, null);
+        dialogBuilder.setView(dialogView);
+
+        final EditText edt = (EditText) dialogView.findViewById(R.id.edit1);
+
+        dialogBuilder.setTitle("Alterar Senha");
+        dialogBuilder.setMessage("Para alterar senha do cartão digite a senha de acesso");
+        dialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                //do something with edt.getText().toString();
+                InputMethodManager inputManager = (InputMethodManager) getBaseContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputManager.hideSoftInputFromWindow(edt.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+
+                String password = SharedPreferenceUtil.getStringPreference(getBaseContext(),"lastPasswordLogged");
+
+                if (edt.getText().toString().equals(password)){
+                    Intent intent = new Intent(getApplicationContext(), TrocarSenhaCartaoActivity.class);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(getBaseContext(), "Erro", Toast.LENGTH_LONG).show();
+                }
+
+            }
+        });
+        dialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                //pass
+                InputMethodManager inputManager = (InputMethodManager) getBaseContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputManager.hideSoftInputFromWindow(edt.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            }
+        });
+        AlertDialog b = dialogBuilder.create();
+        b.show();
     }
 }

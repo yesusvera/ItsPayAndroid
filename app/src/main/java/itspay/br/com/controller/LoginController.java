@@ -18,6 +18,7 @@ import itspay.br.com.model.FazerLoginPortadorResponse;
 import itspay.br.com.services.ConnectPortadorService;
 import itspay.br.com.util.ItsPayConstants;
 import itspay.br.com.util.UtilsActivity;
+import itspay.br.com.util.usersharepreferences.SharedPreferenceUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -68,6 +69,9 @@ public class LoginController extends BaseActivityController<LoginActivity>{
 //                   String JSESSIONID = extractJSESSSIONID(setCookie);
 
                    IdentityItsPay.getInstance().setSetCookie(setCookie);
+
+                   SharedPreferenceUtil.setStringPreference(activity, "lastCPFLogged",activity.getmCpfView().getText().toString());
+                   SharedPreferenceUtil.setStringPreference(activity, "lastPasswordLogged",activity.getmPasswordView().getText().toString());
 
 
                    if(response.body().isRequisitarAtualizacao()){
