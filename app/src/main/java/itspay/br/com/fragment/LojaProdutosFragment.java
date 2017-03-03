@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -28,13 +29,20 @@ import java.util.List;
 
 import itspay.br.com.activity.MarketPlaceActivity;
 import itspay.br.com.activity.ProdutoDetalheActivity;
+import itspay.br.com.authentication.IdentityItsPay;
 import itspay.br.com.controller.LojaProdutosController;
 import itspay.br.com.itspay.R;
 import itspay.br.com.model.ParceiroResponse;
 import itspay.br.com.model.Produto;
 import itspay.br.com.model.ProdutoDetalhe;
+import itspay.br.com.services.ConnectPortadorService;
 import itspay.br.com.util.Utils;
+import itspay.br.com.util.UtilsActivity;
 import jp.wasabeef.recyclerview.animators.FlipInTopXAnimator;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -202,24 +210,24 @@ public class LojaProdutosFragment extends Fragment {
 
                 cards.add(card);
 
-//                if (produto.getImagens() != null && produto.getImagens().length > 0) {
-//                    Call<ResponseBody> call = ConnectPortadorService.getService().abrirImagemProduto(produto.getImagens()[0].getIdImagem(),
-//                            IdentityItsPay.getInstance().getToken());
-//
-//                    call.enqueue(new Callback<ResponseBody>() {
-//                        @Override
-//                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-//                            if (response.body() != null && response.body().byteStream() != null) {
-//                                card.getProvider().setDrawable(new BitmapDrawable(response.body().byteStream()));
-//                            }
-//                        }
-//
-//                        @Override
-//                        public void onFailure(Call<ResponseBody> call, Throwable t) {
-//                            UtilsActivity.alertIfSocketException(t, LojaProdutosFragment.this.getContext());
-//                        }
-//                    });
-//                }
+                if (produto.getImagens() != null && produto.getImagens().length > 0) {
+                    Call<ResponseBody> call = ConnectPortadorService.getService().abrirImagemProduto(produto.getImagens()[0].getIdImagem(),
+                            IdentityItsPay.getInstance().getToken());
+
+                    call.enqueue(new Callback<ResponseBody>() {
+                        @Override
+                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                            if (response.body() != null && response.body().byteStream() != null) {
+                                card.getProvider().setDrawable(new BitmapDrawable(response.body().byteStream()));
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+                            UtilsActivity.alertIfSocketException(t, LojaProdutosFragment.this.getContext());
+                        }
+                    });
+                }
 
             }
 

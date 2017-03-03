@@ -32,10 +32,11 @@ public class LoginController extends BaseActivityController<LoginActivity>{
         super(activity);
     }
 
-    public void login(){
+    public void login(String cpf, String password){
+        activity.showProgress(true);
         final FazerLoginPortador fazerLoginPortador = new FazerLoginPortador();
         fazerLoginPortador.setArchitectureInfo("string");
-        fazerLoginPortador.setCpf(activity.getmCpfView().getText().toString().replace(".", "").replace("-", ""));
+        fazerLoginPortador.setCpf(cpf.replace(".", "").replace("-", ""));
         fazerLoginPortador.setDeviceId("string");
         fazerLoginPortador.setIdInstituicao(ItsPayConstants.ID_INSTITUICAO);
         fazerLoginPortador.setIdProcessadora(ItsPayConstants.ID_PROCESSADORA);
@@ -48,7 +49,7 @@ public class LoginController extends BaseActivityController<LoginActivity>{
         fazerLoginPortador.setOrigemAcesso(1);
         fazerLoginPortador.setPlataformVersion("string");
         fazerLoginPortador.setPlatformName("string");
-        fazerLoginPortador.setSenha(activity.getmPasswordView().getText().toString());
+        fazerLoginPortador.setSenha(password);
         fazerLoginPortador.setSistemaOperacional(2);
         fazerLoginPortador.setVersaoConhecida("1.0.0");
         fazerLoginPortador.setVersaoInstalada("1.0.0");
@@ -173,4 +174,6 @@ public class LoginController extends BaseActivityController<LoginActivity>{
 
         return jsessionid;
     }
+
+
 }

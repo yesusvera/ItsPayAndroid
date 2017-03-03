@@ -191,18 +191,21 @@ public class ProdutoDetalheActivity extends AppCompatActivity {
 
             listaReferencia.add(str);
         }
-
-        final CharSequence[] items = new CharSequence[listaReferencia.size()];
-        listaReferencia.toArray(items);
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Escolha uma referência para adicionar ao carrinho.").setCancelable(true).setNegativeButton("Cancelar", null)
-                .setItems(items, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        adicionarAoCarrinho(produtoDetalhe.getProduto().getReferencias()[i]);
-                    }
-                });
-        builder.create().show();
+        if (listaReferencia.size() > 1) {
+            final CharSequence[] items = new CharSequence[listaReferencia.size()];
+            listaReferencia.toArray(items);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Escolha uma referência para adicionar ao carrinho.").setCancelable(true).setNegativeButton("Cancelar", null)
+                    .setItems(items, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            adicionarAoCarrinho(produtoDetalhe.getProduto().getReferencias()[i]);
+                        }
+                    });
+            builder.create().show();
+        }else{
+            adicionarAoCarrinho(produtoDetalhe.getProduto().getReferencias()[0]);
+        }
     }
 
     public void adicionarAoCarrinho(Referencia referencia){

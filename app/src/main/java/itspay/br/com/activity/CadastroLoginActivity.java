@@ -15,6 +15,7 @@ import io.card.payment.CreditCard;
 import itspay.br.com.controller.CadastroLoginController;
 import itspay.br.com.itspay.R;
 import itspay.br.com.singleton.CadastroSingleton;
+import itspay.br.com.util.Utils;
 import itspay.br.com.util.mask.MaskEditTextChangedListener;
 
 /**
@@ -73,7 +74,15 @@ public class CadastroLoginActivity extends AppCompatActivity {
         scanButton = (ImageButton) findViewById(R.id.scanCardButton);
         proximaPagina = (Button)findViewById(R.id.btn_next_page);
 
+        //        (61)99542-1414
 
+        Utils.nextInputOnMaxLength(this,numeroCartao,dataNascimento,19);
+        Utils.nextInputOnMaxLength(this,dataNascimento,cpf,10);
+        Utils.nextInputOnMaxLength(this,cpf,numerocelular,14);
+
+        Utils.hideSoftKeyboardOnMaxLength(this,numerocelular,14);
+
+        numerocelular.addTextChangedListener(new MaskEditTextChangedListener("(##)#####-####", numerocelular));
         numeroCartao.addTextChangedListener(new MaskEditTextChangedListener("####.####.####.####", numeroCartao));
         cpf.addTextChangedListener(new MaskEditTextChangedListener("###.###.###-##", cpf));
         dataNascimento.addTextChangedListener(new MaskEditTextChangedListener("##/##/####", dataNascimento));
