@@ -43,6 +43,8 @@ public class FingerprintHandler extends
             return;
         }
         manager.authenticate(cryptoObject, cancellationSignal, 0, this, null);
+
+//        mLoginActivity.showProgress(true);
     }
 
     @Override

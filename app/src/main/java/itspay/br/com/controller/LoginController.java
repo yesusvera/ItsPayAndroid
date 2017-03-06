@@ -36,17 +36,13 @@ import retrofit2.Response;
  * Created by yesus on 17/12/16.
  */
 public class LoginController extends BaseActivityController<LoginActivity>{
-
-    private static final String KEY_NAME = "example_key";
-    private KeyGenerator keyGenerator;
-    private KeyStore keyStore;
-
     public LoginController(LoginActivity activity){
         super(activity);
     }
 
-    public void login(String cpf, String password){
-        activity.showProgress(true);
+    public static final String IS_SECOND_LOGIN_FINGER_PRINT = "is_second_login_finger_print";
+
+    public void login(final String cpf, final String password){
         final FazerLoginPortador fazerLoginPortador = new FazerLoginPortador();
         fazerLoginPortador.setArchitectureInfo("string");
         fazerLoginPortador.setCpf(cpf.replace(".", "").replace("-", ""));
@@ -84,9 +80,8 @@ public class LoginController extends BaseActivityController<LoginActivity>{
 
                    IdentityItsPay.getInstance().setSetCookie(setCookie);
 
-                   SharedPreferenceUtil.setStringPreference(activity, "lastCPFLogged",activity.getmCpfView().getText().toString());
-                   SharedPreferenceUtil.setStringPreference(activity, "lastPasswordLogged",activity.getmPasswordView().getText().toString());
-
+                   SharedPreferenceUtil.setStringPreference(activity, "lastCPFLogged",cpf);
+                   SharedPreferenceUtil.setStringPreference(activity, "lastPasswordLogged",password);
 
                    if(response.body().isRequisitarAtualizacao()){
                        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
@@ -104,7 +99,7 @@ public class LoginController extends BaseActivityController<LoginActivity>{
                                     }
                                 });
                        builder.create().show();
-                   }else if(response.body().isRequisitarPermissaoNotificacao()){
+                   }else if(response.body().isRequisitarPermissaoNotificacao() && !SharedPreferenceUtil.getBooleanPreference(activity,IS_SECOND_LOGIN_FINGER_PRINT,false)){
                            AlertDialog.Builder builder = new AlertDialog.Builder(activity);
                            builder.setCancelable(false).setMessage(response.body().getRequisicaoNotificacaoMensagem())
                                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -124,6 +119,8 @@ public class LoginController extends BaseActivityController<LoginActivity>{
                    }else{
                        redirecionarMeusCartoes();
                    }
+
+                   SharedPreferenceUtil.setBooleanPreference(activity,activity.IS_SECOND_LOGIN_FINGER_PRINT,true);
 
                }else if(response.errorBody() != null){
                    try {
@@ -188,40 +185,5 @@ public class LoginController extends BaseActivityController<LoginActivity>{
         return jsessionid;
     }
 
-    public void generateKey() {
-        try {
-            keyStore = KeyStore.getInstance("AndroidKeyStore");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        try {
-            keyGenerator = KeyGenerator.getInstance(
-                    KeyProperties.KEY_ALGORITHM_AES,
-                    "AndroidKeyStore");
-        } catch (NoSuchAlgorithmException |
-                NoSuchProviderException e) {
-            throw new RuntimeException(
-                    "Failed to get KeyGenerator instance", e);
-        }
-
-        try {
-            keyStore.load(null);
-            keyGenerator.init(new
-                    KeyGenParameterSpec.Builder(KEY_NAME,
-                    KeyProperties.PURPOSE_ENCRYPT |
-                            KeyProperties.PURPOSE_DECRYPT)
-                    .setBlockModes(KeyProperties.BLOCK_MODE_CBC)
-                    .setUserAuthenticationRequired(true)
-                    .setEncryptionPaddings(
-                            KeyProperties.ENCRYPTION_PADDING_PKCS7)
-                    .build());
-            keyGenerator.generateKey();
-        } catch (NoSuchAlgorithmException |
-                InvalidAlgorithmParameterException
-                | CertificateException | IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
 }

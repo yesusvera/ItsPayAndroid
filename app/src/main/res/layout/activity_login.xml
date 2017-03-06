@@ -77,26 +77,30 @@
 
                 </android.support.design.widget.TextInputLayout>
 
-                <android.support.design.widget.TextInputLayout
+                <LinearLayout
+                    android:id="@+id/ll_input_layout_password"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="5dp">
-
-                    <EditText
-                        android:id="@+id/password"
+                    android:layout_height="wrap_content">
+                    <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/prompt_password"
-                        android:imeActionId="@+id/login"
-                        android:imeActionLabel="@string/action_sign_in_short"
-                        android:imeOptions="actionUnspecified|actionDone"
-                        android:inputType="textPassword"
-                        android:maxLength="30"
-                        android:maxLines="1"
-                        android:padding="15dp" />
+                        android:paddingBottom="5dp">
 
-                </android.support.design.widget.TextInputLayout>
+                        <EditText
+                            android:id="@+id/password"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/prompt_password"
+                            android:imeActionId="@+id/login"
+                            android:imeActionLabel="@string/action_sign_in_short"
+                            android:imeOptions="actionUnspecified|actionDone"
+                            android:inputType="textPassword"
+                            android:maxLength="30"
+                            android:maxLines="1"
+                            android:padding="15dp" />
 
+                    </android.support.design.widget.TextInputLayout>
+                </LinearLayout>
 
             </LinearLayout>
 
