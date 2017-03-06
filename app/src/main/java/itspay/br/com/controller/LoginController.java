@@ -3,12 +3,21 @@ package itspay.br.com.controller;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.security.keystore.KeyGenParameterSpec;
+import android.security.keystore.KeyProperties;
 import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.KeyStore;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+import java.security.cert.CertificateException;
+
+import javax.crypto.KeyGenerator;
 
 import itspay.br.com.activity.LoginActivity;
 import itspay.br.com.activity.MeusCartoesActivity;
@@ -27,6 +36,10 @@ import retrofit2.Response;
  * Created by yesus on 17/12/16.
  */
 public class LoginController extends BaseActivityController<LoginActivity>{
+
+    private static final String KEY_NAME = "example_key";
+    private KeyGenerator keyGenerator;
+    private KeyStore keyStore;
 
     public LoginController(LoginActivity activity){
         super(activity);
@@ -175,5 +188,40 @@ public class LoginController extends BaseActivityController<LoginActivity>{
         return jsessionid;
     }
 
+    public void generateKey() {
+        try {
+            keyStore = KeyStore.getInstance("AndroidKeyStore");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            keyGenerator = KeyGenerator.getInstance(
+                    KeyProperties.KEY_ALGORITHM_AES,
+                    "AndroidKeyStore");
+        } catch (NoSuchAlgorithmException |
+                NoSuchProviderException e) {
+            throw new RuntimeException(
+                    "Failed to get KeyGenerator instance", e);
+        }
+
+        try {
+            keyStore.load(null);
+            keyGenerator.init(new
+                    KeyGenParameterSpec.Builder(KEY_NAME,
+                    KeyProperties.PURPOSE_ENCRYPT |
+                            KeyProperties.PURPOSE_DECRYPT)
+                    .setBlockModes(KeyProperties.BLOCK_MODE_CBC)
+                    .setUserAuthenticationRequired(true)
+                    .setEncryptionPaddings(
+                            KeyProperties.ENCRYPTION_PADDING_PKCS7)
+                    .build());
+            keyGenerator.generateKey();
+        } catch (NoSuchAlgorithmException |
+                InvalidAlgorithmParameterException
+                | CertificateException | IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }

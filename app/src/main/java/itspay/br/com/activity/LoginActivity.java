@@ -20,9 +20,7 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.CancellationSignal;
 import android.provider.ContactsContract;
-import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyPermanentlyInvalidatedException;
 import android.security.keystore.KeyProperties;
 import android.support.v4.app.ActivityCompat;
@@ -32,7 +30,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
@@ -45,19 +42,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
-import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.crypto.Cipher;
-import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 
@@ -94,18 +88,22 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     protected LocationListener locationListener;
     private double latitude, longitude;
     private String mCpf;
-    private String mPassword;
+
+    public static final String SERIALIZED_PASSWORD = "serialized_password";
+    public static final String IS_FINGER_PRINT_CHECKED = "is_finger_print_checked";
+    public static final String IS_SECOND_LOGIN_FINGER_PRINT = "is_second_login_finger_print";
 
 
 //    Fingher Print
     boolean mIsFeatureEnabled = false;
+    boolean mSecondLogin = false;
     private static final String KEY_NAME = "example_key";
     private FingerprintManager fingerprintManager;
     private KeyguardManager keyguardManager;
     private KeyStore keyStore;
-    private KeyGenerator keyGenerator;
     private Cipher cipher;
     private FingerprintManager.CryptoObject cryptoObject;
+    AlertDialog b;
 
 
 
@@ -125,23 +123,23 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == R.id.login || id == EditorInfo.IME_NULL) {
-                    attemptLogin();
-                    return true;
-                }
-                return false;
+            if (id == R.id.login || id == EditorInfo.IME_NULL) {
+
+                attemptLogin();
+                return true;
+            }
+            return false;
             }
         });
 
         mSwLoginFingerPrint.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-
-                if(!mIsFeatureEnabled){
-                    mIsFeatureEnabled = true;
-                }else{
-                    mIsFeatureEnabled= false;
-                }
+            if(!mIsFeatureEnabled){
+                SharedPreferenceUtil.setBooleanPreference(getBaseContext(),IS_FINGER_PRINT_CHECKED,true);
+            }else{
+                SharedPreferenceUtil.setBooleanPreference(getBaseContext(),IS_FINGER_PRINT_CHECKED,false);
+                mPasswordView.setVisibility(View.VISIBLE);
+            }
             }
         });
 
@@ -153,7 +151,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                attemptLogin();
+                if(mIsFeatureEnabled && mSecondLogin) {
+                    loginFingerPrint();
+                }else if(mIsFeatureEnabled && !mSecondLogin){
+                    showAlert("Para uso do fingerPint você deve acessar com sua senha uma vez.","OK");
+                }else{
+                    attemptLogin();
+                }
             }
         });
 
@@ -179,11 +183,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         fingerprintManager = (FingerprintManager) getSystemService(FINGERPRINT_SERVICE);
 
         if(fingerprintManager.isHardwareDetected()){
-//            Toast.makeText(this ,"tem FingherPrint",Toast.LENGTH_LONG).show();
             mLlFingerPrint.setVisibility(View.VISIBLE);
         }else{
-//            Toast.makeText(this ,"Nao tem FingherPrint",Toast.LENGTH_LONG).show();
             mLlFingerPrint.setVisibility(View.GONE);
+
         }
     }
 
@@ -198,8 +201,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mLlFingerPrint = (LinearLayout)findViewById(R.id.ll_finger_print);
         mSwLoginFingerPrint =(Switch)findViewById(R.id.login_new_access_sw_finger_print);
     }
-
-
 
 //    FingerPrint
     public boolean cipherInit() {
@@ -227,44 +228,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             throw new RuntimeException("Failed to init Cipher", e);
         }
     }
-
-    protected void generateKey() {
-        try {
-            keyStore = KeyStore.getInstance("AndroidKeyStore");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        try {
-            keyGenerator = KeyGenerator.getInstance(
-                    KeyProperties.KEY_ALGORITHM_AES,
-                    "AndroidKeyStore");
-        } catch (NoSuchAlgorithmException |
-                NoSuchProviderException e) {
-            throw new RuntimeException(
-                    "Failed to get KeyGenerator instance", e);
-        }
-
-        try {
-            keyStore.load(null);
-            keyGenerator.init(new
-                    KeyGenParameterSpec.Builder(KEY_NAME,
-                    KeyProperties.PURPOSE_ENCRYPT |
-                            KeyProperties.PURPOSE_DECRYPT)
-                    .setBlockModes(KeyProperties.BLOCK_MODE_CBC)
-                    .setUserAuthenticationRequired(true)
-                    .setEncryptionPaddings(
-                            KeyProperties.ENCRYPTION_PADDING_PKCS7)
-                    .build());
-            keyGenerator.generateKey();
-        } catch (NoSuchAlgorithmException |
-                InvalidAlgorithmParameterException
-                | CertificateException | IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
+    
     @Override
     protected void onResume() {
 
@@ -278,6 +242,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 == PackageManager.PERMISSION_GRANTED) {
             locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+        }
+
+        mIsFeatureEnabled = SharedPreferenceUtil.getBooleanPreference(getBaseContext(),IS_FINGER_PRINT_CHECKED,false);
+        mSecondLogin = SharedPreferenceUtil.getBooleanPreference(getBaseContext(),IS_SECOND_LOGIN_FINGER_PRINT,false);
+
+        if(mIsFeatureEnabled && mSecondLogin){
+            mPasswordView.setVisibility(View.GONE);
+        }else {
+            mPasswordView.setVisibility(View.VISIBLE);
         }
     }
 
@@ -364,39 +337,78 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
 
-
             CarrinhoSingleton.getInstance().esvaziarCarrinho();
-
-            if(mIsFeatureEnabled){
-                generateKey();
-
-                if (cipherInit()) {
-                    AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
-
-                    dialogBuilder.setTitle(getString(R.string.app_name));
-                    dialogBuilder.setMessage("posicione o dedo para acessar");
-
-                    dialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int whichButton) {
-                            //pass
-                        }
-                    });
-                    AlertDialog b = dialogBuilder.create();
-                    b.show();
-
-                    cryptoObject = new FingerprintManager.CryptoObject(cipher);
-                    FingerprintHandler helper = new FingerprintHandler(this,this);
-                    helper.startAuth(fingerprintManager, cryptoObject);
-                }
-//                showProgress(true);
-            }else {
                 showProgress(true);
                 new LoginController(this).login(mCpfView.getText().toString(),mPasswordView.getText().toString());
-            }
-
         }
     }
 
+    public void loginFingerPrint (){
+        // Reset errors.
+        mCpfView.setError(null);
+
+        // Store values at the time of the login attempt.
+        String cpf = mCpfView.getText().toString();
+
+        boolean cancel = false;
+        View focusView = null;
+
+
+        // Check for a valid email address.
+        if (TextUtils.isEmpty(cpf)) {
+            mCpfView.setError(getString(R.string.error_field_required));
+            focusView = mCpfView;
+            cancel = true;
+        } else if (!ValidationsForms.isCPF(cpf.replace(".", "").replace("-", ""))) {
+            mCpfView.setError(getString(R.string.error_invalid_cpf));
+            focusView = mCpfView;
+            cancel = true;
+        }
+
+        if (cancel) {
+            // There was an error; don't attempt login and focus the first
+            // form field with an error.
+            focusView.requestFocus();
+        } else {
+            // Show a progress spinner, and kick off a background task to
+            // perform the user login attempt.
+
+        }
+            new LoginController(this).generateKey();
+        showAlert("Posicione o dedo para acessar.","Cancel");
+
+        if (cipherInit()) {
+            cryptoObject = new FingerprintManager.CryptoObject(cipher);
+            FingerprintHandler helper = new FingerprintHandler(this,this);
+            helper.startAuth(fingerprintManager, cryptoObject);
+//            showProgress(true);
+        }
+//                showProgress(true);
+    }
+    public void showAlert(String menssage , String nameButon){
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+
+        dialogBuilder.setTitle(getString(R.string.app_name));
+        dialogBuilder.setMessage(menssage);
+
+        dialogBuilder.setNegativeButton(nameButon, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                //pass
+            }
+        });
+
+        b = dialogBuilder.create();
+        b.show();
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(b != null) {
+            b.dismiss();
+        }
+    }
 
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
