@@ -4,6 +4,11 @@ package itspay.br.com.util;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 
 import com.dexafree.materialList.card.Card;
 import com.dexafree.materialList.card.CardProvider;
@@ -77,28 +82,28 @@ public class Utils {
                 .build();
 
 
-            Call<ResponseBody> call = ConnectPortadorService
-                                            .getService()
-                                            .abrirPlastico(
-                                                        cred.getIdPlastico(),
-                                                        IdentityItsPay.getInstance().getToken());
+        Call<ResponseBody> call = ConnectPortadorService
+                .getService()
+                .abrirPlastico(
+                        cred.getIdPlastico(),
+                        IdentityItsPay.getInstance().getToken());
 
-            call.enqueue(new Callback<ResponseBody>() {
-                @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
-                    if(response.body()!=null && response.body().byteStream() != null) {
-                        card.getProvider().setDrawable(new BitmapDrawable(response.body().byteStream()));
-                    }
-
+                if(response.body()!=null && response.body().byteStream() != null) {
+                    card.getProvider().setDrawable(new BitmapDrawable(response.body().byteStream()));
                 }
 
-                @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
 //                    UtilsActivity.alertIfSocketException(t, context);
 
-                }
-            });
+            }
+        });
 
         return card;
 
@@ -166,4 +171,42 @@ public class Utils {
     }
 
 
+    public static void hideSoftKeyboardOnMaxLength(final Context context, final EditText ed, final int fieldLength) {
+        ed.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (start == fieldLength - 1 && before != 1) {
+                    ((InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(
+                            ed.getWindowToken(), 0);
+                }
+            }
+        });
+    }
+
+    public static void nextInputOnMaxLength(final Context context, final EditText ed, final View viewNext, final int fieldLength) {
+        ed.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, final int start, final int before, int count) {
+                if (start == fieldLength - 1 && before != 1) {
+                    viewNext.requestFocus();
+                }
+            }
+        });
+    }
 }

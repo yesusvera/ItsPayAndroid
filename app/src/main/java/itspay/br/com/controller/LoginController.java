@@ -18,6 +18,7 @@ import itspay.br.com.model.FazerLoginPortadorResponse;
 import itspay.br.com.services.ConnectPortadorService;
 import itspay.br.com.util.ItsPayConstants;
 import itspay.br.com.util.UtilsActivity;
+import itspay.br.com.util.usersharepreferences.SharedPreferenceUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -31,10 +32,12 @@ public class LoginController extends BaseActivityController<LoginActivity>{
         super(activity);
     }
 
-    public void login(){
+    public static final String IS_SECOND_LOGIN_FINGER_PRINT = "is_second_login_finger_print";
+
+    public void login(final String cpf, final String password){
         final FazerLoginPortador fazerLoginPortador = new FazerLoginPortador();
         fazerLoginPortador.setArchitectureInfo("string");
-        fazerLoginPortador.setCpf(activity.getmCpfView().getText().toString().replace(".", "").replace("-", ""));
+        fazerLoginPortador.setCpf(cpf.replace(".", "").replace("-", ""));
         fazerLoginPortador.setDeviceId("string");
         fazerLoginPortador.setIdInstituicao(ItsPayConstants.ID_INSTITUICAO);
         fazerLoginPortador.setIdProcessadora(ItsPayConstants.ID_PROCESSADORA);
@@ -47,7 +50,7 @@ public class LoginController extends BaseActivityController<LoginActivity>{
         fazerLoginPortador.setOrigemAcesso(1);
         fazerLoginPortador.setPlataformVersion("string");
         fazerLoginPortador.setPlatformName("string");
-        fazerLoginPortador.setSenha(activity.getmPasswordView().getText().toString());
+        fazerLoginPortador.setSenha(password);
         fazerLoginPortador.setSistemaOperacional(2);
         fazerLoginPortador.setVersaoConhecida("1.0.0");
         fazerLoginPortador.setVersaoInstalada("1.0.0");
@@ -57,78 +60,82 @@ public class LoginController extends BaseActivityController<LoginActivity>{
         fazerLoginPortadorResponseCall.enqueue(new Callback<FazerLoginPortadorResponse>() {
             @Override
             public void onResponse(Call<FazerLoginPortadorResponse> call, Response<FazerLoginPortadorResponse> response) {
-               if(response.body()!=null) {
-                   Log.i("RESPOSTA SERVICO LOGIN", response.body().toString());
-                   activity.showProgress(false);
+                if(response.body()!=null) {
+                    Log.i("RESPOSTA SERVICO LOGIN", response.body().toString());
+                    activity.showProgress(false);
 
-                   IdentityItsPay.getInstance().setLoginPortadorResponse(response.body());
-                   IdentityItsPay.getInstance().setLoginPortador(fazerLoginPortador);
+                    IdentityItsPay.getInstance().setLoginPortadorResponse(response.body());
+                    IdentityItsPay.getInstance().setLoginPortador(fazerLoginPortador);
 
-                   String setCookie = response.headers().get("Set-Cookie");
+                    String setCookie = response.headers().get("Set-Cookie");
 //                   String JSESSIONID = extractJSESSSIONID(setCookie);
 
-                   IdentityItsPay.getInstance().setSetCookie(setCookie);
+                    IdentityItsPay.getInstance().setSetCookie(setCookie);
 
+                    SharedPreferenceUtil.setStringPreference(activity, "lastCPFLogged",cpf);
+                    SharedPreferenceUtil.setStringPreference(activity, "lastPasswordLogged",password);
 
-                   if(response.body().isRequisitarAtualizacao()){
-                       AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-                       builder.setCancelable(false).setMessage(response.body().getRequisicaoAtualizacaoMensagem())
-                               .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                   @Override
-                                   public void onClick(DialogInterface dialogInterface, int i) {
-                                       redirecionarMeusCartoes();
-                                   }
-                               })
+                    if(response.body().isRequisitarAtualizacao()){
+                        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                        builder.setCancelable(false).setMessage(response.body().getRequisicaoAtualizacaoMensagem())
+                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        redirecionarMeusCartoes();
+                                    }
+                                })
                                 .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
                                         redirecionarMeusCartoes();
                                     }
                                 });
-                       builder.create().show();
-                   }else if(response.body().isRequisitarPermissaoNotificacao()){
-                           AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-                           builder.setCancelable(false).setMessage(response.body().getRequisicaoNotificacaoMensagem())
-                                   .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                       @Override
-                                       public void onClick(DialogInterface dialogInterface, int i) {
-                                           redirecionarMeusCartoes();
-                                       }
-                                   })
-                                   .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-                                       @Override
-                                       public void onClick(DialogInterface dialogInterface, int i) {
-                                           redirecionarMeusCartoes();
-                                       }
-                                   });
-                           builder.create().show();
+                        builder.create().show();
+                    }else if(response.body().isRequisitarPermissaoNotificacao() && !SharedPreferenceUtil.getBooleanPreference(activity,IS_SECOND_LOGIN_FINGER_PRINT,false)){
+                        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                        builder.setCancelable(false).setMessage(response.body().getRequisicaoNotificacaoMensagem())
+                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        redirecionarMeusCartoes();
+                                    }
+                                })
+                                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        redirecionarMeusCartoes();
+                                    }
+                                });
+                        builder.create().show();
 
-                   }else{
-                       redirecionarMeusCartoes();
-                   }
+                    }else{
+                        redirecionarMeusCartoes();
+                    }
 
-               }else if(response.errorBody() != null){
-                   try {
-                       JSONObject jsonObject = new JSONObject(response.errorBody().string());
-                       String msg = jsonObject.getString("msg");
+                    SharedPreferenceUtil.setBooleanPreference(activity,activity.IS_SECOND_LOGIN_FINGER_PRINT,true);
 
-                       AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-                       builder.setCancelable(false).setMessage(msg)
-                               .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                   @Override
-                                   public void onClick(DialogInterface dialogInterface, int i) {
-                                       activity.showProgress(false);
-                                       IdentityItsPay.getInstance().clean();
-                                   }
-                               });
-                       builder.create().show();
-                   }catch (IOException ex){
-                       ex.printStackTrace();
-                   }catch (JSONException ex){
-                       ex.printStackTrace();
-                       activity.showProgress(false);
-                   }
-               }
+                }else if(response.errorBody() != null){
+                    try {
+                        JSONObject jsonObject = new JSONObject(response.errorBody().string());
+                        String msg = jsonObject.getString("msg");
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                        builder.setCancelable(false).setMessage(msg)
+                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        activity.showProgress(false);
+                                        IdentityItsPay.getInstance().clean();
+                                    }
+                                });
+                        builder.create().show();
+                    }catch (IOException ex){
+                        ex.printStackTrace();
+                    }catch (JSONException ex){
+                        ex.printStackTrace();
+                        activity.showProgress(false);
+                    }
+                }
             }
 
             @Override
