@@ -111,6 +111,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private Cipher cipher;
     private FingerprintManager.CryptoObject cryptoObject;
     private AlertDialog mAlertDialog;
+    private TextView mTxtForgetPassword;
 
 
     @Override
@@ -218,6 +219,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
+
+        mTxtForgetPassword.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
     }
 
     /*
@@ -234,6 +243,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mLlFingerPrint = (LinearLayout) findViewById(R.id.ll_finger_print);
         mSwLoginFingerPrint = (Switch) findViewById(R.id.login_new_access_sw_finger_print);
         mLlInputLayoutPassword = (LinearLayout) findViewById(R.id.ll_input_layout_password);
+        mTxtForgetPassword = (TextView)findViewById(R.id.txt_forget_password);
     }
 
     @Override
