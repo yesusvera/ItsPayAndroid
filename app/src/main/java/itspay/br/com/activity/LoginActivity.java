@@ -77,6 +77,7 @@ import itspay.br.com.util.validations.ValidationsForms;
  */
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor>, LocationListener {
 
+
     private static final int PERMISSION_ACCESS_COARSE_LOCATION = 312;
     // UI references.
     private EditText mCpfView;

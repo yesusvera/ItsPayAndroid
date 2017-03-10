@@ -3,21 +3,12 @@ package itspay.br.com.controller;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.security.keystore.KeyGenParameterSpec;
-import android.security.keystore.KeyProperties;
 import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.KeyStore;
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
-import java.security.cert.CertificateException;
-
-import javax.crypto.KeyGenerator;
 
 import itspay.br.com.activity.LoginActivity;
 import itspay.br.com.activity.MeusCartoesActivity;
@@ -36,6 +27,7 @@ import retrofit2.Response;
  * Created by yesus on 17/12/16.
  */
 public class LoginController extends BaseActivityController<LoginActivity>{
+
     public LoginController(LoginActivity activity){
         super(activity);
     }
@@ -68,82 +60,82 @@ public class LoginController extends BaseActivityController<LoginActivity>{
         fazerLoginPortadorResponseCall.enqueue(new Callback<FazerLoginPortadorResponse>() {
             @Override
             public void onResponse(Call<FazerLoginPortadorResponse> call, Response<FazerLoginPortadorResponse> response) {
-               if(response.body()!=null) {
-                   Log.i("RESPOSTA SERVICO LOGIN", response.body().toString());
-                   activity.showProgress(false);
+                if(response.body()!=null) {
+                    Log.i("RESPOSTA SERVICO LOGIN", response.body().toString());
+                    activity.showProgress(false);
 
-                   IdentityItsPay.getInstance().setLoginPortadorResponse(response.body());
-                   IdentityItsPay.getInstance().setLoginPortador(fazerLoginPortador);
+                    IdentityItsPay.getInstance().setLoginPortadorResponse(response.body());
+                    IdentityItsPay.getInstance().setLoginPortador(fazerLoginPortador);
 
-                   String setCookie = response.headers().get("Set-Cookie");
+                    String setCookie = response.headers().get("Set-Cookie");
 //                   String JSESSIONID = extractJSESSSIONID(setCookie);
 
-                   IdentityItsPay.getInstance().setSetCookie(setCookie);
+                    IdentityItsPay.getInstance().setSetCookie(setCookie);
 
-                   SharedPreferenceUtil.setStringPreference(activity, "lastCPFLogged",cpf);
-                   SharedPreferenceUtil.setStringPreference(activity, "lastPasswordLogged",password);
+                    SharedPreferenceUtil.setStringPreference(activity, "lastCPFLogged",cpf);
+                    SharedPreferenceUtil.setStringPreference(activity, "lastPasswordLogged",password);
 
-                   if(response.body().isRequisitarAtualizacao()){
-                       AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-                       builder.setCancelable(false).setMessage(response.body().getRequisicaoAtualizacaoMensagem())
-                               .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                   @Override
-                                   public void onClick(DialogInterface dialogInterface, int i) {
-                                       redirecionarMeusCartoes();
-                                   }
-                               })
+                    if(response.body().isRequisitarAtualizacao()){
+                        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                        builder.setCancelable(false).setMessage(response.body().getRequisicaoAtualizacaoMensagem())
+                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        redirecionarMeusCartoes();
+                                    }
+                                })
                                 .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
                                         redirecionarMeusCartoes();
                                     }
                                 });
-                       builder.create().show();
-                   }else if(response.body().isRequisitarPermissaoNotificacao() && !SharedPreferenceUtil.getBooleanPreference(activity,IS_SECOND_LOGIN_FINGER_PRINT,false)){
-                           AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-                           builder.setCancelable(false).setMessage(response.body().getRequisicaoNotificacaoMensagem())
-                                   .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                       @Override
-                                       public void onClick(DialogInterface dialogInterface, int i) {
-                                           redirecionarMeusCartoes();
-                                       }
-                                   })
-                                   .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-                                       @Override
-                                       public void onClick(DialogInterface dialogInterface, int i) {
-                                           redirecionarMeusCartoes();
-                                       }
-                                   });
-                           builder.create().show();
+                        builder.create().show();
+                    }else if(response.body().isRequisitarPermissaoNotificacao() && !SharedPreferenceUtil.getBooleanPreference(activity,IS_SECOND_LOGIN_FINGER_PRINT,false)){
+                        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                        builder.setCancelable(false).setMessage(response.body().getRequisicaoNotificacaoMensagem())
+                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        redirecionarMeusCartoes();
+                                    }
+                                })
+                                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        redirecionarMeusCartoes();
+                                    }
+                                });
+                        builder.create().show();
 
-                   }else{
-                       redirecionarMeusCartoes();
-                   }
+                    }else{
+                        redirecionarMeusCartoes();
+                    }
 
-                   SharedPreferenceUtil.setBooleanPreference(activity,activity.IS_SECOND_LOGIN_FINGER_PRINT,true);
+                    SharedPreferenceUtil.setBooleanPreference(activity,activity.IS_SECOND_LOGIN_FINGER_PRINT,true);
 
-               }else if(response.errorBody() != null){
-                   try {
-                       JSONObject jsonObject = new JSONObject(response.errorBody().string());
-                       String msg = jsonObject.getString("msg");
+                }else if(response.errorBody() != null){
+                    try {
+                        JSONObject jsonObject = new JSONObject(response.errorBody().string());
+                        String msg = jsonObject.getString("msg");
 
-                       AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-                       builder.setCancelable(false).setMessage(msg)
-                               .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                   @Override
-                                   public void onClick(DialogInterface dialogInterface, int i) {
-                                       activity.showProgress(false);
-                                       IdentityItsPay.getInstance().clean();
-                                   }
-                               });
-                       builder.create().show();
-                   }catch (IOException ex){
-                       ex.printStackTrace();
-                   }catch (JSONException ex){
-                       ex.printStackTrace();
-                       activity.showProgress(false);
-                   }
-               }
+                        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                        builder.setCancelable(false).setMessage(msg)
+                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        activity.showProgress(false);
+                                        IdentityItsPay.getInstance().clean();
+                                    }
+                                });
+                        builder.create().show();
+                    }catch (IOException ex){
+                        ex.printStackTrace();
+                    }catch (JSONException ex){
+                        ex.printStackTrace();
+                        activity.showProgress(false);
+                    }
+                }
             }
 
             @Override
@@ -184,6 +176,4 @@ public class LoginController extends BaseActivityController<LoginActivity>{
 
         return jsessionid;
     }
-
-
 }

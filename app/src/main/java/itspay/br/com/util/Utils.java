@@ -82,28 +82,28 @@ public class Utils {
                 .build();
 
 
-            Call<ResponseBody> call = ConnectPortadorService
-                                            .getService()
-                                            .abrirPlastico(
-                                                        cred.getIdPlastico(),
-                                                        IdentityItsPay.getInstance().getToken());
+        Call<ResponseBody> call = ConnectPortadorService
+                .getService()
+                .abrirPlastico(
+                        cred.getIdPlastico(),
+                        IdentityItsPay.getInstance().getToken());
 
-            call.enqueue(new Callback<ResponseBody>() {
-                @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
-                    if(response.body()!=null && response.body().byteStream() != null) {
-                        card.getProvider().setDrawable(new BitmapDrawable(response.body().byteStream()));
-                    }
-
+                if(response.body()!=null && response.body().byteStream() != null) {
+                    card.getProvider().setDrawable(new BitmapDrawable(response.body().byteStream()));
                 }
 
-                @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
 //                    UtilsActivity.alertIfSocketException(t, context);
 
-                }
-            });
+            }
+        });
 
         return card;
 
