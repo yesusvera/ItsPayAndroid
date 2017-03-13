@@ -52,6 +52,7 @@
     <string name="titulo_meus_pedidos">Pedidos</string>
     <string name="titulo_carrinho">Carrinho</string>
 
+    <string name="acao_recuperar_login">Recuperar Senha</string>
     <string name="acao_criar_login">Criar Login</string>
     <string name="acao_transferir">Transferir</string>
     <string name="acao_gerar_boleto">Gerar Boleto</string>
