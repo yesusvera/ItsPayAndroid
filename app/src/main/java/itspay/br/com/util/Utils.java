@@ -3,7 +3,6 @@ package itspay.br.com.util;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -22,6 +21,7 @@ import itspay.br.com.authentication.IdentityItsPay;
 import itspay.br.com.itspay.R;
 import itspay.br.com.model.Credencial;
 import itspay.br.com.services.ConnectPortadorService;
+import itspay.br.com.util.cache.CacheImageView;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -29,7 +29,7 @@ import retrofit2.Response;
 
 public class Utils {
 
-    public static String formataMoeda(double valor){
+    public static String formataMoeda(double valor) {
         DecimalFormat formatoDois = new DecimalFormat("##,###,###,##0.00", new DecimalFormatSymbols(new Locale("pt", "BR")));
         formatoDois.setMinimumFractionDigits(2);
         formatoDois.setParseBigDecimal(true);
@@ -41,14 +41,14 @@ public class Utils {
     public static String unmask(String s, Set<String> replaceSymbols) {
 
         for (String symbol : replaceSymbols)
-            s = s.replaceAll("["+symbol+"]","");
+            s = s.replaceAll("[" + symbol + "]", "");
 
         return s;
     }
 
-    public static String mask(String format, String text){
-        String maskedText="";
-        int i =0;
+    public static String mask(String format, String text) {
+        String maskedText = "";
+        int i = 0;
         for (char m : format.toCharArray()) {
             if (m != '#') {
                 maskedText += m;
@@ -65,9 +65,9 @@ public class Utils {
     }
 
     public Card novoCartaoCredencial(final Credencial cred, final Context context) {
-        String saldo = "Saldo: R$"+ cred.getSaldo();
+        String saldo = "Saldo: R$" + cred.getSaldo();
 
-        final Card card =  new Card.Builder(context)
+        final Card card = new Card.Builder(context)
                 .setTag(cred)
                 .withProvider(new CardProvider())
                 .setLayout(R.layout.material_itspay_card)
@@ -82,38 +82,50 @@ public class Utils {
                 .build();
 
 
-        Call<ResponseBody> call = ConnectPortadorService
-                .getService()
-                .abrirPlastico(
-                        cred.getIdPlastico(),
-                        IdentityItsPay.getInstance().getToken());
+        if (CacheImageView.temCache(context, cred.getIdPlastico() + "")) {
+            card.getProvider().setDrawable(CacheImageView.lerCacheBitmapDraw(context, cred.getIdPlastico()+""));
+        } else {
 
-        call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            Call<ResponseBody> call = ConnectPortadorService
+                    .getService()
+                    .abrirPlastico(
+                            cred.getIdPlastico(),
+                            IdentityItsPay.getInstance().getToken());
 
-                if(response.body()!=null && response.body().byteStream() != null) {
-                    card.getProvider().setDrawable(new BitmapDrawable(response.body().byteStream()));
+            call.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                    if (response.body() != null && response.body().byteStream() != null) {
+
+                        try {
+                            CacheImageView.salvarCache(context, cred.getIdPlastico() + "", response.body().byteStream());
+                        } catch (Exception e) {
+                        }
+
+                        card.getProvider().setDrawable(CacheImageView.lerCacheBitmapDraw(context, cred.getIdPlastico()+""));
+                    }
+
                 }
 
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
 //                    UtilsActivity.alertIfSocketException(t, context);
 
-            }
-        });
+                }
+            });
+
+        }
 
         return card;
 
     }
 
 
-    public static Card novoCartaoVirtual(Credencial cred, final Context context) {
-        String saldo = "Saldo: R$"+ cred.getSaldo();
+    public static Card novoCartaoVirtual(final Credencial cred, final Context context) {
+        String saldo = "Saldo: R$" + cred.getSaldo();
 
-        final Card card =  new Card.Builder(context)
+        final Card card = new Card.Builder(context)
                 .setTag("VIRTUAL CARD_ITSPAY")
                 .withProvider(new CardProvider())
                 .setLayout(R.layout.material_itspay_virtual_card)
@@ -128,34 +140,44 @@ public class Utils {
                 .endConfig()
                 .build();
 
-        Call<ResponseBody> call = ConnectPortadorService
-                .getService()
-                .abrirPlastico(
-                        cred.getIdPlastico(),
-                        IdentityItsPay.getInstance().getToken());
 
-        call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+        if (CacheImageView.temCache(context, cred.getIdPlastico() + "")) {
+            card.getProvider().setDrawable(CacheImageView.lerCacheBitmapDraw(context, cred.getIdPlastico()+""));
+        } else {
+            Call<ResponseBody> call = ConnectPortadorService
+                    .getService()
+                    .abrirPlastico(
+                            cred.getIdPlastico(),
+                            IdentityItsPay.getInstance().getToken());
 
-                if(response.body()!=null && response.body().byteStream()!=null) {
-                    card.getProvider().setDrawable(new BitmapDrawable(response.body().byteStream()));
+            call.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                    if (response.body() != null && response.body().byteStream() != null) {
+                        try {
+                            CacheImageView.salvarCache(context, cred.getIdPlastico() + "", response.body().byteStream());
+                        } catch (Exception e) {
+                        }
+
+                        card.getProvider().setDrawable(CacheImageView.lerCacheBitmapDraw(context, cred.getIdPlastico()+""));
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                UtilsActivity.alertIfSocketException(t, context);
-            }
-        });
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    UtilsActivity.alertIfSocketException(t, context);
+                }
+            });
+        }
 
 
         return card;
 
     }
 
-    public static String getCredencialComEspacos(String numeroCredencialVirtual){
-        if(numeroCredencialVirtual.length() >= 16) {
+    public static String getCredencialComEspacos(String numeroCredencialVirtual) {
+        if (numeroCredencialVirtual.length() >= 16) {
             String str = numeroCredencialVirtual.substring(0, 4)
                     + " "
                     + numeroCredencialVirtual.substring(4, 8)
@@ -165,7 +187,7 @@ public class Utils {
                     + numeroCredencialVirtual.substring(12, 16);
 
             return str;
-        }else{
+        } else {
             return "";
         }
     }
