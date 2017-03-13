@@ -9,6 +9,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import itspay.br.com.activity.CadastroLoginActivity;
 import itspay.br.com.activity.CadastroLoginPage2Activity;
@@ -17,6 +20,7 @@ import itspay.br.com.model.CriarLoginResponse;
 import itspay.br.com.model.PortadorLogin;
 import itspay.br.com.services.ConnectPortadorService;
 import itspay.br.com.singleton.CadastroSingleton;
+import itspay.br.com.util.EncriptSHA512;
 import itspay.br.com.util.ItsPayConstants;
 import itspay.br.com.util.UtilsActivity;
 import itspay.br.com.util.validations.ValidationsForms;
@@ -38,19 +42,33 @@ public class CadastroLoginController  {
 
     }
 
-    public void criarLogin(final CadastroLoginPage2Activity activity) {
+    public void criarLogin(final CadastroLoginPage2Activity activity){
+
+        SimpleDateFormat rs = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date convertedCurrentDate = null;
+
+        String credencial = EncriptSHA512.encript(mCadastroSingleton.getmNumeroCartao().toString());
+
         PortadorLogin portadorLogin = new PortadorLogin();
         portadorLogin.setCpf(mCadastroSingleton.getmCpf().replace(".", "").replace("-",""));
-        portadorLogin.setCredencial(mCadastroSingleton.getmNumeroCartao().toString());
-//            portadorLogin.setDataNascimento(mCadastroSingleton.getmDataNascimento());
-        portadorLogin.setDataNascimento("2016-12-19T02:13:53.940Z");
+        portadorLogin.setCredencial(credencial);
         portadorLogin.setEmail(mCadastroSingleton.getmEmail().toString());
         portadorLogin.setIdInstituicao(ItsPayConstants.ID_INSTITUICAO);
         portadorLogin.setIdProcessadora(ItsPayConstants.ID_PROCESSADORA);
         portadorLogin.setOrigemCadastroLogin(ItsPayConstants.ORIGEM_ACESSO);
         portadorLogin.setSenha(mCadastroSingleton.getmSenha().toString());
 
+        try {
+            convertedCurrentDate = rs.parse(mCadastroSingleton.getmDataNascimento());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
+        if(convertedCurrentDate != null){
+            String date=sdf.format(convertedCurrentDate);
+            portadorLogin.setDataNascimento(date);
+        }
 
         Call<CriarLoginResponse> criarLoginCall =   ConnectPortadorService.getService().criarLogin(portadorLogin);
         criarLoginCall.enqueue(new Callback<CriarLoginResponse>() {
