@@ -26,6 +26,7 @@ import itspay.br.com.services.ConnectPortadorService;
 import itspay.br.com.singleton.CarrinhoSingleton;
 import itspay.br.com.util.Utils;
 import itspay.br.com.util.UtilsActivity;
+import itspay.br.com.util.cache.CacheImageView;
 import me.relex.circleindicator.CircleIndicator;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -119,28 +120,43 @@ public class ProdutoDetalheActivity extends AppCompatActivity {
 
         if (produtoDetalhe.getProduto().getImagens() != null && produtoDetalhe.getProduto().getImagens().length > 0) {
 
-            for (Imagen img : produtoDetalhe.getProduto().getImagens()) {
-                Call<ResponseBody> call = ConnectPortadorService.getService().abrirImagemProduto(img.getIdImagem(),
-                        IdentityItsPay.getInstance().getToken());
+            for (final Imagen img : produtoDetalhe.getProduto().getImagens()) {
+                if (CacheImageView.temCache(getApplicationContext(), img.getIdImagem() + "")) {
+                    BitmapDrawable bitmapDrawable = CacheImageView.lerCacheBitmapDraw(getApplicationContext(), img.getIdImagem() + "");
 
-                call.enqueue(new Callback<ResponseBody>() {
-                    @Override
-                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        if (response.body() != null && response.body().byteStream() != null) {
-                            BitmapDrawable bitmapDrawable = new BitmapDrawable(response.body().byteStream());
+                    ImageView imageView = new ImageView(ProdutoDetalheActivity.this);
+                    imageView.setImageBitmap(bitmapDrawable.getBitmap());
+                    pagerAdapter.addView(imageView);
+                    pagerAdapter.notifyDataSetChanged();
+                } else {
+                    Call<ResponseBody> call = ConnectPortadorService.getService().abrirImagemProduto(img.getIdImagem(),
+                            IdentityItsPay.getInstance().getToken());
 
-                            ImageView imageView = new ImageView(ProdutoDetalheActivity.this);
-                            imageView.setImageBitmap(bitmapDrawable.getBitmap());
-                            pagerAdapter.addView(imageView);
-                            pagerAdapter.notifyDataSetChanged();
+                    call.enqueue(new Callback<ResponseBody>() {
+                        @Override
+                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                            if (response.body() != null && response.body().byteStream() != null) {
+
+                                try {
+                                    CacheImageView.salvarCache(getApplicationContext(), img.getIdImagem() + "", response.body().byteStream());
+                                } catch (Exception e) {
+                                }
+
+                                BitmapDrawable bitmapDrawable = CacheImageView.lerCacheBitmapDraw(getApplicationContext(), img.getIdImagem() + "");
+
+                                ImageView imageView = new ImageView(ProdutoDetalheActivity.this);
+                                imageView.setImageBitmap(bitmapDrawable.getBitmap());
+                                pagerAdapter.addView(imageView);
+                                pagerAdapter.notifyDataSetChanged();
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onFailure(Call<ResponseBody> call, Throwable t) {
-                        UtilsActivity.alertIfSocketException(t, ProdutoDetalheActivity.this);
-                    }
-                });
+                        @Override
+                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+                            UtilsActivity.alertIfSocketException(t, ProdutoDetalheActivity.this);
+                        }
+                    });
+                }
             }
         }
     }

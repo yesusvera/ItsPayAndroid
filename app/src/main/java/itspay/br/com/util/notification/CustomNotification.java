@@ -13,7 +13,6 @@ import itspay.br.com.activity.MarketPlaceActivity;
 import itspay.br.com.itspay.R;
 
 import static android.support.design.R.attr.icon;
-import static android.support.design.R.attr.paddingEnd;
 
 /**
  * Created by juniorbraga on 15/02/17.
