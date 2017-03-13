@@ -108,6 +108,7 @@
         Apertando \"Concordo\" eu concordo com os Termos de Uso do Cartão Virtual
     </string>
 
+    <string name="prompt_autorizar_compra">Deseja autorizar esta compra no valor de %1$s em %2$sx?</string>
     <string name="mensagem_sem_internet">Aconteceu uma falha na comunicação. Verifique sua rede.</string>
     <string name="mensagem_confirmacao_transf">Confirma esta transferência?</string>
     <string name="mensagem_sessao_expirou">A sessão expirou.</string>

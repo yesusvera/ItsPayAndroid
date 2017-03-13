@@ -147,7 +147,9 @@ public class MeusCartoesActivity extends AppCompatActivity
         if(FORCE_LOGOUT){
             meusCartoesController.forceLogout();
         }
-        isAlertMarketPlace();
+        if(IdentityItsPay.getInstance().getLoginPortadorResponse().isPossuiMarketPlace()) {
+            isAlertMarketPlace();
+        }
     }
 
     public void abrirMarketPlace(){
