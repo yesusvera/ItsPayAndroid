@@ -29,6 +29,7 @@ import com.example.tutoriallibrary.showcaseview.targets.ViewTarget;
 import java.util.ArrayList;
 import java.util.List;
 
+import itspay.br.com.authentication.IdentityItsPay;
 import itspay.br.com.controller.MeusCartoesController;
 import itspay.br.com.itspay.R;
 import itspay.br.com.model.Credencial;
@@ -63,7 +64,10 @@ public class MeusCartoesActivity extends AppCompatActivity
             }
         });
 
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
@@ -72,6 +76,10 @@ public class MeusCartoesActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        if(!IdentityItsPay.getInstance().getLoginPortadorResponse().isPossuiMarketPlace()){
+            fab.setVisibility(View.GONE);
+            navigationView.getMenu().findItem(R.id.nav_marketplace).setVisible(false);
+        }
 
         mListView = (MaterialListView) findViewById(R.id.material_listview);
 
@@ -92,7 +100,6 @@ public class MeusCartoesActivity extends AppCompatActivity
         });
 
         swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipeRefreshCredenciais);
-
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -140,7 +147,9 @@ public class MeusCartoesActivity extends AppCompatActivity
         if(FORCE_LOGOUT){
             meusCartoesController.forceLogout();
         }
-        isAlertMarketPlace();
+        if(IdentityItsPay.getInstance().getLoginPortadorResponse().isPossuiMarketPlace()) {
+            isAlertMarketPlace();
+        }
     }
 
     public void abrirMarketPlace(){
