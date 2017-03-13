@@ -3,6 +3,7 @@ package itspay.br.com.controller;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.util.Log;
 
 import org.json.JSONException;
@@ -36,9 +37,9 @@ public class LoginController extends BaseActivityController<LoginActivity>{
 
     public void login(final String cpf, final String password){
         final FazerLoginPortador fazerLoginPortador = new FazerLoginPortador();
-        fazerLoginPortador.setArchitectureInfo("string");
+        fazerLoginPortador.setArchitectureInfo(Build.DEVICE);
         fazerLoginPortador.setCpf(cpf.replace(".", "").replace("-", ""));
-        fazerLoginPortador.setDeviceId("string");
+        fazerLoginPortador.setDeviceId(Build.ID);
         fazerLoginPortador.setIdInstituicao(ItsPayConstants.ID_INSTITUICAO);
         fazerLoginPortador.setIdProcessadora(ItsPayConstants.ID_PROCESSADORA);
 //        fazerLoginPortador.setLatitude(castCoordenada(activity.getLatitude()));
@@ -46,10 +47,10 @@ public class LoginController extends BaseActivityController<LoginActivity>{
 //
         fazerLoginPortador.setLatitude(activity.getLatitude());
         fazerLoginPortador.setLongitude(activity.getLongitude());
-        fazerLoginPortador.setModel("string");
+        fazerLoginPortador.setModel(Build.MODEL);
         fazerLoginPortador.setOrigemAcesso(1);
-        fazerLoginPortador.setPlataformVersion("string");
-        fazerLoginPortador.setPlatformName("string");
+        fazerLoginPortador.setPlataformVersion(Build.VERSION.RELEASE);
+        fazerLoginPortador.setPlatformName(Build.PRODUCT);
         fazerLoginPortador.setSenha(password);
         fazerLoginPortador.setSistemaOperacional(ItsPayConstants.SISTEMA_OPERACIONAL);
         fazerLoginPortador.setVersaoConhecida("1.0.0");
