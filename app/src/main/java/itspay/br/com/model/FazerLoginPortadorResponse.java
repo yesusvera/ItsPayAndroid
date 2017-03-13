@@ -13,10 +13,12 @@ public class FazerLoginPortadorResponse{
     private boolean requisitarPermissaoNotificacao;
     private String token;
     private String versaoMaisRecente;
+    private boolean possuiMarketPlace;
+
 
     public FazerLoginPortadorResponse(){}
 
-    public FazerLoginPortadorResponse(String dataHoraUltimoAcessso, long idLogin, String requisicaoAtualizacaoMensagem, String requisicaoNotificacaoMensagem, boolean requisitarAtualizacao, boolean requisitarPermissaoNotificacao, String token, String versaoMaisRecente){
+    public FazerLoginPortadorResponse(String dataHoraUltimoAcessso, long idLogin, String requisicaoAtualizacaoMensagem, String requisicaoNotificacaoMensagem, boolean requisitarAtualizacao, boolean requisitarPermissaoNotificacao, String token, String versaoMaisRecente, boolean possuiMarketPlace){
         this.dataHoraUltimoAcessso = dataHoraUltimoAcessso;
         this.idLogin = idLogin;
         this.requisicaoAtualizacaoMensagem = requisicaoAtualizacaoMensagem;
@@ -25,6 +27,7 @@ public class FazerLoginPortadorResponse{
         this.requisitarPermissaoNotificacao = requisitarPermissaoNotificacao;
         this.token = token;
         this.versaoMaisRecente = versaoMaisRecente;
+        this.setPossuiMarketPlace(possuiMarketPlace);
     }
 
     public String getDataHoraUltimoAcessso() {
@@ -91,10 +94,19 @@ public class FazerLoginPortadorResponse{
         this.versaoMaisRecente = versaoMaisRecente;
     }
 
+
+    public boolean isPossuiMarketPlace() {
+        return possuiMarketPlace;
+    }
+
+    public void setPossuiMarketPlace(boolean possuiMarketPlace) {
+        this.possuiMarketPlace = possuiMarketPlace;
+    }
+
     @Override
     public String toString() {
         return "FazerLoginPortadorResponse{" +
-                "dataHoraUltimoAcessso=" + dataHoraUltimoAcessso +
+                "dataHoraUltimoAcessso='" + dataHoraUltimoAcessso + '\'' +
                 ", idLogin=" + idLogin +
                 ", requisicaoAtualizacaoMensagem='" + requisicaoAtualizacaoMensagem + '\'' +
                 ", requisicaoNotificacaoMensagem='" + requisicaoNotificacaoMensagem + '\'' +
@@ -102,6 +114,7 @@ public class FazerLoginPortadorResponse{
                 ", requisitarPermissaoNotificacao=" + requisitarPermissaoNotificacao +
                 ", token='" + token + '\'' +
                 ", versaoMaisRecente='" + versaoMaisRecente + '\'' +
+                ", possuiMarketPlace=" + possuiMarketPlace +
                 '}';
     }
 }

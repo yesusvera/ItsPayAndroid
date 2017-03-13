@@ -25,45 +25,45 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-             <RelativeLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                 <android.support.design.widget.TextInputLayout
-                     android:layout_width="match_parent"
-                     android:layout_height="wrap_content"
-                     app:counterMaxLength="13"
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:counterMaxLength="13"
 
-                     android:layout_alignParentLeft="true">
+                    android:layout_alignParentLeft="true">
 
-                     <EditText
-                         android:id="@+id/numeroCartao"
-                         android:layout_width="255dp"
-                         android:layout_height="wrap_content"
-                         android:hint="@string/prompt_numero_cartao"
-                         android:inputType="number"
-                         android:maxLines="1"
-                         android:singleLine="true"
-                         android:paddingLeft="15dp" />
+                    <EditText
+                        android:id="@+id/numeroCartao"
+                        android:layout_width="255dp"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/prompt_numero_cartao"
+                        android:inputType="number"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:paddingLeft="15dp" />
 
 
-                 </android.support.design.widget.TextInputLayout>
+                </android.support.design.widget.TextInputLayout>
 
-                 <ImageButton
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     app:srcCompat="@android:drawable/ic_menu_camera"
-                     android:id="@+id/scanCardButton"
-                     android:layout_weight="1"
-                     android:onClick="onScanPress"
-                     android:layout_marginRight="20dp"
-                     android:layout_marginEnd="15dp"
-                     android:layout_centerVertical="true"
-                     android:layout_alignParentRight="true"
-                     android:layout_alignParentEnd="true" />
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@android:drawable/ic_menu_camera"
+                    android:id="@+id/scanCardButton"
+                    android:layout_weight="1"
+                    android:onClick="onScanPress"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
 
-             </RelativeLayout>
+            </RelativeLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -129,7 +129,7 @@
                     android:id="@+id/senha"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/prompt_password"
+                    android:hint="@string/prompt_password_acess"
                     android:inputType="textPassword"
                     android:maxLines="1"
                     android:maxLength="30"
@@ -148,7 +148,7 @@
                     android:id="@+id/confirmacaoSenha"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/prompt_confirma_password"
+                    android:hint="@string/prompt_repita_password"
                     android:inputType="textPassword"
                     android:maxLines="1"
                     android:maxLength="30"
