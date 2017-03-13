@@ -223,7 +223,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mTxtForgetPassword.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent recuperarSenha = new Intent(LoginActivity.this, RecuperarSenhaActivity.class);
+                startActivity(recuperarSenha);
             }
         });
 
