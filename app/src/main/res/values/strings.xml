@@ -4,7 +4,9 @@
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Senha</string>
-    <string name="prompt_confirma_password">Confirmar Senha</string>v
+    <string name="prompt_password_acess">Senha para o Login de Acesso</string>
+    <string name="prompt_repita_password">Repita a senha</string>
+    <string name="prompt_confirma_password">Confirmar Senha</string>
     <string name="prompt_numero_cartao_destino">Número do cartão de destino</string>
     <string name="prompt_favorecido">Nome do Favorecido</string>
     <string name="prompt_banco_favorecido">Banco do Favorecido</string>
@@ -27,7 +29,6 @@
     <string name="prompt_uso_internet">Uso na Internet</string>
     <string name="prompt_saque">Saque</string>
     <string name="prompt_limpar_carrinho">Deseja limpar a lista completamente?</string>
-    <string name="prompt_autorizar_compra">Deseja autorizar esta compra no valor de %1$s em %2$sx?</string>
     <string name="prompt_excluir_produto_carrinho">Deseja realmente retirar este produto do carrinho?</string>
     <string name="prompt_confirma_notificar_perda">Deseja realmente informar a perda deste cartão.
                                                     \nEste cartão será cancelado e um novo cartão será emitido.</string>
@@ -91,7 +92,7 @@
     <string name="prompt_numero_cartao">Número do Cartão</string>
     <string name="prompt_data_nascimento">Data de Nascimento</string>
     <string name="prompt_confirmar_senha">Confirmar Senha</string>
-    <string name="title_activity_cadastro_login">Cadastro Login</string>
+    <string name="title_activity_cadastro_login">Cadastro de Login de Acesso</string>
     <string name="title_activity_termos_de_uso">Termos de Uso</string>
 
     <string name="str_icone_transferir">Transferir</string>

@@ -119,23 +119,26 @@ public class CartaoActivity extends AppCompatActivity {
         }else{
             BuilderManagerFloatingButton.imageResourceIndex = 0;
             BuilderManagerFloatingButton.imageResources = new int[]{
-                    R.drawable.menu_icon1,
-                    R.drawable.menu_icon2,
+//                    R.drawable.menu_icon1,
+//                    R.drawable.menu_icon2,
                     R.drawable.menu_icon3,
                     R.drawable.menu_icon4,
-                    R.drawable.menu_icon5,
+//                    R.drawable.menu_icon5,
                     R.drawable.menu_icon6
             };
             BuilderManagerFloatingButton.textResources = new int[]{
-                    R.string.str_icone_transferir,
-                    R.string.str_icone_inserir_carga,
+//                    R.string.str_icone_transferir,
+//                    R.string.str_icone_inserir_carga,
                     R.string.str_icone_cartoes_virtuais,
                     R.string.str_icone_ajustes_seguranca,
-                    R.string.str_icone_tarifas,
+//                    R.string.str_icone_tarifas,
                     R.string.str_icone_logout
             };
-            bmb.setPiecePlaceEnum(PiecePlaceEnum.DOT_6_1);
-            bmb.setButtonPlaceEnum(ButtonPlaceEnum.SC_6_1);
+//            bmb.setPiecePlaceEnum(PiecePlaceEnum.DOT_6_1);
+//            bmb.setButtonPlaceEnum(ButtonPlaceEnum.SC_6_1);
+
+            bmb.setPiecePlaceEnum(PiecePlaceEnum.DOT_3_1);
+            bmb.setButtonPlaceEnum(ButtonPlaceEnum.SC_3_1);
         }
 
         bmb.setNormalColor(Color.parseColor("#00273f"));
@@ -147,17 +150,17 @@ public class CartaoActivity extends AppCompatActivity {
         bmb.setOnBoomListener(new OnBoomListener() {
             @Override
             public void onClicked(int index, BoomButton boomButton) {
-               int strSelectedResource = BuilderManagerFloatingButton.textResources[index];
+                int strSelectedResource = BuilderManagerFloatingButton.textResources[index];
 
-               switch(strSelectedResource){
-                   case R.string.str_icone_logout: logout(); break;
-                   case R.string.str_icone_transferir : escolherTipoTransferencia(); break;
-                   case R.string.str_icone_inserir_carga : inserirCarga(); break;
-                   case R.string.str_icone_cartoes_virtuais : cartoesVirtuais(); break;
-                   case R.string.str_icone_ajustes_seguranca : ajustesDeSeguranca(); break;
-                   case R.string.str_icone_tarifas : tarifas(); break;
+                switch(strSelectedResource){
+                    case R.string.str_icone_logout: logout(); break;
+                    case R.string.str_icone_transferir : escolherTipoTransferencia(); break;
+                    case R.string.str_icone_inserir_carga : inserirCarga(); break;
+                    case R.string.str_icone_cartoes_virtuais : cartoesVirtuais(); break;
+                    case R.string.str_icone_ajustes_seguranca : ajustesDeSeguranca(); break;
+                    case R.string.str_icone_tarifas : tarifas(); break;
 
-               }
+                }
             }
 
             @Override
@@ -329,7 +332,7 @@ public class CartaoActivity extends AppCompatActivity {
                                     view.setBackgroundDrawable(CartaoActivity.this.getResources().getDrawable(R.drawable.eye_slash));
                                     card.setTag("eye_slash");
                                 }else{
-                                   view.setBackgroundDrawable(CartaoActivity.this.getResources().getDrawable(R.drawable.eye));
+                                    view.setBackgroundDrawable(CartaoActivity.this.getResources().getDrawable(R.drawable.eye));
                                     card.setTag("eye");
                                 }
 
