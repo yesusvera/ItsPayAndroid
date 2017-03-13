@@ -20,7 +20,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launch_financial"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -162,6 +162,21 @@
             android:noHistory="true"
             android:theme="@style/TemaFormularios"
             android:windowSoftInputMode="stateHidden|adjustPan"/>
+
+        <activity
+            android:name="itspay.br.com.activity.TokenActivity"
+            android:label="Validação de Chave"
+            android:noHistory="true"
+            android:theme="@style/TemaFormularios"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
+
+        <activity
+            android:name="itspay.br.com.activity.CadastroLoginPage2Activity"
+           android:label="Finalização de Cadastro"
+            android:noHistory="true"
+            android:theme="@style/TemaFormularios"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
+
     </application>
 
 </manifest>
