@@ -263,6 +263,23 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
 
 //        Regra de view FingerPrint
+
+        boolean isModifiedPassword = SharedPreferenceUtil.getBooleanPreference(getBaseContext(), "isModifiedPassword", false);
+        if (isModifiedPassword){
+            SharedPreferenceUtil.setBooleanPreference(getBaseContext(), "isModifiedPassword", false);
+            SharedPreferenceUtil.setBooleanPreference(getBaseContext(), IS_FINGER_PRINT_CHECKED, false);
+            SharedPreferenceUtil.setBooleanPreference(getBaseContext(), IS_SECOND_LOGIN_FINGER_PRINT, false);
+
+            android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
+            builder.setCancelable(false).setMessage("Sua Senha foi Alterada , acesse o aplicativo com a nova senha.")
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                        }
+                    });
+            builder.create().show();
+        }
+
         mIsFeatureEnabled = SharedPreferenceUtil.getBooleanPreference(getBaseContext(), IS_FINGER_PRINT_CHECKED, false);
         mSecondLogin = SharedPreferenceUtil.getBooleanPreference(getBaseContext(), IS_SECOND_LOGIN_FINGER_PRINT, false);
 
