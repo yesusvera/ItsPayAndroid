@@ -28,6 +28,8 @@ import itspay.br.com.model.Pedido;
 import itspay.br.com.model.PedidoDetalhe;
 import itspay.br.com.model.PortadorCredencial;
 import itspay.br.com.model.PortadorLogin;
+import itspay.br.com.model.RecuperarLoginPortador;
+import itspay.br.com.model.RecuperarSenhaResponse;
 import itspay.br.com.model.TransferenciaContaCorrente;
 import itspay.br.com.model.TransferenciaMesmaInstituicao;
 import itspay.br.com.model.TrocarEmail;
@@ -54,6 +56,9 @@ public interface PortadorService {
 
     @POST("api/portador/login")
     Call<CriarLoginResponse> criarLogin(@Body PortadorLogin portadorLogin);
+
+    @POST("api/portador/login/recuperar-senha")
+    Call<RecuperarSenhaResponse> recuperarSenha(@Body RecuperarLoginPortador portadorLogin);
 
     @GET("api/portador/credencial/{documento}/pessoa/{tipoPessoa}/processadora/{idProcessadora}/instituicao/{idInstituicao}")
     Call<GetCredenciaisResponse> listaCredenciais(
