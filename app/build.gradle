@@ -5,7 +5,7 @@ android {
     compileSdkVersion 25
     buildToolsVersion "24.0.0"
     defaultConfig {
-        applicationId "itspay.br.com.itspay"
+        applicationId "itspay.br.com.bahamas"
         minSdkVersion 15
         targetSdkVersion 25
         versionCode 1
