@@ -8,6 +8,7 @@ public class TrocarSenhaPortador {
     public String cpf;
     public long idInstituicao;
     public long idProcessadora;
+    public String confirmaSenha;
     public String novaSenha;
     public String senha;
 
@@ -60,6 +61,14 @@ public class TrocarSenhaPortador {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public String getConfirmaSenha() {
+        return confirmaSenha;
+    }
+
+    public void setConfirmaSenha(String confirmaSenha) {
+        this.confirmaSenha = confirmaSenha;
     }
 
     @Override

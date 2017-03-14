@@ -14,6 +14,7 @@ import itspay.br.com.services.ConnectPortadorService;
 import itspay.br.com.util.EncriptSHA512;
 import itspay.br.com.util.ItsPayConstants;
 import itspay.br.com.util.UtilsActivity;
+import itspay.br.com.util.usersharepreferences.SharedPreferenceUtil;
 import itspay.br.com.util.validations.ValidationsForms;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -47,21 +48,13 @@ public class TrocarSenhaController extends BaseActivityController<TrocarSenhaAct
             return;
         }
 
-        String senhaCriptografada = EncriptSHA512.encript(activity.getSenha().getText().toString() +
-                IdentityItsPay.getInstance().getToken()
-        );
-
-
-        String novaSenhaCriptografada = EncriptSHA512.encript(activity.getNovaSenha().getText().toString() +
-                IdentityItsPay.getInstance().getToken()
-        );
-
         TrocarSenhaPortador trocarSenhaPortador = new TrocarSenhaPortador();
         trocarSenhaPortador.setIdProcessadora(ItsPayConstants.ID_PROCESSADORA);
         trocarSenhaPortador.setIdInstituicao(ItsPayConstants.ID_INSTITUICAO);
         trocarSenhaPortador.setCpf(IdentityItsPay.getInstance().getLoginPortador().getCpf());
-        trocarSenhaPortador.setSenha(senhaCriptografada);
-        trocarSenhaPortador.setNovaSenha(novaSenhaCriptografada);
+        trocarSenhaPortador.setConfirmaSenha(activity.getNovaSenha().getText().toString());
+        trocarSenhaPortador.setSenha(activity.getSenha().getText().toString());
+        trocarSenhaPortador.setNovaSenha(activity.getNovaSenha().getText().toString());
 
         Call<ItsPayResponse> call =
                 ConnectPortadorService
@@ -78,6 +71,7 @@ public class TrocarSenhaController extends BaseActivityController<TrocarSenhaAct
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     activity.finish();
+                                    SharedPreferenceUtil.setBooleanPreference(activity, "isModifiedPassword", true);
                                 }
                             });
                     builder.create().show();

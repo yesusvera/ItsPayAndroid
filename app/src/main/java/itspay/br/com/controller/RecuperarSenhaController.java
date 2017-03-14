@@ -73,15 +73,6 @@ public class RecuperarSenhaController extends BaseActivityController<RecuperarSe
                                 });
                         builder.create().show();
 
-//                        try {
-////                            String jsonStr = response.body().toString();
-////                            JSONObject reader = new JSONObject(jsonStr);
-////                            String msg = reader.getString("msg");
-//
-//
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
                     }else if(response.errorBody() !=null){
                         try {
                             String jsonStr = response.errorBody().string();
