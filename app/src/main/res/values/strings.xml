@@ -1,20 +1,11 @@
 <resources>
-    <string name="app_name">Bahamas</string>
-
-    <!-- Strings related to login -->   <string name="prompt_confirma_password">Confirmar Senha</string>
-
+    <!-- Strings related to login -->
     <string name="prompt_confirma_password_acess">Confirmar Senha de Acesso</string>
-    <string name="prompt_password_acess">Senha de Acesso</string>
 
     <string name="prompt_numero_celular">Número Celular</string>
-
     <string name="prompt_chave_aceso">Chave de acesso</string>
-
     <string name="prompt_password_acess">Senha para o Login de Acesso</string>
     <string name="prompt_repita_password">Repita a senha</string>
-    <string name="prompt_confirma_password">Confirmar Senha</string>
-
-
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Senha</string>
     <string name="prompt_confirma_password">Confirmar Senha</string>v
@@ -122,7 +113,6 @@
         Apertando \"Concordo\" eu concordo com os Termos de Uso do Cartão Virtual
     </string>
 
-    <string name="prompt_autorizar_compra">Deseja autorizar esta compra no valor de %1$s em %2$sx?</string>
     <string name="mensagem_sem_internet">Aconteceu uma falha na comunicação. Verifique sua rede.</string>
     <string name="mensagem_confirmacao_transf">Confirma esta transferência?</string>
     <string name="mensagem_sessao_expirou">A sessão expirou.</string>

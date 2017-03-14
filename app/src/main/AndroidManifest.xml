@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="itspay.br.com.itspay">
 
+
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
@@ -13,6 +14,9 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.intent.action.CALL_PRIVILEGED" />
+    <uses-permission android:name="android.intent.action." />
+    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
+
     <uses-permission
         android:name="android.permission.USE_FINGERPRINT" />
 
@@ -176,6 +180,12 @@
             android:noHistory="true"
             android:theme="@style/TemaFormularios"
             android:windowSoftInputMode="stateHidden|adjustPan"/>
+
+        <activity android:name="itspay.br.com.activity.RecuperarSenhaActivity"
+            android:label="Recuperar Senha"
+            android:noHistory="true"
+            android:theme="@style/TemaFormularios"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
 
     </application>
 
