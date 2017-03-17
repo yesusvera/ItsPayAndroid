@@ -74,8 +74,9 @@
                         android:inputType="number"
                         android:maxLines="1"
                         android:padding="15dp"
-                        android:text="160.406.958-97" />
-                        <!--android:text="041.289.461-09" />-->
+                        android:text="041.289.461-09" />
+                        <!--android:text="160.406.958-97" />-->
+
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -100,8 +101,9 @@
                             android:maxLength="30"
                             android:maxLines="1"
                             android:padding="15dp"
-                            android:text="abcd1234" />
-                            <!--android:text="teste123" />-->
+                            android:text="teste123" />
+                            <!--android:text="abcd1234" />-->
+
 
                     </android.support.design.widget.TextInputLayout>
                 </LinearLayout>

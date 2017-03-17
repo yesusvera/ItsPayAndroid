@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.util.Log;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
@@ -19,6 +20,7 @@ public class CacheImageView {
 
     public static void salvarCache(Context context, String nomeArquivo, final InputStream inputStream) {
         try {
+            Log.i("CHCIMGITSPAY","SALVANDO CACHE DE IMAGEM ITSPAY " + nomeArquivo );
             FileOutputStream fOut = context.openFileOutput(nomeArquivo, context.MODE_PRIVATE);
             fOut.write(streamToByteArray(inputStream));
             fOut.close();
@@ -34,6 +36,8 @@ public class CacheImageView {
 
     public static byte[] lerDoCache(Context context, String nomeArquivo) {
         byte[] retorno = null;
+
+        Log.i("CHCIMGITSPAY","LENDO O CACHE DE IMAGEM ITSPAY " + nomeArquivo );
 
         try {
             FileInputStream fin = context.openFileInput(nomeArquivo);
