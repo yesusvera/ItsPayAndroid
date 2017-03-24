@@ -21,9 +21,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.security.keystore.KeyGenParameterSpec;
-import android.security.keystore.KeyPermanentlyInvalidatedException;
-import android.security.keystore.KeyProperties;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -42,28 +40,15 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.IOException;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.KeyStore;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
-import java.security.UnrecoverableKeyException;
-import java.security.cert.CertificateException;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.crypto.Cipher;
-import javax.crypto.KeyGenerator;
-import javax.crypto.NoSuchPaddingException;
-import javax.crypto.SecretKey;
 
 import itspay.br.com.controller.LoginController;
 import itspay.br.com.itspay.R;
 import itspay.br.com.singleton.CarrinhoSingleton;
-import itspay.br.com.util.FingerprintHandler;
 import itspay.br.com.util.Utils;
+import itspay.br.com.util.fingerprint.CustomFingerPrint;
+import itspay.br.com.util.fingerprint.ObserverResultFingerPrintInterface;
 import itspay.br.com.util.mask.MaskEditTextChangedListener;
 import itspay.br.com.util.usersharepreferences.SharedPreferenceUtil;
 import itspay.br.com.util.validations.ValidationsForms;
@@ -75,7 +60,7 @@ import itspay.br.com.util.validations.ValidationsForms;
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor>, LocationListener {
+public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor>, LocationListener, ObserverResultFingerPrintInterface {
 
 
     private static final int PERMISSION_ACCESS_COARSE_LOCATION = 312;
@@ -91,9 +76,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private LinearLayout mLlInputLayoutPassword;
 
     protected LocationManager locationManager;
-    protected LocationListener locationListener;
+
     private double latitude, longitude;
-    private String mCpf;
+    private String mCpf, mPassword;
 
     public static final String SERIALIZED_PASSWORD = "serialized_password";
     public static final String IS_FINGER_PRINT_CHECKED = "is_finger_print_checked";
@@ -103,15 +88,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     //    Fingher Print
     boolean mIsFeatureEnabled = false;
     boolean mSecondLogin = false;
-    private KeyGenerator keyGenerator;
     private static final String KEY_NAME = "example_key";
     private FingerprintManager fingerprintManager;
     private KeyguardManager keyguardManager;
-    private KeyStore keyStore;
-    private Cipher cipher;
-    private FingerprintManager.CryptoObject cryptoObject;
+
     private AlertDialog mAlertDialog;
     private TextView mTxtForgetPassword;
+
+    private CustomFingerPrint mCustomFingerPrint;
 
 
     @Override
@@ -127,6 +111,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
 //      Last Cpf Logged
         mCpf = SharedPreferenceUtil.getStringPreference(this, "lastCPFLogged");
+        mPassword = SharedPreferenceUtil.getStringPreference(this, "lastPasswordLogged");
 
         if (mCpf != null && mCpf != "") {
             mCpfView.setText(mCpf);
@@ -146,27 +131,41 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
 //        Regra de View FingerPrint
         keyguardManager = (KeyguardManager) getSystemService(KEYGUARD_SERVICE);
-        fingerprintManager = (FingerprintManager) getSystemService(FINGERPRINT_SERVICE);
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
-        if (fingerprintManager.isHardwareDetected()) {
-            mLlFingerPrint.setVisibility(View.VISIBLE);
-        } else {
-            mLlFingerPrint.setVisibility(View.GONE);
+            fingerprintManager = (FingerprintManager) getSystemService(FINGERPRINT_SERVICE);
 
+            mCustomFingerPrint = new CustomFingerPrint(getBaseContext(), fingerprintManager, keyguardManager, this);
+
+            if (mCustomFingerPrint.isFingerPrint()) {
+                mLlFingerPrint.setVisibility(View.VISIBLE);
+            } else {
+                mLlFingerPrint.setVisibility(View.GONE);
+
+            }
         }
     }
 
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+
+//      Last Cpf Logged
+        mCpf = SharedPreferenceUtil.getStringPreference(this, "lastCPFLogged");
+        mPassword = SharedPreferenceUtil.getStringPreference(this, "lastPasswordLogged");
+    }
+
     /**
+     * `
      * Listeners do Layout
-     * */
+     */
     private void initListeners() {
 
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
                 if (id == R.id.login || id == EditorInfo.IME_NULL) {
-
                     attemptLogin();
                     return true;
                 }
@@ -176,17 +175,21 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
 
 //        Swipe FingerPrint
-
         mSwLoginFingerPrint.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                 mSecondLogin = SharedPreferenceUtil.getBooleanPreference(getBaseContext(), IS_SECOND_LOGIN_FINGER_PRINT, false);
                 if (isChecked) {
-                    if (checkedRegisterFingerPrint()){
+                    if (mCustomFingerPrint.checkedRegisterFingerPrint()) {
                         if (!mSecondLogin) {
-                            showAlert("Informação","Para uso do fingerPint você deve acessar com sua senha uma vez.", "OK",false);
+                            showAlert("Informação", "Para uso do fingerPint você deve acessar com sua senha uma vez.", "OK", false);
                         }
+//                        else {
+//                            showAlert("Alerta", "Nenhuma digital registrada neste dispositivo.", "OK", false);
+//                        }
                         SharedPreferenceUtil.setBooleanPreference(getBaseContext(), IS_FINGER_PRINT_CHECKED, true);
+
                     }
                 } else {
                     SharedPreferenceUtil.setBooleanPreference(getBaseContext(), IS_FINGER_PRINT_CHECKED, false);
@@ -198,11 +201,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 //        Button Login
 
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View view) {
                 if (SharedPreferenceUtil.getBooleanPreference(getBaseContext(), IS_FINGER_PRINT_CHECKED, false) &&
                         SharedPreferenceUtil.getBooleanPreference(getBaseContext(), IS_SECOND_LOGIN_FINGER_PRINT, false)) {
-
                     loginFingerPrint();
                 } else {
                     attemptLogin();
@@ -244,7 +247,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mLlFingerPrint = (LinearLayout) findViewById(R.id.ll_finger_print);
         mSwLoginFingerPrint = (Switch) findViewById(R.id.login_new_access_sw_finger_print);
         mLlInputLayoutPassword = (LinearLayout) findViewById(R.id.ll_input_layout_password);
-        mTxtForgetPassword = (TextView)findViewById(R.id.txt_forget_password);
+        mTxtForgetPassword = (TextView) findViewById(R.id.txt_forget_password);
     }
 
     @Override
@@ -263,23 +266,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
 
 //        Regra de view FingerPrint
-
-        boolean isModifiedPassword = SharedPreferenceUtil.getBooleanPreference(getBaseContext(), "isModifiedPassword", false);
-        if (isModifiedPassword){
-            SharedPreferenceUtil.setBooleanPreference(getBaseContext(), "isModifiedPassword", false);
-            SharedPreferenceUtil.setBooleanPreference(getBaseContext(), IS_FINGER_PRINT_CHECKED, false);
-            SharedPreferenceUtil.setBooleanPreference(getBaseContext(), IS_SECOND_LOGIN_FINGER_PRINT, false);
-
-            android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
-            builder.setCancelable(false).setMessage("Sua Senha foi Alterada , acesse o aplicativo com a nova senha.")
-                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                        }
-                    });
-            builder.create().show();
-        }
-
         mIsFeatureEnabled = SharedPreferenceUtil.getBooleanPreference(getBaseContext(), IS_FINGER_PRINT_CHECKED, false);
         mSecondLogin = SharedPreferenceUtil.getBooleanPreference(getBaseContext(), IS_SECOND_LOGIN_FINGER_PRINT, false);
 
@@ -361,11 +347,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mCpfView.setError(getString(R.string.error_field_required));
             focusView = mCpfView;
             cancel = true;
-        } else if (!ValidationsForms.isCPF(cpf.replace(".", "").replace("-", ""))) {
-            mCpfView.setError(getString(R.string.error_invalid_cpf));
-            focusView = mCpfView;
-            cancel = true;
         }
+//        else if (!ValidationsForms.isCPF(cpf.replace(".", "").replace("-", ""))) {
+//            mCpfView.setError(getString(R.string.error_invalid_cpf));
+//            focusView = mCpfView;
+//            cancel = true;
+//        }
 
         if (cancel) {
             // There was an error; don't attempt login and focus the first
@@ -382,9 +369,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
 
-    /**    FingerPrint
+    /**
+     * FingerPrint
      * Request Login use Finger Print
-     * */
+     */
+    @RequiresApi(api = Build.VERSION_CODES.M)
     public void loginFingerPrint() {
         // Reset errors.
         mCpfView.setError(null);
@@ -416,94 +405,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // perform the user login attempt.
 
         }
-        generateKey();
-        showAlert("Informação","Posicione o dedo para acessar.", "Cancel",true);
 
-        if (cipherInit()) {
-            cryptoObject = new FingerprintManager.CryptoObject(cipher);
-            FingerprintHandler helper = new FingerprintHandler(this, this);
-            helper.startAuth(fingerprintManager, cryptoObject);
-        }
+        CarrinhoSingleton.getInstance().esvaziarCarrinho();
+        showAlert("Informação", "Posicione o dedo para acessar.", "Cancel", true);
+        mCustomFingerPrint.show();
+
     }
 
-    public boolean cipherInit() {
-        try {
-            cipher = Cipher.getInstance(
-                    KeyProperties.KEY_ALGORITHM_AES + "/"
-                            + KeyProperties.BLOCK_MODE_CBC + "/"
-                            + KeyProperties.ENCRYPTION_PADDING_PKCS7);
-        } catch (NoSuchAlgorithmException |
-                NoSuchPaddingException e) {
-            throw new RuntimeException("Failed to get Cipher", e);
-        }
-
-        try {
-            keyStore.load(null);
-            SecretKey key = (SecretKey) keyStore.getKey(KEY_NAME,
-                    null);
-            cipher.init(Cipher.ENCRYPT_MODE, key);
-            return true;
-        } catch (KeyPermanentlyInvalidatedException e) {
-            return false;
-        } catch (KeyStoreException | CertificateException
-                | UnrecoverableKeyException | IOException
-                | NoSuchAlgorithmException | InvalidKeyException e) {
-            throw new RuntimeException("Failed to init Cipher", e);
-        }
-    }
-
-    public boolean checkedRegisterFingerPrint() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.USE_FINGERPRINT) != PackageManager.PERMISSION_GRANTED) {
-
-            return false;
-        }
-        if (!fingerprintManager.hasEnrolledFingerprints()) {
-            showAlert("Alerta","Nenhuma digital regidstrada nesse dispositivo.", "OK",false);
-            mSwLoginFingerPrint.setChecked(false);
-            return false;
-        }
-        return true;
-    }
-
-
-
-    public void generateKey() {
-        try {
-            keyStore = KeyStore.getInstance("AndroidKeyStore");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        try {
-            keyGenerator = KeyGenerator.getInstance(
-                    KeyProperties.KEY_ALGORITHM_AES,
-                    "AndroidKeyStore");
-        } catch (NoSuchAlgorithmException |
-                NoSuchProviderException e) {
-            throw new RuntimeException(
-                    "Failed to get KeyGenerator instance", e);
-        }
-
-        try {
-            keyStore.load(null);
-            keyGenerator.init(new
-                    KeyGenParameterSpec.Builder(KEY_NAME,
-                    KeyProperties.PURPOSE_ENCRYPT |
-                            KeyProperties.PURPOSE_DECRYPT)
-                    .setBlockModes(KeyProperties.BLOCK_MODE_CBC)
-                    .setUserAuthenticationRequired(true)
-                    .setEncryptionPaddings(
-                            KeyProperties.ENCRYPTION_PADDING_PKCS7)
-                    .build());
-            keyGenerator.generateKey();
-        } catch (NoSuchAlgorithmException |
-                InvalidAlgorithmParameterException
-                | CertificateException | IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void showAlert(String title,String menssage , String nameButon ,boolean isFingerPrint){
+    public void showAlert(String title, String menssage, String nameButon, boolean isFingerPrint) {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
 
 //        dialogBuilder.setTitle(getString(R.string.app_name));
@@ -526,7 +435,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     @Override
     protected void onPause() {
         super.onPause();
-        if(mAlertDialog != null) {
+        if (mAlertDialog != null) {
             mAlertDialog.dismiss();
         }
     }
@@ -615,6 +524,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         int ADDRESS = 0;
         int IS_PRIMARY = 1;
     }
+
+    @Override
+    public void showResultFingerPrint(boolean updateList) {
+        showProgress(true);
+        new LoginController(this).login(mCpf, mPassword);
+    }
+
 
     public double getLatitude() {
         return latitude;
