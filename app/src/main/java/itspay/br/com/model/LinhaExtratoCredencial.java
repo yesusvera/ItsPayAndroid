@@ -11,13 +11,15 @@ public class LinhaExtratoCredencial {
     private String descLocal;
     private String descSeguimento;
     private float valorTransacao;
-    private long idTransacao;
+    private String idTransacao;
     private long sinal;
+    private String dataTransacaoStr;
+    private String descTransacao ;
 
     public LinhaExtratoCredencial() {
     }
 
-    private LinhaExtratoCredencial(String dataTransacao, String dataTransacaoFmt, String dataTransacaoFmtMes, String descLocal, String descSeguimento, float valorTransacao, long idTransacao, long sinal){
+    private LinhaExtratoCredencial(String dataTransacao, String dataTransacaoFmt, String dataTransacaoFmtMes, String descLocal, String descSeguimento, float valorTransacao, String  idTransacao, long sinal){
         this.dataTransacao = dataTransacao;
         this.dataTransacaoFmt = dataTransacaoFmt;
         this.dataTransacaoFmtMes = dataTransacaoFmtMes;
@@ -76,11 +78,11 @@ public class LinhaExtratoCredencial {
         this.valorTransacao = valorTransacao;
     }
 
-    public long getIdTransacao() {
+    public String getIdTransacao() {
         return idTransacao;
     }
 
-    public void setIdTransacao(long idTransacao) {
+    public void setIdTransacao(String idTransacao) {
         this.idTransacao = idTransacao;
     }
 
@@ -90,6 +92,22 @@ public class LinhaExtratoCredencial {
 
     public void setSinal(long sinal) {
         this.sinal = sinal;
+    }
+
+    public String getDataTransacaoStr() {
+        return dataTransacaoStr;
+    }
+
+    public void setDataTransacaoStr(String dataTransacaoStr) {
+        this.dataTransacaoStr = dataTransacaoStr;
+    }
+
+    public String getDescTransacao() {
+        return descTransacao;
+    }
+
+    public void setDescTransacao(String descTransacao) {
+        this.descTransacao = descTransacao;
     }
 
     @Override
