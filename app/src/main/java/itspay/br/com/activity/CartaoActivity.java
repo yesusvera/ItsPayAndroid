@@ -309,7 +309,7 @@ public class CartaoActivity extends AppCompatActivity {
         int corValorTransacao = Color.RED;
 
         if(linhaExtrato.getSinal() == 1){
-            corValorTransacao = Color.GREEN;
+            corValorTransacao = getResources().getColor(R.color.green_bahamas);
         }
 
         return new Card.Builder(this)
