@@ -6,7 +6,12 @@ package itspay.br.com.util;
 
 public class ItsPayConstants {
 
-    public static final long ID_INSTITUICAO =  1201;//101;
+//DESENV
+//    public static final long ID_INSTITUICAO =  101;
+
+//BAHAMAS
+    public static final long ID_INSTITUICAO =  1201;
+
     public static final long ID_PROCESSADORA = 10;
     public static final long ORIGEM_ACESSO = 1;
     public static final long STATUS = 1;

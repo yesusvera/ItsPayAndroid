@@ -115,6 +115,7 @@
     <string name="mensagem_sessao_expirou">A sessão expirou.</string>
     <string name="mensagem_confirma_alteracao_bloqueio">Confirma a alteração do estado do bloqueio?</string>
     <string name="mensagem_timeout">A rede está lenta. Verifique sua conexão.</string>
+    <string name="mensagem_not_conection">Você esta sem conexão a Internet.</string>
     <string name="mensagem_sem_movimentacao">Sem movimentos neste Período.</string>
 
     <string name="action_settings_trocar_email_portador">Trocar Email do Portador</string>

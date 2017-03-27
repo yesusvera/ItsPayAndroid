@@ -41,7 +41,7 @@ public class CadastroLoginController extends BaseActivityController<CadastroLogi
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             Date convertedCurrentDate = null;
 
-            String credencial = EncriptSHA512.encript(activity.getNumeroCartao().getText().toString());
+            String credencial = EncriptSHA512.encript(activity.getNumeroCartao().getText().toString().replace(".", ""));
 
             PortadorLogin portadorLogin = new PortadorLogin();
             portadorLogin.setCpf(activity.getCpf().getText().toString().replace(".", "").replace("-",""));

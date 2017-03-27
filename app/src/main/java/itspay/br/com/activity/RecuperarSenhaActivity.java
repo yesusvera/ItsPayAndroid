@@ -1,5 +1,6 @@
 package itspay.br.com.activity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +18,7 @@ public class RecuperarSenhaActivity extends AppCompatActivity {
     protected EditText cpf;
     protected EditText dataNascimento;
     protected Button buttonCriarLogin;
+    public ProgressDialog progress;
 
     private RecuperarSenhaController recuperarSenhaController = new RecuperarSenhaController(this);
 

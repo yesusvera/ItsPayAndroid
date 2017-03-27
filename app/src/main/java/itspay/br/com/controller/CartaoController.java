@@ -34,8 +34,7 @@ public class CartaoController extends BaseActivityController<CartaoActivity> {
         String dtFinal = df.format("yyyy-MM-dd", new Date()).toString();
 
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(new Date());
-        calendar.add(Calendar.DAY_OF_YEAR, -(new Integer(activity.getPeriodo())));
+        calendar.add(Calendar.DATE, -(new Integer(activity.getPeriodo())));
 
         String dtInicial = df.format("yyyy-MM-dd", calendar.getTime()).toString();
 
