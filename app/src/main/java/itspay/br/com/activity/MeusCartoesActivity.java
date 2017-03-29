@@ -100,6 +100,7 @@ public class MeusCartoesActivity extends AppCompatActivity
         });
 
         swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipeRefreshCredenciais);
+
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

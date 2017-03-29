@@ -17,6 +17,7 @@ public class IdentityItsPay {
 
     private String setCookie;
 
+    private boolean mPemissionMarketPlace;
 
 
     private IdentityItsPay(){}
@@ -63,4 +64,13 @@ public class IdentityItsPay {
         loginPortador = null;
         identity = null;
     }
+
+    public boolean ismPemissionMarketPlace() {
+        return mPemissionMarketPlace;
+    }
+
+    public void setmPemissionMarketPlace(boolean mPemissionMarketPlace) {
+        this.mPemissionMarketPlace = mPemissionMarketPlace;
+    }
+
 }
