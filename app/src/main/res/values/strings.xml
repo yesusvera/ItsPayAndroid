@@ -70,7 +70,7 @@
     <string name="acao_pagar">Pagar</string>
 
 
-    <string name="action_sign_in">Login</string>
+    <string name="action_sign_in">Acessar</string>
     <string name="action_sign_in_short">Sign in</string>
 
     <string name="action_trocar_email">Trocar Email</string>
