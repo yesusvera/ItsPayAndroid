@@ -94,6 +94,11 @@ public class UtilsActivity {
                         }
                     });
             builder.create().show();
+        }else{
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setMessage(context.getString(R.string.mensagem_not_conection))
+                    .setPositiveButton("OK", null);
+            builder.create().show();
         }
     }
 }

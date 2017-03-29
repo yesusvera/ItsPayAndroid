@@ -1,6 +1,7 @@
 package itspay.br.com.controller;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.util.Log;
 
@@ -36,6 +37,9 @@ public class RecuperarSenhaController extends BaseActivityController<RecuperarSe
 
     public void criarLogin() {
         if(validaFormulario()){
+            activity.progress = ProgressDialog.show(activity, "Aguarde",
+                    "", true);
+
             SimpleDateFormat rs = new SimpleDateFormat("dd/MM/yyyy");
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             Date convertedCurrentDate = null;
@@ -56,7 +60,7 @@ public class RecuperarSenhaController extends BaseActivityController<RecuperarSe
                 portadorRecuperarLogin.setDataNascimento(date);
             }
 
-            Call<RecuperarSenhaResponse> criarLoginCall =   ConnectPortadorService.getService().recuperarSenha(portadorRecuperarLogin);
+            Call<RecuperarSenhaResponse> criarLoginCall = ConnectPortadorService.getService().recuperarSenha(portadorRecuperarLogin);
             criarLoginCall.enqueue(new Callback<RecuperarSenhaResponse>() {
                 @Override
                 public void onResponse(Call<RecuperarSenhaResponse> call, Response<RecuperarSenhaResponse> response) {
@@ -92,13 +96,13 @@ public class RecuperarSenhaController extends BaseActivityController<RecuperarSe
                         }
 
                     }
+                    activity.progress.dismiss();
                 }
-
-
 
                 @Override
                 public void onFailure(Call<RecuperarSenhaResponse> call, Throwable t) {
                     UtilsActivity.alertIfSocketException(t, activity);
+                    activity.progress.dismiss();
                     t.printStackTrace();
                 }
             });

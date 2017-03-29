@@ -73,8 +73,8 @@
                         android:hint="@string/prompt_cpf"
                         android:inputType="number"
                         android:maxLines="1"
-                        android:padding="15dp"
-                        android:text="160.406.958-97" />
+                        android:padding="15dp"/>
+                        <!--android:text="160.406.958-97" />-->
                     <!--android:text="041.289.461-09" />-->
 
 
@@ -100,8 +100,8 @@
                             android:inputType="textPassword"
                             android:maxLength="30"
                             android:maxLines="1"
-                            android:padding="15dp"
-                            android:text="abcd1234" />
+                            android:padding="15dp"/>
+                            <!--android:text="abcd1234" />-->
                             <!--android:text="teste123" />-->
 
 

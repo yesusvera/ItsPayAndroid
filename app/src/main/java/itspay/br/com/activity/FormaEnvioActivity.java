@@ -87,7 +87,7 @@ public class FormaEnvioActivity extends AppCompatActivity {
                     .setDescription("R$"+ Utils.formataMoeda(formaEnvio.getValor()))
                     .setTitleColor(Color.BLACK)
                     .setSubtitleColor(Color.GRAY)
-                    .setDescriptionColor(Color.GREEN)
+                    .setDescriptionColor(getResources().getColor(R.color.green_bahamas))
                     .setKeepLayoutXml(true)
                     .endConfig()
                     .build();
