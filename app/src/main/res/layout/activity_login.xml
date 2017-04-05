@@ -73,9 +73,10 @@
                         android:hint="@string/prompt_cpf"
                         android:inputType="number"
                         android:maxLines="1"
-                        android:padding="15dp"
-                        android:text="160.406.958-97" />
-                        <!--android:text="041.289.461-09" />-->
+                        android:padding="15dp"/>
+                        <!--android:text="160.406.958-97" />-->
+                    <!--android:text="041.289.461-09" />-->
+
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -99,9 +100,10 @@
                             android:inputType="textPassword"
                             android:maxLength="30"
                             android:maxLines="1"
-                            android:padding="15dp"
-                            android:text="abcd1234" />
+                            android:padding="15dp"/>
+                            <!--android:text="abcd1234" />-->
                             <!--android:text="teste123" />-->
+
 
                     </android.support.design.widget.TextInputLayout>
                 </LinearLayout>
@@ -110,6 +112,7 @@
 
             <LinearLayout
                 android:id="@+id/ll_finger_print"
+                android:visibility="gone"
                 android:layout_marginTop="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/height_55dp"

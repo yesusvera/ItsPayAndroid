@@ -1,7 +1,6 @@
 package itspay.br.com.controller;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.util.Log;
 
@@ -14,12 +13,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import itspay.br.com.activity.CadastroLoginActivity;
-import itspay.br.com.activity.CadastroLoginPage2Activity;
+import itspay.br.com.authentication.IdentityItsPay;
 import itspay.br.com.itspay.R;
 import itspay.br.com.model.CriarLoginResponse;
 import itspay.br.com.model.PortadorLogin;
 import itspay.br.com.services.ConnectPortadorService;
-import itspay.br.com.singleton.CadastroSingleton;
 import itspay.br.com.util.EncriptSHA512;
 import itspay.br.com.util.ItsPayConstants;
 import itspay.br.com.util.UtilsActivity;
@@ -31,81 +29,78 @@ import retrofit2.Response;
 /**
  * Created by yesus on 18/12/16.
  */
-public class CadastroLoginController  {
+public class CadastroLoginController extends BaseActivityController<CadastroLoginActivity> {
 
-    public Context mContext;
-    CadastroSingleton mCadastroSingleton;
-
-    public CadastroLoginController(Context activity) {
-        mContext = activity;
-        mCadastroSingleton = CadastroSingleton.getInstance();
-
+    public CadastroLoginController(CadastroLoginActivity activity) {
+        super(activity);
     }
 
-    public void criarLogin(final CadastroLoginPage2Activity activity){
+    public void criarLogin() {
+        if(validaFormulario()){
+            SimpleDateFormat rs = new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date convertedCurrentDate = null;
 
-        SimpleDateFormat rs = new SimpleDateFormat("dd/MM/yyyy");
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date convertedCurrentDate = null;
+            String credencial = EncriptSHA512.encript(activity.getNumeroCartao().getText().toString().replace(".", ""));
 
-        String credencial = EncriptSHA512.encript(mCadastroSingleton.getmNumeroCartao().toString());
+            PortadorLogin portadorLogin = new PortadorLogin();
+            portadorLogin.setCpf(activity.getCpf().getText().toString().replace(".", "").replace("-",""));
+            portadorLogin.setCredencial(credencial);
+            portadorLogin.setEmail(activity.getEmail().getText().toString());
+            portadorLogin.setIdInstituicao(ItsPayConstants.ID_INSTITUICAO);
+            portadorLogin.setIdProcessadora(ItsPayConstants.ID_PROCESSADORA);
+            portadorLogin.setOrigemCadastroLogin(ItsPayConstants.ORIGEM_ACESSO);
+            portadorLogin.setSenha(activity.getSenha().getText().toString());
 
-        PortadorLogin portadorLogin = new PortadorLogin();
-        portadorLogin.setCpf(mCadastroSingleton.getmCpf().replace(".", "").replace("-",""));
-        portadorLogin.setCredencial(credencial);
-        portadorLogin.setEmail(mCadastroSingleton.getmEmail().toString());
-        portadorLogin.setIdInstituicao(ItsPayConstants.ID_INSTITUICAO);
-        portadorLogin.setIdProcessadora(ItsPayConstants.ID_PROCESSADORA);
-        portadorLogin.setOrigemCadastroLogin(ItsPayConstants.ORIGEM_ACESSO);
-        portadorLogin.setSenha(mCadastroSingleton.getmSenha().toString());
+            try {
+                convertedCurrentDate = rs.parse(activity.getDataNascimento().getText().toString());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
 
-        try {
-            convertedCurrentDate = rs.parse(mCadastroSingleton.getmDataNascimento());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+            if(convertedCurrentDate != null){
+                String date=sdf.format(convertedCurrentDate);
+                portadorLogin.setDataNascimento(date);
+            }
 
-        if(convertedCurrentDate != null){
-            String date=sdf.format(convertedCurrentDate);
-            portadorLogin.setDataNascimento(date);
-        }
+            Call<CriarLoginResponse> criarLoginCall =   ConnectPortadorService.getService().criarLogin(portadorLogin);
+            criarLoginCall.enqueue(new Callback<CriarLoginResponse>() {
+                @Override
+                public void onResponse(Call<CriarLoginResponse> call, Response<CriarLoginResponse> response) {
+                    if(response.body()!=null) {
+                        Log.i("CRIALOGIN", response.body().toString());
+                    }else if(response.errorBody() !=null){
+                        try {
+                            String jsonStr = response.errorBody().string();
 
-        Call<CriarLoginResponse> criarLoginCall =   ConnectPortadorService.getService().criarLogin(portadorLogin);
-        criarLoginCall.enqueue(new Callback<CriarLoginResponse>() {
-            @Override
-            public void onResponse(Call<CriarLoginResponse> call, Response<CriarLoginResponse> response) {
-                if(response.body()!=null) {
-                    Log.i("CRIALOGIN", response.body().toString());
-                }else if(response.errorBody() !=null){
-                    try {
-                        String jsonStr = response.errorBody().string();
+                            JSONObject reader = new JSONObject(jsonStr);
+                            String msg = reader.getString("msg");
+                            String DTL = reader.getString("DTL");
+                            Boolean created = reader.getBoolean("created");
 
-                        JSONObject reader = new JSONObject(jsonStr);
-                        String msg = reader.getString("msg");
-                        String DTL = reader.getString("DTL");
-                        Boolean created = reader.getBoolean("created");
+                            AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                            builder.setCancelable(false).setTitle(msg).setMessage(DTL)
+                                    .setPositiveButton("OK", null);
+                            builder.create().show();
+                        }catch (JSONException ex){
+                            ex.printStackTrace();
+                        }catch (IOException ex){
+                            ex.printStackTrace();
+                        }
 
-                        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-                        builder.setCancelable(false).setTitle(msg).setMessage(DTL)
-                                .setPositiveButton("OK", null);
-                        builder.create().show();
-                    }catch (JSONException ex){
-                        ex.printStackTrace();
-                    }catch (IOException ex){
-                        ex.printStackTrace();
                     }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<CriarLoginResponse> call, Throwable t) {
-                UtilsActivity.alertIfSocketException(t, activity);
-                t.printStackTrace();
-            }
-        });
+                @Override
+                public void onFailure(Call<CriarLoginResponse> call, Throwable t) {
+                    UtilsActivity.alertIfSocketException(t, activity);
+                    t.printStackTrace();
+                }
+            });
+        }
     }
 
-    public boolean validaFormulario(final CadastroLoginPage2Activity activity){
+    public boolean validaFormulario(){
         if (!activity.getTermosDeUso().isChecked()) {
             AlertDialog.Builder builder = new AlertDialog.Builder(activity);
             builder.setMessage("Você precisa concordar com os termos de uso e políticas de privacidade.")
@@ -116,6 +111,24 @@ public class CadastroLoginController  {
                         }
                     });
             builder.create().show();
+            return false;
+        }
+
+        if(activity.getNumeroCartao().getText().length() < 19){
+            activity.getNumeroCartao().setError(activity.getString(R.string.error_invalid_card_number));
+            activity.getNumeroCartao().requestFocus();
+            return false;
+        }
+
+        if(activity.getDataNascimento().getText().toString().length() < 10){
+            activity.getDataNascimento().setError(activity.getString(R.string.error_data_nascimento_invalida));
+            activity.getDataNascimento().requestFocus();
+            return false;
+        }
+
+        if(!ValidationsForms.isCPF(activity.getCpf().getText().toString())){
+            activity.getCpf().setError(activity.getString(R.string.error_invalid_cpf));
+            activity.getCpf().requestFocus();
             return false;
         }
 
@@ -136,44 +149,6 @@ public class CadastroLoginController  {
             activity.getConfirmacaoSenha().requestFocus();
             return false;
         }
-
-        mCadastroSingleton.setmEmail(activity.getEmail().getText().toString());
-        mCadastroSingleton.setmSenha(activity.getSenha().getText().toString());
-
-        return true;
-    }
-
-
-    public boolean validaFormulario1(final CadastroLoginActivity activity){
-
-        if(activity.getNumeroCartao().getText().length() < 19){
-            activity.getNumeroCartao().setError(activity.getString(R.string.error_invalid_card_number));
-            activity.getNumeroCartao().requestFocus();
-            return false;
-        }
-
-        if(activity.getDataNascimento().getText().toString().length() < 10){
-            activity.getDataNascimento().setError(activity.getString(R.string.error_data_nascimento_invalida));
-            activity.getDataNascimento().requestFocus();
-            return false;
-        }
-
-        if(!ValidationsForms.isCPF(activity.getCpf().getText().toString())){
-            activity.getCpf().setError(activity.getString(R.string.error_invalid_cpf));
-            activity.getCpf().requestFocus();
-            return false;
-        }
-
-        if(activity.getNumerocelular().getText().toString() == ""){
-            activity.getNumerocelular().setError("Numero de Celular Invalido");
-            activity.getNumerocelular().requestFocus();
-            return false;
-        }
-
-        mCadastroSingleton.setmNumeroCartao(activity.getNumeroCartao().getText().toString());
-        mCadastroSingleton.setmDataNascimento(activity.getDataNascimento().getText().toString());
-        mCadastroSingleton.setmCpf(activity.getCpf().getText().toString());
-        mCadastroSingleton.setmNumerocelular(activity.getNumerocelular().getText().toString());
 
         return true;
     }

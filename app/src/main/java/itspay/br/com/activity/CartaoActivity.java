@@ -321,17 +321,17 @@ public class CartaoActivity extends AppCompatActivity {
         int corValorTransacao = Color.RED;
 
         if(linhaExtrato.getSinal() == 1){
-            corValorTransacao = Color.GREEN;
+            corValorTransacao = getResources().getColor(R.color.green_bahamas);
         }
 
         return new Card.Builder(this)
                 .setTag("eye")
                 .withProvider(new CardProvider())
                 .setLayout(R.layout.material_itspay_extrato)
-                .setTitle(linhaExtrato.getDescLocal())
+                .setTitle(linhaExtrato.getDescTransacao())
                 .setTitleColor(Color.BLACK)
                 .setSubtitle(linhaExtrato.getDataTransacaoFmtMes() + "")
-                .setSubtitle2(linhaExtrato.getDescSeguimento()+ "")
+                .setSubtitle2(linhaExtrato.getDescSeguimento() != null ? linhaExtrato.getDescSeguimento()+ "" : "-")
                 .setSubtitleColor(Color.GRAY)
                 .setDescription((linhaExtrato.getSinal()==1?"+":"-") + " R$ "+ valorTransacaoFormatado + "")
                 .setDescriptionColor(corValorTransacao)
