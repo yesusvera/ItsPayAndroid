@@ -29,6 +29,7 @@ public class Credencial {
     private long idProduto;
     private long idProdutoPlataforma;
     private long limiteDisponivel;
+    private long limite;
     private String nomeImpresso;
     private String nomeProduto;
     private String preparaDataSaldo;
@@ -49,7 +50,7 @@ public class Credencial {
                       String descStatus, String email, long grupoStatus, long idConta,
                       long idCredencial, long idPessoa, long idPlastico, long idProduto,
                       long idProdutoPlataforma, long limiteDisponivel, String nomeImpresso, String nomeProduto,
-                      String preparaDataSaldo, double saldo, long status, long tipoConta, String urlImagemProduto) {
+                      String preparaDataSaldo, double saldo, long status, long tipoConta, String urlImagemProduto,long limite) {
         this.apelidoVirtual = apelidoVirtual;
         this.codigoSeguranca = codigoSeguranca;
         this.contaPagamento = contaPagamento;
@@ -79,6 +80,15 @@ public class Credencial {
         this.status = status;
         this.tipoConta = tipoConta;
         this.urlImagemProduto = urlImagemProduto;
+        this.limite = limite;
+    }
+
+    public long getLimite() {
+        return limite;
+    }
+
+    public void setLimite(long limite) {
+        this.limite = limite;
     }
 
     public String getApelidoVirtual() {
@@ -346,6 +356,7 @@ public class Credencial {
                 ", idProduto=" + idProduto +
                 ", idProdutoPlataforma=" + idProdutoPlataforma +
                 ", limiteDisponivel=" + limiteDisponivel +
+                ", limite=" + limite +
                 ", nomeImpresso='" + nomeImpresso + '\'' +
                 ", nomeProduto='" + nomeProduto + '\'' +
                 ", preparaDataSaldo='" + preparaDataSaldo + '\'' +
