@@ -71,9 +71,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mProgressView;
     private View mLoginFormView;
     private LinearLayout mLlFingerPrint;
-    private Switch mSwLoginFingerPrint;
+    public Switch mSwLoginFingerPrint;
     private Button mEmailSignInButton;
-    private LinearLayout mLlInputLayoutPassword;
+    public LinearLayout mLlInputLayoutPassword;
 
     protected LocationManager locationManager;
 
@@ -86,13 +86,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
 
     //    Fingher Print
-    boolean mIsFeatureEnabled = false;
-    boolean mSecondLogin = false;
+    public boolean mIsFeatureEnabled = false;
+    public boolean mSecondLogin = false;
     private static final String KEY_NAME = "example_key";
     private FingerprintManager fingerprintManager;
     private KeyguardManager keyguardManager;
 
-    private AlertDialog mAlertDialog;
+    public AlertDialog mAlertDialog;
     private TextView mTxtForgetPassword;
 
     private CustomFingerPrint mCustomFingerPrint;
@@ -545,7 +545,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     @Override
     public void showResultFingerPrint(boolean updateList) {
         showProgress(true);
-        new LoginController(this).login(mCpf, mPassword);
+        new LoginController(this).login(getmCpfView().getText().toString(), mPassword);
     }
 
 
