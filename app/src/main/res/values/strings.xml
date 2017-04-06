@@ -102,6 +102,7 @@
     <string name="str_icone_ajustes_seguranca">Ajustes de Segurança</string>
     <string name="str_icone_tarifas">Tarifas</string>
     <string name="str_icone_logout">Logout</string>
+    <string name="str_icone_limites">Limites</string>
 
     <string name="texto_icone">Logout</string>
 
