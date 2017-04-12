@@ -79,10 +79,13 @@ public class AjustesSegurancaoCartaoController extends BaseActivityController<Aj
 
     public void comunicarPerda() {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setTitle(activity.getString(R.string.app_name));
         builder.setMessage(activity.getString(R.string.prompt_confirma_notificar_perda))
                 .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+
+                        mProgresDialogUtil.show("Comunicando Perda","Aguarde");
 
                         AvisarPerdaOuRouboRequest request = new AvisarPerdaOuRouboRequest();
                         request.setIdCredencial(activity.credencialDetalhe.getIdCredencial());
@@ -120,6 +123,7 @@ public class AjustesSegurancaoCartaoController extends BaseActivityController<Aj
 
     public void comunicarRoubo() {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setTitle(activity.getString(R.string.app_name));
         builder.setMessage(activity.getString(R.string.prompt_confirma_notificar_roubo))
                 .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                     @Override

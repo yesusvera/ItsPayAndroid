@@ -35,6 +35,8 @@ public class TrocarEmailController extends BaseActivityController<TrocarEmailAct
             return;
         }
 
+        mProgresDialogUtil.show("Alterando Email.","Anguarde.");
+
         TrocarEmail trocarEmail = new TrocarEmail();
         trocarEmail.setIdProcessadora(ItsPayConstants.ID_PROCESSADORA);
         trocarEmail.setIdInstituicao(ItsPayConstants.ID_INSTITUICAO);
@@ -69,11 +71,13 @@ public class TrocarEmailController extends BaseActivityController<TrocarEmailAct
                         e.printStackTrace();
                     }
                 }
+                mProgresDialogUtil.dismiss();
             }
 
             @Override
             public void onFailure(Call<ItsPayResponse> call, Throwable t) {
                 UtilsActivity.alertIfSocketException(t, activity);
+                mProgresDialogUtil.dismiss();
             }
         });
     }

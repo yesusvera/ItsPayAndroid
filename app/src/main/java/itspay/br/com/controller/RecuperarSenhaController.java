@@ -1,7 +1,6 @@
 package itspay.br.com.controller;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.util.Log;
 
@@ -31,14 +30,15 @@ import retrofit2.Response;
 
 public class RecuperarSenhaController extends BaseActivityController<RecuperarSenhaActivity> {
 
+
     public RecuperarSenhaController(RecuperarSenhaActivity activity) {
         super(activity);
     }
 
     public void criarLogin() {
         if(validaFormulario()){
-            activity.progress = ProgressDialog.show(activity, "Aguarde",
-                    "", true);
+
+            mProgresDialogUtil.show("Recuperando Login","Aguarde.");
 
             SimpleDateFormat rs = new SimpleDateFormat("dd/MM/yyyy");
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -86,7 +86,7 @@ public class RecuperarSenhaController extends BaseActivityController<RecuperarSe
                             String DTL = reader.getString("DTL");
 
                             AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-                            builder.setCancelable(false).setTitle(msg).setMessage(DTL)
+                            builder.setCancelable(false).setTitle("Erro").setMessage(msg)
                                     .setPositiveButton("OK", null);
                             builder.create().show();
                         }catch (JSONException ex){
@@ -96,13 +96,15 @@ public class RecuperarSenhaController extends BaseActivityController<RecuperarSe
                         }
 
                     }
-                    activity.progress.dismiss();
+                    mProgresDialogUtil.dismiss();
+//                    activity.progress.dismiss();
                 }
 
                 @Override
                 public void onFailure(Call<RecuperarSenhaResponse> call, Throwable t) {
                     UtilsActivity.alertIfSocketException(t, activity);
-                    activity.progress.dismiss();
+                    mProgresDialogUtil.dismiss();
+//                    activity.progress.dismiss();
                     t.printStackTrace();
                 }
             });

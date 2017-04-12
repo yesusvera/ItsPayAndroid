@@ -29,6 +29,9 @@ public class InserirCargaController extends BaseActivityController<InserirCargaA
 
 
     public void gerarBoleto(){
+
+        mProgresDialogUtil.show("Inserindo Carga","Aguarde.");
+
         final GerarBoletoCarga request = new GerarBoletoCarga();
         request.setContaPagamento(activity.getCredencialDetalhe().getContaPagamento());
         request.setDocumentoPortador(IdentityItsPay.getInstance().getLoginPortador().getCpf());
@@ -57,11 +60,13 @@ public class InserirCargaController extends BaseActivityController<InserirCargaA
                 }else{
                     UtilsActivity.alertMsg(response.errorBody(), activity);
                 }
+                mProgresDialogUtil.dismiss();
             }
 
             @Override
             public void onFailure(Call<BoletoCarga> call, Throwable t) {
                 UtilsActivity.alertIfSocketException(t, activity);
+                mProgresDialogUtil.dismiss();
                 t.printStackTrace();
             }
         });
