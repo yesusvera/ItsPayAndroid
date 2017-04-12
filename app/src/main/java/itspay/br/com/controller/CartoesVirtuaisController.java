@@ -23,6 +23,8 @@ public class CartoesVirtuaisController extends BaseActivityController<CartoesVir
 
     public void listarCartoesVirtuais() {
 
+        mProgresDialogUtil.show("Carregando Cartões","Aguarde.");
+
         activity.getSwipeRefreshLayout().setRefreshing(true);
 
         IdentityItsPay identity = IdentityItsPay.getInstance();
@@ -50,12 +52,14 @@ public class CartoesVirtuaisController extends BaseActivityController<CartoesVir
                     UtilsActivity.alertMsg(response.errorBody(), activity);
                 }
 
+                mProgresDialogUtil.dismiss();
                 activity.getSwipeRefreshLayout().setRefreshing(false);
             }
 
             @Override
             public void onFailure(Call<GetCredenciaisResponse> call, Throwable t) {
                 UtilsActivity.alertIfSocketException(t, activity);
+                mProgresDialogUtil.dismiss();
                 t.printStackTrace();
                 activity.getSwipeRefreshLayout().setRefreshing(false);
             }

@@ -30,6 +30,7 @@ public class PagamentoController extends BaseActivityController<PagamentoActivit
     }
 
     public void efetuarPedido() {
+        mProgresDialogUtil.show("Finalizando Pedido","Aguarde.");
         activity.setLoading(true);
         CarrinhoSingleton carrinho = CarrinhoSingleton.getInstance();
 
@@ -104,12 +105,14 @@ public class PagamentoController extends BaseActivityController<PagamentoActivit
                     UtilsActivity.alertMsg(response.errorBody(), activity);
                 }
 
+                mProgresDialogUtil.dismiss();
                 activity.setLoading(false);
             }
 
             @Override
             public void onFailure(Call<Integer> call, Throwable t) {
                 UtilsActivity.alertIfSocketException(t, activity);
+                mProgresDialogUtil.dismiss();
                 activity.setLoading(false);
             }
         });

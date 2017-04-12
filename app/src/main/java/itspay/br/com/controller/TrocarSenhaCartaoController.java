@@ -45,6 +45,8 @@ public class TrocarSenhaCartaoController extends BaseActivityController<TrocarSe
             return;
         }
 
+        mProgresDialogUtil.show("Alterando Senha.","Anguarde.");
+
         String senhaCriptografada = EncriptSHA512.encript(activity.senha.getText().toString() +
                 IdentityItsPay.getInstance().getToken()
         );
@@ -86,10 +88,12 @@ public class TrocarSenhaCartaoController extends BaseActivityController<TrocarSe
                 } else {
                     UtilsActivity.alertMsg(response.errorBody(), activity);
                 }
+                mProgresDialogUtil.dismiss();
             }
 
             @Override
             public void onFailure(Call<Boolean> call, Throwable t) {
+                mProgresDialogUtil.dismiss();
                 UtilsActivity.alertIfSocketException(t, activity);
             }
         });

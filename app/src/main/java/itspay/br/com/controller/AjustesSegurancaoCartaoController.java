@@ -79,10 +79,13 @@ public class AjustesSegurancaoCartaoController extends BaseActivityController<Aj
 
     public void comunicarPerda() {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setTitle(activity.getString(R.string.app_name));
         builder.setMessage(activity.getString(R.string.prompt_confirma_notificar_perda))
                 .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+
+                        mProgresDialogUtil.show("Comunicando Perda","Aguarde");
 
                         AvisarPerdaOuRouboRequest request = new AvisarPerdaOuRouboRequest();
                         request.setIdCredencial(activity.credencialDetalhe.getIdCredencial());
@@ -120,6 +123,7 @@ public class AjustesSegurancaoCartaoController extends BaseActivityController<Aj
 
     public void comunicarRoubo() {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setTitle(activity.getString(R.string.app_name));
         builder.setMessage(activity.getString(R.string.prompt_confirma_notificar_roubo))
                 .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                     @Override
@@ -199,7 +203,7 @@ public class AjustesSegurancaoCartaoController extends BaseActivityController<Aj
 
     public void configSubtitleSwitch(TextView subtitulo, boolean estado) {
         subtitulo.setText(estado ? "Habilitado" : "Desabilitado");
-        subtitulo.setTextColor(estado ? Color.GREEN : Color.RED);
+        subtitulo.setTextColor(estado ? activity.getResources().getColor(R.color.green_bahamas) : Color.RED);
     }
 
     public void configuraSubtitulos() {
@@ -210,7 +214,7 @@ public class AjustesSegurancaoCartaoController extends BaseActivityController<Aj
         configSubtitleSwitch(activity.textUsoInternet, activity.switchUsoInternet.isChecked());
 
         activity.textBloqueioCartao.setText(activity.switchBloqueioCartao.isChecked() ? "Bloqueado" : "Desbloqueado");
-        activity.textBloqueioCartao.setTextColor(activity.switchBloqueioCartao.isChecked() ? Color.RED : Color.GREEN);
+        activity.textBloqueioCartao.setTextColor(activity.switchBloqueioCartao.isChecked() ? Color.RED : activity.getResources().getColor(R.color.green_bahamas));
     }
 
     public void configuraChangeListener() {

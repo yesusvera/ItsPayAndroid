@@ -21,6 +21,9 @@ public class CartoesLojaController extends BaseActivityController<CartoesLojaAct
     }
 
     public void listarCredenciais() {
+
+        mProgresDialogUtil.show("Carregando Cartões","Aguarde.");
+
         activity.swipeRefreshLayout.setRefreshing(true);
 
         Call<GetCredenciaisResponse> call =
@@ -42,11 +45,13 @@ public class CartoesLojaController extends BaseActivityController<CartoesLojaAct
                 }
 
                 activity.swipeRefreshLayout.setRefreshing(false);
+                mProgresDialogUtil.dismiss();
             }
 
             @Override
             public void onFailure(Call<GetCredenciaisResponse> call, Throwable t) {
                 activity.swipeRefreshLayout.setRefreshing(false);
+                mProgresDialogUtil.dismiss();
                 UtilsActivity.alertIfSocketException(t, activity);
             }
         });

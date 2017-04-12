@@ -15,7 +15,7 @@
     <uses-permission android:name="android.intent.action.CALL_PRIVILEGED" />
     <uses-permission android:name="android.intent.action." />
     <uses-permission android:name="android.permission.USE_FINGERPRINT" />
-    <uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
 
     <application
         android:allowBackup="true"
@@ -161,12 +161,17 @@
             android:noHistory="true"
             android:theme="@style/TemaFormularios"
             android:windowSoftInputMode="stateHidden|adjustPan" />
-
-        <activity android:name="itspay.br.com.activity.RecuperarSenhaActivity"
+        <activity
+            android:name="itspay.br.com.activity.RecuperarSenhaActivity"
             android:label="Recuperar Senha"
             android:noHistory="true"
             android:theme="@style/TemaFormularios"
             android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity android:name="itspay.br.com.activity.LimitesActivity"
+            android:label="Limites"
+            android:noHistory="true"
+            android:theme="@style/TemaFormularios"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
     </application>
 
 </manifest>

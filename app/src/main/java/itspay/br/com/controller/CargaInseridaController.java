@@ -20,6 +20,8 @@ public class CargaInseridaController extends BaseActivityController<CargaInserid
 
     public void enviarBoletoEmail(){
 
+        mProgresDialogUtil.show("Inserindo Carga","Aguarde.");
+
         Call<ResponseBody>  call = ConnectPortadorService
                 .getService()
                 .enviarBoletoEmail(activity.getGerarBoletoCarga(),
@@ -33,11 +35,13 @@ public class CargaInseridaController extends BaseActivityController<CargaInserid
                 }else {
                     UtilsActivity.alertMsg(response.errorBody(), activity);
                 }
+                mProgresDialogUtil.dismiss();
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 UtilsActivity.alertIfSocketException(t, activity);
+                mProgresDialogUtil.dismiss();
                 t.printStackTrace();
             }
         });

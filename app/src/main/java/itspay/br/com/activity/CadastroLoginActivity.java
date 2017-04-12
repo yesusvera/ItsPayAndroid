@@ -15,6 +15,7 @@ import io.card.payment.CardIOActivity;
 import io.card.payment.CreditCard;
 import itspay.br.com.controller.CadastroLoginController;
 import itspay.br.com.itspay.R;
+import itspay.br.com.util.Utils;
 import itspay.br.com.util.mask.MaskEditTextChangedListener;
 
 /**
@@ -55,6 +56,13 @@ public class CadastroLoginActivity extends AppCompatActivity {
         termosDeUso = (CheckBox)findViewById(R.id.checkTermosDeUso);
         criarLogin = (Button)findViewById(R.id.buttonCriarLogin);
         txtViewTermosDeUso = (TextView) findViewById(R.id.txtViewTermosDeUso);
+
+
+
+        Utils.nextInputOnMaxLength(this,numeroCartao,dataNascimento,19);
+        Utils.nextInputOnMaxLength(this,dataNascimento,cpf,10);
+
+        Utils.hideSoftKeyboardOnMaxLength(this,cpf,14);
 
         numeroCartao.addTextChangedListener(new MaskEditTextChangedListener("####.####.####.####", numeroCartao));
         cpf.addTextChangedListener(new MaskEditTextChangedListener("###.###.###-##", cpf));

@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.util.Log;
+import android.view.View;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,6 +24,9 @@ import itspay.br.com.util.usersharepreferences.SharedPreferenceUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static itspay.br.com.activity.LoginActivity.IS_FINGER_PRINT_CHECKED;
+import static itspay.br.com.activity.LoginActivity.IS_SECOND_LOGIN_FINGER_PRINT;
 
 /**
  * Created by yesus on 17/12/16.
@@ -74,6 +78,8 @@ public class LoginController extends BaseActivityController<LoginActivity> {
                     SharedPreferenceUtil.setStringPreference(activity, "lastCPFLogged", cpf);
                     SharedPreferenceUtil.setStringPreference(activity, "lastPasswordLogged", password);
 
+                    activity.getmPasswordView().setText("");
+
                     if (response.body().isRequisitarAtualizacao()) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
                         builder.setCancelable(false).setMessage(response.body().getRequisicaoAtualizacaoMensagem())
@@ -118,6 +124,16 @@ public class LoginController extends BaseActivityController<LoginActivity> {
                         JSONObject jsonObject = new JSONObject(response.errorBody().string());
                         String msg = jsonObject.getString("msg");
 
+                        activity.mLlInputLayoutPassword.setVisibility(View.VISIBLE);
+                        if(activity.mAlertDialog!=null) activity.mAlertDialog.dismiss();
+
+                        SharedPreferenceUtil.setBooleanPreference(activity.getBaseContext(), IS_FINGER_PRINT_CHECKED, false);
+                        SharedPreferenceUtil.setBooleanPreference(activity.getBaseContext(), IS_SECOND_LOGIN_FINGER_PRINT, false);
+
+
+                        activity.mIsFeatureEnabled = SharedPreferenceUtil.getBooleanPreference(activity.getBaseContext(), IS_FINGER_PRINT_CHECKED, false);
+                        activity.mSecondLogin = SharedPreferenceUtil.getBooleanPreference(activity.getBaseContext(), IS_SECOND_LOGIN_FINGER_PRINT, false);
+
                         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
                         builder.setCancelable(false).setMessage(msg)
                                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -139,6 +155,7 @@ public class LoginController extends BaseActivityController<LoginActivity> {
 
             @Override
             public void onFailure(Call<FazerLoginPortadorResponse> call, Throwable t) {
+//                activity.mLlInputLayoutPassword.setVisibility(View.VISIBLE);
                 UtilsActivity.alertIfSocketException(t, activity);
                 activity.showProgress(false);
             }

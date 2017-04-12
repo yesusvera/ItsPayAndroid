@@ -48,10 +48,14 @@ dependencies {
     //    compile 'com.android.support:support-v4:25.1.0'
 //    compile 'com.android.support:support-vector-drawable:25.1.0'
     //    compile 'com.android.support:support-v4:25.1.0'
+    compile('cn.trinea.android.view.autoscrollviewpager:android-auto-scroll-view-pager:1.1.2') {
+        exclude module: 'support-v4'
+    }
+
     compile 'com.android.support:support-annotations:25.0.1'
     compile 'com.android.support:appcompat-v7:25.0.1'
     compile 'com.android.support:design:25.0.1'
-    compile 'io.card:android-sdk:5.5.1'
+    compile 'io.card:android-sdk:5.4.2'
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
     compile 'com.squareup.okhttp3:okhttp-urlconnection:3.2.0'
@@ -66,7 +70,7 @@ dependencies {
     }
     compile 'me.relex:circleindicator:1.2.2@aar'
     compile 'com.ramotion.foldingcell:folding-cell:1.1.0'
+    compile 'com.android.support.constraint:constraint-layout:1.0.1'
     testCompile 'junit:junit:4.12'
-
 
 }
