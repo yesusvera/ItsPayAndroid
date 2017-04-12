@@ -60,6 +60,7 @@
                     android:paddingLeft="16dp"
                     android:textColor="@android:color/darker_gray"
                     tools:text="TRANSFERENCIA"
+                    android:visibility="gone"
                     android:textSize="11sp" />
             </LinearLayout>
 

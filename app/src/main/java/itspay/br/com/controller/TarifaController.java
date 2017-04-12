@@ -20,6 +20,7 @@ public class TarifaController extends BaseActivityController<TarifasActivity> {
     }
 
     public void listarTarifas(){
+        mProgresDialogUtil.show("Tarifas","Aguarde.");
         activity.swipeRefreshLayout.setRefreshing(true);
         Call<GetPerfilTarifarioResponse> call = ConnectPortadorService
                                             .getService()

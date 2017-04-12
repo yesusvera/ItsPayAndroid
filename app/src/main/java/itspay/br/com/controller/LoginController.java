@@ -78,6 +78,8 @@ public class LoginController extends BaseActivityController<LoginActivity> {
                     SharedPreferenceUtil.setStringPreference(activity, "lastCPFLogged", cpf);
                     SharedPreferenceUtil.setStringPreference(activity, "lastPasswordLogged", password);
 
+                    activity.getmPasswordView().setText("");
+
                     if (response.body().isRequisitarAtualizacao()) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
                         builder.setCancelable(false).setMessage(response.body().getRequisicaoAtualizacaoMensagem())

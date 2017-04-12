@@ -393,10 +393,9 @@ public class CartaoActivity extends AppCompatActivity {
                 .setTag("eye")
                 .withProvider(new CardProvider())
                 .setLayout(R.layout.material_itspay_extrato)
-                .setTitle(linhaExtrato.getDescTransacao())
+                .setTitle(linhaExtrato.getDescLocal() == null || linhaExtrato.getDescLocal() == "" ? linhaExtrato.getDescTransacao():linhaExtrato.getDescLocal())
                 .setTitleColor(Color.BLACK)
                 .setSubtitle(linhaExtrato.getDataTransacaoFmtMes() + "")
-                .setSubtitle2(linhaExtrato.getDescSeguimento() != null ? linhaExtrato.getDescSeguimento()+ "" : "-")
                 .setSubtitleColor(Color.GRAY)
                 .setDescription((linhaExtrato.getSinal()==1?"+":"-") + " R$ "+ valorTransacaoFormatado + "")
                 .setDescriptionColor(corValorTransacao)
@@ -462,7 +461,7 @@ public class CartaoActivity extends AppCompatActivity {
 
     public void logout(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setCancelable(false).setTitle("ItsPay").setMessage("Tem certeza que deseja sair?")
+        builder.setCancelable(false).setTitle(getString(R.string.app_name)).setMessage("Tem certeza que deseja sair?")
                 .setPositiveButton("Sair", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -478,7 +477,7 @@ public class CartaoActivity extends AppCompatActivity {
     public void escolherTipoTransferencia(){
         final CharSequence[] items = {"Para outro Cartão", "Para uma Conta Corrente"};
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("ItsPay").setCancelable(true).setNegativeButton("Cancelar", null)
+        builder.setTitle(getString(R.string.app_name)).setCancelable(true).setNegativeButton("Cancelar", null)
                 .setItems(items, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -498,6 +497,7 @@ public class CartaoActivity extends AppCompatActivity {
                 });
         builder.create().show();
     }
+
 
     public void inserirCarga(){
         Intent intent = new Intent(this, InserirCargaActivity.class);

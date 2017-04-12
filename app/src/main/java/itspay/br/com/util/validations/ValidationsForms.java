@@ -96,7 +96,7 @@ public class ValidationsForms {
      * @return
      */
     public static boolean senhaValida(String senha){
-        if(senha==null || senha.length() < 6 || senha.length()>30) return false;
+        if(senha==null || senha.length() < 8 || senha.length()>30) return false;
 
         boolean temLetra = false;
         boolean temDigito = false;

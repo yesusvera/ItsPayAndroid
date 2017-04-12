@@ -13,6 +13,7 @@ import itspay.br.com.activity.MeusCartoesActivity;
 import itspay.br.com.activity.TrocarEmailActivity;
 import itspay.br.com.activity.TrocarSenhaActivity;
 import itspay.br.com.authentication.IdentityItsPay;
+import itspay.br.com.itspay.R;
 import itspay.br.com.model.GetCredenciaisResponse;
 import itspay.br.com.services.ConnectPortadorService;
 import itspay.br.com.util.ItsPayConstants;
@@ -33,6 +34,7 @@ public class MeusCartoesController extends BaseActivityController<MeusCartoesAct
     }
 
     public void listarCredenciais(){
+        mProgresDialogUtil.show("Carregando Cartões","Aguarde.");
         activity.getmListView().getAdapter().clearAll();
         activity.getSwipeRefreshLayout().setRefreshing(true);
 
@@ -65,12 +67,14 @@ public class MeusCartoesController extends BaseActivityController<MeusCartoesAct
                     UtilsActivity.alertMsg(response.errorBody(),activity);
                 }
 
+                mProgresDialogUtil.dismiss();
                 activity.getSwipeRefreshLayout().setRefreshing(false);
             }
 
             @Override
             public void onFailure(Call<GetCredenciaisResponse> call, Throwable t) {
                 UtilsActivity.alertIfSocketException(t, activity);
+                mProgresDialogUtil.dismiss();
                 activity.getSwipeRefreshLayout().setRefreshing(false);
             }
         });
@@ -78,7 +82,7 @@ public class MeusCartoesController extends BaseActivityController<MeusCartoesAct
 
     public void ligar(final String numero){
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        builder.setCancelable(false).setTitle("ItsPay").setMessage("Deseja realmente ligar para " + numero + "?")
+        builder.setCancelable(false).setTitle(activity.getString(R.string.app_name)).setMessage("Deseja realmente ligar para " + numero + "?")
                 .setPositiveButton("Ligar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -97,7 +101,7 @@ public class MeusCartoesController extends BaseActivityController<MeusCartoesAct
 
     public void enviarEmail(final String address, final String subject, final String text, final String title){
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        builder.setCancelable(false).setTitle("ItsPay").setMessage("Deseja realmente mandar um email para " + address)
+        builder.setCancelable(false).setTitle(activity.getString(R.string.app_name)).setMessage("Deseja realmente mandar um email para " + address)
                 .setPositiveButton("Enviar email", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -117,7 +121,7 @@ public class MeusCartoesController extends BaseActivityController<MeusCartoesAct
 
     public void logout(){
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        builder.setCancelable(false).setTitle("ItsPay").setMessage("Tem certeza que deseja sair?")
+        builder.setCancelable(false).setTitle(activity.getString(R.string.app_name)).setMessage("Tem certeza que deseja sair?")
                 .setPositiveButton("Sair", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
