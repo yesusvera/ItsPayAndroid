@@ -12,14 +12,14 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import br.com.braga.junior.aplicationlib.model.RecuperarLoginPortador;
+import br.com.braga.junior.aplicationlib.model.RecuperarSenhaResponse;
+import br.com.braga.junior.aplicationlib.util.ItsPayConstants;
+import br.com.braga.junior.aplicationlib.util.validations.ValidationsForms;
 import itspay.br.com.activity.RecuperarSenhaActivity;
 import itspay.br.com.itspay.R;
-import itspay.br.com.model.RecuperarLoginPortador;
-import itspay.br.com.model.RecuperarSenhaResponse;
 import itspay.br.com.services.ConnectPortadorService;
-import itspay.br.com.util.ItsPayConstants;
 import itspay.br.com.util.UtilsActivity;
-import itspay.br.com.util.validations.ValidationsForms;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -29,7 +29,6 @@ import retrofit2.Response;
  */
 
 public class RecuperarSenhaController extends BaseActivityController<RecuperarSenhaActivity> {
-
 
     public RecuperarSenhaController(RecuperarSenhaActivity activity) {
         super(activity);

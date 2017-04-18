@@ -1,8 +1,6 @@
 package itspay.br.com.activity;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -29,17 +27,18 @@ import com.example.tutoriallibrary.showcaseview.targets.ViewTarget;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.braga.junior.aplicationlib.model.Credencial;
+import br.com.braga.junior.aplicationlib.util.notification.CustomNotification;
+import br.com.braga.junior.aplicationlib.util.notification.NotificationObserver;
+import br.com.braga.junior.aplicationlib.util.usersharepreferences.SharedPreferenceUtil;
 import itspay.br.com.authentication.IdentityItsPay;
 import itspay.br.com.controller.MeusCartoesController;
 import itspay.br.com.itspay.R;
-import itspay.br.com.model.Credencial;
 import itspay.br.com.util.Utils;
-import itspay.br.com.util.notification.CustomNotification;
-import itspay.br.com.util.usersharepreferences.SharedPreferenceUtil;
 import jp.wasabeef.recyclerview.animators.FlipInBottomXAnimator;
 
 public class MeusCartoesActivity extends AppCompatActivity
-        implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
+        implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener,NotificationObserver {
 
     private ShowcaseView sv;
     FloatingActionButton fab;
@@ -217,7 +216,6 @@ public class MeusCartoesActivity extends AppCompatActivity
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    @TargetApi(Build.VERSION_CODES.M)
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
@@ -234,7 +232,7 @@ public class MeusCartoesActivity extends AppCompatActivity
         } else if(id == R.id.nav_call_sac){
             meusCartoesController.ligar("3232294950");
         } else if(id == R.id.nav_call_ouvidoria){
-            meusCartoesController.ligar("3208002859632");
+            meusCartoesController.ligar("08002859632");
         } else if(id == R.id.nav_email_fale_conosco){
             meusCartoesController.enviarEmail(getString(R.string.info_email), "", "","");
         } else if(id == R.id.nav_logout){
@@ -280,5 +278,11 @@ public class MeusCartoesActivity extends AppCompatActivity
         }
 
 
+    }
+
+    @Override
+    public void shwoIntent(boolean mClicked) {
+        Intent intent = new Intent(this, MarketPlaceActivity.class);
+        startActivity(intent);
     }
 }

@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,19 +28,19 @@ import com.dexafree.materialList.view.MaterialListView;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.braga.junior.aplicationlib.model.Imagen;
+import br.com.braga.junior.aplicationlib.model.ParceiroResponse;
+import br.com.braga.junior.aplicationlib.model.Produto;
+import br.com.braga.junior.aplicationlib.model.ProdutoDetalhe;
+import br.com.braga.junior.aplicationlib.util.cache.CacheImageView;
 import itspay.br.com.activity.MarketPlaceActivity;
 import itspay.br.com.activity.ProdutoDetalheActivity;
 import itspay.br.com.authentication.IdentityItsPay;
 import itspay.br.com.controller.LojaProdutosController;
 import itspay.br.com.itspay.R;
-import itspay.br.com.model.Imagen;
-import itspay.br.com.model.ParceiroResponse;
-import itspay.br.com.model.Produto;
-import itspay.br.com.model.ProdutoDetalhe;
 import itspay.br.com.services.ConnectPortadorService;
 import itspay.br.com.util.Utils;
 import itspay.br.com.util.UtilsActivity;
-import itspay.br.com.util.cache.CacheImageView;
 import jp.wasabeef.recyclerview.animators.FlipInTopXAnimator;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -214,10 +215,12 @@ public class LojaProdutosFragment extends Fragment {
 
                 if (produto.getImagens() != null && produto.getImagens().length > 0) {
                     final Imagen img = produto.getImagens()[0];
-                    if (CacheImageView.temCache(LojaProdutosFragment.this.getContext(), img.getIdImagem() + "")) {
-                        BitmapDrawable bitmapDrawable = CacheImageView.lerCacheBitmapDraw(getContext(), img.getIdImagem() + "");
 
-                        card.getProvider().setDrawable(bitmapDrawable);
+                    BitmapDrawable bitmapDrawable = CacheImageView.lerCacheBitmapDraw(getContext(), img.getIdImagem() + "");
+
+
+                    if (bitmapDrawable != null) {
+//                        card.getProvider().setDrawable(bitmapDrawable);
                     } else {
                         Call<ResponseBody> call = ConnectPortadorService.getService().abrirImagemProduto(img.getIdImagem(),
                                 IdentityItsPay.getInstance().getToken());
@@ -228,15 +231,11 @@ public class LojaProdutosFragment extends Fragment {
                                 if (response.body() != null && response.body().byteStream() != null) {
 
                                     try {
-                                        CacheImageView.salvarCache(LojaProdutosFragment.this.getContext(), img.getIdImagem() + "", response.body().byteStream());
+                                        BitmapDrawable bitmapDrawable = CacheImageView.salvarCache(LojaProdutosFragment.this.getContext(), img.getIdImagem() + "", response.body().byteStream());
+//                                        card.getProvider().setDrawable(bitmapDrawable);
                                     } catch (Exception e) {
+                                        Log.i("CacheImagem", e.toString());
                                     }
-
-                                    BitmapDrawable bitmapDrawable = CacheImageView.lerCacheBitmapDraw(
-                                                                        LojaProdutosFragment.this.getContext(), img.getIdImagem() + "");
-
-                                    card.getProvider().setDrawable(bitmapDrawable);
-                                    //card.getProvider().setDrawable(new BitmapDrawable(response.body().byteStream()));
                                 }
                             }
 

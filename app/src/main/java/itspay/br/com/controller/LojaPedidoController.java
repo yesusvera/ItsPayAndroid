@@ -4,13 +4,13 @@ import android.view.View;
 
 import java.util.ArrayList;
 
+import br.com.braga.junior.aplicationlib.model.Pedido;
+import br.com.braga.junior.aplicationlib.model.PedidoDetalhe;
+import br.com.braga.junior.aplicationlib.util.ItsPayConstants;
 import itspay.br.com.adapter.FoldingCellPedidosAdapter;
 import itspay.br.com.authentication.IdentityItsPay;
 import itspay.br.com.fragment.LojaPedidosFragment;
-import itspay.br.com.model.Pedido;
-import itspay.br.com.model.PedidoDetalhe;
 import itspay.br.com.services.ConnectPortadorService;
-import itspay.br.com.util.ItsPayConstants;
 import itspay.br.com.util.UtilsActivity;
 import retrofit2.Call;
 import retrofit2.Callback;

@@ -6,10 +6,10 @@ import android.view.View;
 import java.util.Calendar;
 import java.util.Date;
 
+import br.com.braga.junior.aplicationlib.model.Credencial;
+import br.com.braga.junior.aplicationlib.model.LinhaExtratoCredencial;
 import itspay.br.com.activity.CartaoActivity;
 import itspay.br.com.authentication.IdentityItsPay;
-import itspay.br.com.model.Credencial;
-import itspay.br.com.model.LinhaExtratoCredencial;
 import itspay.br.com.services.ConnectPortadorService;
 import itspay.br.com.util.UtilsActivity;
 import retrofit2.Call;

@@ -6,10 +6,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import br.com.braga.junior.aplicationlib.model.BoletoCarga;
+import br.com.braga.junior.aplicationlib.model.GerarBoletoCarga;
 import itspay.br.com.controller.CargaInseridaController;
 import itspay.br.com.itspay.R;
-import itspay.br.com.model.BoletoCarga;
-import itspay.br.com.model.GerarBoletoCarga;
 
 public class CargaInseridaActivity extends AppCompatActivity {
 

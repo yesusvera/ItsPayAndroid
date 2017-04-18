@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -17,11 +18,11 @@ import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 import java.util.Set;
 
+import br.com.braga.junior.aplicationlib.model.Credencial;
+import br.com.braga.junior.aplicationlib.util.cache.CacheImageView;
 import itspay.br.com.authentication.IdentityItsPay;
 import itspay.br.com.itspay.R;
-import itspay.br.com.model.Credencial;
 import itspay.br.com.services.ConnectPortadorService;
-import itspay.br.com.util.cache.CacheImageView;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -108,6 +109,7 @@ public class Utils {
                         try {
                             CacheImageView.salvarCache(context, cred.getIdPlastico() + "", response.body().byteStream());
                         } catch (Exception e) {
+                            Log.i("CacheImagem", e.toString());
                         }
 
                         card.getProvider().setDrawable(CacheImageView.lerCacheBitmapDraw(context, cred.getIdPlastico()+""));

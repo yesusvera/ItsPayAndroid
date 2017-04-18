@@ -5,15 +5,15 @@ import android.content.DialogInterface;
 
 import java.util.ArrayList;
 
+import br.com.braga.junior.aplicationlib.model.FazerPedidoMKTPlace;
+import br.com.braga.junior.aplicationlib.model.ItemPedidoReduzido;
+import br.com.braga.junior.aplicationlib.model.ProdutoCarrinho;
+import br.com.braga.junior.aplicationlib.util.EncriptSHA512;
+import br.com.braga.junior.aplicationlib.util.ItsPayConstants;
 import itspay.br.com.activity.PagamentoActivity;
 import itspay.br.com.authentication.IdentityItsPay;
-import itspay.br.com.model.FazerPedidoMKTPlace;
-import itspay.br.com.model.ItemPedidoReduzido;
-import itspay.br.com.model.ProdutoCarrinho;
 import itspay.br.com.services.ConnectPortadorService;
 import itspay.br.com.singleton.CarrinhoSingleton;
-import itspay.br.com.util.EncriptSHA512;
-import itspay.br.com.util.ItsPayConstants;
 import itspay.br.com.util.UtilsActivity;
 import retrofit2.Call;
 import retrofit2.Callback;

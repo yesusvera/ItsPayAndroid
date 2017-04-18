@@ -17,11 +17,11 @@ import com.ramotion.foldingcell.FoldingCell;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import br.com.braga.junior.aplicationlib.model.Pedido;
+import br.com.braga.junior.aplicationlib.model.PedidoDetalhe;
 import itspay.br.com.adapter.FoldingCellPedidosAdapter;
 import itspay.br.com.controller.LojaPedidoController;
 import itspay.br.com.itspay.R;
-import itspay.br.com.model.Pedido;
-import itspay.br.com.model.PedidoDetalhe;
 import itspay.br.com.util.Utils;
 
 /**

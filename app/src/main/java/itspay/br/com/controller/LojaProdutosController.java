@@ -2,11 +2,11 @@ package itspay.br.com.controller;
 
 import java.util.ArrayList;
 
+import br.com.braga.junior.aplicationlib.model.ParceiroResponse;
+import br.com.braga.junior.aplicationlib.util.ItsPayConstants;
 import itspay.br.com.authentication.IdentityItsPay;
 import itspay.br.com.fragment.LojaProdutosFragment;
-import itspay.br.com.model.ParceiroResponse;
 import itspay.br.com.services.ConnectPortadorService;
-import itspay.br.com.util.ItsPayConstants;
 import itspay.br.com.util.UtilsActivity;
 import retrofit2.Call;
 import retrofit2.Callback;

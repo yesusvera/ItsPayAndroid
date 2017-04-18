@@ -16,13 +16,14 @@ import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import java.util.Locale;
 
+import br.com.braga.junior.aplicationlib.model.Banco;
+import br.com.braga.junior.aplicationlib.model.Credencial;
+import br.com.braga.junior.aplicationlib.util.mask.MaskEditTextChangedListener;
 import itspay.br.com.authentication.IdentityItsPay;
 import itspay.br.com.controller.TransferirContaCorrenteController;
 import itspay.br.com.itspay.R;
-import itspay.br.com.model.Banco;
-import itspay.br.com.model.Credencial;
 import itspay.br.com.util.Utils;
-import itspay.br.com.util.mask.MaskEditTextChangedListener;
+
 
 public class TransferirContaCorrenteActivity extends AppCompatActivity {
 

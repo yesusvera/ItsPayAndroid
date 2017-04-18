@@ -1,10 +1,10 @@
 package itspay.br.com.controller;
 
+import br.com.braga.junior.aplicationlib.model.GetCredenciaisResponse;
+import br.com.braga.junior.aplicationlib.util.ItsPayConstants;
 import itspay.br.com.activity.CartoesLojaActivity;
 import itspay.br.com.authentication.IdentityItsPay;
-import itspay.br.com.model.GetCredenciaisResponse;
 import itspay.br.com.services.ConnectPortadorService;
-import itspay.br.com.util.ItsPayConstants;
 import itspay.br.com.util.UtilsActivity;
 import retrofit2.Call;
 import retrofit2.Callback;

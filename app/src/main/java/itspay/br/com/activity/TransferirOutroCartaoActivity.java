@@ -16,11 +16,12 @@ import com.blackcat.currencyedittext.CurrencyEditText;
 
 import java.util.Locale;
 
+import br.com.braga.junior.aplicationlib.model.Credencial;
+import br.com.braga.junior.aplicationlib.util.mask.MaskEditTextChangedListener;
 import itspay.br.com.controller.TransferirOutroCartaoController;
 import itspay.br.com.itspay.R;
-import itspay.br.com.model.Credencial;
 import itspay.br.com.util.Utils;
-import itspay.br.com.util.mask.MaskEditTextChangedListener;
+
 
 public class TransferirOutroCartaoActivity extends AppCompatActivity {
 

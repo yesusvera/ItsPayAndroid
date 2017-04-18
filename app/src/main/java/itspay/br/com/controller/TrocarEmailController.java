@@ -5,16 +5,16 @@ import android.content.DialogInterface;
 
 import java.io.IOException;
 
+import br.com.braga.junior.aplicationlib.model.BuscarEmailResponse;
+import br.com.braga.junior.aplicationlib.model.ItsPayResponse;
+import br.com.braga.junior.aplicationlib.model.TrocarEmail;
+import br.com.braga.junior.aplicationlib.util.ItsPayConstants;
+import br.com.braga.junior.aplicationlib.util.validations.ValidationsForms;
 import itspay.br.com.activity.TrocarEmailActivity;
 import itspay.br.com.authentication.IdentityItsPay;
 import itspay.br.com.itspay.R;
-import itspay.br.com.model.BuscarEmailResponse;
-import itspay.br.com.model.ItsPayResponse;
-import itspay.br.com.model.TrocarEmail;
 import itspay.br.com.services.ConnectPortadorService;
-import itspay.br.com.util.ItsPayConstants;
 import itspay.br.com.util.UtilsActivity;
-import itspay.br.com.util.validations.ValidationsForms;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

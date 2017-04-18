@@ -15,12 +15,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import br.com.braga.junior.aplicationlib.util.usersharepreferences.SharedPreferenceUtil;
 import itspay.br.com.fragment.LojaCarrinhoFragment;
 import itspay.br.com.fragment.LojaPedidosFragment;
 import itspay.br.com.fragment.LojaProdutosFragment;
 import itspay.br.com.itspay.R;
 import itspay.br.com.singleton.CarrinhoSingleton;
-import itspay.br.com.util.usersharepreferences.SharedPreferenceUtil;
+
 
 public class MarketPlaceActivity extends AppCompatActivity {
 

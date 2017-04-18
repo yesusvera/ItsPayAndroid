@@ -9,9 +9,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import br.com.braga.junior.aplicationlib.model.Credencial;
 import itspay.br.com.controller.NovoCartaoVirtualController;
 import itspay.br.com.itspay.R;
-import itspay.br.com.model.Credencial;
+
 
 public class NovoCartaoVirtualActivity extends AppCompatActivity {
     private Button button1M;

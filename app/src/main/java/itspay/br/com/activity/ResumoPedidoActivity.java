@@ -16,11 +16,11 @@ import com.dexafree.materialList.view.MaterialListView;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.braga.junior.aplicationlib.model.Produto;
+import br.com.braga.junior.aplicationlib.model.ProdutoCarrinho;
+import br.com.braga.junior.aplicationlib.model.Unidade;
 import itspay.br.com.authentication.IdentityItsPay;
 import itspay.br.com.itspay.R;
-import itspay.br.com.model.Produto;
-import itspay.br.com.model.ProdutoCarrinho;
-import itspay.br.com.model.Unidade;
 import itspay.br.com.services.ConnectPortadorService;
 import itspay.br.com.singleton.CarrinhoSingleton;
 import itspay.br.com.util.Utils;

@@ -12,15 +12,15 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
+import br.com.braga.junior.aplicationlib.model.FazerLoginPortador;
+import br.com.braga.junior.aplicationlib.model.FazerLoginPortadorResponse;
+import br.com.braga.junior.aplicationlib.util.ItsPayConstants;
+import br.com.braga.junior.aplicationlib.util.usersharepreferences.SharedPreferenceUtil;
 import itspay.br.com.activity.LoginActivity;
 import itspay.br.com.activity.MeusCartoesActivity;
 import itspay.br.com.authentication.IdentityItsPay;
-import itspay.br.com.model.FazerLoginPortador;
-import itspay.br.com.model.FazerLoginPortadorResponse;
 import itspay.br.com.services.ConnectPortadorService;
-import itspay.br.com.util.ItsPayConstants;
 import itspay.br.com.util.UtilsActivity;
-import itspay.br.com.util.usersharepreferences.SharedPreferenceUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

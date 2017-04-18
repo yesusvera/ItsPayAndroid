@@ -1,8 +1,8 @@
 package itspay.br.com.controller;
 
+import br.com.braga.junior.aplicationlib.model.ParcelasResponse;
 import itspay.br.com.activity.ParcelamentoActivity;
 import itspay.br.com.authentication.IdentityItsPay;
-import itspay.br.com.model.ParcelasResponse;
 import itspay.br.com.services.ConnectPortadorService;
 import itspay.br.com.singleton.CarrinhoSingleton;
 import itspay.br.com.util.UtilsActivity;

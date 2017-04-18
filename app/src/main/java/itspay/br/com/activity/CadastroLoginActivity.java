@@ -11,12 +11,13 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import br.com.braga.junior.aplicationlib.util.mask.MaskEditTextChangedListener;
 import io.card.payment.CardIOActivity;
 import io.card.payment.CreditCard;
 import itspay.br.com.controller.CadastroLoginController;
 import itspay.br.com.itspay.R;
 import itspay.br.com.util.Utils;
-import itspay.br.com.util.mask.MaskEditTextChangedListener;
+
 
 /**
  * Created by yesus on 14/12/16.

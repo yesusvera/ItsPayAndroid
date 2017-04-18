@@ -2,14 +2,14 @@ package itspay.br.com.controller;
 
 import android.content.DialogInterface;
 
+import br.com.braga.junior.aplicationlib.model.GetInfoPortadorCredencialRequest;
+import br.com.braga.junior.aplicationlib.model.PortadorCredencial;
+import br.com.braga.junior.aplicationlib.model.TransferenciaMesmaInstituicao;
+import br.com.braga.junior.aplicationlib.util.EncriptSHA512;
+import br.com.braga.junior.aplicationlib.util.ItsPayConstants;
 import itspay.br.com.activity.TransferirOutroCartaoActivity;
 import itspay.br.com.authentication.IdentityItsPay;
-import itspay.br.com.model.GetInfoPortadorCredencialRequest;
-import itspay.br.com.model.PortadorCredencial;
-import itspay.br.com.model.TransferenciaMesmaInstituicao;
 import itspay.br.com.services.ConnectPortadorService;
-import itspay.br.com.util.EncriptSHA512;
-import itspay.br.com.util.ItsPayConstants;
 import itspay.br.com.util.UtilsActivity;
 import okhttp3.ResponseBody;
 import retrofit2.Call;

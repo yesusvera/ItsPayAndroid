@@ -3,13 +3,14 @@ package itspay.br.com.singleton;
 import java.util.ArrayList;
 import java.util.List;
 
-import itspay.br.com.model.Credencial;
-import itspay.br.com.model.EnderecoPessoa;
-import itspay.br.com.model.FazerPedidoMKTPlace;
-import itspay.br.com.model.GetFormasEnvioResponse;
-import itspay.br.com.model.Parcela;
-import itspay.br.com.model.Produto;
-import itspay.br.com.model.ProdutoCarrinho;
+import br.com.braga.junior.aplicationlib.model.Credencial;
+import br.com.braga.junior.aplicationlib.model.EnderecoPessoa;
+import br.com.braga.junior.aplicationlib.model.FazerPedidoMKTPlace;
+import br.com.braga.junior.aplicationlib.model.GetFormasEnvioResponse;
+import br.com.braga.junior.aplicationlib.model.Parcela;
+import br.com.braga.junior.aplicationlib.model.Produto;
+import br.com.braga.junior.aplicationlib.model.ProdutoCarrinho;
+
 
 /**
  * Created by yesus on 07/02/17.

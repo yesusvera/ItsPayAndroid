@@ -33,10 +33,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import br.com.braga.junior.aplicationlib.model.Credencial;
+import br.com.braga.junior.aplicationlib.model.LinhaExtratoCredencial;
 import itspay.br.com.controller.CartaoController;
 import itspay.br.com.itspay.R;
-import itspay.br.com.model.Credencial;
-import itspay.br.com.model.LinhaExtratoCredencial;
 import itspay.br.com.util.Utils;
 import jp.wasabeef.recyclerview.animators.FadeInLeftAnimator;
 import jp.wasabeef.recyclerview.animators.FlipInBottomXAnimator;
@@ -97,14 +97,14 @@ public class CartaoActivity extends AppCompatActivity {
                 BuilderManagerFloatingButton.imageResourceIndex = 0;
                 BuilderManagerFloatingButton.imageResources = new int[]{
                         R.drawable.menu_icon4,
+                        R.drawable.menu_icon5,
                         R.drawable.menu_icon6,
-                        R.drawable.menu_icon5
 
                 };
                 BuilderManagerFloatingButton.textResources = new int[]{
                         R.string.str_icone_ajustes_seguranca,
+                        R.string.str_icone_limites,
                         R.string.str_icone_logout,
-                        R.string.str_icone_limites
                 };
                 bmb.setPiecePlaceEnum(PiecePlaceEnum.DOT_3_1);
                 bmb.setButtonPlaceEnum(ButtonPlaceEnum.SC_3_1);
@@ -134,14 +134,14 @@ public class CartaoActivity extends AppCompatActivity {
                 BuilderManagerFloatingButton.imageResources = new int[]{
                         R.drawable.menu_icon3,
                         R.drawable.menu_icon4,
+                        R.drawable.menu_icon5,
                         R.drawable.menu_icon6,
-                        R.drawable.menu_icon5
                 };
                 BuilderManagerFloatingButton.textResources = new int[]{
                         R.string.str_icone_cartoes_virtuais,
                         R.string.str_icone_ajustes_seguranca,
+                        R.string.str_icone_limites,
                         R.string.str_icone_logout,
-                        R.string.str_icone_limites
                 };
                 bmb.setPiecePlaceEnum(PiecePlaceEnum.DOT_4_1);
                 bmb.setButtonPlaceEnum(ButtonPlaceEnum.SC_4_1);
@@ -151,7 +151,7 @@ public class CartaoActivity extends AppCompatActivity {
                 BuilderManagerFloatingButton.imageResources = new int[]{
                         R.drawable.menu_icon3,
                         R.drawable.menu_icon4,
-                        R.drawable.menu_icon6
+                        R.drawable.menu_icon5
 
                 };
                 BuilderManagerFloatingButton.textResources = new int[]{
@@ -168,48 +168,48 @@ public class CartaoActivity extends AppCompatActivity {
 
                 BuilderManagerFloatingButton.imageResourceIndex = 0;
                 BuilderManagerFloatingButton.imageResources = new int[]{
-                        R.drawable.menu_icon1,
-                        R.drawable.menu_icon2,
+//                        R.drawable.menu_icon1,
+//                        R.drawable.menu_icon2,
                         R.drawable.menu_icon3,
                         R.drawable.menu_icon4,
+//                        R.drawable.menu_icon5,
                         R.drawable.menu_icon5,
                         R.drawable.menu_icon6,
-                        R.drawable.menu_icon6
                 };
                 BuilderManagerFloatingButton.textResources = new int[]{
-                        R.string.str_icone_transferir,
-                        R.string.str_icone_inserir_carga,
+//                        R.string.str_icone_transferir,
+//                        R.string.str_icone_inserir_carga,
                         R.string.str_icone_cartoes_virtuais,
                         R.string.str_icone_ajustes_seguranca,
-                        R.string.str_icone_tarifas,
+//                        R.string.str_icone_tarifas,
+                        R.string.str_icone_limites,
                         R.string.str_icone_logout,
-                        R.string.str_icone_limites
                 };
 
-                bmb.setPiecePlaceEnum(PiecePlaceEnum.DOT_7_1);
-                bmb.setButtonPlaceEnum(ButtonPlaceEnum.SC_7_1);
+                bmb.setPiecePlaceEnum(PiecePlaceEnum.DOT_4_1);
+                bmb.setButtonPlaceEnum(ButtonPlaceEnum.SC_4_1);
 
 
             }else {
                 BuilderManagerFloatingButton.imageResourceIndex = 0;
                 BuilderManagerFloatingButton.imageResources = new int[]{
-                        R.drawable.menu_icon1,
-                        R.drawable.menu_icon2,
+//                        R.drawable.menu_icon1,
+//                        R.drawable.menu_icon2,
                         R.drawable.menu_icon3,
                         R.drawable.menu_icon4,
-                        R.drawable.menu_icon5,
+//                        R.drawable.menu_icon5,
                         R.drawable.menu_icon6
                 };
                 BuilderManagerFloatingButton.textResources = new int[]{
-                        R.string.str_icone_transferir,
-                        R.string.str_icone_inserir_carga,
+//                        R.string.str_icone_transferir,
+//                        R.string.str_icone_inserir_carga,
                         R.string.str_icone_cartoes_virtuais,
                         R.string.str_icone_ajustes_seguranca,
-                        R.string.str_icone_tarifas,
+//                        R.string.str_icone_tarifas,
                         R.string.str_icone_logout
                 };
-                bmb.setPiecePlaceEnum(PiecePlaceEnum.DOT_6_1);
-                bmb.setButtonPlaceEnum(ButtonPlaceEnum.SC_6_1);
+                bmb.setPiecePlaceEnum(PiecePlaceEnum.DOT_3_1);
+                bmb.setButtonPlaceEnum(ButtonPlaceEnum.SC_3_1);
 
             }
 //            bmb.setPiecePlaceEnum(PiecePlaceEnum.DOT_3_1);
@@ -388,6 +388,13 @@ public class CartaoActivity extends AppCompatActivity {
         if(linhaExtrato.getSinal() == 1){
             corValorTransacao = getResources().getColor(R.color.green_bahamas);
         }
+
+
+//        String data = "";
+//         != null || linhaExtrato.getDescLocal() == "" ? linhaExtrato.getDescTransacao():linhaExtrato.getDescLocal()
+//        if(linhaExtrato.getDescLocal() == "" || linhaExtrato.getDescLocal() == null){
+//            data = linhaExtrato.getDataTransacao();
+//        }
 
         return new Card.Builder(this)
                 .setTag("eye")

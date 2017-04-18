@@ -16,8 +16,8 @@ import com.ramotion.foldingcell.FoldingCell;
 import java.util.HashSet;
 import java.util.List;
 
+import br.com.braga.junior.aplicationlib.model.Pedido;
 import itspay.br.com.itspay.R;
-import itspay.br.com.model.Pedido;
 import itspay.br.com.util.Utils;
 
 /**

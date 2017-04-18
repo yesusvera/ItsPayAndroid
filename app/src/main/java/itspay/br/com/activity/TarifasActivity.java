@@ -13,10 +13,10 @@ import com.dexafree.materialList.view.MaterialListView;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.braga.junior.aplicationlib.model.Credencial;
+import br.com.braga.junior.aplicationlib.model.PerfilsTarifario;
 import itspay.br.com.controller.TarifaController;
 import itspay.br.com.itspay.R;
-import itspay.br.com.model.Credencial;
-import itspay.br.com.model.PerfilsTarifario;
 import itspay.br.com.util.Utils;
 import jp.wasabeef.recyclerview.animators.FadeInLeftAnimator;
 

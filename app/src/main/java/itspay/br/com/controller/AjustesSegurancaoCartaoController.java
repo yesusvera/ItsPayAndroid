@@ -6,14 +6,14 @@ import android.graphics.Color;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import br.com.braga.junior.aplicationlib.model.AvisarPerdaOuRouboRequest;
+import br.com.braga.junior.aplicationlib.model.CredencialStatus;
+import br.com.braga.junior.aplicationlib.model.TrocarEstadoCredencialRequest;
+import br.com.braga.junior.aplicationlib.util.ItsPayConstants;
 import itspay.br.com.activity.AjustesSegurancaCartaoActivity;
 import itspay.br.com.authentication.IdentityItsPay;
 import itspay.br.com.itspay.R;
-import itspay.br.com.model.AvisarPerdaOuRouboRequest;
-import itspay.br.com.model.CredencialStatus;
-import itspay.br.com.model.TrocarEstadoCredencialRequest;
 import itspay.br.com.services.ConnectPortadorService;
-import itspay.br.com.util.ItsPayConstants;
 import itspay.br.com.util.UtilsActivity;
 import okhttp3.ResponseBody;
 import retrofit2.Call;

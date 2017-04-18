@@ -9,9 +9,10 @@ import com.blackcat.currencyedittext.CurrencyEditText;
 
 import java.util.Locale;
 
+import br.com.braga.junior.aplicationlib.model.Credencial;
 import itspay.br.com.controller.InserirCargaController;
 import itspay.br.com.itspay.R;
-import itspay.br.com.model.Credencial;
+
 
 public class InserirCargaActivity extends AppCompatActivity {
 

@@ -6,13 +6,13 @@ import android.widget.ArrayAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.braga.junior.aplicationlib.model.Banco;
+import br.com.braga.junior.aplicationlib.model.TransferenciaContaCorrente;
+import br.com.braga.junior.aplicationlib.util.EncriptSHA512;
+import br.com.braga.junior.aplicationlib.util.ItsPayConstants;
 import itspay.br.com.activity.TransferirContaCorrenteActivity;
 import itspay.br.com.authentication.IdentityItsPay;
-import itspay.br.com.model.Banco;
-import itspay.br.com.model.TransferenciaContaCorrente;
 import itspay.br.com.services.ConnectPortadorService;
-import itspay.br.com.util.EncriptSHA512;
-import itspay.br.com.util.ItsPayConstants;
 import itspay.br.com.util.UtilsActivity;
 import okhttp3.ResponseBody;
 import retrofit2.Call;

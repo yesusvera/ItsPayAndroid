@@ -42,7 +42,7 @@
     </style>
 
     <style name="IvAppLogo">
-        <item name="android:src">@mipmap/ic_launcher</item>
+        <item name="android:background">@mipmap/ic_launcher</item>
     <!-- <item name="android:src">@mipmap/ic_launch_financial</item>-->
     </style>
 

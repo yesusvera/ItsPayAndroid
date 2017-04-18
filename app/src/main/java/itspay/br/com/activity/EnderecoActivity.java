@@ -15,9 +15,9 @@ import com.dexafree.materialList.view.MaterialListView;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.braga.junior.aplicationlib.model.EnderecoPessoa;
 import itspay.br.com.controller.EnderecoController;
 import itspay.br.com.itspay.R;
-import itspay.br.com.model.EnderecoPessoa;
 import itspay.br.com.singleton.CarrinhoSingleton;
 import jp.wasabeef.recyclerview.animators.FadeInLeftAnimator;
 

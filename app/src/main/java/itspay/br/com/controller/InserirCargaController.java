@@ -5,13 +5,13 @@ import android.content.Intent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import br.com.braga.junior.aplicationlib.model.BoletoCarga;
+import br.com.braga.junior.aplicationlib.model.GerarBoletoCarga;
+import br.com.braga.junior.aplicationlib.util.ItsPayConstants;
 import itspay.br.com.activity.CargaInseridaActivity;
 import itspay.br.com.activity.InserirCargaActivity;
 import itspay.br.com.authentication.IdentityItsPay;
-import itspay.br.com.model.BoletoCarga;
-import itspay.br.com.model.GerarBoletoCarga;
 import itspay.br.com.services.ConnectPortadorService;
-import itspay.br.com.util.ItsPayConstants;
 import itspay.br.com.util.UtilsActivity;
 import retrofit2.Call;
 import retrofit2.Callback;

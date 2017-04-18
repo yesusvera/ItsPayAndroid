@@ -43,15 +43,15 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.braga.junior.aplicationlib.util.fingerprint.CustomFingerPrint;
+import br.com.braga.junior.aplicationlib.util.fingerprint.ObserverResultFingerPrintInterface;
+import br.com.braga.junior.aplicationlib.util.mask.MaskEditTextChangedListener;
+import br.com.braga.junior.aplicationlib.util.usersharepreferences.SharedPreferenceUtil;
+import br.com.braga.junior.aplicationlib.util.validations.ValidationsForms;
 import itspay.br.com.controller.LoginController;
 import itspay.br.com.itspay.R;
 import itspay.br.com.singleton.CarrinhoSingleton;
 import itspay.br.com.util.Utils;
-import itspay.br.com.util.fingerprint.CustomFingerPrint;
-import itspay.br.com.util.fingerprint.ObserverResultFingerPrintInterface;
-import itspay.br.com.util.mask.MaskEditTextChangedListener;
-import itspay.br.com.util.usersharepreferences.SharedPreferenceUtil;
-import itspay.br.com.util.validations.ValidationsForms;
 
 /**
  * Created by yesus on 12/12/16.

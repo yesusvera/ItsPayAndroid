@@ -36,7 +36,7 @@
             <item
                 android:id="@+id/nav_call_ouvidoria"
                 android:icon="@android:drawable/ic_menu_call"
-                android:title="SAC - (32) 0800 285 9632 " />
+                android:title="SAC - 0800 285 9632 " />
             <item
                 android:id="@+id/nav_email_fale_conosco"
                 android:icon="@android:drawable/ic_dialog_email"
