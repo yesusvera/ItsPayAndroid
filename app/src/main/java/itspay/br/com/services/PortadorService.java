@@ -30,12 +30,15 @@ import itspay.br.com.model.PortadorCredencial;
 import itspay.br.com.model.PortadorLogin;
 import itspay.br.com.model.RecuperarLoginPortador;
 import itspay.br.com.model.RecuperarSenhaResponse;
+import itspay.br.com.model.RequestToken;
+import itspay.br.com.model.RequestTokenResponse;
 import itspay.br.com.model.TransferenciaContaCorrente;
 import itspay.br.com.model.TransferenciaMesmaInstituicao;
 import itspay.br.com.model.TrocarEmail;
 import itspay.br.com.model.TrocarEstadoCredencialRequest;
 import itspay.br.com.model.TrocarPinRequest;
 import itspay.br.com.model.TrocarSenhaPortador;
+import itspay.br.com.model.ValidToken;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -56,6 +59,14 @@ public interface PortadorService {
 
     @POST("api/portador/login")
     Call<CriarLoginResponse> criarLogin(@Body PortadorLogin portadorLogin);
+
+
+    @POST("api/token-acesso/enviar/token-cadastro-login")
+    Call<RequestTokenResponse> requestToken(@Body RequestToken portadorLogin);
+
+
+    @PUT("api/token-acesso/usar")
+    Call<ResponseBody> validToken(@Body ValidToken portadorLogin);
 
     @POST("api/portador/login/recuperar-senha")
     Call<RecuperarSenhaResponse> recuperarSenha(@Body RecuperarLoginPortador portadorLogin);

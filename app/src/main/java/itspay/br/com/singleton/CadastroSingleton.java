@@ -1,7 +1,5 @@
 package itspay.br.com.singleton;
 
-import android.widget.EditText;
-
 /**
  * Created by juniorbraga on 24/02/17.
  */

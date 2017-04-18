@@ -4,38 +4,38 @@ package itspay.br.com.model;
  * Created by juniorbraga on 27/03/17.
  */
 
-public class RequestToken {
+public class RequestTokenResponse {
 
-    public String code;
-    public String msg;
+    public boolean code;
+    public int token;
 
-    public RequestToken(){}
+    public RequestTokenResponse(){}
 
-    public RequestToken(String code, String msg){
+    public RequestTokenResponse(boolean code, int msg){
         this.code = code;
-        this.msg = msg;
+        this.token = msg;
     }
 
-    public String getCode() {
+    public boolean getCode() {
         return code;
     }
 
-    public void setCode(String code) {
+    public void setCode(boolean code) {
         this.code = code;
     }
 
-    public String getMsg() {
-        return msg;
+    public int getMsg() {
+        return token;
     }
 
-    public void setMsg(String msg) {
-        this.msg = msg;
+    public void setMsg(int msg) {
+        this.token = msg;
     }
 
 
     @Override
     public String toString() {
-        return msg;
+        return token+"";
     }
 
 }

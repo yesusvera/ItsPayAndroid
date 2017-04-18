@@ -64,4 +64,5 @@ dependencies {
     compile 'me.relex:circleindicator:1.2.2@aar'
     compile 'com.ramotion.foldingcell:folding-cell:1.1.0'
     testCompile 'junit:junit:4.12'
+
 }
