@@ -79,7 +79,7 @@ public class CacheImageView {
      */
     public static byte[] streamToByteArray(InputStream stream) throws IOException {
 
-        byte[] buffer = new byte[1024];
+        byte[] buffer = new byte[5000];
         ByteArrayOutputStream os = new ByteArrayOutputStream();
 
         int line = 0;

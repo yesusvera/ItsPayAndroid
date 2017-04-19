@@ -215,7 +215,6 @@ public class LojaProdutosFragment extends Fragment {
 
                 if (produto.getImagens() != null && produto.getImagens().length > 0) {
                     final Imagen img = produto.getImagens()[0];
-
                     BitmapDrawable bitmapDrawable = CacheImageView.lerCacheBitmapDraw(getContext(), img.getIdImagem() + "");
 
 
@@ -231,7 +230,7 @@ public class LojaProdutosFragment extends Fragment {
                                 if (response.body() != null && response.body().byteStream() != null) {
 
                                     try {
-                                        BitmapDrawable bitmapDrawable = CacheImageView.salvarCache(LojaProdutosFragment.this.getContext(), img.getIdImagem() + "", response.body().byteStream());
+//                                        BitmapDrawable bitmapDrawable = CacheImageView.salvarCache(LojaProdutosFragment.this.getContext(), img.getIdImagem() + "", response.body().byteStream());
 //                                        card.getProvider().setDrawable(bitmapDrawable);
                                     } catch (Exception e) {
                                         Log.i("CacheImagem", e.toString());
@@ -262,6 +261,7 @@ public class LojaProdutosFragment extends Fragment {
 
 
         materialListView.getAdapter().addAll(cards);
+
     }
 
 
