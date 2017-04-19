@@ -26,6 +26,9 @@ public class CartaoController extends BaseActivityController<CartaoActivity> {
     }
 
     public void carregarExtrato() {
+
+        mProgresDialogUtil.show("Carregando extrato","Aguarde.");
+
         activity.txtMensagemExtrato.setVisibility(View.GONE);
         activity.getSwipeRefreshExtrato().setRefreshing(true);
         activity.getMaterial_listViewExtrato().getAdapter().clearAll();
@@ -69,11 +72,13 @@ public class CartaoController extends BaseActivityController<CartaoActivity> {
                 } finally {
                     activity.getSwipeRefreshExtrato().setRefreshing(false);
                 }
+                mProgresDialogUtil.dismiss();
             }
 
             @Override
             public void onFailure(Call<LinhaExtratoCredencial[]> call, Throwable t) {
                 UtilsActivity.alertIfSocketException(t, activity);
+                mProgresDialogUtil.dismiss();
                 t.printStackTrace();
                 activity.getSwipeRefreshExtrato().setRefreshing(false);
             }

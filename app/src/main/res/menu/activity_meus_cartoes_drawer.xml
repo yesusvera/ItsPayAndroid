@@ -9,7 +9,7 @@
         <item
             android:id="@+id/nav_termos_de_uso"
             android:icon="@android:drawable/ic_menu_info_details"
-            android:title="Termos de Uso"/>
+            android:title="Termos de Uso" />
 
     </group>
 
@@ -44,16 +44,10 @@
         </menu>
     </item>
 
-
-
-    <item android:title="">
-        <menu>
-        <item
-            android:id="@+id/nav_logout"
-            android:icon="@android:drawable/ic_menu_revert"
-            android:title="@string/action_settings_logout" />
-        </menu>
-    </item>
+    <item
+        android:id="@+id/nav_logout"
+        android:icon="@android:drawable/ic_menu_revert"
+        android:title="@string/action_settings_logout" />
 
 
 </menu>

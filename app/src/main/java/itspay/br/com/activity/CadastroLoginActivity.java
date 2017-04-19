@@ -1,21 +1,19 @@
 package itspay.br.com.activity;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import io.card.payment.CardIOActivity;
 import io.card.payment.CreditCard;
 import itspay.br.com.controller.CadastroLoginController;
 import itspay.br.com.itspay.R;
-import itspay.br.com.singleton.CadastroSingleton;
-import itspay.br.com.util.Utils;
 import itspay.br.com.util.mask.MaskEditTextChangedListener;
 
 /**
@@ -92,24 +90,29 @@ public class CadastroLoginActivity extends AppCompatActivity {
     public void onScanPress(View v) {
         // This method is set up as an onClick handler in the layout xml
         // e.g. android:onClick="onScanPress"onScanPress
-        Intent scanIntent = new Intent(this, CardIOActivity.class);
+        Intent intent = new Intent(this, CardIOActivity.class)
+                .putExtra(CardIOActivity.EXTRA_REQUIRE_EXPIRY, false)
+                .putExtra(CardIOActivity.EXTRA_SCAN_EXPIRY, false)
+                .putExtra(CardIOActivity.EXTRA_REQUIRE_CVV, false)
+                .putExtra(CardIOActivity.EXTRA_REQUIRE_POSTAL_CODE, false)
+                .putExtra(CardIOActivity.EXTRA_RESTRICT_POSTAL_CODE_TO_NUMERIC_ONLY, false)
+                .putExtra(CardIOActivity.EXTRA_REQUIRE_CARDHOLDER_NAME, false)
+                .putExtra(CardIOActivity.EXTRA_SUPPRESS_MANUAL_ENTRY, true)
+                .putExtra(CardIOActivity.EXTRA_USE_CARDIO_LOGO, false)
+                .putExtra(CardIOActivity.EXTRA_LANGUAGE_OR_LOCALE, "pt_BR")
+                .putExtra(CardIOActivity.EXTRA_USE_PAYPAL_ACTIONBAR_ICON, false)
+                .putExtra(CardIOActivity.EXTRA_KEEP_APPLICATION_THEME, false)
+                .putExtra(CardIOActivity.EXTRA_GUIDE_COLOR, Color.GREEN)
+                .putExtra(CardIOActivity.EXTRA_SUPPRESS_CONFIRMATION, false)
+                .putExtra(CardIOActivity.EXTRA_SUPPRESS_SCAN, false)
+                .putExtra(CardIOActivity.EXTRA_HIDE_CARDIO_LOGO, true)
+                .putExtra(CardIOActivity.EXTRA_RETURN_CARD_IMAGE, true);
+        try {
+            int unblurDigits = Integer.parseInt("4");
+            intent.putExtra(CardIOActivity.EXTRA_UNBLUR_DIGITS, unblurDigits);
+        } catch(NumberFormatException ignored) {}
 
-        // customize these values to suit your needs.
-        scanIntent.putExtra(CardIOActivity.EXTRA_REQUIRE_EXPIRY, false); // default: false
-        scanIntent.putExtra(CardIOActivity.EXTRA_REQUIRE_CVV, false); // default: false
-        scanIntent.putExtra(CardIOActivity.EXTRA_REQUIRE_POSTAL_CODE, false); // default: false
-        scanIntent.putExtra(CardIOActivity.EXTRA_RESTRICT_POSTAL_CODE_TO_NUMERIC_ONLY, false); // default: false
-        scanIntent.putExtra(CardIOActivity.EXTRA_REQUIRE_CARDHOLDER_NAME, false); // default: false
-
-        // hides the manual entry button
-        // if set, developers should provide their own manual entry mechanism in the app
-        scanIntent.putExtra(CardIOActivity.EXTRA_SUPPRESS_MANUAL_ENTRY, false); // default: false
-
-        // matches the theme of your application
-        scanIntent.putExtra(CardIOActivity.EXTRA_KEEP_APPLICATION_THEME, true); // default: false
-
-        // MY_SCAN_REQUEST_CODE is arbitrary and is only used within this activity.
-        startActivityForResult(scanIntent, MY_SCAN_REQUEST_CODE);
+        startActivityForResult(intent, MY_SCAN_REQUEST_CODE);
     }
 //
     @Override

@@ -1,8 +1,6 @@
 package itspay.br.com.activity;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -12,14 +10,9 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TabHost;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.dexafree.materialList.card.Card;
 import com.dexafree.materialList.card.CardProvider;
@@ -45,7 +38,6 @@ import itspay.br.com.itspay.R;
 import itspay.br.com.model.Credencial;
 import itspay.br.com.model.LinhaExtratoCredencial;
 import itspay.br.com.util.Utils;
-import itspay.br.com.util.usersharepreferences.SharedPreferenceUtil;
 import jp.wasabeef.recyclerview.animators.FadeInLeftAnimator;
 import jp.wasabeef.recyclerview.animators.FlipInBottomXAnimator;
 
@@ -97,20 +89,48 @@ public class CartaoActivity extends AppCompatActivity {
         bmb = (BoomMenuButton) findViewById(R.id.bmb);
         assert bmb != null;
         bmb.setButtonEnum(ButtonEnum.TextInsideCircle);
+
         if(credencialDetalhe.getIdProdutoPlataforma()==2 || credencialDetalhe.getIdProdutoPlataforma()==3){
-            BuilderManagerFloatingButton.imageResourceIndex = 0;
-            BuilderManagerFloatingButton.imageResources = new int[]{
-                    R.drawable.menu_icon4,
-                    R.drawable.menu_icon6,
-                    R.drawable.ic_password_card
-            };
-            BuilderManagerFloatingButton.textResources = new int[]{
-                    R.string.str_icone_ajustes_seguranca,
-                    R.string.str_icone_logout,
-                    R.string.str_icone_alterar_senha
-            };
-            bmb.setPiecePlaceEnum(PiecePlaceEnum.DOT_4_1);
-            bmb.setButtonPlaceEnum(ButtonPlaceEnum.SC_4_1);
+
+            if(credencialDetalhe.getTipoConta() == 2){
+
+                BuilderManagerFloatingButton.imageResourceIndex = 0;
+                BuilderManagerFloatingButton.imageResources = new int[]{
+                        R.drawable.menu_icon4,
+                        R.drawable.ic_password_card,
+                        R.drawable.menu_icon5,
+                        R.drawable.menu_icon6,
+
+                };
+                BuilderManagerFloatingButton.textResources = new int[]{
+                        R.string.str_icone_ajustes_seguranca,
+                        R.string.str_icone_alterar_senha,
+                        R.string.str_icone_limites,
+                        R.string.str_icone_logout,
+                };
+                bmb.setPiecePlaceEnum(PiecePlaceEnum.DOT_4_1);
+                bmb.setButtonPlaceEnum(ButtonPlaceEnum.SC_4_1);
+
+        }else {
+
+                BuilderManagerFloatingButton.imageResourceIndex = 0;
+                BuilderManagerFloatingButton.imageResources = new int[]{
+                        R.drawable.menu_icon4,
+                        R.drawable.ic_password_card,
+                        R.drawable.menu_icon6,
+                };
+                BuilderManagerFloatingButton.textResources = new int[]{
+                        R.string.str_icone_ajustes_seguranca,
+                        R.string.str_icone_alterar_senha,
+                        R.string.str_icone_logout,
+                };
+                bmb.setPiecePlaceEnum(PiecePlaceEnum.DOT_4_1);
+                bmb.setButtonPlaceEnum(ButtonPlaceEnum.SC_4_1);
+
+            }
+
+
+
         }else if(credencialDetalhe.getIdProdutoPlataforma()==4){
             BuilderManagerFloatingButton.imageResourceIndex = 0;
             BuilderManagerFloatingButton.imageResources = new int[]{
@@ -118,6 +138,31 @@ public class CartaoActivity extends AppCompatActivity {
                     R.drawable.menu_icon4,
                     R.drawable.menu_icon6,
                     R.drawable.ic_password_card
+
+            if(credencialDetalhe.getTipoConta() == 2) {
+
+                BuilderManagerFloatingButton.imageResourceIndex = 0;
+                BuilderManagerFloatingButton.imageResources = new int[]{
+                        R.drawable.menu_icon3,
+                        R.drawable.menu_icon4,
+                        R.drawable.menu_icon6,
+                        R.drawable.menu_icon5
+                };
+                BuilderManagerFloatingButton.textResources = new int[]{
+                        R.string.str_icone_cartoes_virtuais,
+                        R.string.str_icone_ajustes_seguranca,
+                        R.string.str_icone_logout,
+                        R.string.str_icone_limites
+                };
+                bmb.setPiecePlaceEnum(PiecePlaceEnum.DOT_4_1);
+                bmb.setButtonPlaceEnum(ButtonPlaceEnum.SC_4_1);
+
+            }else {
+                BuilderManagerFloatingButton.imageResourceIndex = 0;
+                BuilderManagerFloatingButton.imageResources = new int[]{
+                        R.drawable.menu_icon3,
+                        R.drawable.menu_icon4,
+                        R.drawable.menu_icon6
 
             };
             BuilderManagerFloatingButton.textResources = new int[]{
@@ -128,6 +173,15 @@ public class CartaoActivity extends AppCompatActivity {
             };
             bmb.setPiecePlaceEnum(PiecePlaceEnum.DOT_4_1);
             bmb.setButtonPlaceEnum(ButtonPlaceEnum.SC_4_1);
+                };
+                BuilderManagerFloatingButton.textResources = new int[]{
+                        R.string.str_icone_cartoes_virtuais,
+                        R.string.str_icone_ajustes_seguranca,
+                        R.string.str_icone_logout
+                };
+                bmb.setPiecePlaceEnum(PiecePlaceEnum.DOT_3_1);
+                bmb.setButtonPlaceEnum(ButtonPlaceEnum.SC_3_1);
+            }
         }else{
             BuilderManagerFloatingButton.imageResourceIndex = 0;
             BuilderManagerFloatingButton.imageResources = new int[]{
@@ -150,6 +204,57 @@ public class CartaoActivity extends AppCompatActivity {
             };
             bmb.setPiecePlaceEnum(PiecePlaceEnum.DOT_7_1);
             bmb.setButtonPlaceEnum(ButtonPlaceEnum.SC_7_1);
+
+            if(credencialDetalhe.getTipoConta() == 2) {
+
+                BuilderManagerFloatingButton.imageResourceIndex = 0;
+                BuilderManagerFloatingButton.imageResources = new int[]{
+                        R.drawable.menu_icon1,
+                        R.drawable.menu_icon2,
+                        R.drawable.menu_icon3,
+                        R.drawable.menu_icon4,
+                        R.drawable.menu_icon5,
+                        R.drawable.menu_icon6,
+                        R.drawable.menu_icon6
+                };
+                BuilderManagerFloatingButton.textResources = new int[]{
+                        R.string.str_icone_transferir,
+                        R.string.str_icone_inserir_carga,
+                        R.string.str_icone_cartoes_virtuais,
+                        R.string.str_icone_ajustes_seguranca,
+                        R.string.str_icone_tarifas,
+                        R.string.str_icone_logout,
+                        R.string.str_icone_limites
+                };
+
+                bmb.setPiecePlaceEnum(PiecePlaceEnum.DOT_7_1);
+                bmb.setButtonPlaceEnum(ButtonPlaceEnum.SC_7_1);
+
+
+            }else {
+                BuilderManagerFloatingButton.imageResourceIndex = 0;
+                BuilderManagerFloatingButton.imageResources = new int[]{
+                        R.drawable.menu_icon1,
+                        R.drawable.menu_icon2,
+                        R.drawable.menu_icon3,
+                        R.drawable.menu_icon4,
+                        R.drawable.menu_icon5,
+                        R.drawable.menu_icon6
+                };
+                BuilderManagerFloatingButton.textResources = new int[]{
+                        R.string.str_icone_transferir,
+                        R.string.str_icone_inserir_carga,
+                        R.string.str_icone_cartoes_virtuais,
+                        R.string.str_icone_ajustes_seguranca,
+                        R.string.str_icone_tarifas,
+                        R.string.str_icone_logout
+                };
+                bmb.setPiecePlaceEnum(PiecePlaceEnum.DOT_6_1);
+                bmb.setButtonPlaceEnum(ButtonPlaceEnum.SC_6_1);
+
+            }
+//            bmb.setPiecePlaceEnum(PiecePlaceEnum.DOT_3_1);
+//            bmb.setButtonPlaceEnum(ButtonPlaceEnum.SC_3_1);
         }
 
         bmb.setNormalColor(Color.parseColor("#00273f"));
@@ -170,6 +275,7 @@ public class CartaoActivity extends AppCompatActivity {
                    case R.string.str_icone_cartoes_virtuais : cartoesVirtuais(); break;
                    case R.string.str_icone_ajustes_seguranca : ajustesDeSeguranca(); break;
                    case R.string.str_icone_tarifas : tarifas(); break;
+                   case R.string.str_icone_limites : limites(); break;
                    case R.string.str_icone_alterar_senha : alterarSenhaDoCartao(); break;
 
                }
@@ -328,10 +434,9 @@ public class CartaoActivity extends AppCompatActivity {
                 .setTag("eye")
                 .withProvider(new CardProvider())
                 .setLayout(R.layout.material_itspay_extrato)
-                .setTitle(linhaExtrato.getDescTransacao())
+                .setTitle(linhaExtrato.getDescLocal() == null || linhaExtrato.getDescLocal() == "" ? linhaExtrato.getDescTransacao():linhaExtrato.getDescLocal())
                 .setTitleColor(Color.BLACK)
                 .setSubtitle(linhaExtrato.getDataTransacaoFmtMes() + "")
-                .setSubtitle2(linhaExtrato.getDescSeguimento() != null ? linhaExtrato.getDescSeguimento()+ "" : "-")
                 .setSubtitleColor(Color.GRAY)
                 .setDescription((linhaExtrato.getSinal()==1?"+":"-") + " R$ "+ valorTransacaoFormatado + "")
                 .setDescriptionColor(corValorTransacao)
@@ -397,7 +502,7 @@ public class CartaoActivity extends AppCompatActivity {
 
     public void logout(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setCancelable(false).setTitle("ItsPay").setMessage("Tem certeza que deseja sair?")
+        builder.setCancelable(false).setTitle(getString(R.string.app_name)).setMessage("Tem certeza que deseja sair?")
                 .setPositiveButton("Sair", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -413,7 +518,7 @@ public class CartaoActivity extends AppCompatActivity {
     public void escolherTipoTransferencia(){
         final CharSequence[] items = {"Para outro Cartão", "Para uma Conta Corrente"};
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("ItsPay").setCancelable(true).setNegativeButton("Cancelar", null)
+        builder.setTitle(getString(R.string.app_name)).setCancelable(true).setNegativeButton("Cancelar", null)
                 .setItems(items, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -451,6 +556,12 @@ public class CartaoActivity extends AppCompatActivity {
 
     public void tarifas(){
         Intent intent = new Intent(this, TarifasActivity.class);
+        this.startActivity(intent);
+    }
+
+    public void limites(){
+        LimitesActivity.credencialDetalhe = credencialDetalhe;
+        Intent intent = new Intent(this, LimitesActivity.class);
         this.startActivity(intent);
     }
 

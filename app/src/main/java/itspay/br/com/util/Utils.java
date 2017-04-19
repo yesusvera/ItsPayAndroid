@@ -65,7 +65,14 @@ public class Utils {
     }
 
     public Card novoCartaoCredencial(final Credencial cred, final Context context) {
-        String saldo = "Saldo: R$" + cred.getSaldo();
+
+
+        DecimalFormat formatoDois = new DecimalFormat("##,###,###,##0.00", new DecimalFormatSymbols(new Locale("pt", "BR")));
+        formatoDois.setMinimumFractionDigits(2);
+        formatoDois.setParseBigDecimal (true);
+        String valorTransacaoFormatado = formatoDois.format(cred.getSaldo());
+
+        String saldo = "Saldo: R$" + valorTransacaoFormatado;
 
         final Card card = new Card.Builder(context)
                 .setTag(cred)
@@ -123,7 +130,14 @@ public class Utils {
 
 
     public static Card novoCartaoVirtual(final Credencial cred, final Context context) {
-        String saldo = "Saldo: R$" + cred.getSaldo();
+
+        DecimalFormat formatoDois = new DecimalFormat("##,###,###,##0.00", new DecimalFormatSymbols(new Locale("pt", "BR")));
+        formatoDois.setMinimumFractionDigits(2);
+        formatoDois.setParseBigDecimal (true);
+        String valorTransacaoFormatado = formatoDois.format(cred.getSaldo());
+
+        String saldo = "Saldo: R$" + valorTransacaoFormatado;
+
 
         final Card card = new Card.Builder(context)
                 .setTag("VIRTUAL CARD_ITSPAY")

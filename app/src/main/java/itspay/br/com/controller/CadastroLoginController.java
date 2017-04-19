@@ -1,7 +1,6 @@
 package itspay.br.com.controller;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.util.Log;
 
@@ -14,12 +13,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import itspay.br.com.activity.CadastroLoginActivity;
-import itspay.br.com.activity.CadastroLoginPage2Activity;
+import itspay.br.com.authentication.IdentityItsPay;
 import itspay.br.com.itspay.R;
 import itspay.br.com.model.CriarLoginResponse;
 import itspay.br.com.model.PortadorLogin;
 import itspay.br.com.services.ConnectPortadorService;
-import itspay.br.com.singleton.CadastroSingleton;
 import itspay.br.com.util.EncriptSHA512;
 import itspay.br.com.util.ItsPayConstants;
 import itspay.br.com.util.UtilsActivity;
@@ -44,6 +42,13 @@ public class CadastroLoginController  {
         SimpleDateFormat rs = new SimpleDateFormat("dd/MM/yyyy");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date convertedCurrentDate = null;
+    public void criarLogin() {
+        if(validaFormulario()){
+
+            mProgresDialogUtil.show("Cadastrandro Usuario","Aguarde.");
+            SimpleDateFormat rs = new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date convertedCurrentDate = null;
 
         String credencial = EncriptSHA512.encript(mCadastroSingleton.getmNumeroCartao().toString());
 
@@ -72,6 +77,17 @@ public class CadastroLoginController  {
             @Override
             public void onResponse(Call<CriarLoginResponse> call, Response<CriarLoginResponse> response) {
                 if(response.body()!=null) {
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                    builder.setCancelable(false).setTitle("Sucesso").setMessage("Login Criado com Sucesso")
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    activity.finish();
+                                }
+                            });
+                    builder.create().show();
+                }
                     Log.i("CRIALOGIN", response.body().toString());
                 }else if(response.errorBody() !=null){
                     try {
@@ -92,11 +108,13 @@ public class CadastroLoginController  {
                         ex.printStackTrace();
                     }
                 }
+                mProgresDialogUtil.dismiss();
             }
 
             @Override
             public void onFailure(Call<CriarLoginResponse> call, Throwable t) {
                 UtilsActivity.alertIfSocketException(t, activity);
+                mProgresDialogUtil.dismiss();
                 t.printStackTrace();
             }
         });

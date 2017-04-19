@@ -11,7 +11,6 @@ import itspay.br.com.itspay.R;
 import itspay.br.com.model.ItsPayResponse;
 import itspay.br.com.model.TrocarSenhaPortador;
 import itspay.br.com.services.ConnectPortadorService;
-import itspay.br.com.util.EncriptSHA512;
 import itspay.br.com.util.ItsPayConstants;
 import itspay.br.com.util.UtilsActivity;
 import itspay.br.com.util.usersharepreferences.SharedPreferenceUtil;
@@ -48,6 +47,8 @@ public class TrocarSenhaController extends BaseActivityController<TrocarSenhaAct
             return;
         }
 
+        mProgresDialogUtil.show("Alterando Senha.","Anguarde.");
+
         TrocarSenhaPortador trocarSenhaPortador = new TrocarSenhaPortador();
         trocarSenhaPortador.setIdProcessadora(ItsPayConstants.ID_PROCESSADORA);
         trocarSenhaPortador.setIdInstituicao(ItsPayConstants.ID_INSTITUICAO);
@@ -78,10 +79,12 @@ public class TrocarSenhaController extends BaseActivityController<TrocarSenhaAct
                 }else{
                     UtilsActivity.alertMsg(response.errorBody(), activity);
                 }
+                mProgresDialogUtil.dismiss();
             }
 
             @Override
             public void onFailure(Call<ItsPayResponse> call, Throwable t) {
+                mProgresDialogUtil.dismiss();
                 UtilsActivity.alertIfSocketException(t, activity);
             }
         });
