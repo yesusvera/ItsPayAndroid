@@ -230,7 +230,7 @@ public class LojaProdutosFragment extends Fragment {
                                 if (response.body() != null && response.body().byteStream() != null) {
 
                                     try {
-//                                        BitmapDrawable bitmapDrawable = CacheImageView.salvarCache(LojaProdutosFragment.this.getContext(), img.getIdImagem() + "", response.body().byteStream());
+                                        BitmapDrawable bitmapDrawable = CacheImageView.salvarCache(LojaProdutosFragment.this.getContext(), img.getIdImagem() + "", response.body().byteStream());
 //                                        card.getProvider().setDrawable(bitmapDrawable);
                                     } catch (Exception e) {
                                         Log.i("CacheImagem", e.toString());

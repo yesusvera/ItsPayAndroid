@@ -146,16 +146,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         }
     }
-
-    @Override
-    protected void onPostResume() {
-        super.onPostResume();
-
-//      Last Cpf Logged
-        mCpf = SharedPreferenceUtil.getStringPreference(this, "lastCPFLogged");
-        mPassword = SharedPreferenceUtil.getStringPreference(this, "lastPasswordLogged");
-    }
-
     /**
      * `
      * Listeners do Layout
@@ -256,14 +246,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         if (getIntent().getBooleanExtra("SAIR", false)) {
             finish();
         }
-
         super.onResume();
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
-            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
-        }
+//      Last Cpf Logged
+        mCpf = SharedPreferenceUtil.getStringPreference(this, "lastCPFLogged");
+        mPassword = SharedPreferenceUtil.getStringPreference(this, "lastPasswordLogged");
+
+
 
 //        Regra de view FingerPrint
 
