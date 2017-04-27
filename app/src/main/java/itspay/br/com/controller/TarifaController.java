@@ -1,8 +1,9 @@
 package itspay.br.com.controller;
 
+import com.example.aplicationlib.model.GetPerfilTarifarioResponse;
+
 import itspay.br.com.activity.TarifasActivity;
 import itspay.br.com.authentication.IdentityItsPay;
-import itspay.br.com.model.GetPerfilTarifarioResponse;
 import itspay.br.com.services.ConnectPortadorService;
 import itspay.br.com.util.UtilsActivity;
 import retrofit2.Call;

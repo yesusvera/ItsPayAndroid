@@ -5,16 +5,17 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.widget.EditText;
 
+import com.example.aplicationlib.model.ItsPayResponse;
+import com.example.aplicationlib.model.TrocarSenhaPortador;
+import com.example.aplicationlib.util.ItsPayConstants;
+import com.example.aplicationlib.util.usersharepreferences.SharedPreferenceUtil;
+import com.example.aplicationlib.util.validations.ValidationsForms;
+
 import itspay.br.com.activity.TrocarSenhaActivity;
 import itspay.br.com.authentication.IdentityItsPay;
 import itspay.br.com.itspay.R;
-import itspay.br.com.model.ItsPayResponse;
-import itspay.br.com.model.TrocarSenhaPortador;
 import itspay.br.com.services.ConnectPortadorService;
-import itspay.br.com.util.ItsPayConstants;
 import itspay.br.com.util.UtilsActivity;
-import itspay.br.com.util.usersharepreferences.SharedPreferenceUtil;
-import itspay.br.com.util.validations.ValidationsForms;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

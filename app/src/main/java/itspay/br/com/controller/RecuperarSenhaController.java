@@ -4,6 +4,11 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.util.Log;
 
+import com.example.aplicationlib.model.RecuperarLoginPortador;
+import com.example.aplicationlib.model.RecuperarSenhaResponse;
+import com.example.aplicationlib.util.ItsPayConstants;
+import com.example.aplicationlib.util.validations.ValidationsForms;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -14,12 +19,8 @@ import java.util.Date;
 
 import itspay.br.com.activity.RecuperarSenhaActivity;
 import itspay.br.com.itspay.R;
-import itspay.br.com.model.RecuperarLoginPortador;
-import itspay.br.com.model.RecuperarSenhaResponse;
 import itspay.br.com.services.ConnectPortadorService;
-import itspay.br.com.util.ItsPayConstants;
 import itspay.br.com.util.UtilsActivity;
-import itspay.br.com.util.validations.ValidationsForms;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

@@ -5,14 +5,15 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.widget.EditText;
 
+import com.example.aplicationlib.model.TrocarPinRequest;
+import com.example.aplicationlib.util.EncriptSHA512;
+import com.example.aplicationlib.util.validations.ValidationsForms;
+
 import itspay.br.com.activity.TrocarSenhaCartaoActivity;
 import itspay.br.com.authentication.IdentityItsPay;
 import itspay.br.com.itspay.R;
-import itspay.br.com.model.TrocarPinRequest;
 import itspay.br.com.services.ConnectPortadorService;
-import itspay.br.com.util.EncriptSHA512;
 import itspay.br.com.util.UtilsActivity;
-import itspay.br.com.util.validations.ValidationsForms;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

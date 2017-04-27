@@ -12,15 +12,15 @@ import android.widget.TextView;
 import com.dexafree.materialList.card.Card;
 import com.dexafree.materialList.card.CardProvider;
 import com.dexafree.materialList.view.MaterialListView;
+import com.example.aplicationlib.model.Produto;
+import com.example.aplicationlib.model.ProdutoCarrinho;
+import com.example.aplicationlib.model.Unidade;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import itspay.br.com.authentication.IdentityItsPay;
 import itspay.br.com.itspay.R;
-import itspay.br.com.model.Produto;
-import itspay.br.com.model.ProdutoCarrinho;
-import itspay.br.com.model.Unidade;
 import itspay.br.com.services.ConnectPortadorService;
 import itspay.br.com.singleton.CarrinhoSingleton;
 import itspay.br.com.util.Utils;

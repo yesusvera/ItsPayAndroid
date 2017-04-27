@@ -90,6 +90,7 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="prompt_cnpj">CNPJ</string>
     <string name="prompt_cpf">CPF</string>
     <string name="prompt_novo_email">Email Desejável</string>
     <string name="prompt_numero_cartao">Número do Cartão</string>
@@ -257,7 +258,6 @@
     <string name="content_to2_mock">Woodside, NY 11101</string>
     <string name="title_activity_main2">Main2Activity</string>
 
-    <string name="mensagem_not_conection">Você esta sem conexão a Internet.</string>
 
 
     <!--<string name="info_email">creditoecobranca@bahamascard.com.br</string>-->

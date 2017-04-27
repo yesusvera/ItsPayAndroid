@@ -2,16 +2,17 @@ package itspay.br.com.controller;
 
 import android.content.Intent;
 
+import com.example.aplicationlib.model.BoletoCarga;
+import com.example.aplicationlib.model.GerarBoletoCarga;
+import com.example.aplicationlib.util.ItsPayConstants;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import itspay.br.com.activity.CargaInseridaActivity;
 import itspay.br.com.activity.InserirCargaActivity;
 import itspay.br.com.authentication.IdentityItsPay;
-import itspay.br.com.model.BoletoCarga;
-import itspay.br.com.model.GerarBoletoCarga;
 import itspay.br.com.services.ConnectPortadorService;
-import itspay.br.com.util.ItsPayConstants;
 import itspay.br.com.util.UtilsActivity;
 import retrofit2.Call;
 import retrofit2.Callback;

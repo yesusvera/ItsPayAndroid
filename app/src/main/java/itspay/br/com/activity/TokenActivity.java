@@ -7,9 +7,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.aplicationlib.util.notification.CustomNotification;
+
 import itspay.br.com.controller.TokenController;
 import itspay.br.com.itspay.R;
-import itspay.br.com.util.notification.CustomNotification;
+
 
 
 public class TokenActivity extends AppCompatActivity {
@@ -24,18 +26,18 @@ public class TokenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_tokenfragment);
 
-        mTokenController.requestCode();
+//        mTokenController.requestCode();
 
         mButonOk = (Button)findViewById(R.id.btn_confirma_token);
         mEdToken = (EditText)findViewById(R.id.ed_token);
         mTxtLinkNovoToken = (TextView)findViewById(R.id.txtViewTermosDeUso);
 
-            moke();
 
         mTxtLinkNovoToken.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                moke();
+                mTokenController.requestCode();
+
             }
         });
         mButonOk.setOnClickListener(new View.OnClickListener() {

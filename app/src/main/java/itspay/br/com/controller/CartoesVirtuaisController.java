@@ -2,9 +2,10 @@ package itspay.br.com.controller;
 
 import android.util.Log;
 
+import com.example.aplicationlib.model.GetCredenciaisResponse;
+
 import itspay.br.com.activity.CartoesVirtuaisActivity;
 import itspay.br.com.authentication.IdentityItsPay;
-import itspay.br.com.model.GetCredenciaisResponse;
 import itspay.br.com.services.ConnectPortadorService;
 import itspay.br.com.util.UtilsActivity;
 import retrofit2.Call;

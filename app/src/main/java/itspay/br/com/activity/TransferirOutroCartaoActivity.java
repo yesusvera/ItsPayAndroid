@@ -13,14 +13,14 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.blackcat.currencyedittext.CurrencyEditText;
+import com.example.aplicationlib.model.Credencial;
+import com.example.aplicationlib.util.mask.MaskEditTextChangedListener;
 
 import java.util.Locale;
 
 import itspay.br.com.controller.TransferirOutroCartaoController;
 import itspay.br.com.itspay.R;
-import itspay.br.com.model.Credencial;
 import itspay.br.com.util.Utils;
-import itspay.br.com.util.mask.MaskEditTextChangedListener;
 
 public class TransferirOutroCartaoActivity extends AppCompatActivity {
 

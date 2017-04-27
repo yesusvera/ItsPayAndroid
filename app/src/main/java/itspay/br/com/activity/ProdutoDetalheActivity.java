@@ -10,6 +10,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.aplicationlib.model.Caracteristica;
+import com.example.aplicationlib.model.Imagen;
+import com.example.aplicationlib.model.ProdutoCarrinho;
+import com.example.aplicationlib.model.ProdutoDetalhe;
+import com.example.aplicationlib.model.Referencia;
+import com.example.aplicationlib.util.cache.CacheImageView;
+
 import java.util.ArrayList;
 
 import cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager;
@@ -17,16 +24,10 @@ import itspay.br.com.adapter.MainPagerAdapter;
 import itspay.br.com.authentication.IdentityItsPay;
 import itspay.br.com.controller.ProdutoDetalheController;
 import itspay.br.com.itspay.R;
-import itspay.br.com.model.Caracteristica;
-import itspay.br.com.model.Imagen;
-import itspay.br.com.model.ProdutoCarrinho;
-import itspay.br.com.model.ProdutoDetalhe;
-import itspay.br.com.model.Referencia;
 import itspay.br.com.services.ConnectPortadorService;
 import itspay.br.com.singleton.CarrinhoSingleton;
 import itspay.br.com.util.Utils;
 import itspay.br.com.util.UtilsActivity;
-import itspay.br.com.util.cache.CacheImageView;
 import me.relex.circleindicator.CircleIndicator;
 import okhttp3.ResponseBody;
 import retrofit2.Call;

@@ -11,13 +11,14 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.example.aplicationlib.model.Pedido;
 import com.ramotion.foldingcell.FoldingCell;
 
 import java.util.HashSet;
 import java.util.List;
 
 import itspay.br.com.itspay.R;
-import itspay.br.com.model.Pedido;
+
 import itspay.br.com.util.Utils;
 
 /**

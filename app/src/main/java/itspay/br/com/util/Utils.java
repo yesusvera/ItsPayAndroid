@@ -11,6 +11,8 @@ import android.widget.EditText;
 
 import com.dexafree.materialList.card.Card;
 import com.dexafree.materialList.card.CardProvider;
+import com.example.aplicationlib.model.Credencial;
+import com.example.aplicationlib.util.cache.CacheImageView;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -19,9 +21,7 @@ import java.util.Set;
 
 import itspay.br.com.authentication.IdentityItsPay;
 import itspay.br.com.itspay.R;
-import itspay.br.com.model.Credencial;
 import itspay.br.com.services.ConnectPortadorService;
-import itspay.br.com.util.cache.CacheImageView;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;

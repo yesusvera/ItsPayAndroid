@@ -1,12 +1,14 @@
 package itspay.br.com.controller;
 
+import com.example.aplicationlib.model.ParceiroResponse;
+import com.example.aplicationlib.util.ItsPayConstants;
+
 import java.util.ArrayList;
 
 import itspay.br.com.authentication.IdentityItsPay;
 import itspay.br.com.fragment.LojaProdutosFragment;
-import itspay.br.com.model.ParceiroResponse;
 import itspay.br.com.services.ConnectPortadorService;
-import itspay.br.com.util.ItsPayConstants;
+
 import itspay.br.com.util.UtilsActivity;
 import retrofit2.Call;
 import retrofit2.Callback;

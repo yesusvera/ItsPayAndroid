@@ -7,6 +7,11 @@ import android.os.Build;
 import android.util.Log;
 import android.view.View;
 
+import com.example.aplicationlib.model.FazerLoginPortador;
+import com.example.aplicationlib.model.FazerLoginPortadorResponse;
+import com.example.aplicationlib.util.ItsPayConstants;
+import com.example.aplicationlib.util.usersharepreferences.SharedPreferenceUtil;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -15,12 +20,8 @@ import java.io.IOException;
 import itspay.br.com.activity.LoginActivity;
 import itspay.br.com.activity.MeusCartoesActivity;
 import itspay.br.com.authentication.IdentityItsPay;
-import itspay.br.com.model.FazerLoginPortador;
-import itspay.br.com.model.FazerLoginPortadorResponse;
 import itspay.br.com.services.ConnectPortadorService;
-import itspay.br.com.util.ItsPayConstants;
 import itspay.br.com.util.UtilsActivity;
-import itspay.br.com.util.usersharepreferences.SharedPreferenceUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

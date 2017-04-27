@@ -13,11 +13,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.aplicationlib.model.Credencial;
+import com.example.aplicationlib.util.notification.CustomNotification;
+
 import itspay.br.com.controller.TrocarSenhaCartaoController;
 import itspay.br.com.itspay.R;
-import itspay.br.com.model.Credencial;
-import itspay.br.com.util.notification.CustomNotification;
-import itspay.br.com.util.usersharepreferences.SharedPreferenceUtil;
+
 
 public class TrocarSenhaCartaoActivity extends AppCompatActivity {
 

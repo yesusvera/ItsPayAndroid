@@ -12,6 +12,9 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.blackcat.currencyedittext.CurrencyEditText;
+import com.example.aplicationlib.model.Banco;
+import com.example.aplicationlib.model.Credencial;
+import com.example.aplicationlib.util.mask.MaskEditTextChangedListener;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import java.util.Locale;
@@ -19,10 +22,7 @@ import java.util.Locale;
 import itspay.br.com.authentication.IdentityItsPay;
 import itspay.br.com.controller.TransferirContaCorrenteController;
 import itspay.br.com.itspay.R;
-import itspay.br.com.model.Banco;
-import itspay.br.com.model.Credencial;
 import itspay.br.com.util.Utils;
-import itspay.br.com.util.mask.MaskEditTextChangedListener;
 
 public class TransferirContaCorrenteActivity extends AppCompatActivity {
 

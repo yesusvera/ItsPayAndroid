@@ -1,7 +1,8 @@
 package itspay.br.com.authentication;
 
-import itspay.br.com.model.FazerLoginPortador;
-import itspay.br.com.model.FazerLoginPortadorResponse;
+
+import com.example.aplicationlib.model.FazerLoginPortador;
+import com.example.aplicationlib.model.FazerLoginPortadorResponse;
 
 /**
  * Created by yesus on 18/12/16.

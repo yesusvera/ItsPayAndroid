@@ -9,9 +9,8 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/aplicationlib" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/card.io-5.4.2" />
-            <option value="$PROJECT_DIR$/folding-cell" />
             <option value="$PROJECT_DIR$/materialList" />
             <option value="$PROJECT_DIR$/tutoriallibrary" />
           </set>

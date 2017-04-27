@@ -1,25 +1,33 @@
 package itspay.br.com.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
+import android.widget.RadioButton;
+
+import com.example.aplicationlib.util.mask.MaskEditTextChangedListener;
 
 import io.card.payment.CardIOActivity;
 import io.card.payment.CreditCard;
 import itspay.br.com.controller.CadastroLoginController;
 import itspay.br.com.itspay.R;
-import itspay.br.com.util.mask.MaskEditTextChangedListener;
+import itspay.br.com.singleton.CadastroSingleton;
+import itspay.br.com.util.Utils;
+
 
 /**
  * Created by yesus on 14/12/16.
  */
 public class CadastroLoginActivity extends AppCompatActivity {
+
+    private TextWatcher cpfMask;
+    private TextWatcher cnpjMask;
 
     private EditText numeroCartao;
     private EditText dataNascimento;
@@ -34,7 +42,6 @@ public class CadastroLoginActivity extends AppCompatActivity {
 
     private CadastroLoginController mCadastroLoginController;
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,21 +53,16 @@ public class CadastroLoginActivity extends AppCompatActivity {
         proximaPagina.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                validView();
+//                validView();
+                mCadastroLoginController.verificarLogin(CadastroLoginActivity.this);
             }
         });
     }
 
-    private void validView(){
-        if (mCadastroLoginController.validaFormulario1(this)){
-            Intent intent = new Intent(this,TokenActivity.class);
-            startActivity(intent);
-        }
-    }
-
     private void initView(){
 
-        mCadastroLoginController = new CadastroLoginController(getBaseContext());
+//        initMask
+        mCadastroLoginController = new CadastroLoginController(this);
         mCadastroSingleton = CadastroSingleton.getInstance();
 
         // Attach the page change listener inside the activity
@@ -72,17 +74,23 @@ public class CadastroLoginActivity extends AppCompatActivity {
         scanButton = (ImageButton) findViewById(R.id.scanCardButton);
         proximaPagina = (Button)findViewById(R.id.btn_next_page);
 
+        cpfMask = new MaskEditTextChangedListener("###.###.###-##", cpf);
+        cnpjMask = new MaskEditTextChangedListener("##.###.###/####-##", cpf);
+
+
         //        (61)99542-1414
+
+        cpf.setHint("CPF/CNPJ");
 
         Utils.nextInputOnMaxLength(this,numeroCartao,dataNascimento,19);
         Utils.nextInputOnMaxLength(this,dataNascimento,cpf,10);
-        Utils.nextInputOnMaxLength(this,cpf,numerocelular,14);
+
+        configMask(cpf,numerocelular,cpfMask,cnpjMask,getString(R.string.prompt_cpf));
 
         Utils.hideSoftKeyboardOnMaxLength(this,numerocelular,14);
 
         numerocelular.addTextChangedListener(new MaskEditTextChangedListener("(##)#####-####", numerocelular));
         numeroCartao.addTextChangedListener(new MaskEditTextChangedListener("####.####.####.####", numeroCartao));
-        cpf.addTextChangedListener(new MaskEditTextChangedListener("###.###.###-##", cpf));
         dataNascimento.addTextChangedListener(new MaskEditTextChangedListener("##/##/####", dataNascimento));
 
     }
@@ -152,6 +160,34 @@ public class CadastroLoginActivity extends AppCompatActivity {
             resultStr = "Scan was canceled.";
         }
 
+
+    }
+
+    public void onRadioButtonClicked(View view) {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
+
+        // Check which radio button was clicked
+        switch(view.getId()) {
+            case R.id.rb_cpf:
+                if (checked)
+                    configMask(cpf,numerocelular,cpfMask,cnpjMask,getString(R.string.prompt_cpf));
+                break;
+            case R.id.rb_cnpj:
+                if (checked)
+                    configMask(cpf,numerocelular,cnpjMask,cpfMask,getString(R.string.prompt_cnpj));
+                break;
+        }
+    }
+
+
+    public void configMask(EditText editText,EditText nextEditText,
+                           TextWatcher add, TextWatcher remove ,
+                            String hint){
+
+        editText.removeTextChangedListener(remove);
+        editText.addTextChangedListener(add);
+        editText.setHint(hint);
 
     }
 

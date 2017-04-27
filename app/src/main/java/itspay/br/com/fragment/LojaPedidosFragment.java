@@ -12,6 +12,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.aplicationlib.model.Pedido;
+import com.example.aplicationlib.model.PedidoDetalhe;
 import com.ramotion.foldingcell.FoldingCell;
 
 import java.util.ArrayList;
@@ -20,8 +22,6 @@ import java.util.Arrays;
 import itspay.br.com.adapter.FoldingCellPedidosAdapter;
 import itspay.br.com.controller.LojaPedidoController;
 import itspay.br.com.itspay.R;
-import itspay.br.com.model.Pedido;
-import itspay.br.com.model.PedidoDetalhe;
 import itspay.br.com.util.Utils;
 
 /**

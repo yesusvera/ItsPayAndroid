@@ -1,10 +1,11 @@
 package itspay.br.com.controller;
 
+import com.example.aplicationlib.model.EnderecoPessoa;
+import com.example.aplicationlib.util.ItsPayConstants;
+
 import itspay.br.com.activity.EnderecoActivity;
 import itspay.br.com.authentication.IdentityItsPay;
-import itspay.br.com.model.EnderecoPessoa;
 import itspay.br.com.services.ConnectPortadorService;
-import itspay.br.com.util.ItsPayConstants;
 import itspay.br.com.util.UtilsActivity;
 import retrofit2.Call;
 import retrofit2.Callback;

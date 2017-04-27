@@ -3,18 +3,19 @@ package itspay.br.com.controller;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 
+import com.example.aplicationlib.model.BuscarEmailResponse;
+import com.example.aplicationlib.model.ItsPayResponse;
+import com.example.aplicationlib.model.TrocarEmail;
+import com.example.aplicationlib.util.ItsPayConstants;
+import com.example.aplicationlib.util.validations.ValidationsForms;
+
 import java.io.IOException;
 
 import itspay.br.com.activity.TrocarEmailActivity;
 import itspay.br.com.authentication.IdentityItsPay;
 import itspay.br.com.itspay.R;
-import itspay.br.com.model.BuscarEmailResponse;
-import itspay.br.com.model.ItsPayResponse;
-import itspay.br.com.model.TrocarEmail;
 import itspay.br.com.services.ConnectPortadorService;
-import itspay.br.com.util.ItsPayConstants;
 import itspay.br.com.util.UtilsActivity;
-import itspay.br.com.util.validations.ValidationsForms;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

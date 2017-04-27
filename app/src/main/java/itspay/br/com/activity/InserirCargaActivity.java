@@ -6,12 +6,12 @@ import android.view.View;
 import android.widget.Button;
 
 import com.blackcat.currencyedittext.CurrencyEditText;
+import com.example.aplicationlib.model.Credencial;
 
 import java.util.Locale;
 
 import itspay.br.com.controller.InserirCargaController;
 import itspay.br.com.itspay.R;
-import itspay.br.com.model.Credencial;
 
 public class InserirCargaActivity extends AppCompatActivity {
 

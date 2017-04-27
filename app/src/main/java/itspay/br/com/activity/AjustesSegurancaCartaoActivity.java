@@ -13,9 +13,10 @@ import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.example.aplicationlib.model.Credencial;
+
 import itspay.br.com.controller.AjustesSegurancaoCartaoController;
 import itspay.br.com.itspay.R;
-import itspay.br.com.model.Credencial;
 
 public class AjustesSegurancaCartaoActivity extends AppCompatActivity {
 

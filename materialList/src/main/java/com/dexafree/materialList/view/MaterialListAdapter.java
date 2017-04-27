@@ -1,5 +1,8 @@
+
 package com.dexafree.materialList.view;
 
+import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +13,9 @@ import android.view.ViewGroup;
 import com.dexafree.materialList.card.Card;
 import com.dexafree.materialList.card.CardLayout;
 import com.dexafree.materialList.card.event.DismissEvent;
+import com.example.aplicationlib.model.Imagen;
+import com.example.aplicationlib.model.ProdutoDetalhe;
+import com.example.aplicationlib.util.cache.CacheImageView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,6 +29,7 @@ public class MaterialListAdapter extends RecyclerView.Adapter<MaterialListAdapte
     private final MaterialListView.OnSwipeAnimation mSwipeAnimation;
     private final MaterialListView.OnAdapterItemsChanged mItemAnimation;
     private final List<Card> mCardList = new ArrayList<>();
+    private Context mContext;
 
     public MaterialListAdapter(@NonNull final MaterialListView.OnSwipeAnimation swipeAnimation,
                                @NonNull final MaterialListView.OnAdapterItemsChanged itemAnimation) {
@@ -45,6 +52,7 @@ public class MaterialListAdapter extends RecyclerView.Adapter<MaterialListAdapte
 
     @Override
     public ViewHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
+        mContext = parent.getContext();
         return new ViewHolder(LayoutInflater
                 .from(parent.getContext())
                 .inflate(viewType, parent, false));
@@ -52,7 +60,24 @@ public class MaterialListAdapter extends RecyclerView.Adapter<MaterialListAdapte
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        holder.build(getCard(position));
+        Card card = getCard(position);
+        Object obj = card.getTag();
+
+        try {
+            if (obj.getClass().getSimpleName().equals(ProdutoDetalhe.class.getSimpleName())) {
+
+                Imagen img = ((ProdutoDetalhe) obj).getProduto().getImagens()[0];
+                BitmapDrawable bitmapDrawable = CacheImageView.lerCacheBitmapDraw(mContext, img.getIdImagem() + "");
+
+                if (bitmapDrawable != null) {
+                    card.getProvider().setDrawable(bitmapDrawable);
+                }
+
+            }
+        }catch(Exception e){
+//            e.printStackTrace();
+        }
+        holder.build(card);
     }
 
     @Override

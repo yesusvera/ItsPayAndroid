@@ -3,17 +3,19 @@ package itspay.br.com.controller;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 
+import com.example.aplicationlib.model.FazerPedidoMKTPlace;
+import com.example.aplicationlib.model.ItemPedidoReduzido;
+import com.example.aplicationlib.model.ProdutoCarrinho;
+import com.example.aplicationlib.util.EncriptSHA512;
+import com.example.aplicationlib.util.ItsPayConstants;
+
 import java.util.ArrayList;
 
 import itspay.br.com.activity.PagamentoActivity;
 import itspay.br.com.authentication.IdentityItsPay;
-import itspay.br.com.model.FazerPedidoMKTPlace;
-import itspay.br.com.model.ItemPedidoReduzido;
-import itspay.br.com.model.ProdutoCarrinho;
 import itspay.br.com.services.ConnectPortadorService;
 import itspay.br.com.singleton.CarrinhoSingleton;
-import itspay.br.com.util.EncriptSHA512;
-import itspay.br.com.util.ItsPayConstants;
+
 import itspay.br.com.util.UtilsActivity;
 import retrofit2.Call;
 import retrofit2.Callback;

@@ -4,8 +4,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
+import com.example.aplicationlib.model.Credencial;
+
 import itspay.br.com.itspay.R;
-import itspay.br.com.model.Credencial;
 import itspay.br.com.util.Utils;
 
 public class LimitesActivity extends AppCompatActivity {

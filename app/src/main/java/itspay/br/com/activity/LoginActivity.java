@@ -40,6 +40,12 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.aplicationlib.util.fingerprint.CustomFingerPrint;
+import com.example.aplicationlib.util.fingerprint.ObserverResultFingerPrintInterface;
+import com.example.aplicationlib.util.mask.MaskEditTextChangedListener;
+import com.example.aplicationlib.util.usersharepreferences.SharedPreferenceUtil;
+import com.example.aplicationlib.util.validations.ValidationsForms;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,11 +53,6 @@ import itspay.br.com.controller.LoginController;
 import itspay.br.com.itspay.R;
 import itspay.br.com.singleton.CarrinhoSingleton;
 import itspay.br.com.util.Utils;
-import itspay.br.com.util.fingerprint.CustomFingerPrint;
-import itspay.br.com.util.fingerprint.ObserverResultFingerPrintInterface;
-import itspay.br.com.util.mask.MaskEditTextChangedListener;
-import itspay.br.com.util.usersharepreferences.SharedPreferenceUtil;
-import itspay.br.com.util.validations.ValidationsForms;
 
 /**
  * Created by yesus on 12/12/16.

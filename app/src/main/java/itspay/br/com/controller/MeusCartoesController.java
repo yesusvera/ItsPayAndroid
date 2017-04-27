@@ -9,14 +9,15 @@ import android.net.Uri;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 
+import com.example.aplicationlib.model.GetCredenciaisResponse;
+import com.example.aplicationlib.util.ItsPayConstants;
+
 import itspay.br.com.activity.MeusCartoesActivity;
 import itspay.br.com.activity.TrocarEmailActivity;
 import itspay.br.com.activity.TrocarSenhaActivity;
 import itspay.br.com.authentication.IdentityItsPay;
 import itspay.br.com.itspay.R;
-import itspay.br.com.model.GetCredenciaisResponse;
 import itspay.br.com.services.ConnectPortadorService;
-import itspay.br.com.util.ItsPayConstants;
 import itspay.br.com.util.UtilsActivity;
 import okhttp3.ResponseBody;
 import retrofit2.Call;

@@ -1,6 +1,7 @@
 package itspay.br.com.activity;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -10,9 +11,13 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.TabHost;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dexafree.materialList.card.Card;
 import com.dexafree.materialList.card.CardProvider;
@@ -20,6 +25,9 @@ import com.dexafree.materialList.card.OnActionClickListener;
 import com.dexafree.materialList.card.action.TextViewAction;
 import com.dexafree.materialList.listeners.RecyclerItemClickListener;
 import com.dexafree.materialList.view.MaterialListView;
+import com.example.aplicationlib.model.Credencial;
+import com.example.aplicationlib.model.LinhaExtratoCredencial;
+import com.example.aplicationlib.util.usersharepreferences.SharedPreferenceUtil;
 import com.nightonke.boommenu.BoomButtons.BoomButton;
 import com.nightonke.boommenu.BoomButtons.ButtonPlaceEnum;
 import com.nightonke.boommenu.BoomMenuButton;
@@ -35,8 +43,6 @@ import java.util.Locale;
 
 import itspay.br.com.controller.CartaoController;
 import itspay.br.com.itspay.R;
-import itspay.br.com.model.Credencial;
-import itspay.br.com.model.LinhaExtratoCredencial;
 import itspay.br.com.util.Utils;
 import jp.wasabeef.recyclerview.animators.FadeInLeftAnimator;
 import jp.wasabeef.recyclerview.animators.FlipInBottomXAnimator;
@@ -132,12 +138,7 @@ public class CartaoActivity extends AppCompatActivity {
 
 
         }else if(credencialDetalhe.getIdProdutoPlataforma()==4){
-            BuilderManagerFloatingButton.imageResourceIndex = 0;
-            BuilderManagerFloatingButton.imageResources = new int[]{
-                    R.drawable.menu_icon3,
-                    R.drawable.menu_icon4,
-                    R.drawable.menu_icon6,
-                    R.drawable.ic_password_card
+
 
             if(credencialDetalhe.getTipoConta() == 2) {
 
@@ -179,33 +180,9 @@ public class CartaoActivity extends AppCompatActivity {
                         R.string.str_icone_ajustes_seguranca,
                         R.string.str_icone_logout
                 };
-                bmb.setPiecePlaceEnum(PiecePlaceEnum.DOT_3_1);
-                bmb.setButtonPlaceEnum(ButtonPlaceEnum.SC_3_1);
-            }
-        }else{
-            BuilderManagerFloatingButton.imageResourceIndex = 0;
-            BuilderManagerFloatingButton.imageResources = new int[]{
-                    R.drawable.menu_icon1,
-                    R.drawable.menu_icon2,
-                    R.drawable.menu_icon3,
-                    R.drawable.menu_icon4,
-                    R.drawable.menu_icon5,
-                    R.drawable.menu_icon6,
-                    R.drawable.ic_password_card
-            };
-            BuilderManagerFloatingButton.textResources = new int[]{
-                    R.string.str_icone_transferir,
-                    R.string.str_icone_inserir_carga,
-                    R.string.str_icone_cartoes_virtuais,
-                    R.string.str_icone_ajustes_seguranca,
-                    R.string.str_icone_tarifas,
-                    R.string.str_icone_logout,
-                    R.string.str_icone_alterar_senha
-            };
-            bmb.setPiecePlaceEnum(PiecePlaceEnum.DOT_7_1);
-            bmb.setButtonPlaceEnum(ButtonPlaceEnum.SC_7_1);
 
-            if(credencialDetalhe.getTipoConta() == 2) {
+        }else {
+            if (credencialDetalhe.getTipoConta() == 2) {
 
                 BuilderManagerFloatingButton.imageResourceIndex = 0;
                 BuilderManagerFloatingButton.imageResources = new int[]{
@@ -231,7 +208,7 @@ public class CartaoActivity extends AppCompatActivity {
                 bmb.setButtonPlaceEnum(ButtonPlaceEnum.SC_7_1);
 
 
-            }else {
+            } else {
                 BuilderManagerFloatingButton.imageResourceIndex = 0;
                 BuilderManagerFloatingButton.imageResources = new int[]{
                         R.drawable.menu_icon1,

@@ -3,13 +3,14 @@ package itspay.br.com.controller;
 import android.text.format.DateFormat;
 import android.view.View;
 
+import com.example.aplicationlib.model.Credencial;
+import com.example.aplicationlib.model.LinhaExtratoCredencial;
+
 import java.util.Calendar;
 import java.util.Date;
 
 import itspay.br.com.activity.CartaoActivity;
 import itspay.br.com.authentication.IdentityItsPay;
-import itspay.br.com.model.Credencial;
-import itspay.br.com.model.LinhaExtratoCredencial;
 import itspay.br.com.services.ConnectPortadorService;
 import itspay.br.com.util.UtilsActivity;
 import retrofit2.Call;

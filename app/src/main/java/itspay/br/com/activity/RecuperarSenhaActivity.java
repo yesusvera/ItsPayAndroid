@@ -9,9 +9,11 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.aplicationlib.util.mask.MaskEditTextChangedListener;
+
 import itspay.br.com.controller.RecuperarSenhaController;
 import itspay.br.com.itspay.R;
-import itspay.br.com.util.mask.MaskEditTextChangedListener;
+
 
 public class RecuperarSenhaActivity extends AppCompatActivity {
 

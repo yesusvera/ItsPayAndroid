@@ -1,8 +1,9 @@
 package itspay.br.com.controller;
 
+import com.example.aplicationlib.model.GetFormasEnvioResponse;
+
 import itspay.br.com.activity.FormaEnvioActivity;
 import itspay.br.com.authentication.IdentityItsPay;
-import itspay.br.com.model.GetFormasEnvioResponse;
 import itspay.br.com.services.ConnectPortadorService;
 import itspay.br.com.singleton.CarrinhoSingleton;
 import itspay.br.com.util.UtilsActivity;

@@ -2,7 +2,8 @@ package itspay.br.com.controller;
 
 import android.app.Activity;
 
-import itspay.br.com.util.ProgresDialogUtil;
+import com.example.aplicationlib.util.ProgresDialogUtil;
+
 
 /**
  * Created by yesus on 18/12/16.

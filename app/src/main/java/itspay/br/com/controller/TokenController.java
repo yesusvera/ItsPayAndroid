@@ -2,17 +2,18 @@ package itspay.br.com.controller;
 
 import android.content.Intent;
 
+import com.example.aplicationlib.model.RequestToken;
+import com.example.aplicationlib.model.RequestTokenResponse;
+import com.example.aplicationlib.model.ValidToken;
+import com.example.aplicationlib.util.ItsPayConstants;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import itspay.br.com.activity.CadastroLoginPage2Activity;
 import itspay.br.com.activity.TokenActivity;
-import itspay.br.com.model.RequestToken;
-import itspay.br.com.model.RequestTokenResponse;
-import itspay.br.com.model.ValidToken;
 import itspay.br.com.services.ConnectPortadorService;
 import itspay.br.com.singleton.CadastroSingleton;
-import itspay.br.com.util.ItsPayConstants;
 import itspay.br.com.util.UtilsActivity;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -25,20 +26,25 @@ import retrofit2.Response;
 
 public class TokenController  extends BaseActivityController<TokenActivity>  {
 
-    String mKey;
+    CadastroSingleton mCadastroSingleton;
+
     public TokenController(TokenActivity activity) {
         super(activity);
+        mCadastroSingleton = CadastroSingleton.getInstance();
     }
 
     public void requestCode(){
 
-        mKey = CadastroSingleton.getInstance().getmNumerocelular() +
-                new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").format(new Date());
+        mProgresDialogUtil.show("Token","Requisitando Token!");
+
+        mCadastroSingleton.setmKey(CadastroSingleton.getInstance().getmNumerocelular() +
+                new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").format(new Date()));
+
 
         final RequestToken requestTokenPortador = new RequestToken();
         requestTokenPortador.setIdInstituicao(ItsPayConstants.ID_INSTITUICAO);
         requestTokenPortador.setIdProcessadora(ItsPayConstants.ID_PROCESSADORA);
-        requestTokenPortador.setChave(mKey);
+        requestTokenPortador.setChave(mCadastroSingleton.getmKey());
         requestTokenPortador.setCelular(CadastroSingleton.getInstance().getmNumerocelular());
 
         Call<RequestTokenResponse> call =
@@ -48,8 +54,9 @@ public class TokenController  extends BaseActivityController<TokenActivity>  {
             @Override
             public void onResponse(Call<RequestTokenResponse> call, Response<RequestTokenResponse> response) {
                 if(response.body()!=null){
-
+                    mProgresDialogUtil.dismiss();
                 }else{
+                    mProgresDialogUtil.dismiss();
                     UtilsActivity.alertMsg(response.errorBody(), activity);
                 }
             }
@@ -57,6 +64,7 @@ public class TokenController  extends BaseActivityController<TokenActivity>  {
             @Override
             public void onFailure(Call<RequestTokenResponse> call, Throwable t) {
                 UtilsActivity.alertIfSocketException(t, activity);
+                mProgresDialogUtil.dismiss();
                 t.printStackTrace();
             }
         });
@@ -66,7 +74,7 @@ public class TokenController  extends BaseActivityController<TokenActivity>  {
     public void validToken(String token){
 
         final ValidToken validTokenPortador = new ValidToken();
-        validTokenPortador.setChaveExterna(mKey);
+        validTokenPortador.setChaveExterna(mCadastroSingleton.getmKey());
         validTokenPortador.setToken(token);
 
 
@@ -79,6 +87,7 @@ public class TokenController  extends BaseActivityController<TokenActivity>  {
                 if(response.body()!=null){
                     Intent intent = new Intent(activity,CadastroLoginPage2Activity.class);
                     activity.startActivity(intent);
+                    mCadastroSingleton.setmKey("");
 
                 }else{
                     UtilsActivity.alertMsg(response.errorBody(), activity);

@@ -1,10 +1,11 @@
 package itspay.br.com.controller;
 
+import com.example.aplicationlib.model.GetCredenciaisResponse;
+import com.example.aplicationlib.util.ItsPayConstants;
+
 import itspay.br.com.activity.CartoesLojaActivity;
 import itspay.br.com.authentication.IdentityItsPay;
-import itspay.br.com.model.GetCredenciaisResponse;
 import itspay.br.com.services.ConnectPortadorService;
-import itspay.br.com.util.ItsPayConstants;
 import itspay.br.com.util.UtilsActivity;
 import retrofit2.Call;
 import retrofit2.Callback;

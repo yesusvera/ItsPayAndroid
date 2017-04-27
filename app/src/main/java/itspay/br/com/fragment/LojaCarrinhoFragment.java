@@ -21,6 +21,8 @@ import com.dexafree.materialList.card.CardProvider;
 import com.dexafree.materialList.card.OnActionClickListener;
 import com.dexafree.materialList.card.action.TextViewAction;
 import com.dexafree.materialList.view.MaterialListView;
+import com.example.aplicationlib.model.Produto;
+import com.example.aplicationlib.model.ProdutoCarrinho;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,8 +31,6 @@ import itspay.br.com.activity.CartoesLojaActivity;
 import itspay.br.com.activity.EnderecoActivity;
 import itspay.br.com.activity.MarketPlaceActivity;
 import itspay.br.com.itspay.R;
-import itspay.br.com.model.Produto;
-import itspay.br.com.model.ProdutoCarrinho;
 import itspay.br.com.singleton.CarrinhoSingleton;
 import itspay.br.com.util.Utils;
 import jp.wasabeef.recyclerview.animators.FlipInTopXAnimator;

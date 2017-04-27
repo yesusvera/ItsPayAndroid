@@ -23,6 +23,9 @@ import android.widget.RelativeLayout;
 import com.dexafree.materialList.card.Card;
 import com.dexafree.materialList.listeners.RecyclerItemClickListener;
 import com.dexafree.materialList.view.MaterialListView;
+import com.example.aplicationlib.model.Credencial;
+import com.example.aplicationlib.util.notification.CustomNotification;
+import com.example.aplicationlib.util.usersharepreferences.SharedPreferenceUtil;
 import com.example.tutoriallibrary.showcaseview.ShowcaseView;
 import com.example.tutoriallibrary.showcaseview.targets.ViewTarget;
 
@@ -32,10 +35,7 @@ import java.util.List;
 import itspay.br.com.authentication.IdentityItsPay;
 import itspay.br.com.controller.MeusCartoesController;
 import itspay.br.com.itspay.R;
-import itspay.br.com.model.Credencial;
 import itspay.br.com.util.Utils;
-import itspay.br.com.util.notification.CustomNotification;
-import itspay.br.com.util.usersharepreferences.SharedPreferenceUtil;
 import jp.wasabeef.recyclerview.animators.FlipInBottomXAnimator;
 
 public class MeusCartoesActivity extends AppCompatActivity

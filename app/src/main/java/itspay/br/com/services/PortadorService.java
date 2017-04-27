@@ -1,44 +1,46 @@
 package itspay.br.com.services;
 
+import com.example.aplicationlib.model.AvisarPerdaOuRouboRequest;
+import com.example.aplicationlib.model.Banco;
+import com.example.aplicationlib.model.BoletoCarga;
+import com.example.aplicationlib.model.BuscarEmailResponse;
+import com.example.aplicationlib.model.Credencial;
+import com.example.aplicationlib.model.CredencialGerada;
+import com.example.aplicationlib.model.CredencialStatus;
+import com.example.aplicationlib.model.CriarLoginResponse;
+import com.example.aplicationlib.model.EnderecoPessoa;
+import com.example.aplicationlib.model.FazerLoginPortador;
+import com.example.aplicationlib.model.FazerLoginPortadorResponse;
+import com.example.aplicationlib.model.FazerPedidoMKTPlace;
+import com.example.aplicationlib.model.GerarBoletoCarga;
+import com.example.aplicationlib.model.GerarCredencialRequest;
+import com.example.aplicationlib.model.GetCredenciaisResponse;
+import com.example.aplicationlib.model.GetFormasEnvioResponse;
+import com.example.aplicationlib.model.GetInfoPortadorCredencialRequest;
+import com.example.aplicationlib.model.GetPerfilTarifarioResponse;
+import com.example.aplicationlib.model.ItsPayResponse;
+import com.example.aplicationlib.model.LinhaExtratoCredencial;
+import com.example.aplicationlib.model.ParceiroResponse;
+import com.example.aplicationlib.model.ParcelasResponse;
+import com.example.aplicationlib.model.Pedido;
+import com.example.aplicationlib.model.PedidoDetalhe;
+import com.example.aplicationlib.model.PortadorCredencial;
+import com.example.aplicationlib.model.PortadorLogin;
+import com.example.aplicationlib.model.RecuperarLoginPortador;
+import com.example.aplicationlib.model.RecuperarSenhaResponse;
+import com.example.aplicationlib.model.RequestToken;
+import com.example.aplicationlib.model.RequestTokenResponse;
+import com.example.aplicationlib.model.TransferenciaContaCorrente;
+import com.example.aplicationlib.model.TransferenciaMesmaInstituicao;
+import com.example.aplicationlib.model.TrocarEmail;
+import com.example.aplicationlib.model.TrocarEstadoCredencialRequest;
+import com.example.aplicationlib.model.TrocarPinRequest;
+import com.example.aplicationlib.model.TrocarSenhaPortador;
+import com.example.aplicationlib.model.ValidToken;
+import com.example.aplicationlib.model.ValidarPortadorLogin;
+
 import java.util.ArrayList;
 
-import itspay.br.com.model.AvisarPerdaOuRouboRequest;
-import itspay.br.com.model.Banco;
-import itspay.br.com.model.BoletoCarga;
-import itspay.br.com.model.BuscarEmailResponse;
-import itspay.br.com.model.Credencial;
-import itspay.br.com.model.CredencialGerada;
-import itspay.br.com.model.CredencialStatus;
-import itspay.br.com.model.CriarLoginResponse;
-import itspay.br.com.model.EnderecoPessoa;
-import itspay.br.com.model.FazerLoginPortador;
-import itspay.br.com.model.FazerLoginPortadorResponse;
-import itspay.br.com.model.FazerPedidoMKTPlace;
-import itspay.br.com.model.GerarBoletoCarga;
-import itspay.br.com.model.GerarCredencialRequest;
-import itspay.br.com.model.GetCredenciaisResponse;
-import itspay.br.com.model.GetFormasEnvioResponse;
-import itspay.br.com.model.GetInfoPortadorCredencialRequest;
-import itspay.br.com.model.GetPerfilTarifarioResponse;
-import itspay.br.com.model.ItsPayResponse;
-import itspay.br.com.model.LinhaExtratoCredencial;
-import itspay.br.com.model.ParceiroResponse;
-import itspay.br.com.model.ParcelasResponse;
-import itspay.br.com.model.Pedido;
-import itspay.br.com.model.PedidoDetalhe;
-import itspay.br.com.model.PortadorCredencial;
-import itspay.br.com.model.PortadorLogin;
-import itspay.br.com.model.RecuperarLoginPortador;
-import itspay.br.com.model.RecuperarSenhaResponse;
-import itspay.br.com.model.RequestToken;
-import itspay.br.com.model.RequestTokenResponse;
-import itspay.br.com.model.TransferenciaContaCorrente;
-import itspay.br.com.model.TransferenciaMesmaInstituicao;
-import itspay.br.com.model.TrocarEmail;
-import itspay.br.com.model.TrocarEstadoCredencialRequest;
-import itspay.br.com.model.TrocarPinRequest;
-import itspay.br.com.model.TrocarSenhaPortador;
-import itspay.br.com.model.ValidToken;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -60,6 +62,8 @@ public interface PortadorService {
     @POST("api/portador/login")
     Call<CriarLoginResponse> criarLogin(@Body PortadorLogin portadorLogin);
 
+    @POST("api/token-acesso/validar/token-cadastro-login")
+    Call<CriarLoginResponse> validarPortador(@Body ValidarPortadorLogin validarPortadorLogin);
 
     @POST("api/token-acesso/enviar/token-cadastro-login")
     Call<RequestTokenResponse> requestToken(@Body RequestToken portadorLogin);

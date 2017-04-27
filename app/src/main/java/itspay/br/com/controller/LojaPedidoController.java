@@ -2,15 +2,17 @@ package itspay.br.com.controller;
 
 import android.view.View;
 
+import com.example.aplicationlib.model.Pedido;
+import com.example.aplicationlib.model.PedidoDetalhe;
+import com.example.aplicationlib.util.ItsPayConstants;
+
 import java.util.ArrayList;
 
 import itspay.br.com.adapter.FoldingCellPedidosAdapter;
 import itspay.br.com.authentication.IdentityItsPay;
 import itspay.br.com.fragment.LojaPedidosFragment;
-import itspay.br.com.model.Pedido;
-import itspay.br.com.model.PedidoDetalhe;
 import itspay.br.com.services.ConnectPortadorService;
-import itspay.br.com.util.ItsPayConstants;
+
 import itspay.br.com.util.UtilsActivity;
 import retrofit2.Call;
 import retrofit2.Callback;

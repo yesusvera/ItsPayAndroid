@@ -11,13 +11,13 @@ import com.dexafree.materialList.card.Card;
 import com.dexafree.materialList.card.CardProvider;
 import com.dexafree.materialList.listeners.RecyclerItemClickListener;
 import com.dexafree.materialList.view.MaterialListView;
+import com.example.aplicationlib.model.EnderecoPessoa;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import itspay.br.com.controller.EnderecoController;
 import itspay.br.com.itspay.R;
-import itspay.br.com.model.EnderecoPessoa;
 import itspay.br.com.singleton.CarrinhoSingleton;
 import jp.wasabeef.recyclerview.animators.FadeInLeftAnimator;
 

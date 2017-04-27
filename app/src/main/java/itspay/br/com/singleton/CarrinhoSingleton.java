@@ -1,15 +1,15 @@
 package itspay.br.com.singleton;
 
+import com.example.aplicationlib.model.Credencial;
+import com.example.aplicationlib.model.EnderecoPessoa;
+import com.example.aplicationlib.model.FazerPedidoMKTPlace;
+import com.example.aplicationlib.model.GetFormasEnvioResponse;
+import com.example.aplicationlib.model.Parcela;
+import com.example.aplicationlib.model.Produto;
+import com.example.aplicationlib.model.ProdutoCarrinho;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import itspay.br.com.model.Credencial;
-import itspay.br.com.model.EnderecoPessoa;
-import itspay.br.com.model.FazerPedidoMKTPlace;
-import itspay.br.com.model.GetFormasEnvioResponse;
-import itspay.br.com.model.Parcela;
-import itspay.br.com.model.Produto;
-import itspay.br.com.model.ProdutoCarrinho;
 
 /**
  * Created by yesus on 07/02/17.

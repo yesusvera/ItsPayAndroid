@@ -9,14 +9,14 @@ import android.view.Gravity;
 import com.dexafree.materialList.card.Card;
 import com.dexafree.materialList.card.CardProvider;
 import com.dexafree.materialList.view.MaterialListView;
+import com.example.aplicationlib.model.Credencial;
+import com.example.aplicationlib.model.PerfilsTarifario;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import itspay.br.com.controller.TarifaController;
 import itspay.br.com.itspay.R;
-import itspay.br.com.model.Credencial;
-import itspay.br.com.model.PerfilsTarifario;
 import itspay.br.com.util.Utils;
 import jp.wasabeef.recyclerview.animators.FadeInLeftAnimator;
 

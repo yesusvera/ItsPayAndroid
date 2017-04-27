@@ -9,13 +9,13 @@ import android.widget.Button;
 
 import com.dexafree.materialList.card.Card;
 import com.dexafree.materialList.view.MaterialListView;
+import com.example.aplicationlib.model.Credencial;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import itspay.br.com.controller.CartoesVirtuaisController;
 import itspay.br.com.itspay.R;
-import itspay.br.com.model.Credencial;
 import itspay.br.com.util.Utils;
 import jp.wasabeef.recyclerview.animators.FlipInBottomXAnimator;
 

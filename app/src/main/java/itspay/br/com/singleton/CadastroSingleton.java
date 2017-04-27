@@ -18,9 +18,18 @@ public class CadastroSingleton {
     public String mNumerocelular;
     public String mSenha;
     public String mEmail;
+    public String mKey;
 
     private CadastroSingleton(){}
 
+
+    public String getmKey() {
+        return mKey;
+    }
+
+    public void setmKey(String mKey) {
+        this.mKey = mKey;
+    }
 
     public String getmNumeroCartao() {
         return mNumeroCartao;
