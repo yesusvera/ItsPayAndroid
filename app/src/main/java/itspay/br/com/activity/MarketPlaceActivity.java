@@ -1,6 +1,7 @@
 package itspay.br.com.activity;
 
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -54,27 +55,35 @@ public class MarketPlaceActivity extends AppCompatActivity {
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-        tabLayout.setSelectedTabIndicatorColor(getColor(R.color.indicator_tab));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            tabLayout.setSelectedTabIndicatorColor(getColor(R.color.indicator_tab));
+        }
 
         tabLayout.getTabAt(0).setCustomView(R.layout.tab_loja_personalizado);
         tabLayout.getTabAt(1).setCustomView(R.layout.tab_loja_personalizado);
         tabLayout.getTabAt(2).setCustomView(R.layout.tab_loja_personalizado);
 
-        configuraTabPersonalizado(tabLayout.getTabAt(0).getCustomView(),
-                getDrawable(R.drawable.loja),
-                View.GONE,
-                getResources().getString(R.string.titulo_loja)
-        );
-        configuraTabPersonalizado(tabLayout.getTabAt(1).getCustomView(),
-                getDrawable(R.drawable.meus_pedidos),
-                View.GONE,
-                getResources().getString(R.string.titulo_meus_pedidos)
-        );
-        configuraTabPersonalizado(tabLayout.getTabAt(2).getCustomView(),
-                getDrawable(R.drawable.carrinho_market),
-                View.VISIBLE,
-                getResources().getString(R.string.titulo_carrinho)
-        );
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            configuraTabPersonalizado(tabLayout.getTabAt(0).getCustomView(),
+                    R.drawable.loja,
+                    View.GONE,
+                    getResources().getString(R.string.titulo_loja)
+            );
+//        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            configuraTabPersonalizado(tabLayout.getTabAt(1).getCustomView(),
+                    R.drawable.meus_pedidos,
+                    View.GONE,
+                    getResources().getString(R.string.titulo_meus_pedidos)
+            );
+//        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            configuraTabPersonalizado(tabLayout.getTabAt(2).getCustomView(),
+                    R.drawable.carrinho_market,
+                    View.VISIBLE,
+                    getResources().getString(R.string.titulo_carrinho)
+            );
+//        }
 
 
     }
@@ -99,13 +108,13 @@ public class MarketPlaceActivity extends AppCompatActivity {
         }
     }
 
-    public void configuraTabPersonalizado(View view, Drawable icone, int visibility, String nomeTab){
+    public void configuraTabPersonalizado(View view, int icone, int visibility, String nomeTab){
 
         TextView txtIcone = (TextView)view.findViewById(R.id.txt_icone);
         TextView txtBadget = (TextView)view.findViewById(R.id.txt_badged);
         TextView txtNomeTab = (TextView)view.findViewById(R.id.txt_nome_tab);
 
-        txtIcone.setBackground(icone);
+        txtIcone.setBackgroundResource(icone);
         txtBadget.setVisibility(visibility);
         txtNomeTab.setText(nomeTab);
     }
