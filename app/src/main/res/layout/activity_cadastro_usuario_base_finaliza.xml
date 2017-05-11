@@ -1,0 +1,138 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="itspay.br.com.activity.CadastroLoginPage2Activity"
+    android:layout_marginTop="10dp"
+    android:padding="10dp">
+
+    <ScrollView
+        android:id="@+id/cadastro_login_form"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp">
+
+                <EditText
+                    android:id="@+id/email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Email Pessoal"
+                    android:inputType="textEmailAddress"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:padding="15dp" />
+
+            </android.support.design.widget.TextInputLayout>
+
+
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp">
+
+                <EditText
+                    android:id="@+id/email_profissional"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Email Profissional"
+                    android:inputType="textEmailAddress"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:padding="15dp" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:counterMaxLength="20"
+                android:layout_marginTop="7dp">
+
+                <EditText
+                    android:id="@+id/senha"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/prompt_password_acess"
+                    android:inputType="textPassword"
+                    android:maxLines="1"
+                    android:maxLength="30"
+                    android:singleLine="true"
+                    android:padding="15dp" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:counterMaxLength="20"
+                android:layout_marginTop="7dp">
+
+                <EditText
+                    android:id="@+id/confirmacaoSenha"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/prompt_confirma_password_acess"
+                    android:inputType="textPassword"
+                    android:maxLines="1"
+                    android:maxLength="30"
+                    android:singleLine="true"
+                    android:padding="15dp" />
+
+            </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/layout_criarlogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:padding="8dp">
+
+        <CheckBox
+            android:text="Concordo com os"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/checkTermosDeUso"
+            android:layout_gravity="center"
+            android:textColor="?android:attr/textColorTertiary"
+            android:layout_marginTop="10dp" />
+
+        <TextView
+            android:text="Termos de Uso e Políticas de Privacidade"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtViewTermosDeUso"
+            android:layout_marginTop="5dp"
+            android:textStyle="normal|bold"
+            android:gravity="center" />
+
+        <Button
+            android:id="@+id/buttonCriarLogin"
+            style="?android:textAppearanceSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/back_button_itspay"
+            android:text="@string/acao_criar_login"
+            android:textColor="@android:color/background_light"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp" />
+    </LinearLayout>
+</RelativeLayout>

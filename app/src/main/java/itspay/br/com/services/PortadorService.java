@@ -9,6 +9,7 @@ import com.example.aplicationlib.model.CredencialGerada;
 import com.example.aplicationlib.model.CredencialStatus;
 import com.example.aplicationlib.model.CriarLoginResponse;
 import com.example.aplicationlib.model.EnderecoPessoa;
+import com.example.aplicationlib.model.EnderecoResponse;
 import com.example.aplicationlib.model.FazerLoginPortador;
 import com.example.aplicationlib.model.FazerLoginPortadorResponse;
 import com.example.aplicationlib.model.FazerPedidoMKTPlace;
@@ -38,6 +39,7 @@ import com.example.aplicationlib.model.TrocarPinRequest;
 import com.example.aplicationlib.model.TrocarSenhaPortador;
 import com.example.aplicationlib.model.ValidToken;
 import com.example.aplicationlib.model.ValidarPortadorLogin;
+import com.example.aplicationlib.model.VerificaCredencial;
 
 import java.util.ArrayList;
 
@@ -233,4 +235,11 @@ public interface PortadorService {
     Call<ParcelasResponse> getParcelamento(@Path("idParceiro") long idParceiro,
                                            @Path("valorCarrinho") double valorCarrinho,
                                            @Header("AuthorizationPortador") String token);
+
+    @POST("api/CredencialPreEmitida/card-holder/verifica-uso")
+    Call<ResponseBody> verificaCredencial(@Body VerificaCredencial credencialVerific);
+
+    @GET("api/logradouro/card-holder/{cep}")
+    Call<EnderecoResponse []> bucaEndereco(@Path("cep") String cep);
+
 }

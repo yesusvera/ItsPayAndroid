@@ -12,14 +12,13 @@ import com.example.aplicationlib.util.notification.CustomNotification;
 import itspay.br.com.controller.TokenController;
 import itspay.br.com.itspay.R;
 
-
-
 public class TokenActivity extends AppCompatActivity {
 
     private Button mButonOk;
     private EditText mEdToken;
     private TextView mTxtLinkNovoToken;
     TokenController mTokenController = new TokenController(this);
+    int mTipoActivity;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -27,6 +26,8 @@ public class TokenActivity extends AppCompatActivity {
         setContentView(R.layout.fragment_tokenfragment);
 
 //        mTokenController.requestCode();
+
+        mTipoActivity = getIntent().getIntExtra("tipoActivity",0);
 
         mButonOk = (Button)findViewById(R.id.btn_confirma_token);
         mEdToken = (EditText)findViewById(R.id.ed_token);
@@ -52,4 +53,11 @@ public class TokenActivity extends AppCompatActivity {
         CustomNotification.getInstance().notificationBuilder(getBaseContext(), R.mipmap.ic_launch_financial, R.color.red_itspay_bkp, getString(R.string.app_name), "A Chave de acesso é: 123");
     }
 
+    public int getmTipoActivity() {
+        return mTipoActivity;
+    }
+
+    public void setmTipoActivity(int mTipoActivity) {
+        this.mTipoActivity = mTipoActivity;
+    }
 }

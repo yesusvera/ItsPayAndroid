@@ -16,6 +16,7 @@ import com.example.aplicationlib.util.mask.MaskEditTextChangedListener;
 import io.card.payment.CardIOActivity;
 import io.card.payment.CreditCard;
 import itspay.br.com.controller.CadastroLoginController;
+import itspay.br.com.controller.CadastroUsuarioBase1Controller;
 import itspay.br.com.itspay.R;
 import itspay.br.com.singleton.CadastroSingleton;
 import itspay.br.com.util.Utils;
@@ -23,83 +24,80 @@ import itspay.br.com.util.Utils;
 import static itspay.br.com.util.Utils.configMask;
 import static itspay.br.com.util.Utils.onScanPressUtils;
 
-
 /**
- * Created by yesus on 14/12/16.
+ * Created by juniorbraga on 08/05/17.
  */
-public class CadastroLoginActivity extends AppCompatActivity {
+
+public class CadastroUsuarioBase1Activity extends AppCompatActivity {
+
 
     private TextWatcher cpfMask;
     private TextWatcher cnpjMask;
 
+    private android.widget.EditText numerocelular;
+    private android.widget.EditText numeroresidencial;
+    private android.widget.EditText numerocomercial;
     private EditText numeroCartao;
     private EditText dataNascimento;
     private EditText cpf;
-    private EditText numerocelular;
     private ImageButton scanButton;
     private Button proximaPagina;
 
-    CadastroSingleton mCadastroSingleton;
-
-    private CadastroLoginController mCadastroLoginController;
+    CadastroUsuarioBase1Controller mCadastroUsuarioBase1Controller = new CadastroUsuarioBase1Controller(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cadastro_login);
-        setTitle(R.string.title_activity_cadastro_login);
+        setContentView(R.layout.activity_cadastro_usuario_base1);
 
         initView();
 
         proximaPagina.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                validView();
-                mCadastroLoginController.verificarLogin(CadastroLoginActivity.this);
+                mCadastroUsuarioBase1Controller.nextPage();
             }
         });
+
     }
 
-    private void initView(){
+    private void initView() {
 
-//        initMask
-        mCadastroLoginController = new CadastroLoginController(this);
-        mCadastroSingleton = CadastroSingleton.getInstance();
+        this.numerocelular = (EditText) findViewById(R.id.numero_celular);
+        this.numerocomercial = (EditText) findViewById(R.id.numero_comercial);
+        this.numeroresidencial = (EditText) findViewById(R.id.numero_residencial);
+        this.numeroCartao = (EditText)findViewById(R.id.numeroCartao);
+        this.dataNascimento = (EditText)findViewById(R.id.dataNascimento);
+        this.cpf = (EditText)findViewById(R.id.cpf);
+        this.numerocelular = (EditText)findViewById(R.id.numero_celular);
+        this.scanButton = (ImageButton) findViewById(R.id.scanCardButton);
+        this.proximaPagina = (Button)findViewById(R.id.btn_next_page);
+
 
         // Attach the page change listener inside the activity
-
-        numeroCartao = (EditText)findViewById(R.id.numeroCartao);
-        dataNascimento = (EditText)findViewById(R.id.dataNascimento);
-        cpf = (EditText)findViewById(R.id.cpf);
-        numerocelular = (EditText)findViewById(R.id.numero_celular);
-        scanButton = (ImageButton) findViewById(R.id.scanCardButton);
-        proximaPagina = (Button)findViewById(R.id.btn_next_page);
-
         cpfMask = new MaskEditTextChangedListener("###.###.###-##", cpf);
         cnpjMask = new MaskEditTextChangedListener("##.###.###/####-##", cpf);
-
-
-        //        (61)99542-1414
+        numeroCartao.addTextChangedListener(new MaskEditTextChangedListener("####.####.####.####", numeroCartao));
+        dataNascimento.addTextChangedListener(new MaskEditTextChangedListener("##/##/####", dataNascimento));
+        numerocomercial.addTextChangedListener(new MaskEditTextChangedListener("(##)####-####", numerocomercial));
+        numerocelular.addTextChangedListener(new MaskEditTextChangedListener("(##)#####-####", numerocelular));
+        numeroresidencial.addTextChangedListener(new MaskEditTextChangedListener("(##)####-####", numeroresidencial));
 
         cpf.setHint("CPF/CNPJ");
 
         Utils.nextInputOnMaxLength(this,numeroCartao,dataNascimento,19);
         Utils.nextInputOnMaxLength(this,dataNascimento,cpf,10);
+        Utils.nextInputOnMaxLength(this,numerocelular,this.numeroresidencial,14);
+        Utils.nextInputOnMaxLength(this,numeroresidencial,this.numerocomercial,13);
+        Utils.hideSoftKeyboardOnMaxLength(this,numerocomercial,13);
 
         configMask(cpf,numerocelular,cpfMask,cnpjMask,getString(R.string.prompt_cpf));
-
-        Utils.hideSoftKeyboardOnMaxLength(this,numerocelular,14);
-
-        numerocelular.addTextChangedListener(new MaskEditTextChangedListener("(##)#####-####", numerocelular));
-        numeroCartao.addTextChangedListener(new MaskEditTextChangedListener("####.####.####.####", numeroCartao));
-        dataNascimento.addTextChangedListener(new MaskEditTextChangedListener("##/##/####", dataNascimento));
-
     }
 
     public void onScanPress(View v) {
         onScanPressUtils(v,this);
     }
-//
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -158,7 +156,6 @@ public class CadastroLoginActivity extends AppCompatActivity {
     }
 
 
-
     public EditText getNumeroCartao() {
         return numeroCartao;
     }
@@ -189,5 +186,21 @@ public class CadastroLoginActivity extends AppCompatActivity {
 
     public void setNumerocelular(EditText numerocelular) {
         this.numerocelular = numerocelular;
+    }
+
+    public EditText getNumeroresidencial() {
+        return numeroresidencial;
+    }
+
+    public void setNumeroresidencial(EditText numeroresidencial) {
+        this.numeroresidencial = numeroresidencial;
+    }
+
+    public EditText getNumerocomercial() {
+        return numerocomercial;
+    }
+
+    public void setNumerocomercial(EditText numerocomercial) {
+        this.numerocomercial = numerocomercial;
     }
 }

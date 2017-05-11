@@ -155,7 +155,7 @@ public class AjustesSegurancaCartaoActivity extends AppCompatActivity {
     private void comunicarPerdaOuRoubo(){
         final CharSequence[] items = {"Comunicar Perda do cartão", "Comunicar Roubo do cartão"};
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("ItsPay").setCancelable(true).setNegativeButton("Cancelar", null)
+        builder.setTitle(getString(R.string.app_name)).setCancelable(true).setNegativeButton("Cancelar", null)
                 .setItems(items, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {

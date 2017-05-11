@@ -38,7 +38,7 @@
 
     <style name="IvLogoClient">
         <!--<item name="android:src">@drawable/bahamas_logo</item>-->
-         <item name="android:src">@drawable/ic_financial_logo</item>
+         <item name="android:src">@drawable/fin_pag_logo</item>
     </style>
 
     <style name="IvAppLogo">

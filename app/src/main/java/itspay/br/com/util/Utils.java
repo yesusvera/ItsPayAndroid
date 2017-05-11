@@ -1,7 +1,9 @@
 package itspay.br.com.util;
 
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -9,6 +11,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import com.dexafree.materialList.card.Action;
 import com.dexafree.materialList.card.Card;
 import com.dexafree.materialList.card.CardProvider;
 import com.example.aplicationlib.model.Credencial;
@@ -19,6 +22,7 @@ import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 import java.util.Set;
 
+import io.card.payment.CardIOActivity;
 import itspay.br.com.authentication.IdentityItsPay;
 import itspay.br.com.itspay.R;
 import itspay.br.com.services.ConnectPortadorService;
@@ -185,9 +189,7 @@ public class Utils {
             });
         }
 
-
         return card;
-
     }
 
     public static String getCredencialComEspacos(String numeroCredencialVirtual) {
@@ -244,5 +246,44 @@ public class Utils {
                 }
             }
         });
+    }
+
+    public static void configMask(EditText editText,EditText nextEditText,
+                           TextWatcher add, TextWatcher remove ,
+                           String hint){
+
+        editText.removeTextChangedListener(remove);
+        editText.addTextChangedListener(add);
+        editText.setHint(hint);
+    }
+
+    public static void onScanPressUtils(View v , Activity context) {
+         int MY_SCAN_REQUEST_CODE = 100; // arbitrary int
+
+        // This method is set up as an onClick handler in the layout xml
+        // e.g. android:onClick="onScanPress"onScanPress
+        Intent intent = new Intent(context, CardIOActivity.class)
+                .putExtra(CardIOActivity.EXTRA_REQUIRE_EXPIRY, false)
+                .putExtra(CardIOActivity.EXTRA_SCAN_EXPIRY, false)
+                .putExtra(CardIOActivity.EXTRA_REQUIRE_CVV, false)
+                .putExtra(CardIOActivity.EXTRA_REQUIRE_POSTAL_CODE, false)
+                .putExtra(CardIOActivity.EXTRA_RESTRICT_POSTAL_CODE_TO_NUMERIC_ONLY, false)
+                .putExtra(CardIOActivity.EXTRA_REQUIRE_CARDHOLDER_NAME, false)
+                .putExtra(CardIOActivity.EXTRA_SUPPRESS_MANUAL_ENTRY, true)
+                .putExtra(CardIOActivity.EXTRA_USE_CARDIO_LOGO, false)
+                .putExtra(CardIOActivity.EXTRA_LANGUAGE_OR_LOCALE, "pt_BR")
+                .putExtra(CardIOActivity.EXTRA_USE_PAYPAL_ACTIONBAR_ICON, false)
+                .putExtra(CardIOActivity.EXTRA_KEEP_APPLICATION_THEME, false)
+                .putExtra(CardIOActivity.EXTRA_GUIDE_COLOR, Color.GREEN)
+                .putExtra(CardIOActivity.EXTRA_SUPPRESS_CONFIRMATION, false)
+                .putExtra(CardIOActivity.EXTRA_SUPPRESS_SCAN, false)
+                .putExtra(CardIOActivity.EXTRA_HIDE_CARDIO_LOGO, true)
+                .putExtra(CardIOActivity.EXTRA_RETURN_CARD_IMAGE, true);
+        try {
+            int unblurDigits = Integer.parseInt("4");
+            intent.putExtra(CardIOActivity.EXTRA_UNBLUR_DIGITS, unblurDigits);
+        } catch(NumberFormatException ignored) {}
+
+        context.startActivityForResult(intent, MY_SCAN_REQUEST_CODE);
     }
 }

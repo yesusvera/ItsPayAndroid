@@ -31,9 +31,12 @@ import itspay.br.com.services.ConnectPortadorService;
 import itspay.br.com.singleton.CadastroSingleton;
 import itspay.br.com.util.UtilsActivity;
 
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.example.aplicationlib.util.UtilsAplication.parserDataService;
 
 public class CadastroLoginController  {
 
@@ -69,7 +72,7 @@ public class CadastroLoginController  {
             portadorLogin.setOrigemCadastroLogin(ItsPayConstants.ORIGEM_ACESSO);
             portadorLogin.setSenha(mCadastroSingleton.getmSenha().toString());
 
-            portadorLogin.setDataNascimento(parserData(mCadastroSingleton.getmDataNascimento()));
+            portadorLogin.setDataNascimento(parserDataService(mCadastroSingleton.getmDataNascimento()));
 
             Call<CriarLoginResponse> criarLoginCall = ConnectPortadorService.getService().criarLogin(portadorLogin);
             criarLoginCall.enqueue(new Callback<CriarLoginResponse>() {
@@ -169,7 +172,6 @@ public class CadastroLoginController  {
 
         if(validaFormulario1(activity)){
 
-
             mProgresDialogUtil.show("Validando Usuario", "Aguarde.");
 
             mCadastroSingleton.setmKey(CadastroSingleton.getInstance().getmNumerocelular() +
@@ -182,7 +184,7 @@ public class CadastroLoginController  {
             validarPortadorLogin.setCredencial(credencial);
             validarPortadorLogin.setIdInstituicao(ItsPayConstants.ID_INSTITUICAO);
             validarPortadorLogin.setIdProcessadora(ItsPayConstants.ID_PROCESSADORA);
-            validarPortadorLogin.setDataNascimento(parserData(mCadastroSingleton.getmDataNascimento()));
+            validarPortadorLogin.setDataNascimento(parserDataService(mCadastroSingleton.getmDataNascimento()));
             validarPortadorLogin.setChave(mCadastroSingleton.getmKey());
             validarPortadorLogin.setCelular(mCadastroSingleton.getmNumerocelular());
 
@@ -193,6 +195,7 @@ public class CadastroLoginController  {
                     if (response.body() != null) {
 
                         Intent intent = new Intent(activity,TokenActivity.class);
+                        intent.putExtra("tipoActivity",0);
                         activity.startActivity(intent);
 
 
@@ -266,26 +269,6 @@ public class CadastroLoginController  {
                 .replace("-",""));
 
         return true;
-    }
-
-    public String parserData(String mDate){
-
-        SimpleDateFormat rs = new SimpleDateFormat("dd/MM/yyyy");
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date convertedCurrentDate = null;
-        String date = "";
-
-        try {
-            convertedCurrentDate = rs.parse(mDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        if (convertedCurrentDate != null) {
-             date = sdf.format(convertedCurrentDate);
-        }
-
-        return date;
     }
 
 }

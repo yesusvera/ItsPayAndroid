@@ -3,10 +3,16 @@
     <string name="prompt_confirma_password_acess">Confirmar Senha de Acesso</string>
 
     <string name="prompt_numero_celular">Número Celular</string>
+    <string name="prompt_numero_passaporte">Número do Passaporte</string>
+    <string name="prompt_numero_naacionalidade">Nacionalidade</string>
+    <string name="prompt_numero_naturalidade">Naturalidade</string>
+    <string name="prompt_numero_comercial">Número Comercial</string>
+    <string name="prompt_numero_residencial">Número Residencial</string>
     <string name="prompt_chave_aceso">Chave de acesso</string>
     <string name="prompt_password_acess">Senha para o Login de Acesso</string>
     <string name="prompt_repita_password">Repita a senha</string>
     <string name="prompt_email">Email</string>
+    <string name="prompt_estado_civil">Estado Civil</string>
     <string name="prompt_password">Senha</string>
     <string name="prompt_confirma_password">Confirmar Senha</string>v
     <string name="prompt_numero_cartao_destino">Número do cartão de destino</string>
@@ -79,7 +85,9 @@
     <string name="action_trocar_senha">Trocar Senha</string>
     <string name="error_invalid_email">Este endereço de email é inválido.</string>
     <string name="error_data_nascimento_invalida">Data de nascimento inválida.</string>
+    <string name="error_data_invalida">Data inválida.</string>
     <string name="error_invalid_cpf">Este cpf é inválido</string>
+    <string name="error_invalid_rg">Este RG é inválido</string>
     <string name="error_invalid_password">Digite a senha</string>
     <string name="error_incorrect_password_input">A senha deve possuir números e letras e ter entre 6 e 30 caracteres.</string>
     <string name="error_incorrect_password_credencial_input">A senha deve possuir entre 4 e 30 caracteres.</string>
@@ -92,6 +100,7 @@
     </string>
     <string name="prompt_cnpj">CNPJ</string>
     <string name="prompt_cpf">CPF</string>
+    <string name="prompt_cep">CEP</string>
     <string name="prompt_novo_email">Email Desejável</string>
     <string name="prompt_numero_cartao">Número do Cartão</string>
     <string name="prompt_data_nascimento">Data de Nascimento</string>
@@ -259,12 +268,34 @@
     <string name="title_activity_main2">Main2Activity</string>
 
 
-
     <!--<string name="info_email">creditoecobranca@bahamascard.com.br</string>-->
 
     <string name="info_email">sac@financialcartoes.com.br</string>
 
     <!--<string name="app_name">Bahamas</string>-->
-    <string name="app_name">Financial</string>
+    <string name="app_name">FinPag</string>
+
+    <string name="prompt_nome_pai">Nome do Pai</string>
+    <string name="prompt_nome_mae">Nome da Mãe</string>
+    <string name="prompt_nome_completo">Nome Completo</string>
+    <string name="prompt_rg">RG</string>
+    <string name="promtp_orgao_emissor">Órgão Emissor</string>
+    <string name="prompt_data_emissao">Data Emissão</string>
+    <string name="prompt_masculino">Masculino</string>
+    <string name="prompt_feminino">Feminino</string>
+    <string name="error_invalid_nome" />
+    <string name="prompt_bairro">Bairro</string>
+    <string name="prompt_endereco">Endereço</string>
+    <string name="prompt_numero_edereco">Numero</string>
+    <string name="prompt_complemento">Complemento</string>
+
+    <string-array name="list_estado_civil">
+        <item>Solteiro(a)</item>
+        <item>Casado(a)</item>
+        <item>Divorciado(a)</item>
+        <item>Viúvo(a)</item>
+        <item>Separado(a)</item>
+        <item>Companheiro(a)</item>
+    </string-array>
 
 </resources>

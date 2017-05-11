@@ -218,7 +218,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         txtViewCriaLogin.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent cadastroLogin = new Intent(LoginActivity.this, CadastroLoginActivity.class);
+                Intent cadastroLogin = new Intent(LoginActivity.this, PerguntaCadasroActivity.class);
                 startActivity(cadastroLogin);
             }
         });

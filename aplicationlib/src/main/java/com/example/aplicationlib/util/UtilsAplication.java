@@ -10,6 +10,9 @@ import android.widget.EditText;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 import java.util.Set;
 
@@ -104,5 +107,27 @@ public class UtilsAplication {
                 }
             }
         });
+    }
+
+
+
+    public static String parserDataService(String mDate){
+
+        SimpleDateFormat rs = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date convertedCurrentDate = null;
+        String date = "";
+
+        try {
+            convertedCurrentDate = rs.parse(mDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        if (convertedCurrentDate != null) {
+            date = sdf.format(convertedCurrentDate);
+        }
+
+        return date;
     }
 }

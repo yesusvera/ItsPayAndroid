@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import itspay.br.com.activity.CadastroLoginPage2Activity;
+import itspay.br.com.activity.CadastroUsuarioBaseFinalizaActivity;
 import itspay.br.com.activity.TokenActivity;
 import itspay.br.com.services.ConnectPortadorService;
 import itspay.br.com.singleton.CadastroSingleton;
@@ -78,6 +79,8 @@ public class TokenController  extends BaseActivityController<TokenActivity>  {
         validTokenPortador.setToken(token);
 
 
+//        verificarIntent();
+
         Call<ResponseBody> call =
                 ConnectPortadorService.getService().validToken(validTokenPortador);
 
@@ -85,8 +88,10 @@ public class TokenController  extends BaseActivityController<TokenActivity>  {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if(response.body()!=null){
-                    Intent intent = new Intent(activity,CadastroLoginPage2Activity.class);
-                    activity.startActivity(intent);
+//                    Intent intent = new Intent(activity,CadastroLoginPage2Activity.class);
+//                    activity.startActivity(intent);
+
+                    verificarIntent();
                     mCadastroSingleton.setmKey("");
 
                 }else{
@@ -100,6 +105,26 @@ public class TokenController  extends BaseActivityController<TokenActivity>  {
                 t.printStackTrace();
             }
         });
+    }
+
+
+    public void verificarIntent(){
+        Intent intent= null;
+
+        switch (activity.getmTipoActivity()){
+            case 0:
+                intent = new Intent(activity,CadastroLoginPage2Activity.class);
+                break;
+            case 1:
+                intent = new Intent(activity,CadastroUsuarioBaseFinalizaActivity.class);
+                break;
+            default:
+                intent = new Intent(activity,CadastroLoginPage2Activity.class);
+                break;
+        }
+
+        if(intent != null)
+        activity.startActivity(intent);
     }
 
 }
