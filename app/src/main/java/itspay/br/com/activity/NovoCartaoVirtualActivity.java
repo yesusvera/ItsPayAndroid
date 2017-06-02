@@ -1,5 +1,7 @@
 package itspay.br.com.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -68,12 +70,31 @@ public class NovoCartaoVirtualActivity extends AppCompatActivity {
         buttonRequisitarNovo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(NovoCartaoVirtualActivity.this, TermosDeUsoCartaoVirtualActivity.class);
-                startActivityForResult(intent, CONCORDO_TERMOS_DE_USO_CODE);
+                alertRequisitarCartaoVirtual();
+//                Intent intent = new Intent(NovoCartaoVirtualActivity.this, TermosDeUsoCartaoVirtualActivity.class);
+//                startActivityForResult(intent, CONCORDO_TERMOS_DE_USO_CODE);
             }
         });
     }
 
+    public void alertRequisitarCartaoVirtual(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(false).setTitle("Cartāo Virtual").setMessage("Voce deseja criar um Cartāo Virtual ")
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        controller.requisitarNovoCartao();
+                    }
+                }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+//                builder.create().show();
+        builder.show();
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode== CONCORDO_TERMOS_DE_USO_CODE){
