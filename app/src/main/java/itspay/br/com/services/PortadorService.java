@@ -21,6 +21,7 @@ import com.example.aplicationlib.model.GetInfoPortadorCredencialRequest;
 import com.example.aplicationlib.model.GetPerfilTarifarioResponse;
 import com.example.aplicationlib.model.ItsPayResponse;
 import com.example.aplicationlib.model.LinhaExtratoCredencial;
+import com.example.aplicationlib.model.MarketPlaceResponse;
 import com.example.aplicationlib.model.ParceiroResponse;
 import com.example.aplicationlib.model.ParcelasResponse;
 import com.example.aplicationlib.model.Pedido;
@@ -205,10 +206,12 @@ public interface PortadorService {
                                  @Path("idPedido") long idPedido,
                                  @Header("AuthorizationPortador") String token);
 
-    @GET("api/mktplace/portador/parceiro-produto/{idProcessadora}/{idInstituicao}/")
-    Call<ArrayList<ParceiroResponse>> getParceiros(@Path("idProcessadora") long idProcessadora,
-                                                   @Path("idInstituicao") long idInstituicao,
-                                                   @Header("AuthorizationPortador") String token);
+    @GET("api/mktplace/portador/parceiro-produto/{idProcessadora}/{idInstituicao}/{first}/{max}")
+    Call<ArrayList<MarketPlaceResponse>> getParceiros(@Path("idProcessadora") long idProcessadora,
+                                                      @Path("idInstituicao") long idInstituicao,
+                                                      @Path("first") long first,
+                                                      @Path("max") long max,
+                                                      @Header("AuthorizationPortador") String token);
 
     @GET("api/mktplace/administrativo/imagem/sku/{idImagem}")
     Call<ResponseBody> abrirImagemProduto(@Path("idImagem") long idImagem,

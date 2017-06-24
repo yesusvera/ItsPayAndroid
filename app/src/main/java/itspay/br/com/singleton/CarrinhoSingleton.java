@@ -4,6 +4,7 @@ import com.example.aplicationlib.model.Credencial;
 import com.example.aplicationlib.model.EnderecoPessoa;
 import com.example.aplicationlib.model.FazerPedidoMKTPlace;
 import com.example.aplicationlib.model.GetFormasEnvioResponse;
+import com.example.aplicationlib.model.MarketPlaceResponse;
 import com.example.aplicationlib.model.Parcela;
 import com.example.aplicationlib.model.Produto;
 import com.example.aplicationlib.model.ProdutoCarrinho;
@@ -102,8 +103,8 @@ public class CarrinhoSingleton {
     public double getValorTotal(){
         double valorTotal = 0;
         for (ProdutoCarrinho produtoCarrinho : getListaProdutosCarrinho()) {
-            Produto produto = produtoCarrinho.getProdutoDetalhe().getProduto();
-            double subtotal = produtoCarrinho.getQuantidade() * produto.getReferencias()[0].getPrecoPor();
+            MarketPlaceResponse.ProdutoBean produto = produtoCarrinho.getProdutoDetalhe().getProduto();
+            double subtotal = produtoCarrinho.getQuantidade() * produto.getReferencias().get(0).getPrecoPor();
             valorTotal += subtotal;
         }
         return valorTotal;

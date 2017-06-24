@@ -21,6 +21,7 @@ import com.dexafree.materialList.card.CardProvider;
 import com.dexafree.materialList.card.OnActionClickListener;
 import com.dexafree.materialList.card.action.TextViewAction;
 import com.dexafree.materialList.view.MaterialListView;
+import com.example.aplicationlib.model.MarketPlaceResponse;
 import com.example.aplicationlib.model.Produto;
 import com.example.aplicationlib.model.ProdutoCarrinho;
 
@@ -178,13 +179,13 @@ public class LojaCarrinhoFragment extends Fragment {
 
         for (ProdutoCarrinho produtoCarrinho : CarrinhoSingleton.getInstance().getListaProdutosCarrinho()) {
 
-            textGrupo.setText(produtoCarrinho.getProdutoDetalhe().getParceiroResponse().getNomeParceiro());
+            textGrupo.setText(produtoCarrinho.getProdutoDetalhe().getParceiroResponse().getParceiro().getNomeParceiro());
 
-            Produto produto = produtoCarrinho.getProdutoDetalhe().getProduto();
+            MarketPlaceResponse.ProdutoBean produto = produtoCarrinho.getProdutoDetalhe().getProduto();
 
-            String precoPor = "R$" + Utils.formataMoeda(produto.getReferencias()[0].getPrecoPor());
+            String precoPor = "R$" + Utils.formataMoeda(produto.getReferencias().get(0).getPrecoPor());
 
-            double subtotal = produtoCarrinho.getQuantidade() * produto.getReferencias()[0].getPrecoPor();
+            double subtotal = produtoCarrinho.getQuantidade() * produto.getReferencias().get(0).getPrecoPor();
 
             valorTotal += subtotal;
 

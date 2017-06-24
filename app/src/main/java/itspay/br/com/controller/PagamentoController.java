@@ -45,7 +45,7 @@ public class PagamentoController extends BaseActivityController<PagamentoActivit
         }
         requestPedido.setIdConta(carrinho.getCredencial().getIdConta());
         requestPedido.setIdInstituicao(ItsPayConstants.ID_INSTITUICAO);
-        requestPedido.setIdParceiro(carrinho.getListaProdutosCarrinho().get(0).getProdutoDetalhe().getParceiroResponse().getIdParceiro());
+        requestPedido.setIdParceiro(carrinho.getListaProdutosCarrinho().get(0).getProdutoDetalhe().getParceiroResponse().getParceiro().getIdParceiro());
         requestPedido.setIdProcessadora(ItsPayConstants.ID_PROCESSADORA);
 
         //ADICIONANDO ITENS

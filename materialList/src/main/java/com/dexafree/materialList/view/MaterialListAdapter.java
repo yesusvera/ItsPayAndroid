@@ -14,6 +14,8 @@ import com.dexafree.materialList.card.Card;
 import com.dexafree.materialList.card.CardLayout;
 import com.dexafree.materialList.card.event.DismissEvent;
 import com.example.aplicationlib.model.Imagen;
+
+import com.example.aplicationlib.model.MarketPlaceResponse;
 import com.example.aplicationlib.model.ProdutoDetalhe;
 import com.example.aplicationlib.util.cache.CacheImageView;
 
@@ -28,13 +30,24 @@ public class MaterialListAdapter extends RecyclerView.Adapter<MaterialListAdapte
         implements Observer {
     private final MaterialListView.OnSwipeAnimation mSwipeAnimation;
     private final MaterialListView.OnAdapterItemsChanged mItemAnimation;
+    private int currentPosition;
     private final List<Card> mCardList = new ArrayList<>();
     private Context mContext;
+    int position;
 
     public MaterialListAdapter(@NonNull final MaterialListView.OnSwipeAnimation swipeAnimation,
                                @NonNull final MaterialListView.OnAdapterItemsChanged itemAnimation) {
         mSwipeAnimation = swipeAnimation;
         mItemAnimation = itemAnimation;
+    }
+
+    public void updateList(List<Card> cards) {
+        for(Card card:cards) {
+            mCardList.add(position++, card);
+            card.getProvider().addObserver(this);
+            mItemAnimation.onAddItem(position, false);
+            notifyItemInserted(position); // Triggers the animation!
+        }
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -66,7 +79,7 @@ public class MaterialListAdapter extends RecyclerView.Adapter<MaterialListAdapte
         try {
             if (obj.getClass().getSimpleName().equals(ProdutoDetalhe.class.getSimpleName())) {
 
-                Imagen img = ((ProdutoDetalhe) obj).getProduto().getImagens()[0];
+                MarketPlaceResponse.ProdutoBean.ImagensBean img = ((ProdutoDetalhe) obj).getProduto().getImagens().get(0);
                 BitmapDrawable bitmapDrawable = CacheImageView.lerCacheBitmapDraw(mContext, img.getIdImagem() + "");
 
                 if (bitmapDrawable != null) {
@@ -80,177 +93,185 @@ public class MaterialListAdapter extends RecyclerView.Adapter<MaterialListAdapte
         holder.build(card);
     }
 
-    @Override
-    public int getItemCount() {
-        return mCardList.size();
-    }
+            @Override
+            public int getItemCount() {
+                position = mCardList.size();
+                return mCardList.size();
+            }
 
-    @Override
-    public int getItemViewType(final int position) {
-        return mCardList.get(position).getProvider().getLayout();
-    }
+            @Override
+            public int getItemViewType(final int position) {
+                return mCardList.get(position).getProvider().getLayout();
+            }
 
-    /**
-     * Add a Card at a specific position with or without a scroll animation.
-     *
-     * @param position
-     *         of the card to insert.
-     * @param card
-     *         to insert.
-     * @param scroll
-     *         will trigger an animation if it is set to <code>true</code> otherwise not.
-     */
-    public void add(final int position, @NonNull final Card card, final boolean scroll) {
-        mCardList.add(position, card);
-        card.getProvider().addObserver(this);
-        mItemAnimation.onAddItem(position, scroll);
-        notifyItemInserted(position); // Triggers the animation!
-    }
-
-    /**
-     * Add a Card at a specific position.
-     *
-     * @param position
-     *         of the card to insert.
-     * @param card
-     *         to insert.
-     */
-    public void add(final int position, @NonNull final Card card) {
-        add(position, card, true);
-    }
-
-    /**
-     * Add a Card at the start.
-     *
-     * @param card
-     *         to add at the start.
-     */
-    public void addAtStart(@NonNull final Card card) {
-        add(0, card);
-    }
-
-    /**
-     * Add a Card.
-     *
-     * @param card
-     *         to add.
-     */
-    public void add(@NonNull final Card card) {
-        add(mCardList.size(), card);
-    }
-
-    /**
-     * Add all Cards.
-     *
-     * @param cards
-     *         to add.
-     */
-    public void addAll(@NonNull final Card... cards) {
-        addAll(Arrays.asList(cards));
-    }
-
-    /**
-     * Add all Cards.
-     *
-     * @param cards
-     *         to add.
-     */
-    public void addAll(@NonNull final Collection<Card> cards) {
-        int index = 0;
-        for (Card card : cards) {
-            add(index++, card, false);
+            /**
+             * Add a Card at a specific position with or without a scroll animation.
+             *
+             * @param position
+             *         of the card to insert.
+             * @param card
+             *         to insert.
+             * @param scroll
+             *         will trigger an animation if it is set to <code>true</code> otherwise not.
+             */
+        public void add(final int position, @NonNull final Card card, final boolean scroll) {
+            mCardList.add(position, card);
+            card.getProvider().addObserver(this);
+            mItemAnimation.onAddItem(position, scroll);
+            notifyItemInserted(position); // Triggers the animation!
         }
-    }
 
-    /**
-     * Remove a Card withProvider or without an animation.
-     *
-     * @param card
-     *         to remove.
-     * @param animate
-     *         {@code true} to animate the remove process or {@code false} otherwise.
-     */
-    public void remove(@NonNull final Card card, boolean animate) {
-        if (card.isDismissible()) {
-            card.getProvider().deleteObserver(this);
-            if (animate) {
-                mSwipeAnimation.animate(getPosition(card));
-            } else {
-                mCardList.remove(card);
-                mItemAnimation.onRemoveItem();
+        /**
+         * Add a Card at a specific position.
+         *
+         * @param position
+         *         of the card to insert.
+         * @param card
+         *         to insert.
+         */
+        public void add(final int position, @NonNull final Card card) {
+            add(position, card, true);
+        }
+
+        /**
+         * Add a Card at the start.
+         *
+         * @param card
+         *         to add at the start.
+         */
+        public void addAtStart(@NonNull final Card card) {
+            add(0, card);
+        }
+
+        /**
+         * Add a Card.
+         *
+         * @param card
+         *         to add.
+         */
+        public void add(@NonNull final Card card) {
+            add(mCardList.size(), card);
+        }
+
+        /**
+         * Add all Cards.
+         *
+         * @param cards
+         *         to add.
+         */
+        public void addAll(@NonNull final Card... cards) {
+            addAll(Arrays.asList(cards));
+        }
+
+        /**
+         * Add all Cards.
+         *
+         * @param cards
+         *         to add.
+         */
+        public void addAll(@NonNull final Collection<Card> cards) {
+            int index = 0;
+            for (Card card : cards) {
+                add(index++, card, false);
+            }
+        }
+
+        /**
+         * Remove a Card withProvider or without an animation.
+         *
+         * @param card
+         *         to remove.
+         * @param animate
+         *         {@code true} to animate the remove process or {@code false} otherwise.
+         */
+        public void remove(@NonNull final Card card, boolean animate) {
+            if (card.isDismissible()) {
+                card.getProvider().deleteObserver(this);
+                if (animate) {
+                    mSwipeAnimation.animate(getPosition(card));
+                } else {
+                    mCardList.remove(card);
+                    mItemAnimation.onRemoveItem();
+                    notifyDataSetChanged();
+                }
+            }
+        }
+
+        /**
+         * Clears the list from all Cards (even if they are not dismissable).
+         */
+        public void clearAll() {
+            while (!mCardList.isEmpty()) {
+                final Card card = mCardList.get(0);
+                card.setDismissible(true);
+                remove(card, false);
+                notifyItemRemoved(0);
+            }
+        }
+
+        /**
+         * Clears the list from all Cards (only if dismissable).
+         */
+        public void clear() {
+            for (int index = 0; index < mCardList.size(); ) {
+                final Card card = mCardList.get(index);
+                if (!card.isDismissible()) {
+                    index++;
+                }
+                remove(card, false);
+                notifyItemRemoved(index);
+            }
+        }
+
+        /**
+         * Is the list empty?
+         *
+         * @return {@code true} if the list is empty or {@code false} otherwise.
+         */
+        public boolean isEmpty() {
+            return mCardList.isEmpty();
+        }
+
+        /**
+         * Get a Card at the specified position.
+         *
+         * @param position
+         *         of the Card.
+         * @return the Card or {@code null} if the position is outside of the list range.
+         */
+        @Nullable
+        public Card getCard(int position) {
+            if (position >= 0 && position < mCardList.size()) {
+                return mCardList.get(position);
+            }
+            return null;
+        }
+
+        public int getCurrentPosition() {
+            return currentPosition;
+        }
+
+        public void setCurrentPosition(int currentPosition) {
+            this.currentPosition = currentPosition;
+        }
+        /**
+         * Get the position of a specified Card.
+         *
+         * @param card
+         *         to get the position of.
+         * @return the position.
+         */
+        public int getPosition(@NonNull Card card) {
+            return mCardList.indexOf(card);
+        }
+
+        @Override
+        public void update(final Observable observable, final Object data) {
+            if (data instanceof DismissEvent) {
+                remove(((DismissEvent) data).getCard(), true);
+            }
+            if (data instanceof Card) {
                 notifyDataSetChanged();
             }
         }
     }
-
-    /**
-     * Clears the list from all Cards (even if they are not dismissable).
-     */
-    public void clearAll() {
-        while (!mCardList.isEmpty()) {
-            final Card card = mCardList.get(0);
-            card.setDismissible(true);
-            remove(card, false);
-            notifyItemRemoved(0);
-        }
-    }
-
-    /**
-     * Clears the list from all Cards (only if dismissable).
-     */
-    public void clear() {
-        for (int index = 0; index < mCardList.size(); ) {
-            final Card card = mCardList.get(index);
-            if (!card.isDismissible()) {
-                index++;
-            }
-            remove(card, false);
-            notifyItemRemoved(index);
-        }
-    }
-
-    /**
-     * Is the list empty?
-     *
-     * @return {@code true} if the list is empty or {@code false} otherwise.
-     */
-    public boolean isEmpty() {
-        return mCardList.isEmpty();
-    }
-
-    /**
-     * Get a Card at the specified position.
-     *
-     * @param position
-     *         of the Card.
-     * @return the Card or {@code null} if the position is outside of the list range.
-     */
-    @Nullable
-    public Card getCard(int position) {
-        if (position >= 0 && position < mCardList.size()) {
-            return mCardList.get(position);
-        }
-        return null;
-    }
-
-    /**
-     * Get the position of a specified Card.
-     *
-     * @param card
-     *         to get the position of.
-     * @return the position.
-     */
-    public int getPosition(@NonNull Card card) {
-        return mCardList.indexOf(card);
-    }
-
-    @Override
-    public void update(final Observable observable, final Object data) {
-        if (data instanceof DismissEvent) {
-            remove(((DismissEvent) data).getCard(), true);
-        }
-        if (data instanceof Card) {
-            notifyDataSetChanged();
-        }
-    }
-}

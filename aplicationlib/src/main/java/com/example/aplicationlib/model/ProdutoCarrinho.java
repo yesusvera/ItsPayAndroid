@@ -7,10 +7,10 @@ package com.example.aplicationlib.model;
 public class ProdutoCarrinho {
 
     private ProdutoDetalhe produtoDetalhe;
-    private Referencia referencia;
+    private MarketPlaceResponse.ProdutoBean.ReferenciasBean referencia;
     private int quantidade;
 
-    public ProdutoCarrinho(ProdutoDetalhe produtoDetalhe, Referencia referencia, int quantidade) {
+    public ProdutoCarrinho(ProdutoDetalhe produtoDetalhe, MarketPlaceResponse.ProdutoBean.ReferenciasBean referencia, int quantidade) {
         this.produtoDetalhe = produtoDetalhe;
         this.referencia = referencia;
         this.quantidade = quantidade;
@@ -27,11 +27,11 @@ public class ProdutoCarrinho {
         this.produtoDetalhe = produtoDetalhe;
     }
 
-    public Referencia getReferencia() {
+    public MarketPlaceResponse.ProdutoBean.ReferenciasBean getReferencia() {
         return referencia;
     }
 
-    public void setReferencia(Referencia referencia) {
+    public void setReferencia(MarketPlaceResponse.ProdutoBean.ReferenciasBean referencia) {
         this.referencia = referencia;
     }
 

@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.aplicationlib.model.Caracteristica;
 import com.example.aplicationlib.model.Imagen;
+import com.example.aplicationlib.model.MarketPlaceResponse;
 import com.example.aplicationlib.model.ProdutoCarrinho;
 import com.example.aplicationlib.model.ProdutoDetalhe;
 import com.example.aplicationlib.model.Referencia;
@@ -119,9 +120,9 @@ public class ProdutoDetalheActivity extends AppCompatActivity {
 
     private void preencherImagens() {
 
-        if (produtoDetalhe.getProduto().getImagens() != null && produtoDetalhe.getProduto().getImagens().length > 0) {
+        if (produtoDetalhe.getProduto().getImagens() != null && produtoDetalhe.getProduto().getImagens().size() > 0) {
 
-            for (final Imagen img : produtoDetalhe.getProduto().getImagens()) {
+            for (final MarketPlaceResponse.ProdutoBean.ImagensBean img : produtoDetalhe.getProduto().getImagens()) {
                 if (CacheImageView.temCache(getApplicationContext(), img.getIdImagem() + "")) {
                     BitmapDrawable bitmapDrawable = CacheImageView.lerCacheBitmapDraw(getApplicationContext(), img.getIdImagem() + "");
 
@@ -164,8 +165,8 @@ public class ProdutoDetalheActivity extends AppCompatActivity {
 
     private void preencherValores() {
         if (produtoDetalhe.getProduto() != null) {
-            String precoDe = "De R$" + Utils.formataMoeda(produtoDetalhe.getProduto().getReferencias()[0].getPrecoDe());
-            String precoPor = "R$" + Utils.formataMoeda(produtoDetalhe.getProduto().getReferencias()[0].getPrecoPor());
+            String precoDe = "De R$" + Utils.formataMoeda(produtoDetalhe.getProduto().getReferencias().get(0).getPrecoDe());
+            String precoPor = "R$" + Utils.formataMoeda(produtoDetalhe.getProduto().getReferencias().get(0).getPrecoPor());
 
             txtNomeProduto.setText(produtoDetalhe.getProduto().getNomeProduto());
             txtDescricaoProduto.setText(produtoDetalhe.getProduto().getDescricao());
@@ -173,7 +174,7 @@ public class ProdutoDetalheActivity extends AppCompatActivity {
             txtValorPor.setText(precoPor);
 
             if (produtoDetalhe.getParceiroResponse() != null) {
-                txtParcelas.setText("em até " + produtoDetalhe.getParceiroResponse().getQuantMaxParcelaSemJuros() + " vezes");
+                txtParcelas.setText("em até " + produtoDetalhe.getParceiroResponse().getParceiro().getQuantMaxParcelaSemJuros() + " vezes");
             }
 
         }
@@ -182,7 +183,7 @@ public class ProdutoDetalheActivity extends AppCompatActivity {
     private void atualizaValores() {
         txtQtde.setText(quantidade + "");
 
-        subtotal = quantidade * produtoDetalhe.getProduto().getReferencias()[0].getPrecoPor();
+        subtotal = quantidade * produtoDetalhe.getProduto().getReferencias().get(0).getPrecoPor();
         String strSubtotal = "R$ " + Utils.formataMoeda(subtotal);
 
         txtValorSubtotal.setText(strSubtotal);
@@ -197,11 +198,11 @@ public class ProdutoDetalheActivity extends AppCompatActivity {
     public void escolherReferencia() {
         ArrayList<CharSequence> listaReferencia = new ArrayList<>();
 
-        for(Referencia ref: produtoDetalhe.getProduto().getReferencias()){
+        for(MarketPlaceResponse.ProdutoBean.ReferenciasBean ref: produtoDetalhe.getProduto().getReferencias()){
             String str =  produtoDetalhe.getProduto().getNomeProduto();
 
-            if(ref.getCaracteristicas()!=null && ref.getCaracteristicas().length>0) {
-                for(Caracteristica caracteristica : ref.getCaracteristicas()){
+            if(ref.getCaracteristicas()!=null && ref.getCaracteristicas().size()>0) {
+                for(MarketPlaceResponse.ProdutoBean.ReferenciasBean.CaracteristicasBean caracteristica : ref.getCaracteristicas()){
                     str = str.concat(caracteristica.getValor()).concat(" ");
                 }
             }
@@ -216,16 +217,16 @@ public class ProdutoDetalheActivity extends AppCompatActivity {
                     .setItems(items, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            adicionarAoCarrinho(produtoDetalhe.getProduto().getReferencias()[i]);
+                            adicionarAoCarrinho(produtoDetalhe.getProduto().getReferencias().get(i));
                         }
                     });
             builder.create().show();
         }else{
-            adicionarAoCarrinho(produtoDetalhe.getProduto().getReferencias()[0]);
+            adicionarAoCarrinho(produtoDetalhe.getProduto().getReferencias().get(0));
         }
     }
 
-    public void adicionarAoCarrinho(Referencia referencia){
+    public void adicionarAoCarrinho(MarketPlaceResponse.ProdutoBean.ReferenciasBean referencia){
         ProdutoCarrinho produtoCarrinho = new ProdutoCarrinho();
         produtoCarrinho.setQuantidade(quantidade);
         produtoCarrinho.setProdutoDetalhe(produtoDetalhe);
