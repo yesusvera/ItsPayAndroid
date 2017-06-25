@@ -32,11 +32,11 @@
             <item
                 android:id="@+id/nav_call_sac"
                 android:icon="@android:drawable/ic_menu_call"
-                android:title="SAC - (32) 3229-4950" />
+                android:title="SAC - (37)3512-9797" />
             <item
                 android:id="@+id/nav_call_ouvidoria"
                 android:icon="@android:drawable/ic_menu_call"
-                android:title="SAC - (32) 0800 285 9632 " />
+                android:title="0800 940 6020" />
             <item
                 android:id="@+id/nav_email_fale_conosco"
                 android:icon="@android:drawable/ic_dialog_email"

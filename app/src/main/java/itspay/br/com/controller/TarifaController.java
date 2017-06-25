@@ -37,12 +37,14 @@ public class TarifaController extends BaseActivityController<TarifasActivity> {
                     UtilsActivity.alertMsg(response.errorBody(), activity);
                 }
                 activity.swipeRefreshLayout.setRefreshing(false);
+                mProgresDialogUtil.dismiss();
             }
 
             @Override
             public void onFailure(Call<GetPerfilTarifarioResponse> call, Throwable t) {
                 UtilsActivity.alertIfSocketException(t, activity);
                 activity.swipeRefreshLayout.setRefreshing(false);
+                mProgresDialogUtil.dismiss();
             }
         });
     }

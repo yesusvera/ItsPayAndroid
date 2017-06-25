@@ -66,7 +66,6 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:counterMaxLength="10"
                 android:layout_marginTop="7dp">
 
                 <EditText
@@ -75,7 +74,6 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/prompt_nome_pai"
                     android:maxLines="1"
-                    android:maxLength="10"
                     android:singleLine="true"
                     android:padding="15dp" />
 
@@ -84,6 +82,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -114,9 +113,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:maxLines="1"
+                        android:maxLength="2"
                         android:hint="@string/promtp_orgao_emissor"
                         android:singleLine="true"
                         android:paddingRight="15dp"
+                        android:inputType="textCapCharacters"
                         android:paddingLeft="15dp"
                         android:paddingBottom="15dp" />
 

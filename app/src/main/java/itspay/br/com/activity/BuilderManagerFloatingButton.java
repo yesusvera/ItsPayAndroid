@@ -51,7 +51,7 @@ public class BuilderManagerFloatingButton {
         return new TextInsideCircleButton.Builder()
                 .normalImageRes(getImageResource())
                 .normalTextRes(getTextResource())
-                .pieceColor(Color.WHITE).normalColor(Color.parseColor("#ab772d"));
+                .pieceColor(Color.WHITE).normalColor(Color.parseColor("#EF3D3C"));
                 //.normalTextRes(R.string.texto_icone);
     }
 

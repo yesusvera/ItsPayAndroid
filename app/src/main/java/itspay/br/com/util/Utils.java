@@ -83,12 +83,12 @@ public class Utils {
                 .withProvider(new CardProvider())
                 .setLayout(R.layout.material_itspay_card)
                 .setTitle(cred.getNomeProduto())
-                .setTitleColor(Color.parseColor("#F5F5F5"))
+                .setTitleColor(Color.parseColor("#FFFFFFFF"))
                 .setSubtitle(cred.getCredencialMascarada())
                 .setSubtitle2(saldo)
-                .setSubtitleColor(Color.parseColor("#F5F5F5"))
+                .setSubtitleColor(Color.parseColor("#FFFFFFFF"))
                 .setDescription(cred.getNomeImpresso())
-                .setDescriptionColor(Color.parseColor("#F5F5F5"))
+                .setDescriptionColor(Color.parseColor("#FFFFFFFF"))
                 .endConfig()
                 .build();
 

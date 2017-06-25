@@ -10,7 +10,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Já Possui Cadasto ?"
+        android:text="Já possui cartāo?"
         android:textSize="20dp"
         android:textAlignment="center"
         android:layout_marginTop="10dp"

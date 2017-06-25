@@ -6,4 +6,5 @@
     <color name="black_button">#3C3C3C</color>
     <color name="divider_grey">#D4D4D4</color>
     <color name="divider_white">#608DFA</color>
+    <color name="green_opatic">#51292929</color>
 </resources>

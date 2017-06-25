@@ -40,9 +40,9 @@ public class FormaEnvioController extends BaseActivityController<FormaEnvioActiv
 
         Call<GetFormasEnvioResponse[]> call =
                 ConnectPortadorService.getService().getFormasEnvio(
-                                                    idParceiro,
-                                                    carrinho.getRequestPedido().getIdEndereco(),
-                                                    IdentityItsPay.getInstance().getToken());
+                        idParceiro,
+                        carrinho.getRequestPedido().getIdEndereco(),
+                        IdentityItsPay.getInstance().getToken());
 
         call.enqueue(new Callback<GetFormasEnvioResponse[]>() {
             @Override

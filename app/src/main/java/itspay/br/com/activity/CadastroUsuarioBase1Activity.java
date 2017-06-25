@@ -59,6 +59,8 @@ public class CadastroUsuarioBase1Activity extends AppCompatActivity {
             }
         });
 
+
+        mCadastroUsuarioBase1Controller.mCadastroBaseSingleton.setmTipoPessoa(1);
     }
 
     private void initView() {
@@ -145,12 +147,15 @@ public class CadastroUsuarioBase1Activity extends AppCompatActivity {
         // Check which radio button was clicked
         switch(view.getId()) {
             case R.id.rb_cpf:
-                if (checked)
+                if (checked) {
                     configMask(cpf,numerocelular,cpfMask,cnpjMask,getString(R.string.prompt_cpf));
+                    mCadastroUsuarioBase1Controller.mCadastroBaseSingleton.setmTipoPessoa(1);
+                }
                 break;
             case R.id.rb_cnpj:
                 if (checked)
                     configMask(cpf,numerocelular,cnpjMask,cpfMask,getString(R.string.prompt_cnpj));
+                mCadastroUsuarioBase1Controller.mCadastroBaseSingleton.setmTipoPessoa(2);
                 break;
         }
     }

@@ -28,6 +28,7 @@ import com.example.aplicationlib.model.Pedido;
 import com.example.aplicationlib.model.PedidoDetalhe;
 import com.example.aplicationlib.model.PortadorCredencial;
 import com.example.aplicationlib.model.PortadorLogin;
+import com.example.aplicationlib.model.PortadorPreEmitidoLogin;
 import com.example.aplicationlib.model.RecuperarLoginPortador;
 import com.example.aplicationlib.model.RecuperarSenhaResponse;
 import com.example.aplicationlib.model.RequestToken;
@@ -67,6 +68,9 @@ public interface PortadorService {
 
     @POST("api/token-acesso/validar/token-cadastro-login")
     Call<CriarLoginResponse> validarPortador(@Body ValidarPortadorLogin validarPortadorLogin);
+
+    @POST("api/CredencialPreEmitida/card-holder/criar-pessoa-conta-pre-emitida")
+    Call<CriarLoginResponse> loginPreEmitidoPortador(@Body PortadorPreEmitidoLogin loginPreEmitidoPortador);
 
     @POST("api/token-acesso/enviar/token-cadastro-login")
     Call<RequestTokenResponse> requestToken(@Body RequestToken portadorLogin);

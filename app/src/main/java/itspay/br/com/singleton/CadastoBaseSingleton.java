@@ -12,13 +12,12 @@ public class CadastoBaseSingleton {
         return instance;
     }
 
+    public int mTipoPessoa;
     public String mNomeCompleto;
     public String mNomeMae;
     public String mNomePai;
     public String mCpf;
     public String mRg;
-    public String mEstadoCivil;
-    public String mGenero;
     public String mOrgaoEmissor;
 
     public String mNacionalidade;
@@ -27,10 +26,19 @@ public class CadastoBaseSingleton {
     public String mDataEmissao;
     public String mDataNascimento;
 
-    public String mNumerocelular;
+    private int mDddTelefoneCelular;
+//    private Integer telefoneCelular;
+
+    private int mDddTelefoneResidencial;
+//    private Integer telefoneResidencial;
+
+    private int mDddTelefoneComercial;
+//    private Integer telefoneComercial;
+
+    public int mNumerocelular;
     public String mNumeroPassaporte;
-    public String mNumeroResidencial;
-    public String mNumeroComercial;
+    public int mNumeroResidencial;
+    public int mNumeroComercial;
     public String mNumeroCartao;
 
 
@@ -46,68 +54,49 @@ public class CadastoBaseSingleton {
     public String mCidade;
     public String mEstado;
 
+    public int mGenero;
+    public int mEstadoCivil;
 
     public boolean mEstrangeiro;
 
     public String mKey;
 
+    private String logradouro;
+    private String siglaUF;
+
     private CadastoBaseSingleton(){}
 
 
-    public String getmKey() {
-        return mKey;
+    public String getLogradouro() {
+        return logradouro;
     }
 
-    public void setmKey(String mKey) {
-        this.mKey = mKey;
+    public void setLogradouro(String logradouro) {
+        this.logradouro = logradouro;
     }
 
-    public String getmNumeroCartao() {
-        return mNumeroCartao;
+    public String getSiglaUF() {
+        return siglaUF;
     }
 
-    public void setmNumeroCartao(String mNumeroCartao) {
-        this.mNumeroCartao = mNumeroCartao;
+    public void setSiglaUF(String siglaUF) {
+        this.siglaUF = siglaUF;
     }
 
-    public String getmDataNascimento() {
-        return mDataNascimento;
+    public int getmTipoPessoa() {
+        return mTipoPessoa;
     }
 
-    public void setmDataNascimento(String mDataNascimento) {
-        this.mDataNascimento = mDataNascimento;
+    public void setmTipoPessoa(int mTipoPessoa) {
+        this.mTipoPessoa = mTipoPessoa;
     }
 
-    public String getmCpf() {
-        return mCpf;
+    public String getmNomeCompleto() {
+        return mNomeCompleto;
     }
 
-    public void setmCpf(String mCpf) {
-        this.mCpf = mCpf;
-    }
-
-    public String getmNumerocelular() {
-        return mNumerocelular;
-    }
-
-    public void setmNumerocelular(String mNumerocelular) {
-        this.mNumerocelular = mNumerocelular;
-    }
-
-    public String getmSenha() {
-        return mSenha;
-    }
-
-    public void setmSenha(String mSenha) {
-        this.mSenha = mSenha;
-    }
-
-    public String getmGenero() {
-        return mGenero;
-    }
-
-    public void setmGenero(String mGenero) {
-        this.mGenero = mGenero;
+    public void setmNomeCompleto(String mNomeCompleto) {
+        this.mNomeCompleto = mNomeCompleto;
     }
 
     public String getmNomeMae() {
@@ -126,36 +115,12 @@ public class CadastoBaseSingleton {
         this.mNomePai = mNomePai;
     }
 
-    public String getmDataEmissao() {
-        return mDataEmissao;
+    public String getmCpf() {
+        return mCpf;
     }
 
-    public void setmDataEmissao(String mDataEmissao) {
-        this.mDataEmissao = mDataEmissao;
-    }
-
-    public String getmNumeroResidencial() {
-        return mNumeroResidencial;
-    }
-
-    public void setmNumeroResidencial(String mNumeroResidencial) {
-        this.mNumeroResidencial = mNumeroResidencial;
-    }
-
-    public String getmNumeroComercial() {
-        return mNumeroComercial;
-    }
-
-    public void setmNumeroComercial(String mNumeroComercial) {
-        this.mNumeroComercial = mNumeroComercial;
-    }
-
-    public String getmOrgaoEmissor() {
-        return mOrgaoEmissor;
-    }
-
-    public void setmOrgaoEmissor(String mOrgaoEmissor) {
-        this.mOrgaoEmissor = mOrgaoEmissor;
+    public void setmCpf(String mCpf) {
+        this.mCpf = mCpf;
     }
 
     public String getmRg() {
@@ -166,12 +131,12 @@ public class CadastoBaseSingleton {
         this.mRg = mRg;
     }
 
-    public String getmNumeroPassaporte() {
-        return mNumeroPassaporte;
+    public String getmOrgaoEmissor() {
+        return mOrgaoEmissor;
     }
 
-    public void setmNumeroPassaporte(String mNumeroPassaporte) {
-        this.mNumeroPassaporte = mNumeroPassaporte;
+    public void setmOrgaoEmissor(String mOrgaoEmissor) {
+        this.mOrgaoEmissor = mOrgaoEmissor;
     }
 
     public String getmNacionalidade() {
@@ -190,28 +155,92 @@ public class CadastoBaseSingleton {
         this.mNaturalidade = mNaturalidade;
     }
 
-    public boolean getmEstrangeiro() {
-        return mEstrangeiro;
+    public String getmDataEmissao() {
+        return mDataEmissao;
     }
 
-    public void setmEstrangeiro(boolean mEstrangeiro) {
-        this.mEstrangeiro = mEstrangeiro;
+    public void setmDataEmissao(String mDataEmissao) {
+        this.mDataEmissao = mDataEmissao;
     }
 
-    public String getmEstadoCivil() {
-        return mEstadoCivil;
+    public String getmDataNascimento() {
+        return mDataNascimento;
     }
 
-    public void setmEstadoCivil(String mEstadoCivil) {
-        this.mEstadoCivil = mEstadoCivil;
+    public void setmDataNascimento(String mDataNascimento) {
+        this.mDataNascimento = mDataNascimento;
     }
 
-    public String getmNomeCompleto() {
-        return mNomeCompleto;
+    public int getmDddTelefoneCelular() {
+        return mDddTelefoneCelular;
     }
 
-    public void setmNomeCompleto(String mNomeCompleto) {
-        this.mNomeCompleto = mNomeCompleto;
+    public void setmDddTelefoneCelular(int mDddTelefoneCelular) {
+        this.mDddTelefoneCelular = mDddTelefoneCelular;
+    }
+
+    public int getmDddTelefoneResidencial() {
+        return mDddTelefoneResidencial;
+    }
+
+    public void setmDddTelefoneResidencial(int mDddTelefoneResidencial) {
+        this.mDddTelefoneResidencial = mDddTelefoneResidencial;
+    }
+
+    public int getmDddTelefoneComercial() {
+        return mDddTelefoneComercial;
+    }
+
+    public void setmDddTelefoneComercial(int mDddTelefoneComercial) {
+        this.mDddTelefoneComercial = mDddTelefoneComercial;
+    }
+
+    public int getmNumerocelular() {
+        return mNumerocelular;
+    }
+
+    public void setmNumerocelular(int mNumerocelular) {
+        this.mNumerocelular = mNumerocelular;
+    }
+
+    public String getmNumeroPassaporte() {
+        return mNumeroPassaporte;
+    }
+
+    public void setmNumeroPassaporte(String mNumeroPassaporte) {
+        this.mNumeroPassaporte = mNumeroPassaporte;
+    }
+
+    public int getmNumeroResidencial() {
+        return mNumeroResidencial;
+    }
+
+    public void setmNumeroResidencial(int mNumeroResidencial) {
+        this.mNumeroResidencial = mNumeroResidencial;
+    }
+
+    public int getmNumeroComercial() {
+        return mNumeroComercial;
+    }
+
+    public void setmNumeroComercial(int mNumeroComercial) {
+        this.mNumeroComercial = mNumeroComercial;
+    }
+
+    public String getmNumeroCartao() {
+        return mNumeroCartao;
+    }
+
+    public void setmNumeroCartao(String mNumeroCartao) {
+        this.mNumeroCartao = mNumeroCartao;
+    }
+
+    public String getmSenha() {
+        return mSenha;
+    }
+
+    public void setmSenha(String mSenha) {
+        this.mSenha = mSenha;
     }
 
     public String getmEmailPessoal() {
@@ -284,5 +313,37 @@ public class CadastoBaseSingleton {
 
     public void setmEstado(String mEstado) {
         this.mEstado = mEstado;
+    }
+
+    public int getmGenero() {
+        return mGenero;
+    }
+
+    public void setmGenero(int mGenero) {
+        this.mGenero = mGenero;
+    }
+
+    public int getmEstadoCivil() {
+        return mEstadoCivil;
+    }
+
+    public void setmEstadoCivil(int mEstadoCivil) {
+        this.mEstadoCivil = mEstadoCivil;
+    }
+
+    public boolean ismEstrangeiro() {
+        return mEstrangeiro;
+    }
+
+    public void setmEstrangeiro(boolean mEstrangeiro) {
+        this.mEstrangeiro = mEstrangeiro;
+    }
+
+    public String getmKey() {
+        return mKey;
+    }
+
+    public void setmKey(String mKey) {
+        this.mKey = mKey;
     }
 }

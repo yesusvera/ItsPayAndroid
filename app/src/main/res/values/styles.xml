@@ -33,17 +33,17 @@
 
     <style name="IvBackApp">
        <!--<item name="android:background">@drawable/back_bahamas</item>-->
-        <item name="android:background">@drawable/back_financial_app</item>
+        <item name="android:background">@drawable/back_fin_pag</item>
     </style>
 
     <style name="IvLogoClient">
         <!--<item name="android:src">@drawable/bahamas_logo</item>-->
-         <item name="android:src">@drawable/fin_pag_logo</item>
+         <item name="android:src">@drawable/logo_fin_pag</item>
     </style>
 
     <style name="IvAppLogo">
         <!--<item name="android:src">@mipmap/ic_launcher</item>-->
-     <item name="android:src">@mipmap/ic_launch_financial</item>
+     <item name="android:src">@mipmap/ic_launcher_finpag</item>
     </style>
 
 
@@ -98,4 +98,5 @@
         <item name="android:textColor">@color/titleBadgeTitle</item>
         <item name="android:textSize">12dp</item>
     </style>
+
 </resources>

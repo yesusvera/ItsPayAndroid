@@ -53,7 +53,6 @@ public class CustomFingerPrint {
         mCallBack = (ObserverResultFingerPrintInterface) observerResultFingerPrintInterface;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     public boolean isFingerPrint() {
         if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.USE_FINGERPRINT) != PackageManager.PERMISSION_GRANTED) {
             return true;

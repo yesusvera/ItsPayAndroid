@@ -128,4 +128,23 @@ public class ValidationsForms {
         else
             return true;
     }
+
+    /**
+     * Deve possuir letras e números e ter entre 4 e 30 caracteres.
+     * @param
+     * @return
+     */
+    public static boolean telefoneValida(String telefone,int maxLeng){
+        if(telefone==null || telefone.length() > maxLeng)
+            return false;
+        else
+            return true;
+    }
+
+    public static boolean dataNascimentoValida(String telefone){
+        if(telefone==null || telefone.length() > 10)
+            return false;
+        else
+            return true;
+    }
 }

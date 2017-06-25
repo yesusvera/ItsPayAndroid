@@ -39,7 +39,7 @@ public class ParcelamentoController extends BaseActivityController<ParcelamentoA
                                 idParceiro,
                                 carrinho.getValorTotal(),
                                 IdentityItsPay.getInstance().getToken()
-                            );
+                        );
 
         call.enqueue(new Callback<ParcelasResponse>() {
             @Override

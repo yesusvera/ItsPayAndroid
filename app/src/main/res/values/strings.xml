@@ -289,13 +289,17 @@
     <string name="prompt_numero_edereco">Numero</string>
     <string name="prompt_complemento">Complemento</string>
 
+    <string name="numero_telefonico_1">(37)3512-9797</string>
+    <string name="numero_telefonico_2">0800 940 6020</string>
+
+
     <string-array name="list_estado_civil">
         <item>Solteiro(a)</item>
         <item>Casado(a)</item>
         <item>Divorciado(a)</item>
         <item>Viúvo(a)</item>
         <item>Separado(a)</item>
-        <item>Companheiro(a)</item>
+        <item>Não Informado</item>
     </string-array>
 
 </resources>

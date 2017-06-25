@@ -11,6 +11,7 @@ import android.widget.RadioButton;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 
+import com.example.aplicationlib.enumclass.EstadoCivilEnum;
 import com.example.aplicationlib.util.mask.MaskEditTextChangedListener;
 
 import itspay.br.com.controller.CadastroUsuarioBaseController;
@@ -21,9 +22,9 @@ import itspay.br.com.util.Utils;
 public class CadastroUsuarioBaseActivity extends AppCompatActivity {
 
 
-    private String mGenero;
+    private int mGenero;
     public boolean isEstrageiro;
-    public String mStadoCivil;
+    public int mStadoCivil;
 
     CadastroUsuarioBaseController mCadastroUsuarioBaseController = new CadastroUsuarioBaseController(this);
 
@@ -53,7 +54,7 @@ public class CadastroUsuarioBaseActivity extends AppCompatActivity {
 
         initClickListener();
 
-        mGenero = "Masculino";
+        mGenero = 1;
     }
 
     private void initClickListener() {
@@ -71,7 +72,7 @@ public class CadastroUsuarioBaseActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent,
                                        View view, int pos, long id) {
-                mStadoCivil = parent.getItemAtPosition(pos).toString();
+                mStadoCivil = EstadoCivilEnum.getFromRepresentative(parent.getItemAtPosition(pos).toString()).getNumberEstado();
             }
 
             @Override
@@ -116,11 +117,11 @@ public class CadastroUsuarioBaseActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.rb_masculino:
                 if (checked)
-                    mGenero = "Masculino";
+                    mGenero = 1;
                 break;
             case R.id.rb_feminino:
                 if (checked)
-                    mGenero = "Feminino";
+                    mGenero = 2;
                 break;
         }
     }
@@ -170,11 +171,11 @@ public class CadastroUsuarioBaseActivity extends AppCompatActivity {
     }
 
 
-    public String getmGenero() {
+    public int getmGenero() {
         return mGenero;
     }
 
-    public void setmGenero(String mGenero) {
+    public void setmGenero(int mGenero) {
         this.mGenero = mGenero;
     }
 
@@ -226,11 +227,11 @@ public class CadastroUsuarioBaseActivity extends AppCompatActivity {
         this.naturalidade = naturalidade;
     }
 
-    public String getmStadoCivil() {
+    public int getmStadoCivil() {
         return mStadoCivil;
     }
 
-    public void setmStadoCivil(String mStadoCivil) {
+    public void setmStadoCivil(int mStadoCivil) {
         this.mStadoCivil = mStadoCivil;
     }
 

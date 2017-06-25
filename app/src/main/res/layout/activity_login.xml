@@ -56,7 +56,6 @@
                 android:id="@+id/email_login_form"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/screen_border"
                 android:elevation="16dp"
                 android:orientation="vertical">
 
@@ -71,6 +70,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/prompt_cpf"
+                        android:textColor="@color/black_button"
                         android:inputType="number"
                         android:maxLines="1"
                         android:padding="15dp"/>
@@ -95,6 +95,7 @@
                             android:layout_height="wrap_content"
                             android:hint="@string/prompt_password"
                             android:imeActionId="@+id/login"
+                            android:textColor="@color/black_button"
                             android:imeActionLabel="@string/action_sign_in_short"
                             android:imeOptions="actionUnspecified|actionDone"
                             android:inputType="textPassword"
@@ -112,16 +113,16 @@
 
             <LinearLayout
                 android:id="@+id/ll_finger_print"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:layout_marginTop="8dp"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/height_55dp"
+                android:layout_height="@dimen/height_40dp"
                 android:gravity="right"
                 android:orientation="horizontal">
 
                 <Switch
                     android:id="@+id/login_new_access_sw_finger_print"
-                    android:textColor="@android:color/background_light"
+                    android:textColor="@android:color/black"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -141,8 +142,8 @@
                     android:layout_height="wrap_content"
                     android:padding="10dp"
                     android:text="Esqueci a senha"
-                    android:textColor="@android:color/background_light"
-                    android:textSize="13sp"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="16sp"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentEnd="true" />
@@ -165,12 +166,11 @@
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 android:text="Ainda não possui Login de Acesso?"
-                android:textColor="@android:color/background_light"
-                android:textSize="16sp"
-                android:alpha="0.95"
+                android:textColor="@android:color/background_dark"
+                android:textSize="17sp"
                 android:layout_below="@+id/login_form"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="57dp" />
+                android:layout_marginTop="57dp"/>
 
             <TextView
                 android:id="@+id/txtViewCriaLogin"
@@ -178,8 +178,8 @@
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 android:text="Crie seu Login de Acesso Agora!"
-                android:textColor="@android:color/background_light"
-                android:textSize="17sp"
+                android:textColor="@android:color/background_dark"
+                android:textSize="18sp"
                 android:textStyle="normal|bold"
                 android:background="?attr/colorControlHighlight"
                 android:alpha="0.95"/>

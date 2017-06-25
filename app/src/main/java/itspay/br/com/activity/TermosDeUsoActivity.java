@@ -35,7 +35,7 @@ public class TermosDeUsoActivity extends AppCompatActivity {
 //        webview.loadUrl(doc);
 //        webview.loadData(doc, "text/html", "UTF-8");
 
-        webview.loadUrl("https://docs.google.com/gview?embedded=true&url="+ "https://bahamascard.itspay.com.br/assets/termos.pdf");
+        webview.loadUrl("https://docs.google.com/gview?embedded=true&url="+ "https://financialcartoes.itspay.com.br/assets/termos.pdf");
 //
 //        webview.loadUrl("http://www.financialcartoes.com.br/Download/CONTRATO_DE_CONCESSAO_DE_CREDITO_CARTAO_INDIVIDUAL_COMPLETO_080115.pdf");
 

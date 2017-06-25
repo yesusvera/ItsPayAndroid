@@ -7,8 +7,18 @@ package com.example.aplicationlib.util;
 public class ItsPayConstants {
 
     //DESENV
-    public static final long ID_INSTITUICAO =  300;
+    public static final long ID_INSTITUICAO = 300;
 
+    public static final long ID_REGIONAL = 3001;
+    public static final long ID_FILIAL = 3002;
+    public static final long ID_PONTO_RELACIONAMENTO= 320;
+
+//    Financial
+//  public static final long ID_INSTITUICAO = 1401;
+
+//    public static final long ID_REGIONAL = 1;
+//    public static final long ID_FILIAL = 5;
+//    public static final long ID_PONTO_RELACIONAMENTO= 5;
 //BAHAMAS
 //    public static final long ID_INSTITUICAO =  1201;
 

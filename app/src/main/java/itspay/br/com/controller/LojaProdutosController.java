@@ -28,11 +28,11 @@ public class LojaProdutosController {
     boolean initialProgress;
 
     public LojaProdutosController(Context context, LojaProdutosFragment fragment){
-            this.mProgresDialogUtil = new ProgresDialogUtil(fragment.getActivity());
+        this.mProgresDialogUtil = new ProgresDialogUtil(fragment.getActivity());
 
-            if(mProgresDialogUtil == null) {
-                mProgresDialogUtil.setProgress(new ProgressDialog(fragment.getActivity()));
-            }
+        if(mProgresDialogUtil == null) {
+            mProgresDialogUtil.setProgress(new ProgressDialog(fragment.getActivity()));
+        }
 
     }
 

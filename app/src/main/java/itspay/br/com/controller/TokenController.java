@@ -74,12 +74,11 @@ public class TokenController  extends BaseActivityController<TokenActivity>  {
 
     public void validToken(String token){
 
+        mProgresDialogUtil.show("Valiando Token","Agaurde.");
+
         final ValidToken validTokenPortador = new ValidToken();
         validTokenPortador.setChaveExterna(mCadastroSingleton.getmKey());
         validTokenPortador.setToken(token);
-
-
-//        verificarIntent();
 
         Call<ResponseBody> call =
                 ConnectPortadorService.getService().validToken(validTokenPortador);
@@ -88,8 +87,6 @@ public class TokenController  extends BaseActivityController<TokenActivity>  {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if(response.body()!=null){
-//                    Intent intent = new Intent(activity,CadastroLoginPage2Activity.class);
-//                    activity.startActivity(intent);
 
                     verificarIntent();
                     mCadastroSingleton.setmKey("");
@@ -97,12 +94,14 @@ public class TokenController  extends BaseActivityController<TokenActivity>  {
                 }else{
                     UtilsActivity.alertMsg(response.errorBody(), activity);
                 }
+                mProgresDialogUtil.dismiss();
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 UtilsActivity.alertIfSocketException(t, activity);
                 t.printStackTrace();
+                mProgresDialogUtil.dismiss();
             }
         });
     }

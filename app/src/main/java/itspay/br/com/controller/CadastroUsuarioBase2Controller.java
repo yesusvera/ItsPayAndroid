@@ -43,9 +43,7 @@ public class CadastroUsuarioBase2Controller extends BaseActivityController<Cadas
 
     public void nextPage(){
         if(validaFormulario()){
-
-
-            CadastroSingleton.getInstance().setmNumerocelular(mCadastroBaseSingleton.getmNumerocelular());
+            CadastroSingleton.getInstance().setmNumerocelular(""+mCadastroBaseSingleton.getmDddTelefoneCelular()+mCadastroBaseSingleton.getmNumerocelular());
 
             mCadastroSingleton.setmKey(CadastroSingleton.getInstance().getmNumerocelular() +
                     new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").format(new Date()));
@@ -76,6 +74,8 @@ public class CadastroUsuarioBase2Controller extends BaseActivityController<Cadas
                     activity.getTxtestado().setText(mEnderecoResponse[0].getBairroInicio().getLocalidade().getUf().getNome());
                     activity.getTxtcidade().setText(mEnderecoResponse[0].getBairroInicio().getLocalidade().getNome());
                     activity.getEndereco().setText(mEnderecoResponse[0].getNomeAbreviado());
+                    mCadastroBaseSingleton.setLogradouro(mEnderecoResponse[0].getNome());
+                    mCadastroBaseSingleton.setSiglaUF(mEnderecoResponse[0].getBairroInicio().getLocalidade().getUf().getSigla());
                 }else{
                     mProgresDialogUtil.dismiss();
                     UtilsActivity.alertMsg(response.errorBody(), activity);
@@ -110,12 +110,6 @@ public class CadastroUsuarioBase2Controller extends BaseActivityController<Cadas
             activity.getEndereco().setError(activity.getString(R.string.error_field_required));
             activity.getEndereco().requestFocus();
             return false;
-        }
-
-//        Campo Nao Obrigatorio
-        if(activity.getNumerocomplemento().getText().toString().isEmpty()){
-            activity.getNumerocomplemento().setError(activity.getString(R.string.error_field_required));
-            activity.getNumerocomplemento().requestFocus();
         }
 
         if(activity.getNumeroresidencial().getText().toString().isEmpty()){

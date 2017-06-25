@@ -53,18 +53,19 @@ public class CadastroUsuarioBaseFinalizaActivity extends AppCompatActivity {
     }
 
     private void clickListeners(){
-        checkTermosDeUso.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                valida();
-            }
-        });
 
         txtViewTermosDeUso.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getBaseContext(), TermosDeUsoActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        buttonCriarLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                valida();
             }
         });
     }

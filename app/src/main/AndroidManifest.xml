@@ -23,7 +23,7 @@
     <application
         android:allowBackup="true"
         android:hardwareAccelerated="false"
-        android:icon="@mipmap/ic_launcher_fin_pag"
+        android:icon="@mipmap/ic_launcher_finpag"
         android:label="@string/app_name"
         android:largeHeap="true"
         android:supportsRtl="true"
@@ -193,28 +193,30 @@
         <activity
             android:name="itspay.br.com.activity.PerguntaCadasroActivity"
             android:label="Cadastro Login"
-            android:noHistory="true"
             android:theme="@style/TemaFormularios"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name="itspay.br.com.activity.CadastroUsuarioBaseActivity"
             android:label="Cadastro Login"
-            android:noHistory="true"
             android:theme="@style/TemaFormularios"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name="itspay.br.com.activity.CadastroUsuarioBase1Activity"
             android:label="Cadastro Dados Pessoais"
-            android:noHistory="true"
             android:theme="@style/TemaFormularios"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name="itspay.br.com.activity.CadastroUsuarioBase2Activity"
             android:label="Cadastro Login"
-            android:noHistory="true"
             android:theme="@style/TemaFormularios"
             android:windowSoftInputMode="stateHidden|adjustPan" />
-        <activity android:name="itspay.br.com.activity.CadastroUsuarioBaseFinalizaActivity"></activity>
+
+        <activity android:name="itspay.br.com.activity.CadastroUsuarioBaseFinalizaActivity"
+            android:label="Finalização de Cadastro"
+            android:noHistory="true"
+            android:theme="@style/TemaFormularios"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
+
     </application>
 
 </manifest>

@@ -45,7 +45,7 @@ public class MeusCartoesActivity extends AppCompatActivity
     FloatingActionButton fab;
     private MaterialListView mListView;
     private Credencial credenciais[];
-    private MeusCartoesController meusCartoesController = new MeusCartoesController(this);
+    private MeusCartoesController meusCartoesController ;
     private SwipeRefreshLayout swipeRefreshLayout;
     public static boolean FORCE_LOGOUT = false;
 
@@ -64,7 +64,7 @@ public class MeusCartoesActivity extends AppCompatActivity
             }
         });
 
-
+        meusCartoesController = new MeusCartoesController(this);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
 
@@ -232,9 +232,9 @@ public class MeusCartoesActivity extends AppCompatActivity
         } else if (id == R.id.nav_marketplace) {
             abrirMarketPlace();
         } else if(id == R.id.nav_call_sac){
-            meusCartoesController.ligar("3232294950");
+            meusCartoesController.ligar(getString(R.string.numero_telefonico_1));
         } else if(id == R.id.nav_call_ouvidoria){
-            meusCartoesController.ligar("3208002859632");
+            meusCartoesController.ligar(getString(R.string.numero_telefonico_2));
         } else if(id == R.id.nav_email_fale_conosco){
             meusCartoesController.enviarEmail(getString(R.string.info_email), "", "","");
         } else if(id == R.id.nav_logout){

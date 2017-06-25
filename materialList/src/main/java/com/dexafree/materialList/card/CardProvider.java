@@ -740,7 +740,7 @@ public class CardProvider<T extends CardProvider> extends Observable {
         }
 
         //YESUS CASTILLO
-        final LinearLayout cardItsPayLinearLayout = findViewById(view, R.id.cardItsPayLinearLayout, LinearLayout.class);
+        final ImageView cardItsPayLinearLayout = findViewById(view, R.id.cardItsPayLinearLayout, ImageView.class);
         if (cardItsPayLinearLayout != null) {
             if (getDrawable() != null) {
                 cardItsPayLinearLayout.setBackgroundDrawable(getDrawable());

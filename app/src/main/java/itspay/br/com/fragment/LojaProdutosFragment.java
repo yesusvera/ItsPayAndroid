@@ -43,7 +43,7 @@ import itspay.br.com.itspay.R;
 import itspay.br.com.services.ConnectPortadorService;
 import itspay.br.com.util.Utils;
 import itspay.br.com.util.UtilsActivity;
-import itspay.br.com.util.components.CustomScrollListener;
+import itspay.br.com.util.component.CustomScrollListener;
 import jp.wasabeef.recyclerview.animators.FlipInTopXAnimator;
 import okhttp3.ResponseBody;
 import retrofit2.Call;

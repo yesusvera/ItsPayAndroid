@@ -165,21 +165,17 @@ public class CartaoActivity extends AppCompatActivity {
                         R.drawable.menu_icon4,
                         R.drawable.menu_icon6
 
-            };
-            BuilderManagerFloatingButton.textResources = new int[]{
-                    R.string.str_icone_cartoes_virtuais,
-                    R.string.str_icone_ajustes_seguranca,
-                    R.string.str_icone_logout,
-                    R.string.str_icone_alterar_senha
-            };
-            bmb.setPiecePlaceEnum(PiecePlaceEnum.DOT_4_1);
-            bmb.setButtonPlaceEnum(ButtonPlaceEnum.SC_4_1);
                 };
+
                 BuilderManagerFloatingButton.textResources = new int[]{
                         R.string.str_icone_cartoes_virtuais,
                         R.string.str_icone_ajustes_seguranca,
                         R.string.str_icone_logout
                 };
+
+                bmb.setPiecePlaceEnum(PiecePlaceEnum.DOT_3_1);
+                bmb.setButtonPlaceEnum(ButtonPlaceEnum.SC_3_1);
+            }
 
         }else {
             if (credencialDetalhe.getTipoConta() == 2) {

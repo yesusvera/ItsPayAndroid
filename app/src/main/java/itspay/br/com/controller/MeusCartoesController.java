@@ -45,7 +45,7 @@ public class MeusCartoesController extends BaseActivityController<MeusCartoesAct
                 =  ConnectPortadorService
                         .getService()
                         .listaCredenciais(
-                                identity.getLoginPortador().getCpf().replace(".", "").replace("-", ""),
+                                identity.getLoginPortador().getCpf().replace(".", "").replace("-", "").replace(" ",""),
                                 ItsPayConstants.TIPO_PESSOA,
                                 ItsPayConstants.ID_PROCESSADORA,
                                 ItsPayConstants.ID_INSTITUICAO,
@@ -88,7 +88,11 @@ public class MeusCartoesController extends BaseActivityController<MeusCartoesAct
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
-                            String uri = "tel:" + numero;
+                            String uri = "tel:" + numero.replace(" ","")
+                                    .replace("-","")
+                                    .replace("(","")
+                                    .replace(")","");
+
                             Intent intent = new Intent(Intent.ACTION_CALL);
                             intent.setData(Uri.parse(uri));
                             activity.startActivity(intent);

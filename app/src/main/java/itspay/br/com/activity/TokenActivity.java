@@ -25,8 +25,7 @@ public class TokenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_tokenfragment);
 
-//        mTokenController.requestCode();
-
+        mTokenController.requestCode();
         mTipoActivity = getIntent().getIntExtra("tipoActivity",0);
 
         mButonOk = (Button)findViewById(R.id.btn_confirma_token);

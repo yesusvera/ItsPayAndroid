@@ -2,6 +2,8 @@ package itspay.br.com.controller;
 
 import android.content.Intent;
 
+import com.example.aplicationlib.util.validations.ValidationsForms;
+
 import itspay.br.com.activity.CadastroUsuarioBase1Activity;
 import itspay.br.com.activity.CadastroUsuarioBase2Activity;
 import itspay.br.com.activity.CadastroUsuarioBaseActivity;
@@ -28,7 +30,6 @@ public class CadastroUsuarioBaseController extends BaseActivityController<Cadast
             Intent intent = new Intent(activity, CadastroUsuarioBase2Activity.class);
             activity.startActivity(intent);
         }
-
     }
 
     public boolean validaFormulario(){
@@ -57,8 +58,8 @@ public class CadastroUsuarioBaseController extends BaseActivityController<Cadast
             return false;
         }
 
-        if(activity.getDataEmissao().getText().toString().length() < 10){
-            activity.getDataEmissao().setError(activity.getString(R.string.error_data_invalida));
+        if(ValidationsForms.dataNascimentoValida(activity.getDataEmissao().getText().toString())){
+            activity.getDataEmissao().setError(activity.getString(R.string.error_data_nascimento_invalida));
             activity.getDataEmissao().requestFocus();
             return false;
         }
@@ -97,10 +98,12 @@ public class CadastroUsuarioBaseController extends BaseActivityController<Cadast
         mCadastroBaseSingleton.setmGenero(activity.getmGenero());
         mCadastroBaseSingleton.setmEstadoCivil(activity.getmStadoCivil());
         mCadastroBaseSingleton.setmEstrangeiro(activity.isEstrageiro);
-        mCadastroBaseSingleton.setmNumeroPassaporte(activity.getNumeropassaport().getText().toString());
+
         mCadastroBaseSingleton.setmNacionalidade(activity.getNacionalidade().getText().toString());
         mCadastroBaseSingleton.setmNaturalidade(activity.getNaturalidade().getText().toString());
 
+        if (activity.isEstrageiro)
+        mCadastroBaseSingleton.setmNumeroPassaporte(activity.getNumeropassaport().getText().toString());
 
         return true;
     }

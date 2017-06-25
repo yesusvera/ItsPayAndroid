@@ -10,7 +10,6 @@
         android:id="@+id/cadastro_login_form"
         android:padding="16dp"
         android:layout_width="fill_parent"
-        android:layout_above="@+id/btn_next_page"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
@@ -63,7 +62,11 @@
 
             </RelativeLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:counterMaxLength="10"
@@ -80,7 +83,9 @@
                     android:singleLine="true"
                     android:padding="15dp" />
 
-            </android.support.design.widget.TextInputLayout>
+                </android.support.design.widget.TextInputLayout>
+
+            </RelativeLayout>
 
             <RadioGroup
                 android:layout_marginTop="18dp"
@@ -105,6 +110,9 @@
                     android:onClick="onRadioButtonClicked"/>
             </RadioGroup>
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -121,7 +129,11 @@
                     android:paddingBottom="15dp" />
 
             </android.support.design.widget.TextInputLayout>
+            </RelativeLayout>
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -138,7 +150,11 @@
                     android:padding="15dp" />
 
             </android.support.design.widget.TextInputLayout>
+            </RelativeLayout>
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -155,6 +171,8 @@
                     android:padding="15dp" />
 
             </android.support.design.widget.TextInputLayout>
+
+            </RelativeLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"

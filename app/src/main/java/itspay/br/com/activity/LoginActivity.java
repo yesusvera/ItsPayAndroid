@@ -53,6 +53,7 @@ import itspay.br.com.controller.LoginController;
 import itspay.br.com.itspay.R;
 import itspay.br.com.singleton.CarrinhoSingleton;
 import itspay.br.com.util.Utils;
+import itspay.br.com.util.component.BorderTextView;
 
 /**
  * Created by yesus on 12/12/16.
@@ -109,7 +110,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         initListeners();
 
-
 //      Last Cpf Logged
         mCpf = SharedPreferenceUtil.getStringPreference(this, "lastCPFLogged");
         mPassword = SharedPreferenceUtil.getStringPreference(this, "lastPasswordLogged");
@@ -145,6 +145,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 mLlFingerPrint.setVisibility(View.GONE);
 
             }
+        }else{
+            mLlFingerPrint.setVisibility(View.GONE);
         }
     }
 

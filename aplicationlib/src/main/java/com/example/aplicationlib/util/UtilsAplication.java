@@ -130,4 +130,22 @@ public class UtilsAplication {
 
         return date;
     }
+
+    public static int getDddNumber(String number){
+        String numeroCelular = number.
+                replace("(","").
+                replace(")","").
+                replace("-","");
+
+        return Integer.valueOf(numeroCelular.substring(0,2));
+    }
+
+    public static int getNumberSemDDD(String number){
+        String numeroCelular = number.
+                replace("(","").
+                replace(")","").
+                replace("-","");
+
+        return Integer.valueOf(numeroCelular.substring(2,numeroCelular.length()));
+    }
 }

@@ -236,7 +236,7 @@ public class ProdutoDetalheActivity extends AppCompatActivity {
 
         finish();
     }
-    
+
 
     //-----------------------------------------------------------------------------
     // Here's what the app should do to add a view to the ViewPager.

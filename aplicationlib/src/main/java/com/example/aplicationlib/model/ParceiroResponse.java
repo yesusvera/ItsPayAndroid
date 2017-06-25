@@ -22,8 +22,13 @@ public class ParceiroResponse  implements  Cloneable{
     private long quantMaxParcelaSemJuros;
     private long status;
     private Unidade unidades[];
+    private String descricao;
 
-    public ParceiroResponse(String cnpj, String dataHoraStatus, long entrega, long idParceiro, long idUsuarioInclusao, long idUsuarioManutencao, double jurosAoMes, String nomeImagem, String nomeParceiro, ArrayList<Produto>  produtos, long quantMaxParcelaComJuros, long quantMaxParcelaSemJuros, long status, Unidade[] unidades) {
+
+    public ParceiroResponse(String cnpj, String dataHoraStatus, long entrega, long idParceiro, long idUsuarioInclusao,
+                            long idUsuarioManutencao, double jurosAoMes, String nomeImagem,
+                            String nomeParceiro, ArrayList<Produto> produtos, long quantMaxParcelaComJuros,
+                            long quantMaxParcelaSemJuros, long status, Unidade[] unidades, String descricao) {
         this.cnpj = cnpj;
         this.dataHoraStatus = dataHoraStatus;
         this.entrega = entrega;
@@ -38,9 +43,19 @@ public class ParceiroResponse  implements  Cloneable{
         this.quantMaxParcelaSemJuros = quantMaxParcelaSemJuros;
         this.status = status;
         this.unidades = unidades;
+        this.descricao = descricao;
     }
 
     public ParceiroResponse() {
+    }
+
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
     public String getCnpj() {

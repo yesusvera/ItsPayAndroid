@@ -8,10 +8,6 @@ public class VerificaCredencial {
 
     private String hashCode;
 
-    public VerificaCredencial(String hashCode) {
-        this.hashCode = hashCode;
-    }
-
     public VerificaCredencial() {
     }
 

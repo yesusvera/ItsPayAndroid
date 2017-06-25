@@ -49,7 +49,6 @@ public class CadastroUsuarioBase2Activity extends AppCompatActivity {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(!hasFocus){
-                    Toast.makeText(getApplicationContext(), "lost the focus", Toast.LENGTH_LONG).show();
                     mCadastroUsuarioBase2Controller.getEnderecoCep(cep.getText().toString());
 
                 }
@@ -69,6 +68,7 @@ public class CadastroUsuarioBase2Activity extends AppCompatActivity {
         this.bairro = (EditText) findViewById(R.id.bairro);
         this.cep = (EditText) findViewById(R.id.cep);
 
+//        numeroresidencial.setText("13");
         cep.addTextChangedListener(new MaskEditTextChangedListener("#####-###", cep));
 
         Utils.nextInputOnMaxLength(this,cep,bairro,9);

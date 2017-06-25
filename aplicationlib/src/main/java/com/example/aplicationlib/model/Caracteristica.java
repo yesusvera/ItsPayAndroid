@@ -5,31 +5,34 @@ package com.example.aplicationlib.model;
  */
 
 public class Caracteristica {
-    /**
-     * idCaracteristicaReferencia : 1
-     * idReferenciaSKU : 1
-     * nome : Marca
-     * valor : Sony
-     */
-
-    private int idCaracteristicaReferencia;
-    private int idReferenciaSKU;
+    private long idCaracteristicaReferencia;
+    private long idReferenciaSKU;
     private String nome;
     private String valor;
 
-    public int getIdCaracteristicaReferencia() {
+    public Caracteristica(long idCaracteristicaReferencia, long idReferenciaSKU, String nome, String valor) {
+        this.idCaracteristicaReferencia = idCaracteristicaReferencia;
+        this.idReferenciaSKU = idReferenciaSKU;
+        this.nome = nome;
+        this.valor = valor;
+    }
+
+    public Caracteristica() {
+    }
+
+    public long getIdCaracteristicaReferencia() {
         return idCaracteristicaReferencia;
     }
 
-    public void setIdCaracteristicaReferencia(int idCaracteristicaReferencia) {
+    public void setIdCaracteristicaReferencia(long idCaracteristicaReferencia) {
         this.idCaracteristicaReferencia = idCaracteristicaReferencia;
     }
 
-    public int getIdReferenciaSKU() {
+    public long getIdReferenciaSKU() {
         return idReferenciaSKU;
     }
 
-    public void setIdReferenciaSKU(int idReferenciaSKU) {
+    public void setIdReferenciaSKU(long idReferenciaSKU) {
         this.idReferenciaSKU = idReferenciaSKU;
     }
 
@@ -47,5 +50,15 @@ public class Caracteristica {
 
     public void setValor(String valor) {
         this.valor = valor;
+    }
+
+    @Override
+    public String toString() {
+        return "Caracteristica{" +
+                "idCaracteristicaReferencia=" + idCaracteristicaReferencia +
+                ", idReferenciaSKU=" + idReferenciaSKU +
+                ", nome='" + nome + '\'' +
+                ", valor='" + valor + '\'' +
+                '}';
     }
 }
