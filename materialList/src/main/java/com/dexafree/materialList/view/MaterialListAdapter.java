@@ -21,6 +21,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import br.com.braga.junior.aplicationlib.model.Imagen;
+import br.com.braga.junior.aplicationlib.model.MarketPlaceResponse;
 import br.com.braga.junior.aplicationlib.model.ProdutoDetalhe;
 import br.com.braga.junior.aplicationlib.util.cache.CacheImageView;
 
@@ -28,13 +29,24 @@ public class MaterialListAdapter extends RecyclerView.Adapter<MaterialListAdapte
         implements Observer {
     private final MaterialListView.OnSwipeAnimation mSwipeAnimation;
     private final MaterialListView.OnAdapterItemsChanged mItemAnimation;
+    private int currentPosition;
     private final List<Card> mCardList = new ArrayList<>();
     private Context mContext;
+    int position;
 
     public MaterialListAdapter(@NonNull final MaterialListView.OnSwipeAnimation swipeAnimation,
                                @NonNull final MaterialListView.OnAdapterItemsChanged itemAnimation) {
         mSwipeAnimation = swipeAnimation;
         mItemAnimation = itemAnimation;
+    }
+
+    public void updateList(List<Card> cards) {
+        for(Card card:cards) {
+            mCardList.add(position++, card);
+            card.getProvider().addObserver(this);
+            mItemAnimation.onAddItem(position, false);
+            notifyItemInserted(position); // Triggers the animation!
+        }
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -66,7 +78,7 @@ public class MaterialListAdapter extends RecyclerView.Adapter<MaterialListAdapte
         try {
             if (obj.getClass().getSimpleName().equals(ProdutoDetalhe.class.getSimpleName())) {
 
-                Imagen img = ((ProdutoDetalhe) obj).getProduto().getImagens()[0];
+                MarketPlaceResponse.ProdutoBean.ImagensBean img = ((ProdutoDetalhe) obj).getProduto().getImagens().get(0);
                 BitmapDrawable bitmapDrawable = CacheImageView.lerCacheBitmapDraw(mContext, img.getIdImagem() + "");
 
                 if (bitmapDrawable != null) {
@@ -82,6 +94,7 @@ public class MaterialListAdapter extends RecyclerView.Adapter<MaterialListAdapte
 
     @Override
     public int getItemCount() {
+        position = mCardList.size();
         return mCardList.size();
     }
 
@@ -233,6 +246,13 @@ public class MaterialListAdapter extends RecyclerView.Adapter<MaterialListAdapte
         return null;
     }
 
+    public int getCurrentPosition() {
+        return currentPosition;
+    }
+
+    public void setCurrentPosition(int currentPosition) {
+        this.currentPosition = currentPosition;
+    }
     /**
      * Get the position of a specified Card.
      *

@@ -1,5 +1,7 @@
 package itspay.br.com.singleton;
 
+
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,10 +9,9 @@ import br.com.braga.junior.aplicationlib.model.Credencial;
 import br.com.braga.junior.aplicationlib.model.EnderecoPessoa;
 import br.com.braga.junior.aplicationlib.model.FazerPedidoMKTPlace;
 import br.com.braga.junior.aplicationlib.model.GetFormasEnvioResponse;
+import br.com.braga.junior.aplicationlib.model.MarketPlaceResponse;
 import br.com.braga.junior.aplicationlib.model.Parcela;
-import br.com.braga.junior.aplicationlib.model.Produto;
 import br.com.braga.junior.aplicationlib.model.ProdutoCarrinho;
-
 
 /**
  * Created by yesus on 07/02/17.
@@ -103,8 +104,8 @@ public class CarrinhoSingleton {
     public double getValorTotal(){
         double valorTotal = 0;
         for (ProdutoCarrinho produtoCarrinho : getListaProdutosCarrinho()) {
-            Produto produto = produtoCarrinho.getProdutoDetalhe().getProduto();
-            double subtotal = produtoCarrinho.getQuantidade() * produto.getReferencias()[0].getPrecoPor();
+            MarketPlaceResponse.ProdutoBean produto = produtoCarrinho.getProdutoDetalhe().getProduto();
+            double subtotal = produtoCarrinho.getQuantidade() * produto.getReferencias().get(0).getPrecoPor();
             valorTotal += subtotal;
         }
         return valorTotal;

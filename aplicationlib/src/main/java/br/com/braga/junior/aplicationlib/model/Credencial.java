@@ -28,8 +28,8 @@ public class Credencial {
     private long idPlastico;
     private long idProduto;
     private long idProdutoPlataforma;
-    private long limiteDisponivel;
-    private long limite;
+    private double limiteDisponivel;
+    private double limite;
     private String nomeImpresso;
     private String nomeProduto;
     private String preparaDataSaldo;
@@ -49,8 +49,8 @@ public class Credencial {
                       String dataValidade, String dataValidadeFmt, String descGrupoStatus,
                       String descStatus, String email, long grupoStatus, long idConta,
                       long idCredencial, long idPessoa, long idPlastico, long idProduto,
-                      long idProdutoPlataforma, long limiteDisponivel, String nomeImpresso, String nomeProduto,
-                      String preparaDataSaldo, double saldo, long status, long tipoConta, String urlImagemProduto,long limite) {
+                      long idProdutoPlataforma, double limiteDisponivel, String nomeImpresso, String nomeProduto,
+                      String preparaDataSaldo, double saldo, long status, long tipoConta, String urlImagemProduto,double limite) {
         this.apelidoVirtual = apelidoVirtual;
         this.codigoSeguranca = codigoSeguranca;
         this.contaPagamento = contaPagamento;
@@ -83,11 +83,11 @@ public class Credencial {
         this.limite = limite;
     }
 
-    public long getLimite() {
+    public double getLimite() {
         return limite;
     }
 
-    public void setLimite(long limite) {
+    public void setLimite(double limite) {
         this.limite = limite;
     }
 
@@ -259,11 +259,11 @@ public class Credencial {
         this.idProdutoPlataforma = idProdutoPlataforma;
     }
 
-    public long getLimiteDisponivel() {
+    public double getLimiteDisponivel() {
         return limiteDisponivel;
     }
 
-    public void setLimiteDisponivel(long limiteDisponivel) {
+    public void setLimiteDisponivel(double limiteDisponivel) {
         this.limiteDisponivel = limiteDisponivel;
     }
 

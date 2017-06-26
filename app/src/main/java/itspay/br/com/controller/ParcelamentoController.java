@@ -27,7 +27,7 @@ public class ParcelamentoController extends BaseActivityController<ParcelamentoA
         CarrinhoSingleton carrinho = CarrinhoSingleton.getInstance();
 
         try {
-            idParceiro = carrinho.getListaProdutosCarrinho().get(0).getProdutoDetalhe().getParceiroResponse().getIdParceiro();
+            idParceiro = carrinho.getListaProdutosCarrinho().get(0).getProdutoDetalhe().getParceiroResponse().getParceiro().getIdParceiro();
         }catch (NullPointerException npe){
             npe.printStackTrace();
         }

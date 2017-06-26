@@ -16,6 +16,7 @@ import com.dexafree.materialList.view.MaterialListView;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.braga.junior.aplicationlib.model.MarketPlaceResponse;
 import br.com.braga.junior.aplicationlib.model.Produto;
 import br.com.braga.junior.aplicationlib.model.ProdutoCarrinho;
 import br.com.braga.junior.aplicationlib.model.Unidade;
@@ -102,13 +103,13 @@ public class ResumoPedidoActivity extends AppCompatActivity {
             textFormaEntregaTitulo.setText("Retirar na Loja");
             textFormaEntregaValor.setVisibility(View.GONE);
             try {
-                Unidade uni = carrinho.getListaProdutosCarrinho().get(0).getProdutoDetalhe().getParceiroResponse().getUnidades()[0];
-                textEnderecoEntrega.setText(uni.getLogradouro()    + " " +
-                        uni.getNumero()        + " " +
-                        uni.getComplemento()   + " " +
-                        uni.getBairro()        + " " +
-                        uni.getCidade() + "/" + uni.getUf()
-                       );
+//                Unidade uni = carrinho.getListaProdutosCarrinho().get(0).getProdutoDetalhe().getParceiroResponse().getParceiro().getUnidades()[0];
+//                textEnderecoEntrega.setText(uni.getLogradouro()    + " " +
+//                        uni.getNumero()        + " " +
+//                        uni.getComplemento()   + " " +
+//                        uni.getBairro()        + " " +
+//                        uni.getCidade() + "/" + uni.getUf()
+//                       );
             }catch (NullPointerException npe){
                 npe.printStackTrace();
             }
@@ -125,11 +126,11 @@ public class ResumoPedidoActivity extends AppCompatActivity {
         List<Card> cards = new ArrayList<>();
 
         for (ProdutoCarrinho produtoCarrinho : CarrinhoSingleton.getInstance().getListaProdutosCarrinho()) {
-            textGrupo.setText(produtoCarrinho.getProdutoDetalhe().getParceiroResponse().getNomeParceiro());
-            Produto produto = produtoCarrinho.getProdutoDetalhe().getProduto();
+            textGrupo.setText(produtoCarrinho.getProdutoDetalhe().getParceiroResponse().getParceiro().getNomeParceiro());
+            MarketPlaceResponse.ProdutoBean produto = produtoCarrinho.getProdutoDetalhe().getProduto();
 
-            String precoPor = "R$" + Utils.formataMoeda(produto.getReferencias()[0].getPrecoPor());
-            double subtotal = produtoCarrinho.getQuantidade() * produto.getReferencias()[0].getPrecoPor();
+            String precoPor = "R$" + Utils.formataMoeda(produto.getReferencias().get(0).getPrecoPor());
+            double subtotal = produtoCarrinho.getQuantidade() * produto.getReferencias().get(0).getPrecoPor();
 
 
             String strSubtotal = "R$ " + Utils.formataMoeda(subtotal);
@@ -151,8 +152,8 @@ public class ResumoPedidoActivity extends AppCompatActivity {
 
             cards.add(card);
 
-            if (produto.getImagens() != null && produto.getImagens().length > 0) {
-                Call<ResponseBody> call = ConnectPortadorService.getService().abrirImagemProduto(produto.getImagens()[0].getIdImagem(),
+            if (produto.getImagens() != null && produto.getImagens().size() > 0) {
+                Call<ResponseBody> call = ConnectPortadorService.getService().abrirImagemProduto(produto.getImagens().get(0).getIdImagem(),
                         IdentityItsPay.getInstance().getToken());
 
                 call.enqueue(new Callback<ResponseBody>() {

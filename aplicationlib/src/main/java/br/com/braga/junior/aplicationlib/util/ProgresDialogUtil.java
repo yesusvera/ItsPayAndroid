@@ -35,5 +35,13 @@ public class ProgresDialogUtil {
             progress.dismiss();
         }
     }
+
+    public ProgressDialog getProgress() {
+        return progress;
+    }
+
+    public void setProgress(ProgressDialog progress) {
+        this.progress = progress;
+    }
 }
 

@@ -7,13 +7,13 @@ package br.com.braga.junior.aplicationlib.util;
 public class ItsPayConstants {
 
 //DESENV
-//    public static final long ID_INSTITUICAO =  300;
+    public static final long ID_INSTITUICAO =  300;
 
     //TESTE
 //    public static final long ID_INSTITUICAO =  1001;
 
 //BAHAMAS
-    public static final long ID_INSTITUICAO =  1201;
+//    public static final long ID_INSTITUICAO =  1201;
 
     public static final long ID_PROCESSADORA = 10;
     public static final long ORIGEM_ACESSO = 1;

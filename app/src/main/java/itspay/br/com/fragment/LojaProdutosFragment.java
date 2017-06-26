@@ -1,5 +1,4 @@
 package itspay.br.com.fragment;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +9,9 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -18,19 +20,17 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dexafree.materialList.card.Card;
 import com.dexafree.materialList.card.CardProvider;
 import com.dexafree.materialList.listeners.RecyclerItemClickListener;
 import com.dexafree.materialList.view.MaterialListView;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.braga.junior.aplicationlib.model.Imagen;
-import br.com.braga.junior.aplicationlib.model.ParceiroResponse;
-import br.com.braga.junior.aplicationlib.model.Produto;
+import br.com.braga.junior.aplicationlib.model.MarketPlaceResponse;
 import br.com.braga.junior.aplicationlib.model.ProdutoDetalhe;
 import br.com.braga.junior.aplicationlib.util.cache.CacheImageView;
 import itspay.br.com.activity.MarketPlaceActivity;
@@ -39,6 +39,7 @@ import itspay.br.com.authentication.IdentityItsPay;
 import itspay.br.com.controller.LojaProdutosController;
 import itspay.br.com.itspay.R;
 import itspay.br.com.services.ConnectPortadorService;
+import itspay.br.com.util.CustomScrollListener;
 import itspay.br.com.util.Utils;
 import itspay.br.com.util.UtilsActivity;
 import jp.wasabeef.recyclerview.animators.FlipInTopXAnimator;
@@ -63,7 +64,7 @@ public class LojaProdutosFragment extends Fragment {
 
     boolean verificadorOpçoes;
     ArrayList<String> countries;
-    public ArrayList<ParceiroResponse> listaParceiroResponse;
+    public ArrayList<MarketPlaceResponse> listaParceiroResponse;
 //    public ArrayList<ParceiroResponse> listaParceiroResponse2;
 
     // TODO: Rename and change types of parameters
@@ -77,12 +78,14 @@ public class LojaProdutosFragment extends Fragment {
     private View rootView;
 
     public SwipeRefreshLayout swipeRefreshLayout;
-
+    private GridLayoutManager layoutManager;
     public MaterialListView materialListView;
-
+    private static long MAX_ITEMS_PER_REQUEST = 10;
     public TextView txtSearch;
+    CustomScrollListener mCreateInfiniteScrollListener;
+    boolean isEstautsService;
 
-    private LojaProdutosController controller = new LojaProdutosController();
+    private LojaProdutosController controller;
 
     public LojaProdutosFragment() {
         // Required empty public constructor
@@ -123,38 +126,16 @@ public class LojaProdutosFragment extends Fragment {
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshLayout);
         txtSearch = (TextView) rootView.findViewById(R.id.txt_search);
         textView = (AutoCompleteTextView) rootView.findViewById(R.id.autocomplete_country);
-
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                verificadorOpçoes = false;
-                controller.listaParceiros(LojaProdutosFragment.this);
-                rootView.invalidate();
-            }
-        });
         materialListView = (MaterialListView) rootView.findViewById(R.id.material_listview);
 
-        materialListView.addOnItemTouchListener(new RecyclerItemClickListener.OnItemClickListener() {
-            @Override
-            public void onItemClick(@NonNull Card card, int position) {
-                ProdutoDetalhe produtoDetalhe = (ProdutoDetalhe) card.getTag();
+        controller = new LojaProdutosController(getActivity(),this);
 
-                ProdutoDetalheActivity.produtoDetalhe = produtoDetalhe;
-                Intent produtoDetalheIntent = new Intent(LojaProdutosFragment.this.getActivity(), ProdutoDetalheActivity.class);
-                LojaProdutosFragment.this.getActivity().startActivity(produtoDetalheIntent);
+        layoutManager = new GridLayoutManager(getActivity(), 2);
+        materialListView.setLayoutManager(layoutManager);
 
-            }
+        acoesDosComponentes();
 
-            @Override
-            public void onItemLongClick(@NonNull Card card, int position) {
-
-            }
-        });
-
-        açoesDosComponentes();
-
-        controller.listaParceiros(LojaProdutosFragment.this);
-
+        controller.initFragment(LojaProdutosFragment.this);
 
         return rootView;
     }
@@ -171,85 +152,81 @@ public class LojaProdutosFragment extends Fragment {
         }
     }
 
-    public void listarProdutos() {
+    public void listarProdutos(boolean isUpdate) {
         materialListView.setItemAnimator(new FlipInTopXAnimator());
         materialListView.getItemAnimator().setAddDuration(500);
         materialListView.getItemAnimator().setRemoveDuration(300);
-        createComponent(listaParceiroResponse);
+        createComponent(listaParceiroResponse , isUpdate);
     }
 
-    public void createComponent(ArrayList<ParceiroResponse> listaParceiro) {
+    public void createComponent(ArrayList<MarketPlaceResponse> listaParceiro ,boolean isUpdate) {
         List<Card> cards = new ArrayList<>();
         ArrayList<String> valueString = new ArrayList<>();
 
-        for (ParceiroResponse parceiroResponse : listaParceiro) {
-            for (Produto produto : parceiroResponse.getProdutos()) {
-
-                String precoDe = "R$" + Utils.formataMoeda(produto.getReferencias()[0].getPrecoDe());
-                String precoPor = "R$" + Utils.formataMoeda(produto.getReferencias()[0].getPrecoPor());
-                String description = parceiroResponse.getQuantMaxParcelaSemJuros() +
-                        "x de R$" +
-                        Utils.formataMoeda(
-                                produto.getReferencias()[0].getPrecoPor() /
-                                        parceiroResponse.getQuantMaxParcelaSemJuros());
-
-                valueString.add(produto.getNomeProduto());
-
-                final Card card = new Card.Builder(this.getContext())
-                        .setTag(new ProdutoDetalhe(parceiroResponse, produto))
-                        .setDismissible()
-                        .withProvider(new CardProvider())
-                        .setLayout(R.layout.item_produto_loja)
-                        .setTitle(produto.getNomeProduto())
-                        .setTitleColor(Color.DKGRAY)
-                        .setSubtitle(precoDe)
-                        .setSubtitle2(precoPor)
-                        .setSubtitle3(description)
-                        .setSubtitleColor(Color.BLACK)
-                        .setDescription(produto.getDescricao())
-                        .setKeepLayoutXml(true)
-                        .endConfig()
-                        .build();
-
-                cards.add(card);
-
-                if (produto.getImagens() != null && produto.getImagens().length > 0) {
-                    final Imagen img = produto.getImagens()[0];
-                    BitmapDrawable bitmapDrawable = CacheImageView.lerCacheBitmapDraw(getContext(), img.getIdImagem() + "");
+        for (MarketPlaceResponse parceiroResponse : listaParceiro) {
 
 
-                    if (bitmapDrawable != null) {
+            String precoDe = "R$" + Utils.formataMoeda(parceiroResponse.getProduto().getReferencias().get(0).getPrecoDe());
+            String precoPor = "R$" + Utils.formataMoeda(parceiroResponse.getProduto().getReferencias().get(0).getPrecoPor());
+            String description = parceiroResponse.getParceiro().getQuantMaxParcelaSemJuros() +
+                    "x de R$" +
+                    Utils.formataMoeda(
+                            parceiroResponse.getProduto().getReferencias().get(0).getPrecoPor() /
+                                    parceiroResponse.getParceiro().getQuantMaxParcelaSemJuros());
+
+            valueString.add(parceiroResponse.getProduto().getNomeProduto());
+
+            final Card card = new Card.Builder(this.getContext())
+                    .setTag(new ProdutoDetalhe(parceiroResponse, parceiroResponse.getProduto()))
+                    .setDismissible()
+                    .withProvider(new CardProvider())
+                    .setLayout(R.layout.item_produto_loja)
+                    .setTitle(parceiroResponse.getProduto().getNomeProduto())
+                    .setTitleColor(Color.DKGRAY)
+                    .setSubtitle(precoDe)
+                    .setSubtitle2(precoPor)
+                    .setSubtitle3(description)
+                    .setSubtitleColor(Color.BLACK)
+                    .setDescription(parceiroResponse.getProduto().getDescricao())
+                    .setKeepLayoutXml(true)
+                    .endConfig()
+                    .build();
+
+            cards.add(card);
+
+            if (parceiroResponse.getProduto().getImagens() != null && parceiroResponse.getProduto().getImagens().size() > 0) {
+                final  MarketPlaceResponse.ProdutoBean.ImagensBean img = parceiroResponse.getProduto().getImagens().get(0);
+                BitmapDrawable bitmapDrawable = CacheImageView.lerCacheBitmapDraw(getContext(), img.getIdImagem() + "");
+
+
+                if (bitmapDrawable != null) {
 //                        card.getProvider().setDrawable(bitmapDrawable);
-                    } else {
-                        Call<ResponseBody> call = ConnectPortadorService.getService().abrirImagemProduto(img.getIdImagem(),
-                                IdentityItsPay.getInstance().getToken());
-                        call.enqueue(new Callback<ResponseBody>() {
+                } else {
+                    Call<ResponseBody> call = ConnectPortadorService.getService().abrirImagemProduto(img.getIdImagem(),
+                            IdentityItsPay.getInstance().getToken());
+                    call.enqueue(new Callback<ResponseBody>() {
 
-                            @Override
-                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                                if (response.body() != null && response.body().byteStream() != null) {
+                        @Override
+                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                            if (response.body() != null && response.body().byteStream() != null) {
 
-                                    try {
-                                        BitmapDrawable bitmapDrawable = CacheImageView.salvarCache(LojaProdutosFragment.this.getContext(), img.getIdImagem() + "", response.body().byteStream());
-//                                        card.getProvider().setDrawable(bitmapDrawable);
-                                    } catch (Exception e) {
-                                        Log.i("CacheImagem", e.toString());
-                                    }
+                                try {
+                                    BitmapDrawable bitmapDrawable = CacheImageView.salvarCache(LojaProdutosFragment.this.getContext(), img.getIdImagem() + "", response.body().byteStream());
+                                    card.getProvider().setDrawable(bitmapDrawable);
+                                } catch (Exception e) {
+                                    Log.i("CacheImagem", e.toString());
                                 }
                             }
+                        }
 
-                            @Override
-                            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                                UtilsActivity.alertIfSocketException(t, LojaProdutosFragment.this.getContext());
-                            }
+                        @Override
+                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+                            UtilsActivity.alertIfSocketException(t, LojaProdutosFragment.this.getContext());
+                        }
 
-                        });
-                    }
-
-
+                    });
                 }
             }
-
         }
 
         if (!verificadorOpçoes) {
@@ -259,11 +236,33 @@ public class LojaProdutosFragment extends Fragment {
             verificadorOpçoes = true;
         }
 
-
-        materialListView.getAdapter().addAll(cards);
-
+        if(isUpdate) {
+            if(cards.size() == 0 ){
+                this.isEstautsService =true;
+            }
+            materialListView.getAdapter().updateList(cards);
+            this.mCreateInfiniteScrollListener.resetState();
+        }else {
+            this.materialListView.getAdapter().addAll(cards);
+        }
+        this.materialListView.setHasFixedSize(true);
+        this.mCreateInfiniteScrollListener = createInfiniteScrollListener();
+        this.materialListView.addOnScrollListener(mCreateInfiniteScrollListener);
     }
 
+
+    private CustomScrollListener createInfiniteScrollListener() {
+        return new CustomScrollListener(layoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                if(!isEstautsService) {
+                    controller.updateItem(LojaProdutosFragment.this, MAX_ITEMS_PER_REQUEST);
+                    MAX_ITEMS_PER_REQUEST = MAX_ITEMS_PER_REQUEST + 10;
+                }
+            }
+
+        };
+    }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -294,7 +293,37 @@ public class LojaProdutosFragment extends Fragment {
     }
 
 
-    public void açoesDosComponentes() {
+    public void acoesDosComponentes() {
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                verificadorOpçoes = false;
+                controller.initFragment(LojaProdutosFragment.this);
+                isEstautsService =false;
+                mCreateInfiniteScrollListener.resetState();
+                rootView.invalidate();
+                MAX_ITEMS_PER_REQUEST = 10;
+            }
+        });
+
+        materialListView.addOnItemTouchListener(new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(@NonNull Card card, int position) {
+                ProdutoDetalhe produtoDetalhe = (ProdutoDetalhe) card.getTag();
+
+                ProdutoDetalheActivity.produtoDetalhe = produtoDetalhe;
+                Intent produtoDetalheIntent = new Intent(LojaProdutosFragment.this.getActivity(), ProdutoDetalheActivity.class);
+                LojaProdutosFragment.this.getActivity().startActivity(produtoDetalheIntent);
+
+            }
+
+            @Override
+            public void onItemLongClick(@NonNull Card card, int position) {
+
+            }
+        });
+
 
         txtSearch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -312,32 +341,26 @@ public class LojaProdutosFragment extends Fragment {
                 boolean handled = false;
                 if (actionId == 5) {
 
-                    ArrayList<Produto> listaProduto = new ArrayList<>();
-                    ArrayList<ParceiroResponse> filterList = new ArrayList<>();
+                    ArrayList<MarketPlaceResponse> filterList = new ArrayList<>();
 
 
                     materialListView.getAdapter().clearAll();
 
                     if (textView.getText() != null && textView.getText().length() > 0) {
-                        for (ParceiroResponse parceiroResponse : listaParceiroResponse) {
+                        for (MarketPlaceResponse parceiroResponse : listaParceiroResponse) {
 
-                            ParceiroResponse pRTemp = parceiroResponse.clone();
+                            MarketPlaceResponse pRTemp = parceiroResponse.clone();
 
-                            for (Produto produto : pRTemp.getProdutos()) {
-                                if ((produto.getNomeProduto().toUpperCase()).contains(textView.getText().toString().toUpperCase())) {
-                                    listaProduto.add(produto);
-                                }
+                            if ((pRTemp.getProduto().getNomeProduto().toUpperCase()).contains(textView.getText().toString().toUpperCase())) {
+                                filterList.add(pRTemp);
                             }
-
-                            pRTemp.setProdutos(listaProduto);
-                            filterList.add(pRTemp);
                         }
 
                     } else {
                         filterList = listaParceiroResponse;
                     }
 
-                    createComponent(filterList);
+                    createComponent(filterList,false);
 
 
                     //rootView.invalidate();

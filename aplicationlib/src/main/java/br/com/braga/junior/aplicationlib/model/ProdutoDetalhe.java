@@ -5,27 +5,27 @@ package br.com.braga.junior.aplicationlib.model;
  */
 
 public class ProdutoDetalhe {
-    private ParceiroResponse parceiroResponse;
-    private Produto produto;
+    private MarketPlaceResponse parceiroResponse;
+    private MarketPlaceResponse.ProdutoBean produto;
 
-    public ProdutoDetalhe(ParceiroResponse parceiroResponse, Produto produto) {
+    public ProdutoDetalhe(MarketPlaceResponse parceiroResponse, MarketPlaceResponse.ProdutoBean produto) {
         this.parceiroResponse = parceiroResponse;
         this.produto = produto;
     }
 
-    public ParceiroResponse getParceiroResponse() {
+    public MarketPlaceResponse getParceiroResponse() {
         return parceiroResponse;
     }
 
-    public void setParceiroResponse(ParceiroResponse parceiroResponse) {
+    public void setParceiroResponse(MarketPlaceResponse parceiroResponse) {
         this.parceiroResponse = parceiroResponse;
     }
 
-    public Produto getProduto() {
+    public MarketPlaceResponse.ProdutoBean getProduto() {
         return produto;
     }
 
-    public void setProduto(Produto produto) {
+    public void setProduto(MarketPlaceResponse.ProdutoBean produto) {
         this.produto = produto;
     }
 }

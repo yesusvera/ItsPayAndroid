@@ -22,6 +22,7 @@ import br.com.braga.junior.aplicationlib.model.GetInfoPortadorCredencialRequest;
 import br.com.braga.junior.aplicationlib.model.GetPerfilTarifarioResponse;
 import br.com.braga.junior.aplicationlib.model.ItsPayResponse;
 import br.com.braga.junior.aplicationlib.model.LinhaExtratoCredencial;
+import br.com.braga.junior.aplicationlib.model.MarketPlaceResponse;
 import br.com.braga.junior.aplicationlib.model.ParceiroResponse;
 import br.com.braga.junior.aplicationlib.model.ParcelasResponse;
 import br.com.braga.junior.aplicationlib.model.Pedido;
@@ -188,11 +189,12 @@ public interface PortadorService {
                                  @Path("idPedido") long idPedido,
                                  @Header("AuthorizationPortador") String token);
 
-    @GET("api/mktplace/portador/parceiro-produto/{idProcessadora}/{idInstituicao}/")
-    Call<ArrayList<ParceiroResponse>> getParceiros(@Path("idProcessadora") long idProcessadora,
-                                                   @Path("idInstituicao") long idInstituicao,
-                                                   @Header("AuthorizationPortador") String token);
-
+    @GET("api/mktplace/portador/parceiro-produto/{idProcessadora}/{idInstituicao}/{first}/{max}")
+    Call<ArrayList<MarketPlaceResponse>> getParceiros(@Path("idProcessadora") long idProcessadora,
+                                                      @Path("idInstituicao") long idInstituicao,
+                                                      @Path("first") long first,
+                                                      @Path("max") long max,
+                                                      @Header("AuthorizationPortador") String token);
     @GET("api/mktplace/administrativo/imagem/sku/{idImagem}")
     Call<ResponseBody> abrirImagemProduto(@Path("idImagem") long idImagem,
                                           @Header("AuthorizationPortador") String token);

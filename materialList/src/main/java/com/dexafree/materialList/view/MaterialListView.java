@@ -28,6 +28,7 @@ public class MaterialListView extends RecyclerView {
     private int mColumnCount;
     private int mColumnCountLandscape = DEFAULT_COLUMNS_LANDSCAPE;
     private int mColumnCountPortrait = DEFAULT_COLUMNS_PORTRAIT;
+    private LinearLayoutManager linearLayoutManager;
     private final AdapterDataObserver mEmptyViewObserver = new AdapterDataObserver() {
         @Override public void onChanged() {
             super.onChanged();
@@ -37,14 +38,25 @@ public class MaterialListView extends RecyclerView {
 
     public MaterialListView(Context context) {
         this(context, null);
+        if(linearLayoutManager == null)
+            linearLayoutManager = new LinearLayoutManager(getContext(),
+                    LinearLayoutManager.VERTICAL, false);
     }
 
     public MaterialListView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
+        if(linearLayoutManager == null)
+            linearLayoutManager = new LinearLayoutManager(getContext(),
+                    LinearLayoutManager.VERTICAL, false);
     }
 
     public MaterialListView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+
+        if(linearLayoutManager == null) {
+            linearLayoutManager = new LinearLayoutManager(getContext(),
+                    LinearLayoutManager.VERTICAL, false);
+        }
 
         mDismissListener = new SwipeDismissRecyclerViewTouchListener(this,
                 new SwipeDismissRecyclerViewTouchListener.DismissCallbacks() {
@@ -191,8 +203,11 @@ public class MaterialListView extends RecyclerView {
             setLayoutManager(new StaggeredGridLayoutManager(columnCount,
                     StaggeredGridLayoutManager.VERTICAL));
         } else {
-            setLayoutManager(new LinearLayoutManager(getContext(),
-                    LinearLayoutManager.VERTICAL, false));
+            if(linearLayoutManager == null) {
+                linearLayoutManager = new LinearLayoutManager(getContext(),
+                        LinearLayoutManager.VERTICAL, false);
+            }
+            setLayoutManager(linearLayoutManager);
         }
     }
 
@@ -205,6 +220,14 @@ public class MaterialListView extends RecyclerView {
             mEmptyView.setVisibility(getAdapter().isEmpty() ? VISIBLE : GONE);
             setVisibility(getAdapter().isEmpty() ? GONE : VISIBLE);
         }
+    }
+
+    public LinearLayoutManager getLinearLayoutManager() {
+        return linearLayoutManager;
+    }
+
+    public void setLinearLayoutManager(LinearLayoutManager linearLayoutManager) {
+        this.linearLayoutManager = linearLayoutManager;
     }
 
     /**
